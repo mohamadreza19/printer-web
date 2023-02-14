@@ -74,21 +74,19 @@ export const LtrTheme =
       MuiButton: {
         styleOverrides: {
           root: {
-            color: "#010101",
+            color: "#FFFFFF",
+            borderRadius: "10px",
+            // fontSize: "0px",
           },
         },
       },
     },
     typography: {
-      // fontFamily: ["IRANSens_v2"],
+      // fontFamily: ["Vazirmatn"],
     },
     palette: {
-      background: {
-        // default: "black !important",
-      },
-
       primary: {
-        main: "#FFA100",
+        main: colors.primary,
       },
       secondary: {
         main: "#404040",

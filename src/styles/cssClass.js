@@ -47,6 +47,8 @@ export const ltrClass = {
   pe_4: "padding-right-4",
   pe_5: "padding-right-5",
   pe_6: "padding-right-6",
+  // border Radius
+  border_r_e_50px: "border-r-right-50",
 };
 
 export const rtlClass = {
@@ -77,4 +79,6 @@ export const rtlClass = {
   pe_4: "padding-left-4",
   pe_5: "padding-left-5",
   pe_6: "padding-left-6",
+  // border Radius
+  border_r_e_50px: "border-r-left-50",
 };

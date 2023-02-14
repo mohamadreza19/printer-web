@@ -10,7 +10,7 @@ export default function () {
   useEffect(() => {
     const action = {
       type: languageAction.CHANGE_LANUAGE,
-      payload: cachedLanguage.value || "en",
+      payload: cachedLanguage.value || "fa",
     };
     set(action);
   }, [cachedLanguage.value]);

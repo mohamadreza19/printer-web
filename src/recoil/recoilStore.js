@@ -14,7 +14,7 @@ export const userData = atom({
 export const isUserLogin = atom({
   key: "user-authentication",
   default: {
-    isLoggin: false,
+    isLoggin: true,
   },
 });
 export const ageIn2 = selector({
@@ -23,7 +23,7 @@ export const ageIn2 = selector({
 });
 export const language = atom({
   key: "language",
-  default: "en",
+  default: "fa",
 });
 export const class_Based_Language = selector({
   key: "class_Based_Language",
@@ -37,35 +37,12 @@ export const class_Based_Language = selector({
       case "fa":
         return rtlClass;
         break;
+      case "tr":
+        return ltrClass;
+        break;
 
       default:
-        return {
-          ms_auto: "magin-left-auto",
-          ms_1: "magin-left1",
-          ms_2: "magin-left2",
-          ms_3: "magin-left3",
-          ms_4: "magin-left4",
-          ms_5: "magin-left5",
-          //
-          me_auto: "magin-right-auto",
-          me_1: "magin-right1",
-          me_2: "magin-right2",
-          me_3: "magin-right3",
-          me_4: "magin-right4",
-          me_5: "magin-right5",
-          //padding
-          ps_1: "padding-left1",
-          ps_2: "padding-left2",
-          ps_3: "padding-left3",
-          ps_4: "padding-left4",
-          ps_5: "padding-left5",
-          //
-          pe_1: "padding-right1",
-          pe_2: "padding-right2",
-          pe_3: "padding-right3",
-          pe_4: "padding-right4",
-          pe_5: "padding-right5",
-        };
+        return rtlClass;
         break;
     }
   },
@@ -82,6 +59,31 @@ export const content_Based_Language = selector({
             startButtonText: "Change to English",
             endButtonText: "ادامه با زبان فارسی",
           },
+          login: {
+            header: {
+              supportButton: "support",
+            },
+            textFeilds: {
+              userName: "user name",
+              password: "password",
+            },
+            enterButton: "enter",
+            remember: "remember password",
+          },
+          userPannel: {
+            start_col: {
+              row1: {
+                epirationOfCredit: "Expiration of credit",
+              },
+              row2: {
+                listOfProjects: "List of projects",
+                addNewProject: "Add new project",
+                listOfLabels: "List of labels",
+                historyOfPrinting: "History of printing",
+                settings: "Settings",
+              },
+            },
+          },
         };
         break;
       case "fa":
@@ -91,15 +93,99 @@ export const content_Based_Language = selector({
             startButtonText: "ادامه با فارسی",
             endButtonText: "Change to English",
           },
+          login: {
+            header: {
+              supportButton: "پشتیبانی",
+            },
+            textFeilds: {
+              userName: "نام کاربری",
+              password: "رمز عبور",
+            },
+            enterButton: "ورود",
+            remember: "فراموشی رمز عبور",
+          },
+          userPannel: {
+            start_col: {
+              row1: {
+                epirationOfCredit: "انقضا اعتبار",
+              },
+              row2: {
+                listOfProjects: "لیست پروژه ها",
+                addNewProject: "افزودن پروژه جدید",
+                listOfLabels: "لیست لیبل ها",
+                historyOfPrinting: "تاریخچه چاپ",
+                settings: "تنظیمات",
+              },
+            },
+          },
+        };
+
+        break;
+      case "tr":
+        return {
+          selectedLanguage: {
+            text: "Konumunuz dil ile aynı değil gibi görünüyor, değiştirmek ister misiniz?",
+            startButtonText: "İngilizceye değiştir",
+            endButtonText: "ادامه با زبان فارسی",
+          },
+          login: {
+            header: {
+              supportButton: "Destek",
+            },
+            textFeilds: {
+              userName: "Kullanıcı adı",
+              password: "şifre",
+            },
+            enterButton: "girmek",
+            remember: "şifre hatırlamak",
+          },
+          userPannel: {
+            start_col: {
+              row1: {
+                epirationOfCredit: "Kredinin sona ermesi",
+              },
+              row2: {
+                listOfProjects: "proje listesi",
+                addNewProject: "Add new project",
+                listOfLabels: "Yeni proje ekle",
+                historyOfPrinting: "baskı tarihi",
+                settings: "Ayarlar",
+              },
+            },
+          },
         };
         break;
-
       default:
         return {
           selectedLanguage: {
             text: "It seems that your location is not the same as the language, would you like to change it?",
             startButtonText: "Change to English",
-            endButtonText: "ادامه با فارسی",
+            endButtonText: "ادامه با زبان فارسی",
+          },
+          login: {
+            header: {
+              supportButton: "support",
+            },
+            textFeilds: {
+              userName: "user name",
+              password: "password",
+            },
+            enterButton: "enter",
+            remember: "remember password",
+          },
+          userPannel: {
+            start_col: {
+              row1: {
+                epirationOfCredit: "Expiration of credit",
+              },
+              row2: {
+                listOfProjects: "List of projects",
+                addNewProject: "Add new project",
+                listOfLabels: "List of labels",
+                historyOfPrinting: "History of printing",
+                settings: "Settings",
+              },
+            },
           },
         };
         break;

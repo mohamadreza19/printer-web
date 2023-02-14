@@ -17,17 +17,32 @@ export default class {
       </Typography>
     );
   }
-  static H6(props) {
+  static H6({ children, className }) {
     return (
-      <Typography className="" variant="h6">
-        {props.children}
+      <Typography className={className} variant="h6">
+        {children}
       </Typography>
     );
   }
-  static Button(props) {
+  static H7({ children, className, onClick }) {
     return (
-      <Typography className="text-lowercase " variant="button">
-        {props.children}
+      <Typography
+        onClick={onClick}
+        className={className + " font-size-1_15rem"}
+        variant="h6"
+      >
+        {children}
+      </Typography>
+    );
+  }
+  static Button({ children = "", className = "", onClick = () => {} }) {
+    return (
+      <Typography
+        onClick={onClick}
+        className={"text-lowercase " + className}
+        variant="button"
+      >
+        {children}
       </Typography>
     );
   }
@@ -36,6 +51,28 @@ export default class {
       <Typography className="" variant="caption">
         {props.children}
       </Typography>
+    );
+  }
+  static Body2({ children, className }) {
+    return (
+      <Typography className={" " + className} variant="body2">
+        {children}
+      </Typography>
+    );
+  }
+  static EnglishNumber_body2({ children, className }) {
+    return (
+      <span
+        lang="en"
+        // dir="ltr"
+        style={{
+          fontFamily: "Ubuntu important",
+        }}
+        className={" " + className}
+        variant="body2"
+      >
+        {children}
+      </span>
     );
   }
 }

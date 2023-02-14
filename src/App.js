@@ -13,16 +13,20 @@ import useHandleDirection_Based_Langiage from "./utility/useHandleDirection_Base
 
 import Routes from "./routes/Routes";
 import useHandleLanguage_Based_CachedLanguage from "./utility/useHandleLanguage_Based_CachedLanguage";
+import { useLanguage } from "./recoil/readStore";
+import { useMemo } from "react";
 
 function App() {
   useHandleDirection_Based_Langiage();
   useHandleLanguage_Based_CachedLanguage();
+  const language = useMemo(useLanguage);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackComponent}>
       <MycacheProider>
         <ThemeProvider
           //  theme={language === "fa" ? RtlTheme : LtrTheme}
+          // theme={language == "fa" ? RtlTheme : LtrTheme}
           theme={RtlTheme}
         >
           <Routes />

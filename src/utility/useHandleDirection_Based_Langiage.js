@@ -7,10 +7,8 @@ function useHandleDirection_Based_Langiage() {
 
   useEffect(() => {
     if (language == "fa") {
-      console.log("rtl");
       document.dir = "rtl";
     } else {
-      console.log("ltr");
       document.dir = "ltr";
     }
   }, [language]);

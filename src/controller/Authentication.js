@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { useIsUserLogin } from "../recoil/readStore";
 
-export default function (props) {
+export default function ({ children, replacePath = "/login" }) {
   const { isLoggin } = useIsUserLogin();
 
   if (isLoggin) {
-    return props.children;
+    return children;
   } else {
-    return <Navigate to={"/login"} replace />;
+    return <Navigate to={replacePath} replace />;
   }
 }
