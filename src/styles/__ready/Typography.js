@@ -46,6 +46,16 @@ export default class {
       </Typography>
     );
   }
+  static Button_v2({ children = "", className = "", onClick = () => {} }) {
+    return (
+      <p
+        onClick={onClick}
+        className={"text-lowercase font-vazir " + className + " "}
+      >
+        {children}
+      </p>
+    );
+  }
   static Caption(props) {
     return (
       <Typography className="" variant="caption">

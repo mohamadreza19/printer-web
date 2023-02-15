@@ -16,14 +16,14 @@ export default function () {
     return (
       <Buttons.Contained_Custom
         className={
-          "w-100 d-flex justify-content-start py-3_5rm  px-3 mb-3 border-r-20 " +
+          "w-100 d-flex justify-content-start py-3  px-3 mb-3 border-r-20 " +
           colorClass
         }
       >
         <Icons.List />
-        <Typography.H6 className={"font-200 " + cssClass.ms_2}>
+        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
           {buttonsText.listOfProjects}
-        </Typography.H6>
+        </Typography.H7>
       </Buttons.Contained_Custom>
     );
   };
@@ -31,14 +31,14 @@ export default function () {
     return (
       <Buttons.Contained_Custom
         className={
-          "w-100 d-flex justify-content-start py-3_5rm  border-r-20  px-3 mb-3 " +
+          "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
           colorClass
         }
       >
         <Icons.AddNewProject />
-        <Typography.H6 className={"font-200 " + cssClass.ms_2}>
+        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
           {buttonsText.addNewProject}
-        </Typography.H6>
+        </Typography.H7>
       </Buttons.Contained_Custom>
     );
   };
@@ -46,14 +46,14 @@ export default function () {
     return (
       <Buttons.Contained_Custom
         className={
-          "w-100 d-flex justify-content-start py-3_5rm  border-r-20  px-3 mb-3 " +
+          "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
           colorClass
         }
       >
         <Icons.Labels />
-        <Typography.H6 className={"font-200 " + cssClass.ms_2}>
+        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
           {buttonsText.listOfLabels}
-        </Typography.H6>
+        </Typography.H7>
       </Buttons.Contained_Custom>
     );
   };
@@ -61,14 +61,14 @@ export default function () {
     return (
       <Buttons.Contained_Custom
         className={
-          "w-100 d-flex justify-content-start py-3_5rm  px-3  border-r-20 mb-3 " +
+          "w-100 d-flex justify-content-start py-3  px-3  border-r-20 mb-3 " +
           colorClass
         }
       >
         <Icons.History />
-        <Typography.H6 className={"font-200 " + cssClass.ms_2}>
+        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
           {buttonsText.historyOfPrinting}
-        </Typography.H6>
+        </Typography.H7>
       </Buttons.Contained_Custom>
     );
   };
@@ -76,13 +76,13 @@ export default function () {
     return (
       <Buttons.Contained_Custom
         className={
-          "w-100 d-flex justify-content-start py-3_5rm  px-3 " + colorClass
+          "w-100 d-flex justify-content-start py-3  px-3 " + colorClass
         }
       >
         <Icons.Setting />
-        <Typography.H6 className={"font-200 " + cssClass.ms_2}>
+        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
           {buttonsText.settings}
-        </Typography.H6>
+        </Typography.H7>
       </Buttons.Contained_Custom>
     );
   };

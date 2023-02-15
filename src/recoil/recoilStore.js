@@ -82,6 +82,16 @@ export const content_Based_Language = selector({
                 historyOfPrinting: "History of printing",
                 settings: "Settings",
               },
+              row3: "Sign out",
+            },
+            end_col: {
+              row1: {
+                frequently_asked_questions: "Frequently asked questions",
+                fileUpload: "file upload",
+              },
+              row2: {
+                searchPlaceHolder: "Search by project name",
+              },
             },
           },
         };
@@ -115,6 +125,16 @@ export const content_Based_Language = selector({
                 listOfLabels: "لیست لیبل ها",
                 historyOfPrinting: "تاریخچه چاپ",
                 settings: "تنظیمات",
+              },
+              row3: " خروج از حساب کاربری",
+            },
+            end_col: {
+              row1: {
+                frequently_asked_questions: "سوالات پر تکرار",
+                fileUpload: "آپلود فایل",
+              },
+              row2: {
+                searchPlaceHolder: "جست و جو بر اساس نام پروژه",
               },
             },
           },
@@ -150,6 +170,16 @@ export const content_Based_Language = selector({
                 listOfLabels: "Yeni proje ekle",
                 historyOfPrinting: "baskı tarihi",
                 settings: "Ayarlar",
+              },
+              row3: "oturumu Kapat",
+            },
+            end_col: {
+              row1: {
+                frequently_asked_questions: "ıkça Sorulan Sorular",
+                fileUpload: "dosya yükleme",
+              },
+              row2: {
+                searchPlaceHolder: "Proje adına göre ara",
               },
             },
           },

@@ -26,6 +26,7 @@ export const ltrClass = {
   ms_4: "margin-left-4",
   ms_5: "margin-left-5",
   ms_6: "margin-left-6",
+  ms_auto: "margin-left-auto",
   // me
   me_1: "margin-right-1",
   me_2: "margin-right-2",
@@ -49,6 +50,10 @@ export const ltrClass = {
   pe_6: "padding-right-6",
   // border Radius
   border_r_e_50px: "border-r-right-50",
+  border_r_s_50px: "border-r-left-50",
+  //
+  border_r_e_30px: "border-r-right-30",
+  border_r_s_30px: "border-r-left-30",
 };
 
 export const rtlClass = {
@@ -58,6 +63,7 @@ export const rtlClass = {
   ms_4: "margin-right-4",
   ms_5: "margin-right-5",
   ms_6: "margin-right-6",
+  ms_auto: "margin-right-auto",
   // me
   me_1: "margin-left-1",
   me_2: "margin-left-2",
@@ -81,4 +87,7 @@ export const rtlClass = {
   pe_6: "padding-left-6",
   // border Radius
   border_r_e_50px: "border-r-left-50",
+  border_r_s_50px: "border-r-right-50",
+  border_r_e_30px: "border-r-left-30",
+  border_r_s_30px: "border-r-right-30",
 };
