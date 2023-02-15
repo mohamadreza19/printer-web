@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import EndColumn from "./layout/endColumn";
-import StartColumn from "./layout/startColumn";
+// import StartColumn from "./layout/startColumn";
+import StartColumn from "./layout/startColumn/index";
 
 export default function () {
   return (
