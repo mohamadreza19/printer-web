@@ -1,6 +1,7 @@
 :root {
   --primary: #ff7d41;
   --secondary: #434343;
+  --secondary_v2: #aeaeae;
   --info: #f5f5f5;
   --gray1: #ececec;
   --gray2: #cbcbcb;
@@ -20,8 +21,11 @@ html {
   /* font-size: var(--base-size); */
   /* background-color: #434343; */
 }
-* {
-  /* outline: 1.5px solid red; */
+/* * {
+  outline: 1.5px solid red;
+} */
+a {
+  color: inherit !important;
 }
 .vw100 {
   width: 100vw;
@@ -42,11 +46,24 @@ html {
 .mt-8 {
   margin-top: 4.5rem !important;
 }
+.mt-9 {
+  margin-top: 5rem !important;
+}
+.mt-10 {
+  margin-top: 5.5rem !important;
+}
+
+.mt-11rem {
+  margin-top: 11rem !important;
+}
 .mt-11-5rem {
   margin-top: 11.5rem !important;
 }
 .margin-left-auto {
   margin-left: auto;
+}
+.margin-left-1_1rem {
+  margin-left: 1.1rem !important;
 }
 .margin-right-auto {
   margin-right: auto;
@@ -160,6 +177,9 @@ html {
 .w-90 {
   width: 90% !important;
 }
+.w-60 {
+  width: 60% !important;
+}
 .w-md-75 {
   width: 100%;
 }
@@ -219,6 +239,9 @@ html {
 .box_shadow_disabled {
   box-shadow: none !important;
 }
+.box_shadow-v1 {
+  box-shadow: 0px 30px 60px -10px rgba(0, 0, 0, 0.7) !important;
+}
 /* .bg_secondray {
   background: linear-gradient(111.74deg, #ff7d41 24.86%, #ff5100 69.34%);
   border-radius: 20px !important;
@@ -227,8 +250,14 @@ html {
 .color-primary {
   color: var(--primary) !important;
 }
+.color-white {
+  color: var(--white) !important;
+}
 .color_danger {
   color: var(--danger);
+}
+.color_gray2 {
+  color: var(--gray2);
 }
 .bg_black {
   background-color: var(--black1) !important;
@@ -236,11 +265,21 @@ html {
 .bg_info {
   background-color: var(--info) !important;
 }
+.color_secondray_v2 {
+  color: var(--secondary_v2) !important;
+}
+
 .bg_secondray {
   background-color: var(--secondary) !important;
 }
 /* fill */
 
+.fill_white {
+  fill: var(--white) !important;
+}
+.fill_secondray_v2 {
+  fill: var(--secondary_v2) !important;
+}
 .fill_primary {
   fill: var(--primary) !important;
 }
@@ -291,7 +330,7 @@ html {
   border-bottom: 1px solid var(--primary);
 }
 .border-bottom-gray {
-  border-bottom: 0.15rem solid var(--gray1);
+  border-bottom: 0.19rem solid var(--gray1);
 }
 
 .cur-pointer {
@@ -310,11 +349,20 @@ html {
 .font-size-1_15rem {
   font-size: 1.15rem !important;
 }
+.font-size-h8 {
+  font-size: 1rem !important;
+}
+.font-size-h9 {
+  font-size: 0.99rem !important;
+}
 .font-bold {
   font-weight: bold;
 }
 .font-bold-500 {
   font-weight: bold !important;
+}
+.font-400 {
+  font-weight: 400 !important;
 }
 .font-300 {
   font-weight: 300 !important;

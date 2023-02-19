@@ -9,6 +9,8 @@ export default class {
     children = "",
     className = "",
     Input_marginStart_based_Language = "ms-3",
+    value = " ",
+    onChange = () => {},
   }) {
     return (
       <div
@@ -17,9 +19,10 @@ export default class {
           className
         }
       >
-        <img src="/svg/icon/username.svg" className="" />
         <input
           className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+          // value={value}
+          onChange={(e) => onChange(e)}
         />
       </div>
     );

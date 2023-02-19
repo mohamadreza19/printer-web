@@ -5,7 +5,11 @@ import {
   useContent_Based_Language,
   useDynamicCssClass,
 } from "../../../../recoil/readStore";
+import { Link, useLocation } from "react-router-dom";
+import { UserRoutePath } from "../../../../routes/Routes";
 export default function () {
+  const { pathname } = useLocation();
+
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
   const buttonsText = content.userPannel.start_col.row2;
@@ -13,33 +17,68 @@ export default function () {
     ? "bg_secondray box_shadow_disabled"
     : "bg_primary box_shadow_disabled";
   const ListOfProject = () => {
-    return (
-      <Buttons.Contained_Custom
-        className={
-          "w-100 d-flex justify-content-start py-3  px-3 mb-3 border-r-20 " +
-          colorClass
+    const dynamicColor = pathname.includes("project-list")
+      ? {
+          bg: "bg_primary box_shadow_disabled",
+          color: "color-white ",
+          fill: "fill_white",
         }
-      >
-        <Icons.List />
-        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
-          {buttonsText.listOfProjects}
-        </Typography.H7>
-      </Buttons.Contained_Custom>
+      : {
+          bg: "bg_secondray box_shadow_disabled",
+          color: "color_secondray_v2",
+          fill: "fill_secondray_v2",
+        };
+
+    return (
+      <Link to={UserRoutePath.projectList}>
+        <Buttons.Contained_Custom
+          className={
+            "w-100 d-flex justify-content-start py-3  px-3 mb-3 border-r-20 " +
+            dynamicColor.bg
+          }
+        >
+          <Icons.List className={dynamicColor.fill} />
+          <Typography.H7
+            className={`font-200 ${cssClass.ms_2} ${dynamicColor.color}`}
+          >
+            {buttonsText.listOfProjects}
+          </Typography.H7>
+        </Buttons.Contained_Custom>
+      </Link>
     );
   };
   const AddProject = () => {
-    return (
-      <Buttons.Contained_Custom
-        className={
-          "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
-          colorClass
+    // const bg = pathname.includes("add-project")
+    //   ? "bg_primary box_shadow_disabled"
+    //   : "bg_secondray box_shadow_disabled";
+    const dynamicColor = pathname.includes("add-project")
+      ? {
+          bg: "bg_primary box_shadow_disabled",
+          color: "color-white ",
+          fill: "fill_white",
         }
-      >
-        <Icons.AddNewProject />
-        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
-          {buttonsText.addNewProject}
-        </Typography.H7>
-      </Buttons.Contained_Custom>
+      : {
+          bg: "bg_secondray box_shadow_disabled",
+          color: "color_secondray_v2",
+          fill: "fill_secondray_v2",
+        };
+    return (
+      <Link to={UserRoutePath.createProject}>
+        <Buttons.Contained_Custom
+          className={
+            "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
+            dynamicColor.bg
+          }
+        >
+          <Icons.AddNewProject classNameForPath={dynamicColor.fill} />
+          <Typography.H7
+            className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
+          >
+            {" "}
+            {buttonsText.addNewProject}
+          </Typography.H7>
+        </Buttons.Contained_Custom>
+      </Link>
     );
   };
   const LabelList = () => {
@@ -76,7 +115,8 @@ export default function () {
     return (
       <Buttons.Contained_Custom
         className={
-          "w-100 d-flex justify-content-start py-3  px-3 " + colorClass
+          "w-100 d-flex justify-content-start py-3  px-3 border-r-20 " +
+          colorClass
         }
       >
         <Icons.Setting />

@@ -35,6 +35,28 @@ export default class {
       </Typography>
     );
   }
+  static H8({ children, className, onClick }) {
+    return (
+      <Typography
+        onClick={onClick}
+        className={className + " font-size-h8"}
+        variant="h6"
+      >
+        {children}
+      </Typography>
+    );
+  }
+  static H9({ children, className, onClick }) {
+    return (
+      <Typography
+        onClick={onClick}
+        className={className + " font-size-h9"}
+        variant="h6"
+      >
+        {children}
+      </Typography>
+    );
+  }
   static Button({ children = "", className = "", onClick = () => {} }) {
     return (
       <Typography

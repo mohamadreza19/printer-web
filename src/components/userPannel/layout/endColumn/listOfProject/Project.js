@@ -15,7 +15,7 @@ export default function () {
         <div className="mx-4">
           <Icons.Edit />
         </div>
-        <Buttons.Contained_Custom className="bg_primary py-3  ">
+        <Buttons.Contained_Custom className="bg_primary py-3 px-3  ">
           <Icons.Print />
         </Buttons.Contained_Custom>
       </div>

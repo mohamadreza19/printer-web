@@ -45,6 +45,8 @@ export const RtlTheme =
           root: {
             color: "#FFFFFF",
             borderRadius: "10px",
+            padding: "0px",
+            minWidth: "0",
             // fontSize: "0px",
           },
         },

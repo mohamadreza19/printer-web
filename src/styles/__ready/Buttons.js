@@ -18,7 +18,11 @@ export default class {
     className = " ",
   }) {
     return (
-      <Button onClick={onClick} variant="contained" className={" " + className}>
+      <Button
+        onClick={onClick}
+        variant="contained"
+        className={"bordr " + className}
+      >
         {children}
       </Button>
     );

@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import EndColumn from "./layout/endColumn";
 // import StartColumn from "./layout/startColumn";
 import StartColumn from "./layout/startColumn/index";
-
+import { Outlet } from "react-router-dom";
 export default function () {
   return (
     <Grid container className="bg_secondray vh100 ">
