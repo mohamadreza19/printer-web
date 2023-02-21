@@ -82,33 +82,63 @@ export default function () {
     );
   };
   const LabelList = () => {
-    return (
-      <Buttons.Contained_Custom
-        className={
-          "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
-          colorClass
+    const dynamicColor = pathname.includes("label-list")
+      ? {
+          bg: "bg_primary box_shadow_disabled",
+          color: "color-white ",
+          fill: "fill_white",
         }
-      >
-        <Icons.Labels />
-        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
-          {buttonsText.listOfLabels}
-        </Typography.H7>
-      </Buttons.Contained_Custom>
+      : {
+          bg: "bg_secondray box_shadow_disabled",
+          color: "color_secondray_v2",
+          fill: "fill_secondray_v2",
+        };
+    return (
+      <Link to={UserRoutePath.labelList}>
+        <Buttons.Contained_Custom
+          className={
+            "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
+            dynamicColor.bg
+          }
+        >
+          <Icons.Labels classNameForPath={dynamicColor.fill} />
+          <Typography.H7
+            className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
+          >
+            {buttonsText.listOfLabels}
+          </Typography.H7>
+        </Buttons.Contained_Custom>
+      </Link>
     );
   };
   const History = () => {
-    return (
-      <Buttons.Contained_Custom
-        className={
-          "w-100 d-flex justify-content-start py-3  px-3  border-r-20 mb-3 " +
-          colorClass
+    const dynamicColor = pathname.includes("prining-history")
+      ? {
+          bg: "bg_primary box_shadow_disabled",
+          color: "color-white ",
+          fill: "fill_white",
         }
-      >
-        <Icons.History />
-        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
-          {buttonsText.historyOfPrinting}
-        </Typography.H7>
-      </Buttons.Contained_Custom>
+      : {
+          bg: "bg_secondray box_shadow_disabled",
+          color: "color_secondray_v2",
+          fill: "fill_secondray_v2",
+        };
+    return (
+      <Link to={UserRoutePath.priningHistory}>
+        <Buttons.Contained_Custom
+          className={
+            "w-100 d-flex justify-content-start py-3  px-3  border-r-20 mb-3 " +
+            dynamicColor.bg
+          }
+        >
+          <Icons.History classNameForPath={dynamicColor.fill} />
+          <Typography.H7
+            className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
+          >
+            {buttonsText.historyOfPrinting}
+          </Typography.H7>
+        </Buttons.Contained_Custom>
+      </Link>
     );
   };
   const Setting = () => {

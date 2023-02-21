@@ -92,6 +92,28 @@ export const content_Based_Language = selector({
               row2: {
                 searchPlaceHolder: "Search by project name",
               },
+              addNewProject: {
+                header: "Please enter your project information",
+                inputLabelOne: "project name",
+                inputLabelTwo: "Name of the creator",
+                directionButton: {
+                  rightToLeft: "Sort from right to left",
+                  leftToRight: "Sort from left to right",
+                },
+                continueButton: "continue",
+              },
+              labelList: {
+                selectedLabelsButton: "selected Labels",
+                searchPlaceHolder: "Search for a label or product name",
+              },
+              historyOfPrinting: {
+                calender: {
+                  from: "Sorting from date",
+                  to: "To date",
+                },
+                sortButton: "Sort it",
+                downloadExcel: "Download Excel",
+              },
             },
           },
         };
@@ -135,6 +157,28 @@ export const content_Based_Language = selector({
               },
               row2: {
                 searchPlaceHolder: "جست و جو بر اساس نام پروژه",
+              },
+              addNewProject: {
+                header: "لطفا اطلاعات پروژه خود را وارد کنید",
+                inputLabelOne: " نام پروژه",
+                inputLabelTwo: "نام سازنده",
+                directionButton: {
+                  rightToLeft: "چینش از راست به چپ",
+                  leftToRight: "چینش از چپبه راست",
+                },
+                continueButton: "ادامه",
+              },
+              labelList: {
+                selectedLabelsButton: "لیبل های منتخب",
+                searchPlaceHolder: "جست و جوی نام لیبل یا محصول",
+              },
+              historyOfPrinting: {
+                calender: {
+                  from: "مرتب سازی از تاریخ",
+                  to: "تا تاریخ",
+                },
+                sortButton: "مرتب کن",
+                downloadExcel: "دریافت فایل اکسل",
               },
             },
           },
@@ -181,6 +225,28 @@ export const content_Based_Language = selector({
               row2: {
                 searchPlaceHolder: "Proje adına göre ara",
               },
+              addNewProject: {
+                header: "Lütfen proje bilgilerinizi giriniz",
+                inputLabelOne: "proje Adı",
+                inputLabelTwo: "yaratıcı adı",
+                directionButton: {
+                  rightToLeft: "Sağdan sola sırala",
+                  leftToRight: "Soldan sağa sırala",
+                },
+                continueButton: "devam etmek",
+              },
+              labelList: {
+                selectedLabelsButton: "seçili Etiket",
+                searchPlaceHolder: "Bir etiket veya ürün adı arayın",
+              },
+              historyOfPrinting: {
+                calender: {
+                  from: "tarihe göre sıralama",
+                  to: "Bugüne kadar",
+                },
+                sortButton: "Sırala",
+                downloadExcel: "exceli indir",
+              },
             },
           },
         };
@@ -214,6 +280,20 @@ export const content_Based_Language = selector({
                 listOfLabels: "List of labels",
                 historyOfPrinting: "History of printing",
                 settings: "Settings",
+              },
+              addNewProject: {
+                header: "Lütfen proje bilgilerinizi giriniz",
+                inputLabelOne: "proje Adı",
+                inputLabelTwo: "yaratıcının adı",
+                directionButton: {
+                  rightToLeft: "Sağdan sola sırala",
+                  leftToRight: "Soldan sağa sırala",
+                },
+                continueButton: "devam etmek",
+              },
+              labelList: {
+                selectedLabelsButton: "seçili Etiketler",
+                searchPlaceHolder: "Bir etiket veya ürün adı arayın",
               },
             },
           },

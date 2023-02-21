@@ -35,3 +35,56 @@ a {
   height: 30px;
   background-color: red;
 }
+.calendar-input {
+  font-family: "Vazirmatn";
+  width: 171.96px;
+  height: 52px;
+  /* border-radius: 20px; */
+  /* border: 2px solid #ecececec; */
+  /* text-align: center; */
+  color: #cbcbcb;
+  /* padding-inline: 2rem; */
+}
+.icon-tabler-calendar-event {
+  left: 15px !important;
+  fill: #ff7d41;
+}
+
+/* // over write calendar css */
+/* .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover {
+  background-color: #ff7d41 !important;
+  opacity: 0.5;
+} */
+.rmdp-week-day {
+  color: #ff7d41 !important;
+}
+.rmdp-selected span {
+  background-color: #ff7d41 !important;
+}
+.rmdp-today span {
+  background-color: #ff7d41 !important;
+  opacity: 0.8;
+}
+.rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover {
+  background-color: #ff7d41 !important;
+  opacity: 0.3;
+  color: #fff;
+}
+.sd:hover {
+  background-color: #ff7d41 !important;
+  opacity: 0.3;
+}
+/* .rmdp-arrow {
+  border: solid #ff7d41 !important;
+} */
+.rmdp-arrow {
+  border-color: #ff7d41 !important;
+}
+.rmdp-arrow-container:hover {
+  background-color: #ff7d41 !important;
+
+  /* box-shadow: 0 0 3px #8798ad; */
+}
+.rmdp-arrow-container:hover .rmdp-arrow {
+  border-color: #f8f4f2 !important;
+}

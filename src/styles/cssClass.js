@@ -20,6 +20,7 @@ export const flexClass = {
 };
 
 export const ltrClass = {
+  ms_extraSmall: "margin-left-0-2",
   ms_1: "margin-left-1",
   ms_2: "margin-left-2",
   ms_3: "margin-left-3",
@@ -28,6 +29,7 @@ export const ltrClass = {
   ms_6: "margin-left-6",
   ms_auto: "margin-left-auto",
   // me
+  me_extraSmall: "margin-right-0-2",
   me_1: "margin-right-1",
   me_2: "margin-right-2",
   me_3: "margin-right-3",
@@ -41,6 +43,8 @@ export const ltrClass = {
   ps_4: "padding-left-4",
   ps_5: "padding-left-5",
   ps_6: "padding-left-6",
+  ps_7: "padding-left-7",
+  ps_8: "padding-left-8",
   //pe
   pe_1: "padding-right-1",
   pe_2: "padding-right-2",
@@ -48,6 +52,8 @@ export const ltrClass = {
   pe_4: "padding-right-4",
   pe_5: "padding-right-5",
   pe_6: "padding-right-6",
+  pe_7: "padding-right-7",
+  pe_8: "padding-right-8",
   // border Radius
   border_r_e_50px: "border-r-right-50",
   border_r_s_50px: "border-r-left-50",
@@ -57,6 +63,7 @@ export const ltrClass = {
 };
 
 export const rtlClass = {
+  ms_extraSmall: "margin-right-0-2",
   ms_1: "margin-right-1",
   ms_2: "margin-right-2",
   ms_3: "margin-right-3",
@@ -65,6 +72,7 @@ export const rtlClass = {
   ms_6: "margin-right-6",
   ms_auto: "margin-right-auto",
   // me
+  me_extraSmall: "margin-left-0-2",
   me_1: "margin-left-1",
   me_2: "margin-left-2",
   me_3: "margin-left-3",
@@ -78,6 +86,8 @@ export const rtlClass = {
   ps_4: "padding-right-4",
   ps_5: "padding-right-5",
   ps_6: "padding-right-6",
+  ps_7: "padding-right-7",
+  ps_8: "padding-right-8",
   //pe
   pe_1: "padding-left-1",
   pe_2: "padding-left-2",
@@ -85,6 +95,8 @@ export const rtlClass = {
   pe_4: "padding-left-4",
   pe_5: "padding-left-5",
   pe_6: "padding-left-6",
+  pe_7: "padding-left-7",
+  pe_8: "padding-left-8",
   // border Radius
   border_r_e_50px: "border-r-left-50",
   border_r_s_50px: "border-r-right-50",

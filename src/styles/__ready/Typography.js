@@ -68,11 +68,18 @@ export default class {
       </Typography>
     );
   }
-  static Button_v2({ children = "", className = "", onClick = () => {} }) {
+  static Button_v2({
+    isFa = true,
+    children = "",
+    className = "",
+    onClick = () => {},
+  }) {
     return (
       <p
         onClick={onClick}
-        className={"text-lowercase font-vazir " + className + " "}
+        className={`text-lowercase font-vazir "  ${className} ${
+          !isFa && "font-English"
+        } `}
       >
         {children}
       </p>
@@ -85,9 +92,12 @@ export default class {
       </Typography>
     );
   }
-  static Body2({ children, className }) {
+  static Body2({ children, className, isFa = true }) {
     return (
-      <Typography className={" " + className} variant="body2">
+      <Typography
+        className={` ${!isFa && "font-English"} ${className}`}
+        variant="body2"
+      >
         {children}
       </Typography>
     );

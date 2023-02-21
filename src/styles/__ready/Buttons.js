@@ -6,7 +6,7 @@ export default class {
       <Button
         onClick={onClick}
         variant="contained"
-        className={"bg_primary px-3 py-4 " + className}
+        className={"bg_primary px-3 py-1_4rem " + className}
       >
         {children}
       </Button>

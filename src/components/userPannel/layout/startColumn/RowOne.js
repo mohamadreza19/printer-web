@@ -4,9 +4,11 @@ import {
   useContent_Based_Language,
   useDynamicCssClass,
 } from "../../../../recoil/readStore/";
+import useCachedLanguage from "../../../../utility/useCachedLanguage";
 export default function () {
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
+  const { value } = useCachedLanguage();
   return (
     <div className="w-100 p-1 bg_info border-r-20 d-flex justify-content-center flex-column align-item-center box_shadow-v1">
       <section>
@@ -19,9 +21,9 @@ export default function () {
           {"@taghizsandatpsgad"}
         </Typography.H9>
         <section className="d-flex justify-content-between mb-2-0-5 align-item-center">
-          <Typography.Body2 className={"disabled_gray2 "}>
+          <Typography.Body2 isFa={value == "fa"} className={"disabled_gray2 "}>
             {/* <span>{"۱٤۰۲/۰٥/۰۳"}</span> */}
-            <span>{"2023/02/04"}</span>
+            2023/02/04
           </Typography.Body2>
           <Typography.Body2 className={"disabled_gray2 margin-left-1_1rem "}>
             <span>{content.userPannel.start_col.row1.epirationOfCredit}</span>

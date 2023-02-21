@@ -7,11 +7,15 @@ import Login from "../components/login";
 import UserPannel from "../components/userPannel";
 import ListOfProject from "../components/userPannel/layout/endColumn/listOfProject";
 import AddNewProject from "../components/userPannel/layout/endColumn/addNewProject/";
+import LabelList from "../components/userPannel/layout/endColumn/label-list";
+import HistoryPrining from "../components/userPannel/layout/endColumn/historyPrining";
 
 export const UserRoutePath = {
   Index: "/user",
   projectList: "/user/project-list",
   createProject: "/user/add-project",
+  labelList: "/user/label-list",
+  priningHistory: "/user/prining-history",
 };
 
 export default function () {
@@ -31,6 +35,8 @@ export default function () {
       >
         <Route path="project-list" element={<ListOfProject />} />
         <Route path="add-project" element={<AddNewProject />} />
+        <Route path="label-list" element={<LabelList />} />
+        <Route path="prining-history" element={<HistoryPrining />} />
       </Route>
 
       <Route path="/login" element={<Login />} />
