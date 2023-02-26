@@ -88,3 +88,24 @@ a {
 .rmdp-arrow-container:hover .rmdp-arrow {
   border-color: #f8f4f2 !important;
 }
+
+.MuiButton-outlined {
+  border: 2px solid #ff7d41 !important;
+}
+
+.button {
+  width: 143px;
+  padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important;
+}
+.button_contained_v2 {
+  /* background: linear-gradient(111.74deg, #ff7d41 24.86%, #ff5100 69.34%); */
+  background-color: #ffe5d8 !important;
+  color: #ff7d41 !important;
+  border-radius: 20px;
+  box-shadow: none;
+}
+.icon_mx-0_6rem {
+  margin-left: 0.65rem;
+  margin-right: 0.65rem;
+}

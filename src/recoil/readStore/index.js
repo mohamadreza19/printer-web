@@ -6,6 +6,7 @@ import {
   userData,
   content_Based_Language,
   class_Based_Language,
+  isAdminLogin,
 } from "../recoilStore";
 
 export const useReadUser = (howToRead = "") => {
@@ -31,6 +32,9 @@ export const useReadUser = (howToRead = "") => {
 
 export const useLanguage = () => {
   return useRecoilValue(language);
+};
+export const useIsAdminLogin = () => {
+  return useRecoilValue(isAdminLogin);
 };
 export const useIsUserLogin = () => {
   return useRecoilValue(isUserLogin);

@@ -21,7 +21,7 @@ export default class {
       <Button
         onClick={onClick}
         variant="contained"
-        className={"bordr " + className}
+        className={"bordr border-r-20  " + className}
       >
         {children}
       </Button>
@@ -32,7 +32,18 @@ export default class {
       <Button
         onClick={onClick}
         variant="outlined"
-        className={"color-primary  px-3 border-r-20 py-0_8rm " + className}
+        className={"color-primary  px-3 border-r-20  py-0_8rm " + className}
+      >
+        {children}
+      </Button>
+    );
+  }
+  static Outlined_Custom({ children, onClick = () => {}, className }) {
+    return (
+      <Button
+        onClick={onClick}
+        variant="outlined"
+        className={"color-primary   border-r-20   " + className}
       >
         {children}
       </Button>

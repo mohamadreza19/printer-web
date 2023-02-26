@@ -11,8 +11,14 @@ export const userData = atom({
     licence: false,
   },
 });
-export const isUserLogin = atom({
+export const isAdminLogin = atom({
   key: "user-authentication",
+  default: {
+    isLoggin: true,
+  },
+});
+export const isUserLogin = atom({
+  key: "admin-authentication",
   default: {
     isLoggin: true,
   },
@@ -113,6 +119,83 @@ export const content_Based_Language = selector({
                 },
                 sortButton: "Sort it",
                 downloadExcel: "Download Excel",
+                reprint: "reprint",
+                print: "print",
+              },
+            },
+          },
+          AdminPannel: {
+            start_col: {
+              row1: {
+                // epirationOfCredit: "Expiration of credit",
+              },
+              row2: {
+                // listOfProjects: "List of projects",
+                // addNewProject: "Add new project",
+                // listOfLabels: "List of labels",
+                // historyOfPrinting: "History of printing",
+                // settings: "Settings",
+                controlPannel: "Control pannel",
+              },
+              // row3: "Sign out",
+            },
+            end_col: {
+              row1: {
+                add_new_admin: "Add new admin",
+              },
+              row2: {
+                searchPlaceHolder: "Search by project name",
+              },
+              controlPannel: {
+                row1: {
+                  activeUser: "Active user",
+                  usersList: "Users list",
+                  AddNewUser: "Add new user",
+                  ProductAndLabel: "Product and label",
+                  productsList: "Products list",
+                  AddNewProduct: "Add product",
+                },
+                row2: {
+                  latestUpdate: "Latest update",
+                  update: "Update",
+                  viewAll: "View all",
+                },
+                row3: {
+                  product: "Product",
+                  print: "Print",
+                },
+                history: {
+                  searchBoxPlaceHolder:
+                    "Search for the name of the company or the name of the person who created the project",
+                  backToPannel: "Back to pannel",
+                  allPrints: "All prints",
+                  onlyProducts: "Only products",
+                  onlyLabels: "Only labels",
+                },
+              },
+              addNewProject: {
+                header: "Please enter your project information",
+                inputLabelOne: "project name",
+                inputLabelTwo: "Name of the creator",
+                directionButton: {
+                  rightToLeft: "Sort from right to left",
+                  leftToRight: "Sort from left to right",
+                },
+                continueButton: "continue",
+              },
+              labelList: {
+                selectedLabelsButton: "selected Labels",
+                searchPlaceHolder: "Search for a label or product name",
+              },
+              historyOfPrinting: {
+                calender: {
+                  from: "Sorting from date",
+                  to: "To date",
+                },
+                sortButton: "Sort it",
+                downloadExcel: "Download Excel",
+                reprint: "reprint",
+                print: "print",
               },
             },
           },
@@ -179,6 +262,82 @@ export const content_Based_Language = selector({
                 },
                 sortButton: "مرتب کن",
                 downloadExcel: "دریافت فایل اکسل",
+                reprint: "چاپ مجدد",
+                print: "چاپ",
+              },
+            },
+          },
+          AdminPannel: {
+            start_col: {
+              row1: {
+                // epirationOfCredit: "Expiration of credit",
+              },
+              row2: {
+                // listOfProjects: "List of projects",
+                // addNewProject: "Add new project",
+                // listOfLabels: "List of labels",
+                // historyOfPrinting: "History of printing",
+                // settings: "Settings",
+                controlPannel: "پنل مدیریت",
+              },
+              // row3: "Sign out",
+            },
+            end_col: {
+              row1: {
+                add_new_admin: "افزودن ادمین جدید",
+              },
+              row2: {
+                searchPlaceHolder: "Search by project name",
+              },
+              controlPannel: {
+                row1: {
+                  activeUser: "کاربر فعال",
+                  usersList: "لیست کاربران",
+                  AddNewUser: "افزودن کاربر جدید",
+                  ProductAndLabel: "محصول و لیبل ",
+                  productsList: "لیست محصولات",
+                  AddNewProduct: "افزودن محصول جدید",
+                },
+                row2: {
+                  latestUpdate: "آخرین به روز رسانی",
+                  update: "به روز رسانی",
+                  viewAll: "مشاهده همه",
+                },
+                row3: {
+                  product: "محصول",
+                  print: "چاپ",
+                },
+                history: {
+                  searchBoxPlaceHolder:
+                    "جست و جوی نام شرکت یا نام شخص سازنده پروژه",
+                  allPrints: "همه چاپ ها",
+                  onlyProducts: "فقط محصولات",
+                  onlyLabels: "فقط لیبل ها",
+                },
+              },
+              addNewProject: {
+                header: "Please enter your project information",
+                inputLabelOne: "project name",
+                inputLabelTwo: "Name of the creator",
+                directionButton: {
+                  rightToLeft: "Sort from right to left",
+                  leftToRight: "Sort from left to right",
+                },
+                continueButton: "continue",
+              },
+              labelList: {
+                selectedLabelsButton: "selected Labels",
+                searchPlaceHolder: "Search for a label or product name",
+              },
+              historyOfPrinting: {
+                calender: {
+                  from: "Sorting from date",
+                  to: "To date",
+                },
+                sortButton: "Sort it",
+                downloadExcel: "Download Excel",
+                reprint: "reprint",
+                print: "print",
               },
             },
           },
@@ -246,6 +405,83 @@ export const content_Based_Language = selector({
                 },
                 sortButton: "Sırala",
                 downloadExcel: "exceli indir",
+                reprint: "yeniden basmak",
+                print: "yeniden",
+              },
+            },
+          },
+          AdminPannel: {
+            start_col: {
+              row1: {
+                // epirationOfCredit: "Expiration of credit",
+              },
+              row2: {
+                // listOfProjects: "List of projects",
+                // addNewProject: "Add new project",
+                // listOfLabels: "List of labels",
+                // historyOfPrinting: "History of printing",
+                // settings: "Settings",
+                controlPannel: "kontrol Paneli",
+              },
+              // row3: "Sign out",
+            },
+            end_col: {
+              row1: {
+                add_new_admin: "yeni yönetici ekle",
+              },
+              row2: {
+                searchPlaceHolder: "Search by project name",
+              },
+              controlPannel: {
+                row1: {
+                  activeUser: "Aktif kullanıcı",
+                  usersList: "kullanıcılar",
+                  AddNewUser: "Kullanıcı Ekle",
+                  ProductAndLabel: "Ürün ve etiket",
+                  productsList: "Ürün listesi",
+                  AddNewProduct: "yeni ürün ekle",
+                },
+                row2: {
+                  latestUpdate: "Son güncelleme",
+                  update: "Güncelleme",
+                  viewAll: "Hepsini gör",
+                },
+                row3: {
+                  product: "ürün",
+                  print: "Yazdır",
+                },
+                history: {
+                  searchBoxPlaceHolder:
+                    "Şirketin adını veya projeyi oluşturan kişinin adını arayın",
+                  backToPannel: "Panele geri dön",
+                  allPrints: "tüm Baskılar",
+                  onlyProducts: "sadece Ürünler",
+                  onlyLabels: "sadece Etiketler",
+                },
+              },
+              addNewProject: {
+                header: "Please enter your project information",
+                inputLabelOne: "project name",
+                inputLabelTwo: "Name of the creator",
+                directionButton: {
+                  rightToLeft: "Sort from right to left",
+                  leftToRight: "Sort from left to right",
+                },
+                continueButton: "continue",
+              },
+              labelList: {
+                selectedLabelsButton: "selected Labels",
+                searchPlaceHolder: "Search for a label or product name",
+              },
+              historyOfPrinting: {
+                calender: {
+                  from: "Sorting from date",
+                  to: "To date",
+                },
+                sortButton: "Sort it",
+                downloadExcel: "Download Excel",
+                reprint: "reprint",
+                print: "print",
               },
             },
           },

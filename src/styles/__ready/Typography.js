@@ -3,10 +3,32 @@ import { Typography } from "@mui/material";
 export default class {
   constructor() {}
 
-  static H4(props) {
+  static H2({ children, className, language = "fa" }) {
+    const value = language === "fa" ? " " : "font-English";
     return (
-      <Typography className="" variant="h4">
-        {props.children}
+      <Typography className={`${className} ${value}`} variant="h2">
+        {children}
+      </Typography>
+    );
+  }
+  static H3({ children, className }) {
+    return (
+      <Typography className={" " + className} variant="h3">
+        {children}
+      </Typography>
+    );
+  }
+  static H3_v2({ children, className }) {
+    return (
+      <Typography className={" font-size-1_6rem  " + className} variant="h4">
+        {children}
+      </Typography>
+    );
+  }
+  static H4({ children, className }) {
+    return (
+      <Typography className={" " + className} variant="h4">
+        {children}
       </Typography>
     );
   }
@@ -17,7 +39,7 @@ export default class {
       </Typography>
     );
   }
-  static H6({ children, className }) {
+  static H6({ children, className, language = "fa" }) {
     return (
       <Typography className={className} variant="h6">
         {children}
@@ -51,6 +73,18 @@ export default class {
       <Typography
         onClick={onClick}
         className={className + " font-size-h9"}
+        variant="h6"
+      >
+        {children}
+      </Typography>
+    );
+  }
+  static H10({ children, className, onClick, language = "fa" }) {
+    const value = language === "fa" ? " " : "font-English";
+    return (
+      <Typography
+        onClick={onClick}
+        className={className + " font-size-h10 " + value}
         variant="h6"
       >
         {children}

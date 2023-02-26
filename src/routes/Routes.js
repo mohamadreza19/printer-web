@@ -9,6 +9,12 @@ import ListOfProject from "../components/userPannel/layout/endColumn/listOfProje
 import AddNewProject from "../components/userPannel/layout/endColumn/addNewProject/";
 import LabelList from "../components/userPannel/layout/endColumn/label-list";
 import HistoryPrining from "../components/userPannel/layout/endColumn/historyPrining";
+//admin
+import AdminPannel from "../components/adminPannel";
+import AdminAddNewProject from "../components/adminPannel/layout/endColumn/addNewProject";
+import AdminControlPannel from "../components/adminPannel/layout/endColumn/controlPannel";
+import AdimHistory from "../components/adminPannel/layout/endColumn/controlPannel/adimHistory";
+import ElsePath from "../controller/ElsePath";
 
 export const UserRoutePath = {
   Index: "/user",
@@ -38,9 +44,22 @@ export default function () {
         <Route path="label-list" element={<LabelList />} />
         <Route path="prining-history" element={<HistoryPrining />} />
       </Route>
+      <Route
+        path="/admin"
+        element={
+          <Authentication>
+            <AdminPannel />
+          </Authentication>
+        }
+      >
+        <Route path="control-pannel" element={<AdminControlPannel />} />
+        <Route path="control-pannel/history" element={<AdimHistory />} />
+
+        <Route path="add-project" element={<AdminAddNewProject />} />
+      </Route>
 
       <Route path="/login" element={<Login />} />
-      <Route path="*" element={<Navigate to="/user" replace />} />
+      <Route path="*" element={<ElsePath />} />
     </Routes>
   );
 }

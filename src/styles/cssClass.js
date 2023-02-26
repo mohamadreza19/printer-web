@@ -60,6 +60,9 @@ export const ltrClass = {
   //
   border_r_e_30px: "border-r-right-30",
   border_r_s_30px: "border-r-left-30",
+  //
+  right_5rem: "right-5rem-n",
+  left_3_9rem: "left-3_9rem-n",
 };
 
 export const rtlClass = {
@@ -102,4 +105,7 @@ export const rtlClass = {
   border_r_s_50px: "border-r-right-50",
   border_r_e_30px: "border-r-left-30",
   border_r_s_30px: "border-r-right-30",
+  //
+  right_5rem: "right-5rem",
+  left_3_9rem: "left: 3.9rem",
 };

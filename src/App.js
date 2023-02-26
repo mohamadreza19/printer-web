@@ -18,7 +18,7 @@ import { useLanguage } from "./recoil/readStore";
 function App() {
   useHandleDirection_Based_Langiage();
   useHandleLanguage_Based_CachedLanguage();
-  console.log("test");
+
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackComponent}>
       <MycacheProider>

@@ -7,15 +7,17 @@ import English_fa from "react-date-object/locales/gregorian_en";
 import "react-multi-date-picker/styles/colors/yellow.css";
 
 import { useCallback, useEffect, useState } from "react";
-import Icons from "../../../../../styles/__ready/Icons";
-import Typography from "../../../../../styles/__ready/Typography";
-import Buttons from "../../../../../styles/__ready/Buttons";
+
+import useDateobject from "../../../../../../utility/useDateObject";
+import useCachedLanguage from "../../../../../../utility/useCachedLanguage";
+
+import Icons from "../../../../../../styles/__ready/Icons";
+import Typography from "../../../../../../styles/__ready/Typography";
+import Buttons from "../../../../../../styles/__ready/Buttons";
 import {
   useContent_Based_Language,
   useDynamicCssClass,
-} from "../../../../../recoil/readStore";
-import useCachedLanguage from "../../../../../utility/useCachedLanguage";
-import useDateobject from "../../../../../utility/useDateObject";
+} from "../../../../../../recoil/readStore";
 export default function () {
   const date = useDateobject();
 
@@ -151,7 +153,7 @@ export default function () {
   };
 
   return (
-    <div className="mt-4 d-flex justify-content-end pb-3 border-bottom-gray">
+    <div className="mt-4 d-flex justify-content-end pb-3 ">
       <section
         style={{ direction: "rtl" }}
         className={`d-flex ${
