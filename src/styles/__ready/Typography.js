@@ -32,10 +32,10 @@ export default class {
       </Typography>
     );
   }
-  static H5(props) {
+  static H5({ className, children }) {
     return (
-      <Typography className="" variant="h5">
-        {props.children}
+      <Typography className={className} variant="h5">
+        {children}
       </Typography>
     );
   }
@@ -73,6 +73,18 @@ export default class {
       <Typography
         onClick={onClick}
         className={className + " font-size-h9"}
+        variant="h6"
+      >
+        {children}
+      </Typography>
+    );
+  }
+  static H9_5({ children, className, onClick, language = "fa" }) {
+    const value = language === "fa" ? " " : "font-English";
+    return (
+      <Typography
+        onClick={onClick}
+        className={className + " font-size-h9_5 " + value}
         variant="h6"
       >
         {children}

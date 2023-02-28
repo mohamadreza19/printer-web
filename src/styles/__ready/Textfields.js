@@ -1,4 +1,5 @@
 import { Input, TextField } from "@mui/material";
+import { useDynamicCssClass } from "../../recoil/readStore";
 import Icons from "./Icons";
 
 export default class {
@@ -21,6 +22,54 @@ export default class {
       >
         <input
           className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+          // value={value}
+          onChange={(e) => onChange(e)}
+        />
+      </div>
+    );
+  }
+  static v3({
+    children = "",
+    className = "",
+    Input_marginStart_based_Language = "ms-3",
+    value = " ",
+    onChange = () => {},
+  }) {
+    return (
+      <div
+        className={
+          " bg-white border  d-flex align-items-center border-r-20 " + className
+        }
+      >
+        <input
+          className={
+            "text-filed-input-v2 text-filed-medium " +
+            Input_marginStart_based_Language
+          }
+          // value={value}
+          onChange={(e) => onChange(e)}
+        />
+      </div>
+    );
+  }
+  static v4({
+    children = "",
+    className = "",
+    Input_marginStart_based_Language = "ms-3",
+    value = " ",
+    onChange = () => {},
+  }) {
+    return (
+      <div
+        className={
+          " bg-white border  d-flex align-items-center border-r-20 " + className
+        }
+      >
+        <input
+          className={
+            "text-filed-input-v2  text-filed-large " +
+            Input_marginStart_based_Language
+          }
           // value={value}
           onChange={(e) => onChange(e)}
         />
@@ -78,3 +127,48 @@ export default class {
     );
   }
 }
+
+export const TextFieldFUN_v3 = ({
+  value = " ",
+  onChange = " ",
+  placeholder = " ",
+  className = " ",
+}) => {
+  const cssClass = useDynamicCssClass();
+
+  return (
+    <div
+      className={` bg-white border  d-flex align-items-center border-r-20 ${className}`}
+    >
+      <input
+        className={`text-filed-input-v2 text-filed-medium 
+          ${cssClass.ms_2}`}
+        // value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e)}
+      />
+    </div>
+  );
+};
+export const TextFieldFUN_v4 = ({
+  value = " ",
+  onChange = " ",
+  placeholder = " ",
+  className = " ",
+}) => {
+  const cssClass = useDynamicCssClass();
+
+  return (
+    <div
+      className={` bg-white border  d-flex align-items-center border-r-20 ${className}`}
+    >
+      <input
+        className={`text-filed-input-v2 text-filed-large
+          ${cssClass.ms_2}`}
+        // value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e)}
+      />
+    </div>
+  );
+};

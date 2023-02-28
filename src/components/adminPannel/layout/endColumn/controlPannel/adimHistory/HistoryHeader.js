@@ -1,8 +1,10 @@
 import { Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 import {
   useContent_Based_Language,
   useDynamicCssClass,
 } from "../../../../../../recoil/readStore";
+import { AdminRoutePath } from "../../../../../../routes/Routes";
 import Buttons from "../../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../styles/__ready/Typography";
@@ -24,17 +26,18 @@ export default function () {
           پیش
         </Typography.H8>
 
-        <Buttons.Outlined_Custom className="button ">
+        <Buttons.Outlined_Custom className="button_medium ">
           <Typography.H8>
             {content.AdminPannel.end_col.controlPannel.row2.update}
           </Typography.H8>
         </Buttons.Outlined_Custom>
         <Buttons.Contained_Custom
-          className={"button h-100 bg_primary " + cssClass.ms_auto}
+          className={"button_medium bg_primary " + cssClass.ms_auto}
         >
           <Typography.H8 className="font-400">
-            {/* {content.AdminPannel.end_col.controlPannel.row2.viewAll} */}
-            {content.AdminPannel.end_col.controlPannel.history.backToPannel}
+            <Link to={AdminRoutePath.controlPannel}>
+              {content.AdminPannel.end_col.controlPannel.history.backToPannel}
+            </Link>
           </Typography.H8>
         </Buttons.Contained_Custom>
       </Grid>

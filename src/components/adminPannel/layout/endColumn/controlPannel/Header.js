@@ -36,11 +36,11 @@ export default function () {
   }) => {
     return (
       <section className="w-48 d-flex align-items-center flex-column bg-white border-r-25 py-3 px-3">
-        <Buttons.Outlined className="w-98 py-3 mb-2">
+        <Buttons.Outlined className="button_big mb-2">
           <Typography.H7>{value.row1}</Typography.H7>
         </Buttons.Outlined>
-        <Buttons.Contained_Custom className="w-98 bg_primary py-3 px-3 ">
-          <Typography.H7 className="font-400">{value.row2}</Typography.H7>
+        <Buttons.Contained_Custom className="button_big bg_primary   ">
+          <Typography.H7 className="font-300">{value.row2}</Typography.H7>
         </Buttons.Contained_Custom>
       </section>
     );

@@ -11,9 +11,11 @@ import LabelList from "../components/userPannel/layout/endColumn/label-list";
 import HistoryPrining from "../components/userPannel/layout/endColumn/historyPrining";
 //admin
 import AdminPannel from "../components/adminPannel";
-import AdminAddNewProject from "../components/adminPannel/layout/endColumn/addNewProject";
+
 import AdminControlPannel from "../components/adminPannel/layout/endColumn/controlPannel";
 import AdimHistory from "../components/adminPannel/layout/endColumn/controlPannel/adimHistory";
+import AdminAddNewUser from "../components/adminPannel/layout/endColumn/controlPannel/adminAddNewUser";
+import AdminAddProduct_Or_Label from "../components/adminPannel/layout/endColumn/addNewProduct_Label";
 import ElsePath from "../controller/ElsePath";
 
 export const UserRoutePath = {
@@ -22,6 +24,11 @@ export const UserRoutePath = {
   createProject: "/user/add-project",
   labelList: "/user/label-list",
   priningHistory: "/user/prining-history",
+};
+export const AdminRoutePath = {
+  index: "/admin",
+  controlPannel: "/admin/control-pannel",
+  controlPannel_History: "/admin/control-pannel/history",
 };
 
 export default function () {
@@ -54,8 +61,11 @@ export default function () {
       >
         <Route path="control-pannel" element={<AdminControlPannel />} />
         <Route path="control-pannel/history" element={<AdimHistory />} />
-
-        <Route path="add-project" element={<AdminAddNewProject />} />
+        <Route path="control-pannel/add-user" element={<AdminAddNewUser />} />
+        <Route
+          path="add-product-label"
+          element={<AdminAddProduct_Or_Label />}
+        />
       </Route>
 
       <Route path="/login" element={<Login />} />

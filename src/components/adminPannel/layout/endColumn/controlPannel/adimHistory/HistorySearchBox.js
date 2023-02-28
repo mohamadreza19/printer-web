@@ -12,18 +12,18 @@ export default function () {
   const cssClass = useDynamicCssClass();
   return (
     <Grid container>
-      <Grid item lg={6} className="bg_info">
-        <Buttons.Contained_Custom className="button bg_primary">
+      <Grid item lg={6}>
+        <Buttons.Contained_Custom className="button_medium bg_primary">
           <Typography.H8 className="font-400 ">
             {content.AdminPannel.end_col.controlPannel.history.allPrints}
           </Typography.H8>
         </Buttons.Contained_Custom>
-        <Buttons.Contained_Custom className="button button_contained_v2 mx-3">
+        <Buttons.Contained_Custom className="button_medium button_contained_v2 box_shadow_disabled mx-3">
           <Typography.H8 className="font-400 ">
             {content.AdminPannel.end_col.controlPannel.history.onlyProducts}
           </Typography.H8>
         </Buttons.Contained_Custom>
-        <Buttons.Contained_Custom className="button button_contained_v2">
+        <Buttons.Contained_Custom className="button_medium button_contained_v2 box_shadow_disabled">
           <Typography.H8 className="font-400 ">
             {content.AdminPannel.end_col.controlPannel.history.onlyLabels}
           </Typography.H8>

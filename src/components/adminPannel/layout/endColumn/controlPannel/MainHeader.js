@@ -6,6 +6,8 @@ import {
   useDynamicCssClass,
 } from "../../../../../recoil/readStore";
 import Buttons from "../../../../../styles/__ready/Buttons";
+import { Link } from "react-router-dom";
+import { AdminRoutePath } from "../../../../../routes/Routes";
 export default function () {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
@@ -23,16 +25,18 @@ export default function () {
           پیش
         </Typography.H8>
 
-        <Buttons.Outlined_Custom className="button ">
+        <Buttons.Outlined_Custom className={"button_medium  " + cssClass.ms_1}>
           <Typography.H8>
             {content.AdminPannel.end_col.controlPannel.row2.update}
           </Typography.H8>
         </Buttons.Outlined_Custom>
         <Buttons.Contained_Custom
-          className={"button h-100 bg_primary " + cssClass.ms_auto}
+          className={"button_medium   bg_primary " + cssClass.ms_auto}
         >
           <Typography.H8>
-            {content.AdminPannel.end_col.controlPannel.row2.viewAll}
+            <Link to={AdminRoutePath.controlPannel_History}>
+              {content.AdminPannel.end_col.controlPannel.row2.viewAll}
+            </Link>
           </Typography.H8>
         </Buttons.Contained_Custom>
       </Grid>

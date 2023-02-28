@@ -12,13 +12,13 @@ export const userData = atom({
   },
 });
 export const isAdminLogin = atom({
-  key: "user-authentication",
+  key: "admin-authentication",
   default: {
     isLoggin: true,
   },
 });
 export const isUserLogin = atom({
-  key: "admin-authentication",
+  key: "user-authentication",
   default: {
     isLoggin: true,
   },
@@ -172,6 +172,35 @@ export const content_Based_Language = selector({
                   onlyProducts: "Only products",
                   onlyLabels: "Only labels",
                 },
+                AddNewUser: {
+                  row1: {
+                    Name_of_the_company_or_institution:
+                      "Name of the company or institution",
+                    ManagementName: "Management name",
+                  },
+                  row2: {
+                    phoneNumber: "phone number",
+                    userName: "user name",
+                  },
+                  row3: {
+                    Email: "E-mail",
+                    CompanyZipCode: "Company zip code",
+                  },
+                  row4: {
+                    State: "State",
+                    City: "City",
+                    CompanyAddress: "Company address",
+                  },
+                  row5: {
+                    AccessToProducts: "Access to products",
+                  },
+                  row6: {
+                    AddUser: "Add user",
+                  },
+                  success: {
+                    NewUserSuccessfullyCreated: "New user successfully created",
+                  },
+                },
               },
               addNewProject: {
                 header: "Please enter your project information",
@@ -310,9 +339,38 @@ export const content_Based_Language = selector({
                 history: {
                   searchBoxPlaceHolder:
                     "جست و جوی نام شرکت یا نام شخص سازنده پروژه",
+                  backToPannel: "بازگشت به پنل",
                   allPrints: "همه چاپ ها",
                   onlyProducts: "فقط محصولات",
                   onlyLabels: "فقط لیبل ها",
+                },
+                AddNewUser: {
+                  row1: {
+                    Name_of_the_company_or_institution: "نام شرکت یا موسسه",
+                    ManagementName: "نام مدیریت",
+                  },
+                  row2: {
+                    phoneNumber: "شماره موبایل",
+                    userName: "نام کاربری",
+                  },
+                  row3: {
+                    Email: "آدرس ایمیل",
+                    CompanyZipCode: "کدپستی شرکت",
+                  },
+                  row4: {
+                    State: "استان",
+                    City: "شهر",
+                    CompanyAddress: "نشانی شرکت",
+                  },
+                  row5: {
+                    AccessToProducts: "دسترسی به محصولات",
+                  },
+                  row6: {
+                    AddUser: "افزودن کاربر",
+                  },
+                  success: {
+                    NewUserSuccessfullyCreated: "کاربر جدید با موفقیت ساخته شد",
+                  },
                 },
               },
               addNewProject: {
@@ -457,6 +515,36 @@ export const content_Based_Language = selector({
                   allPrints: "tüm Baskılar",
                   onlyProducts: "sadece Ürünler",
                   onlyLabels: "sadece Etiketler",
+                },
+                AddNewUser: {
+                  row1: {
+                    Name_of_the_company_or_institution:
+                      "Şirket veya kurumun adı",
+                    ManagementName: "Yönetim adı",
+                  },
+                  row2: {
+                    phoneNumber: "telefon numarası",
+                    userName: "Kullanıcı adı",
+                  },
+                  row3: {
+                    Email: "E-mail",
+                    CompanyZipCode: "şirket posta kodu",
+                  },
+                  row4: {
+                    State: "durum",
+                    City: "Şehir",
+                    CompanyAddress: "Şirket adresi",
+                  },
+                  row5: {
+                    AccessToProducts: "Ürünlere erişim",
+                  },
+                  row6: {
+                    AddUser: "Kullanıcı Ekle",
+                  },
+                  success: {
+                    NewUserSuccessfullyCreated:
+                      "Yeni kullanıcı başarıyla oluşturuldu",
+                  },
                 },
               },
               addNewProject: {
