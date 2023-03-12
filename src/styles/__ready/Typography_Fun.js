@@ -47,36 +47,33 @@ export default class {
       </Typography>
     );
   }
-  static H7({ children, className, onClick, language = "fa" }) {
-    const matched = language == "en" ? "font-English" : " ";
+  static H7({ children, className, onClick }) {
     return (
       <Typography
         onClick={onClick}
-        className={className + " font-size-1_15rem " + matched}
+        className={className + " font-size-1_15rem"}
         variant="h6"
       >
         {children}
       </Typography>
     );
   }
-  static H8({ children, className, onClick, language = "fa" }) {
-    const matched = language == "en" ? "font-English" : " ";
+  static H8({ children, className, onClick }) {
     return (
       <Typography
         onClick={onClick}
-        className={className + " font-size-h8 " + matched}
-        variant="body1"
+        className={className + " font-size-h8"}
+        variant="h6"
       >
         {children}
       </Typography>
     );
   }
-  static H9({ children, className, onClick, language = "fa" }) {
-    const matched = language == "en" ? "font-English" : " ";
+  static H9({ children, className, onClick }) {
     return (
       <Typography
         onClick={onClick}
-        className={`${className} font-size-h9 ${matched} `}
+        className={className + " font-size-h9"}
         variant="h6"
       >
         {children}

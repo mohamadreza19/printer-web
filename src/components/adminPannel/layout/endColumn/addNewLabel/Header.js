@@ -23,11 +23,6 @@ export default function () {
           {content.addNewProductAndLabel}
         </Typography.H7>
       </section>
-      <section className="">
-        <Buttons.Outlined className="button_extra-large_v1">
-          <Typography.H8> {content.uploadSsExcelFile}</Typography.H8>
-        </Buttons.Outlined>
-      </section>
     </div>
   );
 }

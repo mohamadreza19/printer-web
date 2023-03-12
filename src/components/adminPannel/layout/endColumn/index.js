@@ -26,7 +26,7 @@ export default function () {
       <Header />
       <main
         className={`  mt-3 ${
-          isControlPannelPath ? " " : " px-4 pt-4 bg-white"
+          isControlPannelPath ? " " : "  pt-4 bg-white"
         } border-r-top-30`}
       >
         <Outlet />

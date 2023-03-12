@@ -35,6 +35,7 @@ a {
   /* border: 0; */
   outline: 0;
 }
+
 .next-button {
   width: 30px;
   height: 30px;
@@ -106,6 +107,15 @@ a {
   /* padding-top: 0.65rem !important;
   padding-bottom: 0.65rem !important; */
 }
+.button_medium_v1 {
+  width: 168.41px !important;
+  height: 52px !important;
+  max-width: 168.41px !important ;
+  max-height: 52px !important;
+  /* padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important; */
+}
+
 .button_large {
   width: 173.03px !important;
   height: 72px !important;
@@ -118,6 +128,14 @@ a {
   width: 197.03px !important;
   height: 52px !important;
   max-width: 197.03px !important ;
+  max-height: 52px !important;
+  /* padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important; */
+}
+.button_extra-large_v2 {
+  width: 186.73px !important;
+  height: 52px !important;
+  max-width: 186.73px !important ;
   max-height: 52px !important;
   /* padding-top: 0.65rem !important;
   padding-bottom: 0.65rem !important; */
@@ -142,6 +160,12 @@ a {
   height: 62px !important;
   max-width: 180px !important ;
   max-height: 62px !important;
+}
+.text-filed-medium-v1 {
+  width: 200px !important;
+  height: 52px !important;
+  max-width: 200px !important;
+  max-height: 52px !important;
 }
 .text-filed-medium {
   width: 93% !important;
@@ -182,7 +206,7 @@ a {
   border: 2px solid #ececec;
   border-radius: 20px;
   /* text-align: center; */
-  padding-right: 1.2rem;
+  /* padding-right: 1.2rem; */
 }
 .select-lft {
   font-family: "Vazirmatn";
@@ -204,11 +228,47 @@ select:focus {
   outline: none;
   /* background-color: antiquewhite; */
 }
+.select-medium {
+  font-family: "Vazirmatn";
+  width: 140px;
+  border-radius: 20px;
+  height: 52px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 0.5rem center;
+  border-radius: 2px;
+  /* padding: 0.25rem 2rem 0.25rem 0.75rem; */
+  border: 2px solid #ececec;
+  border-radius: 20px;
+  text-align: center;
+}
+html[dir="ltr"] .select-medium {
+  background-position: right 0.5rem center;
+}
+/* // */
+.select-large {
+  font-family: "Vazirmatn";
+  width: 160px;
+  height: 52px;
+  border-radius: 20px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 0.5rem center;
+  border-radius: 2px;
+  /* padding: 0.25rem 2rem 0.25rem 0.75rem; */
+  border: 2px solid #ececec;
+  border-radius: 20px;
+  text-align: center;
+}
+/* // */
 .text-filed-large {
   width: 95%;
   height: 52px;
   max-width: 100% !important ;
   max-height: 52px !important;
+  background-color: #ffffff00;
   /* padding-inline: 249.345px; */
 }
 .success-logo {
@@ -270,7 +330,7 @@ html[dir="ltr"] .select-large {
   border-radius: 20px;
   /* text-align: center; */
   padding-right: 0;
-  padding-left: 1.2rem;
+  /* padding-left: 1.2rem; */
 }
 
 .x-scroll {
@@ -285,9 +345,11 @@ html[dir="ltr"] .select-large {
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+  position: absolute;
+  left: 0;
 }
 ::-webkit-scrollbar-track {
-  background-color: #ebebeb;
+  background-color: #ececec;
   -webkit-border-radius: 8px;
   border-radius: 8px;
 }
@@ -295,19 +357,147 @@ html[dir="ltr"] .select-large {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: #f36523;
+  background: #cbcbcb;
 }
+
 .language-card-select {
   width: 490px;
   height: 52px;
   min-width: 490px;
 }
+.test-area-big {
+  width: 861.9px;
+  height: 110px;
+  max-height: 110px;
+}
+.language-card-select-large {
+  width: 861.9px;
+  height: 127.25px;
+  min-width: 490px;
+}
 .laguage-card {
   /* position: absolute; */
-  background-color: red;
+
   bottom: 1rem;
   right: 26rem;
   border-radius: 20px;
   width: 100px;
   height: 74px;
+}
+.width {
+  width: 328.3px;
+  max-width: 328.3px;
+}
+.height {
+  height: 7.9rem;
+  max-height: 7.9rem;
+}
+.height-62 {
+  height: 62px !important;
+  min-height: 62px !important ;
+}
+.height-190 {
+  height: 190px;
+  max-height: 190px;
+}
+.grid-height {
+  height: 16rem;
+  max-height: 16rem;
+}
+
+.badge_1 {
+  width: 42px;
+  height: 42px;
+}
+
+.add-product-medium-text-area-header-card {
+  bottom: -2rem;
+  right: 11.4rem;
+}
+html[dir="ltr"] .add-product-medium-text-area-header-card {
+  right: 0;
+  left: 11.39rem;
+}
+.add-product-big-text-area-header-card {
+  bottom: -2rem;
+  right: 34.6rem;
+}
+html[dir="ltr"] .add-product-big-text-area-header-card {
+  right: 0;
+  left: 34.59rem;
+}
+.upload-file-area {
+  width: 136.8px;
+  height: 87.71px;
+}
+.upload-file-area-preview {
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+}
+.upload-file-area-progress-bar {
+  width: 211.75px !important;
+  max-width: 211.75px !important;
+}
+
+.cheched-box {
+  width: 34.22px;
+  height: 34.22px;
+  background: #f36523;
+  border-radius: 20px;
+  left: 0.52rem;
+  top: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html[dir="ltr"] .cheched-box {
+  left: -8.3rem;
+  right: 1rem;
+}
+.uploaded-file-area {
+  width: 860px;
+  height: 190px;
+  border: 2px solid #ececec;
+  border-radius: 20px;
+}
+.search_box {
+  width: 420px !important;
+  height: 52px !important;
+}
+.test:first-child:nth-last-child(1) {
+  background-color: brown;
+}
+.recharts-text {
+}
+html[dir="rtl"] .recharts-text {
+  font-family: Vazirmatn;
+}
+
+/* .recharts-cartesian-axis-line {
+  display: none;
+}
+line {
+  display: none;
+} */
+
+/* chart */
+.recharts-tooltip-wrapper:focus-visible {
+  outline: 0;
+  border: 0;
+}
+.recharts-tooltip-cursor {
+  display: none;
+}
+
+.footer-statistics {
+  width: 186.71px;
+  height: 104.41px;
+  border: 1px solid #ececec;
+  border-radius: 20px;
+}
+
+.card-header-chart-disabled {
+  background-color: #ececec !important;
+  color: #cdcdcd !important;
 }

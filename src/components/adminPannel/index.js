@@ -5,7 +5,7 @@ import StartColumn from "./layout/startColumn/index";
 import { Outlet } from "react-router-dom";
 export default function () {
   return (
-    <Grid container className="bg_secondray vh100 ">
+    <Grid container className="bg_secondray vh100  ">
       <Grid item lg={3} className="">
         <StartColumn />
       </Grid>

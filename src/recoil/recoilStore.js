@@ -130,12 +130,8 @@ export const content_Based_Language = selector({
                 // epirationOfCredit: "Expiration of credit",
               },
               row2: {
-                // listOfProjects: "List of projects",
-                // addNewProject: "Add new project",
-                // listOfLabels: "List of labels",
-                // historyOfPrinting: "History of printing",
-                // settings: "Settings",
                 controlPannel: "Control pannel",
+                addNewProductAndLabel: "Add new prduct/lbl",
               },
               // row3: "Sign out",
             },
@@ -202,6 +198,33 @@ export const content_Based_Language = selector({
                   },
                 },
               },
+              addNew_Project_Or_Label: {
+                header: {
+                  addNewProductAndLabel: "Add new pruduct / label",
+                  uploadSsExcelFile: "Upload as an Excel file",
+                },
+                rowOne: {
+                  addNewProduct: "Add new product",
+                  addNewLabel: "Add a new label",
+                },
+                rowTwo: {
+                  productName: "Product Name",
+                  persian: "Persion",
+                  english: "English",
+                  turkish: "Turkish",
+                },
+                rowThree: {
+                  ProductLinkOnTheSite: "Product link on the site",
+                },
+                rowFour: {
+                  AdditionalInformationAboutTheProduct:
+                    "Additional information about the product",
+                  persian: "Persion",
+                  english: "English",
+                  turkish: "Turkish",
+                },
+              },
+
               addNewProject: {
                 header: "Please enter your project information",
                 inputLabelOne: "project name",
@@ -308,6 +331,7 @@ export const content_Based_Language = selector({
                 // historyOfPrinting: "History of printing",
                 // settings: "Settings",
                 controlPannel: "پنل مدیریت",
+                addNewProductAndLabel: "افزودن محصول / لیبل جدید",
               },
               // row3: "Sign out",
             },
@@ -371,6 +395,32 @@ export const content_Based_Language = selector({
                   success: {
                     NewUserSuccessfullyCreated: "کاربر جدید با موفقیت ساخته شد",
                   },
+                },
+              },
+              addNew_Project_Or_Label: {
+                header: {
+                  addNewProductAndLabel: "افزودن محصول / لیبل جدید",
+                  uploadSsExcelFile: "آپلود به شکل فایل اکسل",
+                },
+                rowOne: {
+                  addNewProduct: "افزودن محصول جدید",
+                  addNewLabel: "افزودن لیبل جدید",
+                },
+                rowTwo: {
+                  productName: "نام محصول ",
+                  persian: "فارسی",
+                  english: "انگلیسی",
+                  turkish: "ترکی",
+                },
+                rowThree: {
+                  ProductLinkOnTheSite: "لینک محصول در سایت",
+                },
+                rowFour: {
+                  AdditionalInformationAboutTheProduct:
+                    "توضیحات تکمیلی درباره محصول",
+                  persian: "فارسی",
+                  english: "انگلیسی",
+                  turkish: "ترکی",
                 },
               },
               addNewProject: {
@@ -474,11 +524,7 @@ export const content_Based_Language = selector({
                 // epirationOfCredit: "Expiration of credit",
               },
               row2: {
-                // listOfProjects: "List of projects",
-                // addNewProject: "Add new project",
-                // listOfLabels: "List of labels",
-                // historyOfPrinting: "History of printing",
-                // settings: "Settings",
+                addNewProductAndLabel: "Yeni ürün / etiket ekle",
                 controlPannel: "kontrol Paneli",
               },
               // row3: "Sign out",
@@ -545,6 +591,32 @@ export const content_Based_Language = selector({
                     NewUserSuccessfullyCreated:
                       "Yeni kullanıcı başarıyla oluşturuldu",
                   },
+                },
+              },
+              addNew_Project_Or_Label: {
+                header: {
+                  addNewProductAndLabel: "Yeni ürün / etiket ekle",
+                  uploadSsExcelFile: "Excel dosyası olarak yükleyin",
+                },
+                rowOne: {
+                  addNewProduct: "yeni ürün ekle",
+                  addNewLabel: "yeni bir etiket ekle",
+                },
+                rowTwo: {
+                  productName: "Ürün adı",
+                  persian: "Farsça",
+                  english: "İngilizce",
+                  turkish: "Türkçe",
+                },
+                rowThree: {
+                  ProductLinkOnTheSite: "Sitedeki ürün bağlantısı",
+                },
+                rowFour: {
+                  AdditionalInformationAboutTheProduct:
+                    "Ürün hakkında ek bilgi",
+                  persian: "Farsça",
+                  english: "İngilizce",
+                  turkish: "Türkçe",
                 },
               },
               addNewProject: {

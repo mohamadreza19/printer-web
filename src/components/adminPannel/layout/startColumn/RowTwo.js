@@ -6,7 +6,7 @@ import {
   useDynamicCssClass,
 } from "../../../../recoil/readStore";
 import { Link, useLocation } from "react-router-dom";
-import { UserRoutePath } from "../../../../routes/Routes";
+import { AdminRoutePath, UserRoutePath } from "../../../../routes/Routes";
 export default function () {
   const { pathname } = useLocation();
 
@@ -39,7 +39,7 @@ export default function () {
         };
 
     return (
-      <Link to={UserRoutePath.projectList}>
+      <Link to={AdminRoutePath.controlPannel}>
         <Buttons.Contained_Custom
           className={
             "w-100 d-flex justify-content-start py-3  px-3 mb-3 border-r-20 " +
@@ -87,11 +87,11 @@ export default function () {
   //     </Link>
   //   );
   // };
-  const AddProject = () => {
+  const AddProject_OrLanel = () => {
     // const bg = pathname.includes("add-project")
     //   ? "bg_primary box_shadow_disabled"
     //   : "bg_secondray box_shadow_disabled";
-    const dynamicColor = pathname.includes("add-project")
+    const dynamicColor = pathname.includes("add-product-label")
       ? {
           bg: "bg_primary box_shadow_disabled",
           color: "color-white ",
@@ -103,7 +103,7 @@ export default function () {
           fill: "fill_secondray_v2",
         };
     return (
-      <Link to={UserRoutePath.createProject}>
+      <Link to={AdminRoutePath.addProduct_Or_Label}>
         <Buttons.Contained_Custom
           className={
             "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
@@ -115,7 +115,7 @@ export default function () {
             className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
           >
             {" "}
-            {buttonsText.addNewProject}
+            {content.AdminPannel.start_col.row2.addNewProductAndLabel}
           </Typography.H7>
         </Buttons.Contained_Custom>
       </Link>
@@ -200,7 +200,7 @@ export default function () {
   return (
     <div className="w-100  mt-4">
       <ControlPannel />
-      <AddProject />
+      <AddProject_OrLanel />
 
       <LabelList />
       <History />
