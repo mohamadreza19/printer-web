@@ -65,7 +65,7 @@ export default function () {
 
   if (response)
     return (
-      <div className="w-100">
+      <div className="w-100 ">
         <Header />
         <section className="w-100 d-flex mt-4 justify-content-center flex-column align-item-center  mt-4 ">
           <span className="success-logo ">
@@ -153,14 +153,9 @@ export default function () {
       </div>
     );
   return (
-    <div className="w-100">
+    <div className="w-100 px-3 scrollable2">
       <Header />
-      <Grid
-        container
-        className="mt-2 scrollable2"
-        columnSpacing={3}
-        rowSpacing={2}
-      >
+      <Grid container className="mt-2 " columnSpacing={3} rowSpacing={2}>
         <Grid item lg={6} className="d-flex justify-content-end">
           <div className="w-90">
             <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
@@ -212,7 +207,7 @@ export default function () {
         {/* // */}
         <Grid item lg={4}>
           <div className="d-flex">
-            <article className={cssClass.me_3 + " language-card-select"}>
+            <article>
               <span>
                 <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
                   {content.row4.State}
@@ -227,7 +222,7 @@ export default function () {
                 </option>
               </select>
             </article>
-            <article>
+            <article className={cssClass.ms_3}>
               <span>
                 <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
                   {content.row4.City}

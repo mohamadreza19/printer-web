@@ -7,7 +7,7 @@ import Typography from "../../../../../styles/__ready/Typography";
 export default function () {
   const cssClass = useDynamicCssClass();
   return (
-    <header className="w-100 d-flex justify-content-between pb-3 border-bottom-gray">
+    <header className="w-100 d-flex justify-content-between pb-3 border-bottom-gray ">
       <article className="d-flex align-items-center">
         <section className="d-flex align-items-center">
           <Icons.UserList classNameForPath="fill_black" />

@@ -31,12 +31,13 @@ export default function () {
             <span>(سه ماهه)</span>
           </Typography.H9_5>
         </section>
-        <section className="mx-5">
+        <section className={`${cssClass.me_2} ${cssClass.ms_6}`}>
           <Typography.H9_5 className="font-400">۱٤۰ چاپ</Typography.H9_5>
         </section>
         <section className={" " + cssClass.pe_2}>
-          <Icons.Trash />
-          <span className="mx-3">
+          <Icons.Trash className={cssClass.me_1} />
+          <Icons.Print classNameForPath="fill_primary" />
+          <span className="mx-2">
             <Icons.Trade />
           </span>
           <Icons.Edit />

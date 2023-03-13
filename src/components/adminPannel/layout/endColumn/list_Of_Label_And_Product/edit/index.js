@@ -36,12 +36,12 @@ export default function () {
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label;
 
   return (
-    <div className="w-100 scrollable3 ">
+    <div className="w-100 scrollable3 px-3 ">
       <Header />
       <Grid container className={"mt-3 " + cssClass.ps_6}>
-        <Grid item lg={12} className="">
+        {/* <Grid item lg={12} className="">
           <RowOne />
-        </Grid>
+        </Grid> */}
         <Grid item lg={12} className="height">
           <RowTwo
             param={{

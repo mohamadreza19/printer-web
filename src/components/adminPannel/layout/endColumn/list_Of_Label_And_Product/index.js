@@ -7,7 +7,7 @@ import Items from "./Items";
 
 export default function () {
   return (
-    <div className="w-100 ">
+    <div className="w-100 scrollable2 px-4 ">
       <Header />
       <Items />
     </div>

@@ -26,6 +26,7 @@ import AdminList_Of_Label_And_Product_edit from "../components/adminPannel/layou
 
 import AdminList_Of_User_Manager from "../components/adminPannel/layout/endColumn/list_Of_User_Manager";
 import AdminList_Of_User_Manager_edit from "../components/adminPannel/layout/endColumn/list_Of_User_Manager/edit";
+import AdminList_Of_User_Manager_Printer from "../components/adminPannel/layout/endColumn/list_Of_User_Manager/printer";
 //
 import AdminAddLabel from "../components/adminPannel/layout/endColumn/addNewLabel";
 import AdminAddLabel_UploadFile from "../components/adminPannel/layout/endColumn/addNewLabel/uploadFile";
@@ -113,6 +114,10 @@ export default function () {
         <Route
           path="list-user-manager/edit"
           element={<AdminList_Of_User_Manager_edit />}
+        />
+        <Route
+          path="list-user-manager/add-printer"
+          element={<AdminList_Of_User_Manager_Printer />}
         />
         <Route path="charts" element={<ViewPrinitChart />} />
       </Route>

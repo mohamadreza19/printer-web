@@ -18,7 +18,7 @@ export default function () {
   } = labelName;
   const cssClass = useDynamicCssClass();
   return (
-    <div className="w-100">
+    <div className="w-100 px-4">
       <Header />
       <Grid container className={"mt-3 " + cssClass.ps_6}>
         <Grid item lg={12}>

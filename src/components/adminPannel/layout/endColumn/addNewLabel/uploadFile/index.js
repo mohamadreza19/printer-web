@@ -10,7 +10,7 @@ export default function () {
   const cssClass = useDynamicCssClass();
   const continue_ = false;
   return (
-    <div className="w-100">
+    <div className="w-100 px-4">
       <Header />
       {!continue_ ? (
         <>

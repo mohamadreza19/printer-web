@@ -366,6 +366,9 @@ a {
 .color_secondray_v2 {
   color: var(--secondary_v2) !important;
 }
+.color_disabled {
+  color: var(--gray2);
+}
 
 .bg_gray2 {
   background-color: var(--gray2) !important;
@@ -568,29 +571,6 @@ html[dir="ltr"] .border-r-top-left-30 {
 }
 .left-3_9rem-n {
   left: -3.9rem;
-}
-
-.scrollable-small {
-  max-height: 15rem;
-  overflow-y: hidden;
-}
-.scrollable {
-  max-height: 32rem;
-  overflow-y: scroll;
-}
-.scrollable1 {
-  max-height: 23.37rem;
-  overflow-y: scroll;
-}
-.scrollable2 {
-  position: relative;
-  max-height: 37rem;
-  overflow-y: scroll;
-}
-.scrollable3 {
-  /* position: relative; */
-  max-height: 40.5rem;
-  overflow-y: scroll;
 }
 
 /* // */
