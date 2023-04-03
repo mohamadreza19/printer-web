@@ -34,17 +34,21 @@ export default function () {
   return (
     <div
       style={{
-        // width: "600px",
+        height: "40%",
         position: "relative",
       }}
-      className="w-100"
+      className="w-100 py-3"
     >
       <RightArrow
         language={language}
         onClick={() => swiperRef.current?.slideNext()}
       />
+      <LeftArrow
+        language={language}
+        onClick={() => swiperRef.current?.slidePrev()}
+      />
       <Swiper
-        className="border-radius4 "
+        className="border-radius4 h-100"
         slidesPerView={2.5}
         loop={true}
         modules={[Navigation, Pagination, Autoplay]}
@@ -53,38 +57,24 @@ export default function () {
           //   direction: language === "fa" ? "rtl" : "ltr",
           direction: "ltr",
 
-          // height: "320px",
-          // maxHeight: "320px",
           zIndex: 1,
-          //   position: "absolute",
         }}
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
         }}
-        // pagination={{
-        //   clickable: true,
-        //   renderBullet: function (index, className) {
-        //     return `<span class="${className}"></span>`;
-        //   },
-        // }}
       >
         {ads.items.map((item, index) => {
           return (
             <SwiperSlide
               style={{
-                // width: "95% !important",
-                // height: "350px !important",
                 display: "flex",
                 justifyContent: "center",
-                // alignItems: "center",
               }}
               key={index}
             >
               <img
                 style={{
-                  // objectFit: "fill",
-                  width: "95%",
-                  // height: "350px",
+                  width: "90%",
                   borderRadius: "50px",
                 }}
                 src={item}
@@ -93,10 +83,6 @@ export default function () {
           );
         })}
       </Swiper>
-      <LeftArrow
-        language={language}
-        onClick={() => swiperRef.current?.slidePrev()}
-      />
     </div>
   );
 }

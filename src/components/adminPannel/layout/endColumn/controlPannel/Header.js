@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import Typography from "../../../../../styles/__ready/Typography";
 import useCachedLanguage from "../../../../../utility/useCachedLanguage";
 import { useContent_Based_Language } from "../../../../../recoil/readStore";
+import { Link } from "react-router-dom";
 export default function () {
   const { value: currenctLanguage } = useCachedLanguage();
   const content = useContent_Based_Language();
@@ -32,6 +33,8 @@ export default function () {
     value = {
       row1: " ",
       row2: " ",
+      row1Link: " ",
+      row2Link: " ",
     },
   }) => {
     return (
@@ -40,7 +43,9 @@ export default function () {
           <Typography.H7>{value.row1}</Typography.H7>
         </Buttons.Outlined>
         <Buttons.Contained_Custom className="button_big bg_primary   ">
-          <Typography.H7 className="font-300">{value.row2}</Typography.H7>
+          <Link to={value.row2Link} replace>
+            <Typography.H7 className="font-300">{value.row2}</Typography.H7>
+          </Link>
         </Buttons.Contained_Custom>
       </section>
     );
@@ -59,6 +64,7 @@ export default function () {
             value={{
               row1: content.AdminPannel.end_col.controlPannel.row1.usersList,
               row2: content.AdminPannel.end_col.controlPannel.row1.AddNewUser,
+              row2Link: "add-user",
             }}
           />
         </article>
@@ -81,6 +87,7 @@ export default function () {
               row1: content.AdminPannel.end_col.controlPannel.row1.productsList,
               row2: content.AdminPannel.end_col.controlPannel.row1
                 .AddNewProduct,
+              row2Link: "/admin/add-product",
             }}
           />
         </article>

@@ -16,7 +16,7 @@ export default function () {
           <Typography.H8>{content.addNewProduct}</Typography.H8>
         </option>
         <option value="">
-          <Typography.H9>{content.addNewLabel}</Typography.H9>
+          <Typography.H8>{content.addNewLabel}</Typography.H8>
         </option>
       </select>
     </article>

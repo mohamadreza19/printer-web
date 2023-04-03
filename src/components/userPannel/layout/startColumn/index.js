@@ -4,7 +4,7 @@ import RowTwo from "./RowTwo";
 
 export default function () {
   return (
-    <div className="w-100 px-3 py-4 bg_secondray">
+    <div className="w-100 h-100 px-3 py-4 bg_secondray">
       <RowOne />
       <RowTwo />
       <RowThree />

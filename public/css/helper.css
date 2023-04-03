@@ -43,6 +43,9 @@ a {
   margin-top: 1.8rem !important;
   margin-bottom: 1.8rem !important;
 }
+.mt-0_8rem {
+  margin-top: 0.8rem !important;
+}
 .mt-4_5 {
   margin-top: 2.699rem !important;
 }
@@ -64,6 +67,9 @@ a {
 .mt-10 {
   margin-top: 5.5rem !important;
 }
+.mt-11 {
+  margin-top: 6rem !important;
+}
 
 .mt-11rem {
   margin-top: 11rem !important;
@@ -74,6 +80,16 @@ a {
 .mt-17-9rem {
   margin-top: 17.9rem;
 }
+
+.mx-0_1rem {
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+}
+.mx-0_8rem {
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+}
+
 .margin-left-auto {
   margin-left: auto !important;
 }
@@ -88,6 +104,9 @@ a {
 }
 .margin-right-auto {
   margin-right: auto !important;
+}
+.margin-left-0_8rem {
+  margin-left: 0.8rem !important;
 }
 .margin-left-1 {
   margin-left: 0.5rem !important;
@@ -134,6 +153,10 @@ a {
 .py-1_4rem {
   padding-top: 1.4rem !important;
   padding-bottom: 1.4rem !important;
+}
+.py-1_8rem {
+  padding-top: 1.8rem !important;
+  padding-bottom: 1.8rem !important;
 }
 .py-0_9rm {
   padding-top: 0.9rem !important;
@@ -186,9 +209,16 @@ a {
 .padding-left-7 {
   padding-left: 3.5rem !important;
 }
-.padding-left-4 {
+.padding-left-8 {
   padding-left: 4rem !important;
 }
+.pe-20 {
+  padding-left: 11rem;
+}
+/* html[dir="lft"] .pe-20 {
+  padding-left: 0;
+  padding-right: 11rem;
+} */
 /* // */
 .padding-right-1 {
   padding-right: 0.5rem !important;
@@ -239,6 +269,9 @@ a {
 }
 .w-85 {
   width: 85% !important;
+}
+.w-62 {
+  width: 62% !important;
 }
 .w-60 {
   width: 60% !important;
@@ -370,6 +403,9 @@ a {
   color: var(--gray2);
 }
 
+.bg_gray1 {
+  background-color: var(--gray1) !important;
+}
 .bg_gray2 {
   background-color: var(--gray2) !important;
 }
@@ -380,6 +416,9 @@ a {
 
 .fill_white {
   fill: var(--white) !important;
+}
+.fill_disabled {
+  fill: var(--gray2) !important;
 }
 .fill_secondray_v2 {
   fill: var(--secondary_v2) !important;
@@ -399,6 +438,12 @@ a {
 }
 .text-upercase {
   text-transform: capitalize !important;
+}
+.border-10 {
+  border-radius: 10px;
+}
+.border-r-10 {
+  border-radius: 10px;
 }
 .border-12 {
   border-radius: 12px;
@@ -421,6 +466,9 @@ a {
 }
 .border_bottom_primary {
   border-bottom: 1px solid var(--primary);
+}
+.border-r-top-20 {
+  border-radius: 20px 20px 0 0;
 }
 .border-r-top-right-30 {
   border-top-right-radius: 30px !important;

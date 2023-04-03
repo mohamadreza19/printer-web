@@ -11,6 +11,7 @@ import UserPannel from "../components/userPannel";
 // import ListOfProject from "../components/userPannel/layout/endColumn/listOfProject";
 
 import AddNewProject from "../components/userPannel/layout/endColumn/addNewProject/";
+import AddNewProject_Editor from "../components/userPannel/layout/endColumn/addNewProject/editor";
 import LabelList from "../components/userPannel/layout/endColumn/label-list";
 import HistoryPrining from "../components/userPannel/layout/endColumn/historyPrining";
 //admin
@@ -19,8 +20,8 @@ import AdminPannel from "../components/adminPannel";
 import AdminControlPannel from "../components/adminPannel/layout/endColumn/controlPannel";
 import AdimHistory from "../components/adminPannel/layout/endColumn/controlPannel/adimHistory";
 import AdminAddNewUser from "../components/adminPannel/layout/endColumn/controlPannel/adminAddNewUser";
-import AdminAddProduct from "../components/adminPannel/layout/endColumn/addNewProduct_Label";
-import AdminAddProduct_UploadFile from "../components/adminPannel/layout/endColumn/addNewProduct_Label/uploadFile";
+import AdminAddProduct from "../components/adminPannel/layout/endColumn/addNewProduct";
+import AdminAddProduct_UploadFile from "../components/adminPannel/layout/endColumn/addNewProduct/uploadFile";
 import AdminList_Of_Label_And_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product";
 import AdminList_Of_Label_And_Product_edit from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/edit";
 
@@ -75,9 +76,15 @@ export default function () {
           }
         />
         <Route path="add-project" element={<AddNewProject />} />
+
         <Route path="label-list" element={<LabelList />} />
         <Route path="prining-history" element={<HistoryPrining />} />
       </Route>
+      {/* editor */}
+      <Route
+        path="user/add-project/editor"
+        element={<AddNewProject_Editor />}
+      />
       <Route
         path="/admin"
         element={

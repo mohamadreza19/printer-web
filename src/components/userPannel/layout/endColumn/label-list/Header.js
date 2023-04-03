@@ -13,12 +13,12 @@ export default function ({
   padding = { pe_1: " ", pe_2: " " },
 }) {
   return (
-    <header className="w-100 border-bottom-gray pb-3">
-      <Grid container className="">
+    <header className="w-100  px-4">
+      <Grid container className="border-bottom-gray pb-3">
         <Grid item lg={6} className="d-flex">
           <div className={"w-100 d-flex align-items-center " + padding.pe_1}>
             <Icons.Labels classNameForPath="fill_black" />
-            <Typography.H8 className={margin.ms_2}>
+            <Typography.H8 className={"font-500 " + margin.ms_2}>
               {content.labelList}
             </Typography.H8>
             {/* // */}

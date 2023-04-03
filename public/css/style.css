@@ -29,7 +29,7 @@ a {
 
 .text-filed-input-v2 {
   border: 0;
-  /* width: 100%; */
+  width: 100%;
 }
 .text-filed-input-v2:focus {
   /* border: 0; */
@@ -126,6 +126,7 @@ a {
   /* padding-top: 0.65rem !important;
   padding-bottom: 0.65rem !important; */
 }
+
 .button_extra-large_v1 {
   width: 197.03px !important;
   height: 52px !important;
@@ -139,6 +140,30 @@ a {
   height: 52px !important;
   max-width: 186.73px !important ;
   max-height: 52px !important;
+  /* padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important; */
+}
+.editor-header-button_extra-small {
+  width: 128px !important;
+  height: 64px !important;
+  max-width: 128px !important ;
+  max-height: 64px !important;
+  /* padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important; */
+}
+.editor-header-button_extra-medium {
+  width: 191px !important;
+  height: 64px !important;
+  max-width: 191px !important ;
+  max-height: 64px !important;
+  /* padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important; */
+}
+.editor-header-button_extra-large {
+  width: 236px !important;
+  height: 64px !important;
+  max-width: 236px !important ;
+  max-height: 64px !important;
   /* padding-top: 0.65rem !important;
   padding-bottom: 0.65rem !important; */
 }
@@ -185,7 +210,7 @@ a {
   border-radius: 20px;
   height: 52px;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E");
+  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
   background-repeat: no-repeat;
   background-position: left 1rem center;
   border-radius: 2px;
@@ -201,7 +226,7 @@ a {
   border-radius: 20px;
   height: 52px;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E");
+  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   border-radius: 2px;
@@ -221,9 +246,9 @@ select:focus {
   border-radius: 20px;
   height: 52px;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E");
+  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
   background-repeat: no-repeat;
-  background-position: left 0.5rem center;
+  background-position: left 1rem center;
   border-radius: 2px;
   /* padding: 0.25rem 2rem 0.25rem 0.75rem; */
   border: 2px solid #ececec;
@@ -231,7 +256,7 @@ select:focus {
   text-align: center;
 }
 html[dir="ltr"] .select-medium {
-  background-position: right 0.5rem center;
+  background-position: right 1rem center;
 }
 /* // */
 .select-large {
@@ -242,9 +267,9 @@ html[dir="ltr"] .select-medium {
   min-height: 52px;
   border-radius: 20px;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E");
+  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
   background-repeat: no-repeat;
-  background-position: left 0.5rem center;
+  background-position: left 1rem center;
   border-radius: 2px;
   /* padding: 0.25rem 2rem 0.25rem 0.75rem; */
   border: 2px solid #ececec;
@@ -259,7 +284,7 @@ html[dir="ltr"] .select-large {
   height: 52px;
   height: 52px;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E");
+  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   border-radius: 2px;
@@ -269,6 +294,44 @@ html[dir="ltr"] .select-large {
   /* text-align: center; */
   padding-right: 0;
   /* padding-left: 1.2rem; */
+}
+.select-extra-large {
+  font-family: "Vazirmatn";
+  width: 490px;
+  min-width: 490px;
+  height: 52px;
+  min-height: 52px;
+  border-radius: 20px;
+  appearance: none;
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E"); */
+  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-repeat: no-repeat;
+  background-position: left 1rem center;
+  border-radius: 2px;
+  padding-right: 0.5rem;
+  border: 2px solid #ececec;
+  border-radius: 20px;
+  text-align: start;
+}
+html[dir="ltr"] .select-extra-large {
+  font-family: "Vazirmatn";
+  border-radius: 20px;
+  width: 490px;
+  min-width: 490px;
+  height: 52px;
+
+  appearance: none;
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E"); */
+  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  border-radius: 2px;
+
+  border: 2px solid #ececec;
+  border-radius: 20px;
+
+  padding-right: 0;
+  padding-left: 0.5rem;
 }
 /* // */
 .text-filed-large {
@@ -513,13 +576,27 @@ line {
   max-height: 6rem;
   overflow-y: scroll;
 }
+.scrollable-x-extra-small {
+  max-height: 6rem;
+  overflow-x: scroll;
+}
 .scrollable {
-  max-height: 32rem;
+  max-height: 33rem;
+  overflow-y: scroll;
+}
+.scrollable-medium {
+  max-height: 33rem;
+
+  overflow-y: scroll;
+}
+.scrollable-medium-test {
+  max-height: 33rem;
+
   overflow-y: scroll;
 }
 .scrollable1 {
-  max-height: 23.37rem;
-  overflow-y: scroll;
+  max-height: 25.99rem;
+  overflow-y: auto;
 }
 .scrollable2 {
   position: relative;
@@ -536,6 +613,22 @@ line {
   max-height: 40.5rem;
   overflow-y: scroll;
 }
+.scrollable-x-latge {
+  /* position: relative; */
+  height: 59vh;
+  overflow-x: scroll;
+}
+.scrollable-x-latge::-webkit-scrollbar-track {
+  /* position: relative; */
+  margin-left: 25px;
+  margin-right: 25px;
+}
+.scrollable-x-latge::-webkit-scrollbar-thumb {
+  /* position: relative; */
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #cbcbcb;
+}
 .action-botton-positon-rtl {
   left: 0.8rem;
 }
@@ -547,7 +640,39 @@ line {
   left: 0;
   right: 0.9rem !important;
 } */
+
+.editor-end-column-r {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+html[dir="ltr"] .editor-end-column-r {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
 .action-botton-positon-ltr {
   /* left: 0 !important; */
   right: 0.8rem !important;
+}
+.editor-action-buttons {
+  width: 62px;
+  height: 62px;
+}
+.editor-action-buttons-bg-primary {
+  background: #f36523;
+  box-shadow: 0px 30px 30px -10px rgba(0, 0, 0, 0.7);
+}
+.editor-action-buttons-bg-white {
+  background: #f5f5f5;
+  box-shadow: 0px 30px 30px -10px rgba(0, 0, 0, 0.7);
+}
+.footer-shape-icon-box-rtl {
+  right: 2.7rem;
+  top: 2.29rem;
+}
+.footer-shape-icon-box-ltr {
+  left: 2.7rem;
+  top: 2.29rem;
+  rotate: -90deg;
 }

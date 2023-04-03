@@ -97,12 +97,14 @@ export default function () {
     });
   }
   return (
-    <div
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-      className="w-100 d-flex justify-content-center  mt-5 flex-column align-items-center border-dashed-gray border-r-20 "
-    >
-      <File />
-    </div>
+    <main className="w-100 px-4">
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        className=" d-flex justify-content-center   mt-5 flex-column align-items-center border-dashed-gray border-r-20 "
+      >
+        <File />
+      </div>
+    </main>
   );
 }

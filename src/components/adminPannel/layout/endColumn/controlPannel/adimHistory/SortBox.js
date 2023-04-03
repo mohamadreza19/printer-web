@@ -153,7 +153,7 @@ export default function () {
   };
 
   return (
-    <div className="mt-4 d-flex justify-content-end pb-3 ">
+    <div className="mt-4 d-flex justify-content-end px-4 pb-3 ">
       <section
         style={{ direction: "rtl" }}
         className={`d-flex ${

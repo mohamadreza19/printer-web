@@ -5,7 +5,7 @@ import SortBox from "./SortBox";
 
 export default function () {
   return (
-    <div className="w-100">
+    <div className="w-100 ">
       <HistoryHeader />
       <HistorySearchBox />
       <SortBox />

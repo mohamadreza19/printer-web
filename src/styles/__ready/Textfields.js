@@ -109,6 +109,25 @@ export default class {
       </div>
     );
   }
+  static v2_userName({
+    children = "",
+    className = "",
+    Input_marginStart_based_Language = "ms-3",
+  }) {
+    return (
+      <div
+        className={
+          "w-100 bg-white border py-3 px-3 d-flex align-items-center border-r-20 " +
+          className
+        }
+      >
+        <Icons.UserName />
+        <input
+          className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+        />
+      </div>
+    );
+  }
   static v2_password({
     children = "",
     className = "",

@@ -11,7 +11,7 @@ export default function () {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
   return (
-    <Grid container>
+    <Grid container className="px-4">
       <Grid item lg={6}>
         <Buttons.Contained_Custom className="button_medium bg_primary">
           <Typography.H8 className="font-400 ">

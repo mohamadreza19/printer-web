@@ -27,16 +27,17 @@ export default function ({ param }) {
 
   return (
     <>
-      <div className={"position-relative " + cssClass.ms_3}>
+      <div className={"position-relative  " + cssClass.ms_3}>
         <article
           style={{
             top: "2rem",
+            // right: "0",
           }}
           className="position-absolute"
         >
-          <Typography.H7 className="font-400">
+          <Typography.H8 className="font-400">
             {content.productName}
-          </Typography.H7>
+          </Typography.H8>
         </article>
       </div>
       <div

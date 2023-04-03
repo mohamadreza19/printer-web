@@ -13,10 +13,10 @@ export default function () {
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
   return (
-    <Grid container className="border-bottom pb-3 mb-3">
+    <Grid container className="border-bottom px-4 pb-3 mb-3">
       <Grid item lg={5} className="d-flex align-items-center">
         <Icons.History classNameForPath="fill_black" />
-        <Typography.H8 className={cssClass.ms_1}>
+        <Typography.H8 className={"font-500 " + cssClass.ms_1}>
           {content.userPannel.start_col.row2.historyOfPrinting}
         </Typography.H8>
       </Grid>

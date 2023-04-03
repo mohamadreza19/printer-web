@@ -18,7 +18,7 @@ export default function () {
           >
             <img
               className="w-100 h-100 img-fill border-r-20"
-              src="https://media.istockphoto.com/id/474267374/fr/photo/reflets-sur-le-lac.jpg?s=1024x1024&w=is&k=20&c=5J0Hlyjmmi9M1Rt66TsjG2Itsex8-PUozPsGKdifvoM="
+              src="https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg"
             />
           </section>
           <section

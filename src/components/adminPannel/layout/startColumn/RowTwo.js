@@ -28,7 +28,7 @@ export default function () {
   const ControlPannel = () => {
     const dynamicColor = pathname.includes("control-pannel")
       ? {
-          bg: "bg_primary box_shadow_disabled",
+          bg: "bg_primary ",
           color: "color-white ",
           fill: "fill_white",
         }
@@ -56,54 +56,26 @@ export default function () {
       </Link>
     );
   };
-  // const ListOfProject = () => {
-  //   const dynamicColor = pathname.includes("project-list")
-  //     ? {
-  //         bg: "bg_primary box_shadow_disabled",
-  //         color: "color-white ",
-  //         fill: "fill_white",
-  //       }
-  //     : {
-  //         bg: "bg_secondray box_shadow_disabled",
-  //         color: "color_secondray_v2",
-  //         fill: "fill_secondray_v2",
-  //       };
 
-  //   return (
-  //     <Link to={UserRoutePath.projectList}>
-  //       <Buttons.Contained_Custom
-  //         className={
-  //           "w-100 d-flex justify-content-start py-3  px-3 mb-3 border-r-20 " +
-  //           dynamicColor.bg
-  //         }
-  //       >
-  //         <Icons.List className={dynamicColor.fill} />
-  //         <Typography.H7
-  //           className={`font-200 ${cssClass.ms_2} ${dynamicColor.color}`}
-  //         >
-  //           {buttonsText.listOfProjects}
-  //         </Typography.H7>
-  //       </Buttons.Contained_Custom>
-  //     </Link>
-  //   );
-  // };
   const AddProject_OrLanel = () => {
     // const bg = pathname.includes("add-project")
     //   ? "bg_primary box_shadow_disabled"
     //   : "bg_secondray box_shadow_disabled";
-    const dynamicColor = pathname.includes("add-product-label")
-      ? {
-          bg: "bg_primary box_shadow_disabled",
-          color: "color-white ",
-          fill: "fill_white",
-        }
-      : {
-          bg: "bg_secondray box_shadow_disabled",
-          color: "color_secondray_v2",
-          fill: "fill_secondray_v2",
-        };
+
+    const dynamicColor =
+      pathname.includes("add-label") || pathname.includes("add-product")
+        ? {
+            bg: "bg_primary ",
+            color: "color-white ",
+            fill: "fill_white",
+          }
+        : {
+            bg: "bg_secondray box_shadow_disabled",
+            color: "color_secondray_v2",
+            fill: "fill_secondray_v2",
+          };
     return (
-      <Link to={AdminRoutePath.addProduct_Or_Label}>
+      <Link to={"/admin/add-product"}>
         <Buttons.Contained_Custom
           className={
             "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
@@ -122,9 +94,9 @@ export default function () {
     );
   };
   const LabelList = () => {
-    const dynamicColor = pathname.includes("label-list")
+    const dynamicColor = pathname.includes("list-labels-products")
       ? {
-          bg: "bg_primary box_shadow_disabled",
+          bg: "bg_primary ",
           color: "color-white ",
           fill: "fill_white",
         }
@@ -134,7 +106,7 @@ export default function () {
           fill: "fill_secondray_v2",
         };
     return (
-      <Link to={UserRoutePath.labelList}>
+      <Link to={"/admin/list-labels-products"}>
         <Buttons.Contained_Custom
           className={
             "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
@@ -151,10 +123,70 @@ export default function () {
       </Link>
     );
   };
+  const ViewPrinitChart = () => {
+    const dynamicColor = pathname.includes("charts")
+      ? {
+          bg: "bg_primary ",
+          color: "color-white ",
+          fill: "fill_white",
+        }
+      : {
+          bg: "bg_secondray box_shadow_disabled",
+          color: "color_secondray_v2",
+          fill: "fill_secondray_v2",
+        };
+    return (
+      <Link to={"/admin/charts"}>
+        <Buttons.Contained_Custom
+          className={
+            "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
+            dynamicColor.bg
+          }
+        >
+          <Icons.Trade classNameForPath={dynamicColor.fill} />
+          <Typography.H7
+            className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
+          >
+            مشاهده آمار چاپ
+          </Typography.H7>
+        </Buttons.Contained_Custom>
+      </Link>
+    );
+  };
+  const Admin_And_User_List = () => {
+    const dynamicColor = pathname.includes("list-user-manager")
+      ? {
+          bg: "bg_primary ",
+          color: "color-white ",
+          fill: "fill_white",
+        }
+      : {
+          bg: "bg_secondray box_shadow_disabled",
+          color: "color_secondray_v2",
+          fill: "fill_secondray_v2",
+        };
+    return (
+      <Link to={"/admin/list-user-manager"}>
+        <Buttons.Contained_Custom
+          className={
+            "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
+            dynamicColor.bg
+          }
+        >
+          <Icons.UserList pathClassName={dynamicColor.fill} />
+          <Typography.H7
+            className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
+          >
+            لیست کاربران و مدیران
+          </Typography.H7>
+        </Buttons.Contained_Custom>
+      </Link>
+    );
+  };
   const History = () => {
     const dynamicColor = pathname.includes("prining-history")
       ? {
-          bg: "bg_primary box_shadow_disabled",
+          bg: "bg_primary ",
           color: "color-white ",
           fill: "fill_white",
         }
@@ -182,15 +214,28 @@ export default function () {
     );
   };
   const Setting = () => {
+    const dynamicColor = pathname.includes("prining-history")
+      ? {
+          bg: "bg_primary ",
+          color: "color-white ",
+          fill: "fill_white",
+        }
+      : {
+          bg: "bg_secondray box_shadow_disabled",
+          color: "color_secondray_v2",
+          fill: "fill_secondray_v2",
+        };
     return (
       <Buttons.Contained_Custom
         className={
           "w-100 d-flex justify-content-start py-3  px-3 border-r-20 " +
-          colorClass
+          dynamicColor.bg
         }
       >
-        <Icons.Setting />
-        <Typography.H7 className={"font-200 " + cssClass.ms_2}>
+        <Icons.Setting classNameForPath={dynamicColor.fill} />
+        <Typography.H7
+          className={+dynamicColor.color + " font-200 " + cssClass.ms_2}
+        >
           {buttonsText.settings}
         </Typography.H7>
       </Buttons.Contained_Custom>
@@ -201,8 +246,9 @@ export default function () {
     <div className="w-100  mt-4">
       <ControlPannel />
       <AddProject_OrLanel />
-
       <LabelList />
+      <ViewPrinitChart />
+      <Admin_And_User_List />
       <History />
       <Setting />
     </div>

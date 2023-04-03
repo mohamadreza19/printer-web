@@ -153,59 +153,59 @@ export default function () {
       </div>
     );
   return (
-    <div className="w-100">
+    <div className="w-100 ">
       <Header />
       <Grid
         container
-        className="mt-2 scrollable2"
+        className="mt-2 px-4 scrollable2"
         columnSpacing={3}
         rowSpacing={2}
       >
         <Grid item lg={6} className="d-flex justify-content-end">
           <div className="w-90">
-            <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
               {content.row1.Name_of_the_company_or_institution}
-            </Typography.H7>
+            </Typography.H8>
             <TextFieldFUN_v3 />
           </div>
         </Grid>
         <Grid item lg={6} className="d-flex justify-content-start">
           <div className="w-90">
-            <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
               {content.row1.ManagementName}
-            </Typography.H7>
+            </Typography.H8>
             <TextFieldFUN_v3 />
           </div>
         </Grid>
         <Grid item lg={6} className="d-flex justify-content-end">
           <div className="w-90">
-            <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
               {content.row2.phoneNumber}
-            </Typography.H7>
+            </Typography.H8>
             <TextFieldFUN_v3 />
           </div>
         </Grid>
         <Grid item lg={6} className="d-flex justify-content-start">
           <div className="w-90">
-            <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
               {content.row2.userName}
-            </Typography.H7>
+            </Typography.H8>
             <TextFieldFUN_v3 />
           </div>
         </Grid>
         <Grid item lg={6} className="d-flex justify-content-end">
           <div className="w-90">
-            <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
               {content.row3.Email}
-            </Typography.H7>
+            </Typography.H8>
             <TextFieldFUN_v3 />
           </div>
         </Grid>
         <Grid item lg={6} className="d-flex justify-content-start">
           <div className="w-90">
-            <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
               {content.row3.CompanyZipCode}
-            </Typography.H7>
+            </Typography.H8>
             <TextFieldFUN_v3 />
           </div>
         </Grid>
@@ -214,9 +214,9 @@ export default function () {
           <div className="d-flex">
             <article className={cssClass.me_3 + " language-card-select"}>
               <span>
-                <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+                <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
                   {content.row4.State}
-                </Typography.H7>
+                </Typography.H8>
               </span>
               <select name="cars" id="cars" className="select-rtl">
                 <option value="تهران">
@@ -229,9 +229,9 @@ export default function () {
             </article>
             <article>
               <span>
-                <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+                <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
                   {content.row4.City}
-                </Typography.H7>
+                </Typography.H8>
               </span>
               <select name="cars" id="cars" className="select-rtl">
                 <option value="تهران">
@@ -256,9 +256,9 @@ export default function () {
         </Grid>
         <Grid item lg={8} className="d-flex justify-content-start">
           <div className={"w-85  " + cssClass.ms_6}>
-            <Typography.H7 className={"font-400 mb-2 " + cssClass.ms_3}>
+            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
               {content.row4.CompanyAddress}
-            </Typography.H7>
+            </Typography.H8>
             <TextFieldFUN_v4 />
           </div>
         </Grid>

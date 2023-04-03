@@ -18,15 +18,7 @@ export default function () {
     ["tr", "Turkish"],
   ];
   return (
-    <div
-      className={"w-100 mt-8 " + cssClass.ms_1}
-      style={
-        {
-          // position: "absolute",
-          // bottom: "1.5rem",
-        }
-      }
-    >
+    <div className={"w-100  " + cssClass.ms_3}>
       <section className="d-flex align-item-center">
         <div>
           <Icons.Language />

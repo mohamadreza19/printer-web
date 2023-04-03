@@ -13,9 +13,9 @@ export default function () {
   const { productLinkValue, handeler } = useAdmin_Add_Product().productLink;
   return (
     <div className="mt-4_5 ">
-      <Typography.H7 className={"font-400 mb-1 " + cssClass.ms_3}>
+      <Typography.H8 className={"font-400 mb-1 " + cssClass.ms_3}>
         {content.ProductLinkOnTheSite}
-      </Typography.H7>
+      </Typography.H8>
       <TextFieldFUN_ClipBoardBadge
         className=""
         value={productLinkValue}

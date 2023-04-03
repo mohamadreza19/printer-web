@@ -10,9 +10,9 @@ export default function () {
       <article className="d-flex align-items-center">
         <section className="d-flex align-items-center">
           <Icons.Labels classNameForPath="fill_black" />
-          <Typography.H7 className={cssClass.ms_2}>
+          <Typography.H8 className={"font-500 " + cssClass.ms_2}>
             لیست محصولات و لیبل ها
-          </Typography.H7>
+          </Typography.H8>
         </section>
       </article>
     </header>

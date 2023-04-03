@@ -9,7 +9,7 @@ export default function () {
   const content = useContent_Based_Language();
   return (
     <div
-      className={"px-3  w-100 mt-11rem d-flex cur-pointer"}
+      className={"px-3  w-100 mt-4 d-flex cur-pointer"}
       // className={"px-3  w-100  d-flex cur-pointer"}
     >
       <Icons.SingOut />

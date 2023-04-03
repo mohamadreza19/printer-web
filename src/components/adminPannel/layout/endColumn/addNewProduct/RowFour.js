@@ -31,9 +31,9 @@ export default function ({ worker }) {
           }}
           className="position-absolute"
         >
-          <Typography.H7 className="font-400">
+          <Typography.H8 className="font-400">
             {content.AdditionalInformationAboutTheProduct}
-          </Typography.H7>
+          </Typography.H8>
         </article>
       </div>
       <div style={{ top: "4.2rem" }} className="position-relative  ">

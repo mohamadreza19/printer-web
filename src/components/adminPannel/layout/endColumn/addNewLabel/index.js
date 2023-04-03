@@ -18,9 +18,9 @@ export default function () {
   } = labelName;
   const cssClass = useDynamicCssClass();
   return (
-    <div className="w-100 px-4">
+    <div className="w-100 ">
       <Header />
-      <Grid container className={"mt-3 " + cssClass.ps_6}>
+      <Grid container className={"mt-5 " + cssClass.ps_6}>
         <Grid item lg={12}>
           <RowOne />
         </Grid>
@@ -35,12 +35,12 @@ export default function () {
           />
         </Grid>
       </Grid>
-      <footer className="w-100 mt-17-9rem d-flex justify-content-end pb-5 px-4">
+      <footer className="w-100 mt-17-9rem d-flex justify-content-end pb-4 px-4">
         <Buttons.Contained
           //   onClick={handleSubmit_FirstPage}
           className="button_large"
         >
-          <Typography.H7 className="font-400">ادامه</Typography.H7>
+          <Typography.H7 className="font-300">ادامه</Typography.H7>
         </Buttons.Contained>
       </footer>
     </div>

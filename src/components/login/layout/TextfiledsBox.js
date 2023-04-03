@@ -13,7 +13,7 @@ export default function () {
     return (
       <div className="d-flex flex-column mb-3">
         <Typography.H6>{content.login.textFeilds.userName}</Typography.H6>
-        <Textfields.v2
+        <Textfields.v2_userName
           className="mt-3"
           Input_marginStart_based_Language={cssClass.ms_3}
         />
@@ -32,7 +32,7 @@ export default function () {
     );
   };
   return (
-    <Grid container className="mt-8 d-flex justify-content-center ">
+    <Grid container className=" d-flex justify-content-center ">
       <Grid item lg={7} md={10} sm={10} xs={10}>
         <div className="w-100 ">
           <UsernameBox />

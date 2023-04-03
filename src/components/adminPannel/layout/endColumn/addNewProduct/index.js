@@ -9,7 +9,7 @@ import { TextFieldFUN_v5 } from "../../../../../styles/__ready/Textfields";
 
 import Typography from "../../../../../styles/__ready/Typography";
 import Header from "./Header";
-import RowFive from "./RowFive";
+
 import RowFour from "./RowFour";
 import RowOne from "./RowOne";
 import RowThree from "./RowThree";
@@ -37,7 +37,7 @@ export default function () {
   return (
     <div className="w-100 scrollable3 ">
       <Header />
-      <Grid container className={"mt-3 " + cssClass.ps_6}>
+      <Grid container className={"mt-5 " + cssClass.ps_6}>
         <Grid item lg={12} className="">
           <RowOne />
         </Grid>
@@ -66,12 +66,12 @@ export default function () {
           />
         </Grid>
       </Grid>
-      <article className="w-100 d-flex justify-content-end">
+      <article className="w-100 d-flex justify-content-end px-4">
         <Buttons.Contained
           onClick={handleSubmit_FirstPage}
           className="button_large"
         >
-          <Typography.H7 className="font-400">ادامه</Typography.H7>
+          <Typography.H7 className="font-300">ادامه</Typography.H7>
         </Buttons.Contained>
       </article>
     </div>

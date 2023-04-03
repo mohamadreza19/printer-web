@@ -7,7 +7,7 @@ export default function ({ language, onClick }) {
         // opacity: "0.3",
         width: "2.55rem",
         height: "5rem",
-        top: "5rem",
+        top: "7.5rem",
         position: "absolute",
         zIndex: 2,
         right: "0",

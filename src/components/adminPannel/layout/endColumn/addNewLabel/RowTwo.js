@@ -29,7 +29,7 @@ export default function ({ param }) {
           }}
           className="position-absolute"
         >
-          <Typography.H7 className="font-400">نام لیبل</Typography.H7>
+          <Typography.H8 className="font-400">نام لیبل</Typography.H8>
         </article>
       </div>
       <div

@@ -5,7 +5,7 @@ import Typography from "../../../../../../styles/__ready/Typography";
 export default function () {
   const cssClass = useDynamicCssClass();
   return (
-    <main className="w-100 pt-4">
+    <main className="w-100 px-4 pt-4">
       <article className="mt-9 d-flex">
         <section className="">
           <Typography.H8 className={"mb-1 " + cssClass.ms_3}>

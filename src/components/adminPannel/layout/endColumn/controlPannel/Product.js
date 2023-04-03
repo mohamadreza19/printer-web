@@ -50,6 +50,7 @@ export default function () {
       </Grid>
     );
   };
+
   const EndGrid = () => {
     const changedPostion = {
       first: currentLanguage == "fa" ? "7.5rem" : "-10rem",
@@ -98,8 +99,36 @@ export default function () {
         container
         className="w-100 d-flex justify-content-between align-items-center bg-white border  px-3 py-3  "
       >
-        <StartGrid />
-        <EndGrid />
+        <Grid item lg={3}>
+          <Typography.H10>شرکت تجهیز صنعت پاسارگاد</Typography.H10>
+        </Grid>
+        <Grid item lg={3} className="d-flex justify-content-end">
+          <Typography.H10>چند دقیقه پیش</Typography.H10>
+        </Grid>
+        <Grid item lg={3} className="d-flex justify-content-end">
+          <span>
+            <Typography.H10 language={currentLanguage}>
+              21
+              <span className={cssClass.ms_1}>
+                {content.AdminPannel.end_col.controlPannel.row3.product}
+              </span>
+            </Typography.H10>
+          </span>
+        </Grid>
+        <Grid
+          item
+          lg={3}
+          className={"d-flex justify-content-end " + cssClass.pe_5}
+        >
+          <span>
+            <Typography.H10 language={currentLanguage}>
+              21
+              <span className={cssClass.ms_1}>
+                {content.AdminPannel.end_col.controlPannel.row3.print}
+              </span>
+            </Typography.H10>
+          </span>
+        </Grid>
       </Grid>
       <section className={"d-flex align-items-center "}>
         <Icons.LeftArrow

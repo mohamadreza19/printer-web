@@ -49,7 +49,7 @@ export default function () {
           <span
             style={{
               position: "relative",
-              left: "15px",
+              left: "40px",
             }}
             onClick={openCalendar}
             className="cur-pointer "
@@ -107,7 +107,7 @@ export default function () {
           <span
             style={{
               position: "relative",
-              left: "15px",
+              left: "40px",
             }}
             onClick={openCalendar}
             className="cur-pointer "
@@ -151,26 +151,28 @@ export default function () {
   };
 
   return (
-    <div className="mt-4 d-flex justify-content-end pb-3 border-bottom-gray">
-      <section
-        style={{ direction: "rtl" }}
-        className={`d-flex ${
-          currentLanguage != "fa" ? "flex-row-reverse" : " "
-        }`}
-      >
-        <From />
-        <To />
-      </section>
-      <Buttons.Contained_Custom className="px-2_3rem bg_primary border-r-20  mx-2 ">
-        <Typography.H9 className="font-400">
-          {content.userPannel.end_col.historyOfPrinting.sortButton}
-        </Typography.H9>
-      </Buttons.Contained_Custom>
-      <Buttons.Outlined className="px-3 border-r-20   ">
-        <Typography.H9 className="font-400">
-          {content.userPannel.end_col.historyOfPrinting.downloadExcel}
-        </Typography.H9>
-      </Buttons.Outlined>
+    <div className="px-4">
+      <article className="d-flex justify-content-end border-bottom-gray mt-4 pb-3">
+        <section
+          style={{ direction: "rtl" }}
+          className={`d-flex ${
+            currentLanguage != "fa" ? "flex-row-reverse" : " "
+          }`}
+        >
+          <From />
+          <To />
+        </section>
+        <Buttons.Contained_Custom className="px-2_3rem bg_primary border-r-20  mx-2 ">
+          <Typography.H9 className="font-400">
+            {content.userPannel.end_col.historyOfPrinting.sortButton}
+          </Typography.H9>
+        </Buttons.Contained_Custom>
+        <Buttons.Outlined className="px-3 border-r-20   ">
+          <Typography.H9 className="font-400">
+            {content.userPannel.end_col.historyOfPrinting.downloadExcel}
+          </Typography.H9>
+        </Buttons.Outlined>
+      </article>
     </div>
   );
 }

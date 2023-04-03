@@ -25,7 +25,7 @@ export default function () {
     <div className={`bg_info h-100 pt-4 px-4 ${cssClass.border_r_s_30px}`}>
       <Header />
       <main
-        className={`  mt-3 ${
+        className={`   mt-3 ${
           isControlPannelPath ? " " : "  pt-4 bg-white"
         } border-r-top-30`}
       >

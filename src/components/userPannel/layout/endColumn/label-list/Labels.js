@@ -10,7 +10,7 @@ export default function () {
         overflowY: "scroll",
       }}
       //   className="w-100 mt-2"
-      className="w-100 p-2"
+      className="w-100 px-4 mt-4"
     >
       <Grid container rowSpacing={"0.9rem"}>
         {/* <Grid item lg={3}>

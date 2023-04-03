@@ -12,9 +12,13 @@ export default function () {
     useContent_Based_Language().AdminPannel.end_col.controlPannel.row1
       .AddNewUser;
   return (
-    <div className={"w-100 d-flex  border-bottom-gray pb-3 " + cssClass.ms_2}>
-      <Icons.AddNewProject classNameForPath="fill_black" />
-      <Typography.H7 className={cssClass.ms_2}>{content}</Typography.H7>
+    <div className={"w-100 d-flex  px-4"}>
+      <section className="w-100 d-flex    pb-3 border-bottom-gray">
+        <Icons.AddNewProject classNameForPath="fill_black" />
+        <Typography.H8 className={"font-500 " + cssClass.ms_2}>
+          {content}
+        </Typography.H8>
+      </section>
     </div>
   );
 }

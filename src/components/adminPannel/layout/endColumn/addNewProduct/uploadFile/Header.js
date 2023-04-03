@@ -11,12 +11,12 @@ export default function () {
       .header;
   const cssClass = useDynamicCssClass();
   return (
-    <div className={"w-100 d-flex  border-bottom-gray pb-3 d-flex  px-3 "}>
-      <section className="d-flex">
+    <div className={"w-100   px-4 "}>
+      <section className="d-flex  border-bottom-gray pb-3 d-flex">
         <Icons.AddNewProject classNameForPath="fill_black" />
-        <Typography.H7 className={cssClass.ms_2}>
+        <Typography.H8 className={cssClass.ms_2}>
           {content.addNewProductAndLabel}
-        </Typography.H7>
+        </Typography.H8>
       </section>
     </div>
   );
