@@ -613,17 +613,18 @@ line {
   max-height: 40.5rem;
   overflow-y: scroll;
 }
-.scrollable-x-latge {
+.scrollable-x-large {
   /* position: relative; */
-  height: 59vh;
+  height: 72vh;
+  /* height: 100%; */
   overflow-x: scroll;
 }
-.scrollable-x-latge::-webkit-scrollbar-track {
+.scrollable-x-large::-webkit-scrollbar-track {
   /* position: relative; */
   margin-left: 25px;
   margin-right: 25px;
 }
-.scrollable-x-latge::-webkit-scrollbar-thumb {
+.scrollable-x-large::-webkit-scrollbar-thumb {
   /* position: relative; */
   -webkit-border-radius: 10px;
   border-radius: 10px;
@@ -675,4 +676,20 @@ html[dir="ltr"] .editor-end-column-r {
   left: 2.7rem;
   top: 2.29rem;
   rotate: -90deg;
+}
+.editor-search-icon {
+  width: 23.37px !important;
+  height: 23.25px !important;
+}
+
+.editor-searchbox-input {
+  border: 0;
+  width: 100%;
+}
+.editor-searchbox-input::placeholder {
+  font-size: 18px;
+}
+.editor-searchbox-input:focus {
+  /* border: 0; */
+  outline: 0;
 }

@@ -8,7 +8,11 @@ export default function () {
     <div className="w-100 h-100  ">
       <Header />
 
-      <main className={"w-100 bg-white dir-ltr pe-20  scrollable-x-latge"}>
+      <main
+        className={
+          "w-100  bg-white dir-ltr pe-20  scrollable-x-large border-r-bottom-20"
+        }
+      >
         <div className="w-100 mt-10 " style={{}}>
           <article
             className="bg-info"

@@ -38,12 +38,12 @@ export default function () {
   const cssClass = useDynamicCssClass();
 
   return (
-    <div className="bg-white border-r-top-20 dir-rtl">
+    <div className=" bg-white border-r-top-20 dir-rtl">
       <div
         style={{
           width: "100%",
-          height: "15.17vh",
-          padding: "0 2rem",
+          height: "17.5vh",
+          padding: "0 1rem",
         }}
         className=" bg_gray2  border-r-20 d-flex align-items-center py-4"
       >

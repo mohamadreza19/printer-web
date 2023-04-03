@@ -2,8 +2,7 @@ import { Grid } from "@mui/material";
 import { useDynamicCssClass } from "../../../../../../../../recoil/readStore";
 import Header from "./Header";
 import EditorBox from "./layout/editorBox";
-
-import SearchBox from "./layout/SearchBox";
+import SearchBox from "./layout/searchBox";
 
 export default function () {
   const cssClass = useDynamicCssClass();

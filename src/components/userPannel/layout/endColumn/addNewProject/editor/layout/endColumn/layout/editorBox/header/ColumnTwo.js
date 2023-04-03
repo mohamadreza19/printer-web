@@ -19,7 +19,7 @@ export default function () {
           <footer className="d-flex align-items-center">
             <span
               style={{
-                fontSize: "140%",
+                fontSize: "100%",
                 fontWeight: "400",
               }}
             >

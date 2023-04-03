@@ -1,4 +1,4 @@
-import { Language } from "@mui/icons-material";
+import { CloudSyncRounded, Language } from "@mui/icons-material";
 
 export default class {
   static Language() {
@@ -339,7 +339,7 @@ export default class {
     );
   }
 
-  static Search({ className }) {
+  static Search({ className, cls }) {
     return (
       <svg
         width="2rem"
@@ -347,6 +347,7 @@ export default class {
         viewBox="0 0 27 27"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className={cls}
       >
         <path
           className={className}

@@ -148,7 +148,47 @@ export default class {
     );
   }
 }
-
+export const EditorSearchBox = ({
+  children = "",
+  className = "",
+  Input_marginStart_based_Language = "ms-3",
+  placeholder = "",
+  iconMarginStart = " ",
+}) => {
+  const cssClass = useDynamicCssClass();
+  return (
+    <div
+      style={{
+        width: "320px",
+        height: "64px",
+      }}
+      className={` bg-white border py-2  d-flex align-items-center justify-content-between border-r-20
+      ${cssClass.ps_2} ${cssClass.pe_1} ${className} `}
+    >
+      <input
+        style={{
+          position: "relative",
+          top: "-0.1rem",
+        }}
+        placeholder={"نام محصول"}
+        // placeholder="جست و جو بر اساس نام پروژه"
+        className={
+          " editor-searchbox-input placeholder-v1 " +
+          Input_marginStart_based_Language
+        }
+      />
+      <section
+        className={
+          "cur-pointer bg_primary d-flex justify-content-center align-items-center   " +
+          iconMarginStart
+        }
+        style={{ width: "60px", height: "52px" }}
+      >
+        <Icons.Search className="fill_white " cls={"editor-search-icon"} />
+      </section>
+    </div>
+  );
+};
 export const TextFieldFUN_v3 = ({
   value = " ",
   onChange = " ",

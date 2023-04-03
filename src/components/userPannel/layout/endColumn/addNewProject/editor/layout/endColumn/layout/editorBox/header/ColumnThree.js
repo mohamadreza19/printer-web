@@ -29,7 +29,7 @@ export default function () {
                   /> */}
               <p
                 style={{
-                  fontSize: "150%",
+                  fontSize: "110%",
                   position: "absolute",
                 }}
               >
@@ -63,7 +63,7 @@ export default function () {
                   /> */}
               <p
                 style={{
-                  fontSize: "150%",
+                  fontSize: "110%",
                   position: "absolute",
                 }}
               >
@@ -99,7 +99,7 @@ export default function () {
                   /> */}
               <p
                 style={{
-                  fontSize: "150%",
+                  fontSize: "110%",
                   position: "absolute",
                 }}
               >
@@ -133,7 +133,7 @@ export default function () {
                   /> */}
               <p
                 style={{
-                  fontSize: "150%",
+                  fontSize: "110%",
                   position: "absolute",
                 }}
               >
