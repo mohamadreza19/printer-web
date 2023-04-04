@@ -1,4 +1,6 @@
 import { useDynamicCssClass } from "../../../../../../../../../../recoil/readStore";
+import Bookmarks from "./Bookmarks";
+import Labels_Products from "./Labels_Products";
 import Search from "./Search";
 
 export default function () {
@@ -11,12 +13,14 @@ export default function () {
         maxHeight: "89vh",
       }}
     >
-      <header
+      <main
         style={{ height: "400px" }}
         className={"bg-white border-r-top-right-20 pt-3 "}
       >
         <Search />
-      </header>
+        <Bookmarks />
+        <Labels_Products />
+      </main>
     </div>
   );
 }

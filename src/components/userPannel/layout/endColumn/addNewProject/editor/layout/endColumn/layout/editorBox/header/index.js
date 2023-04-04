@@ -36,21 +36,25 @@ import ColumnTwo from "./ColumnTwo";
 
 export default function () {
   const cssClass = useDynamicCssClass();
-
+  const Divider = () => {
+    return <div className="editor-cell-divider mx-0_8rem"></div>;
+  };
   return (
     <div className=" bg-white border-r-top-20 dir-rtl">
       <div
         style={{
-          width: "100%",
-          height: "17.5vh",
-          padding: "0 1rem",
+          //   width: "850px",
+          height: "110px",
+          //   padding: "0 1rem",
         }}
-        className=" bg_gray2  border-r-20 d-flex align-items-center py-4"
+        className="w-100 bg_gray2  border-r-20 d-flex align-items-center  justify-content-center"
       >
         <ColumnOne />
+        <Divider />
         <ColumnTwo />
         <ColumnThree />
         <ColumnFour />
+        <Divider />
         <ColumnFive />
       </div>
     </div>

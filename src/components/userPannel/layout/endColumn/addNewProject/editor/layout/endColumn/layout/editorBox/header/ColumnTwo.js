@@ -7,97 +7,40 @@ import {
   TextRight,
   TextUnderLine,
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
+import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
 export default function () {
   return (
-    <article className=" h-100" style={{ width: "30%" }}>
-      <header className="w-100 h-50 ps-2 pb-1">
-        <section className="w-100 h-100 bg_gray1 border-r-10 d-flex justify-content-between align-items-center px-3">
-          <header className="d-flex align-items-center">
-            <DropDown />
-          </header>
-          <footer className="d-flex align-items-center">
-            <span
-              style={{
-                fontSize: "100%",
-                fontWeight: "400",
-              }}
-            >
-              Arial
-            </span>
-          </footer>
+    <article className="">
+      <header className="d-flex mb-2">
+        <section className="editor-big-cell-box px-2 d-flex justify-content-between align-items-center">
+          <DropDown />
+
+          <Typography.H8>Arial</Typography.H8>
         </section>
       </header>
-      <footer className="w-100 h-50 ps-2 d-flex pt-1">
-        <section className="w-50 h-100   border-r-10 me-2 d-flex">
-          <div
-            style={{
-              width: "33.33333333333333%",
-              height: "100%",
-              backgroundColor: "#D8D8D8",
-              borderRadius: "0 12px 12px 0",
-            }}
-            className="d-flex justify-content-center align-items-center"
-          >
+      <footer className="d-flex justify-content-between">
+        <section className="d-flex ">
+          <span className="editor-group-button-right-box d-flex justify-content-center align-item-center">
             <TextRight />
-          </div>
-          <div
-            style={{
-              width: "33.33333333333333%",
-              height: "100%",
-              backgroundColor: "#ECECEC",
-              borderRadius: "",
-            }}
-            className="mx-0_1rem d-flex justify-content-center align-items-center"
-          >
+          </span>
+          <span className="editor-group-button-center-box d-flex justify-content-center align-item-center ">
             <TextCenter />
-          </div>
-          <div
-            style={{
-              width: "33.33333333333333%",
-              height: "100%",
-              backgroundColor: "#ECECEC",
-              borderRadius: "12px 0 0 12px",
-            }}
-            className="d-flex justify-content-center align-items-center"
-          >
+          </span>
+          <span className="editor-group-button-left-box d-flex justify-content-center align-item-center">
             <TextLeft />
-          </div>
+          </span>
         </section>
-        <section className="w-50 h-100  border-r-10 d-flex">
-          <div
-            style={{
-              width: "33.33333333333333%",
-              height: "100%",
-              backgroundColor: "#D8D8D8",
-              borderRadius: "0 12px 12px 0",
-            }}
-            className="d-flex justify-content-center align-items-center"
-          >
+        <section className="d-flex">
+          <span className="editor-group-button-right-box d-flex justify-content-center align-item-center">
             <TextUnderLine />
-          </div>
-          <div
-            style={{
-              width: "33.33333333333333%",
-              height: "100%",
-              backgroundColor: "#ECECEC",
-              borderRadius: "",
-            }}
-            className="mx-0_1rem d-flex justify-content-center align-items-center"
-          >
+          </span>
+          <span className="editor-group-button-center-box d-flex justify-content-center align-item-center">
             <TextItalic />
-          </div>
-          <div
-            style={{
-              width: "33.33333333333333%",
-              height: "100%",
-              backgroundColor: "#ECECEC",
-              borderRadius: "12px 0 0 12px",
-            }}
-            className="d-flex justify-content-center align-items-center"
-          >
+          </span>
+          <span className="editor-group-button-left-box d-flex justify-content-center align-item-center">
             <TextBold />
-          </div>
+          </span>
         </section>
       </footer>
     </article>
