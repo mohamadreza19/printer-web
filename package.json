@@ -31,9 +31,11 @@
     "react-waypoint": "^10.3.0",
     "recharts": "^2.4.3",
     "recoil": "^0.7.6",
+    "shortid": "^2.2.16",
     "stylis-plugin-rtl": "^2.1.1",
     "swiper": "^8.4.6",
     "use-immer": "^0.8.1",
+    "uuid": "^9.0.0",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

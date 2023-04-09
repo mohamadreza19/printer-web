@@ -866,3 +866,13 @@ html[dir="ltr"] .editor-end-column-r {
   width: 75.29px;
   height: 36px;
 }
+.splitedColumn-border-left {
+  /* border-left: 1.3px solid #454545; */
+  outline: 1.3px solid #454545;
+}
+.editor-cell-input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: none;
+}

@@ -2,7 +2,9 @@ import { Input, TextField } from "@mui/material";
 import { useDynamicCssClass, useLanguage } from "../../recoil/readStore";
 import Icons from "./Icons";
 import Typography from "./Typography";
-
+import { useRecoilState, useRecoilValue } from "recoil";
+//
+import { isView } from "../../recoil/userEditorStore/selectionButtonsStore/actionButton";
 export default class {
   static v1({ children = "", className = "" }) {
     return <TextField className={className} />;
@@ -355,6 +357,30 @@ export const TextFieldFUN_ClipBoardBadge = ({
           onChange={onChange}
         />
       </div>
+    </>
+  );
+};
+export const Editor_Cell_Input = ({
+  value = " ",
+  onChange = () => {},
+  id = "",
+  placeholder = " ",
+  isSelected = false,
+}) => {
+  const isViewMode = useRecoilValue(isView);
+  console.log(isViewMode);
+
+  return (
+    <>
+      <input
+        className="editor-cell-input"
+        value={value}
+        // placeholder={placeholder}
+        disabled={isViewMode || isSelected}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
+      />
     </>
   );
 };

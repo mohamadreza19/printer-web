@@ -1,26 +1,35 @@
 import { useLanguage } from "../../../../../../../../recoil/readStore";
 import Icons from "../../../../../../../../styles/__ready/Icons";
 
-export default function ({ selectedActionButton, setSelectedActionButton }) {
+export default function ({
+  selectedActionButton,
+  setSelectedActionButton,
+  actions = " ",
+  handeler = () => {},
+  useSelection,
+  useView,
+  useUseText,
+  useUseShape,
+}) {
   const language = useLanguage();
-  const Select = () => {
+
+  const Select = ({ is }) => {
     let changedColor = {
       bg: " ",
       iconFill: " ",
     };
-    changedColor =
-      selectedActionButton == "select"
-        ? (changedColor = {
-            bg: "editor-action-buttons-bg-primary",
-            iconFill: "fill_white",
-          })
-        : (changedColor = {
-            bg: "editor-action-buttons-bg-white",
-            iconFill: "fill_primary ",
-          });
+    changedColor = is
+      ? (changedColor = {
+          bg: "editor-action-buttons-bg-primary",
+          iconFill: "fill_white",
+        })
+      : (changedColor = {
+          bg: "editor-action-buttons-bg-white",
+          iconFill: "fill_primary ",
+        });
     return (
       <section
-        onClick={() => setSelectedActionButton("select")}
+        onClick={() => handeler(actions.SELECT)}
         className={
           "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-3 " +
           changedColor.bg
@@ -33,24 +42,23 @@ export default function ({ selectedActionButton, setSelectedActionButton }) {
       </section>
     );
   };
-  const Hand = () => {
+  const View = ({ is }) => {
     let changedColor = {
       bg: " ",
       iconFill: " ",
     };
-    changedColor =
-      selectedActionButton == "hand"
-        ? (changedColor = {
-            bg: "editor-action-buttons-bg-primary",
-            iconFill: "fill_white",
-          })
-        : (changedColor = {
-            bg: "editor-action-buttons-bg-white",
-            iconFill: "fill_primary ",
-          });
+    changedColor = is
+      ? (changedColor = {
+          bg: "editor-action-buttons-bg-primary",
+          iconFill: "fill_white",
+        })
+      : (changedColor = {
+          bg: "editor-action-buttons-bg-white",
+          iconFill: "fill_primary ",
+        });
     return (
       <section
-        onClick={() => setSelectedActionButton("hand")}
+        onClick={() => handeler(actions.VIEW)}
         className={
           "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem " +
           changedColor.bg
@@ -60,24 +68,23 @@ export default function ({ selectedActionButton, setSelectedActionButton }) {
       </section>
     );
   };
-  const Text = () => {
+  const Text = ({ is }) => {
     let changedColor = {
       bg: " ",
       iconFill: " ",
     };
-    changedColor =
-      selectedActionButton == "text"
-        ? (changedColor = {
-            bg: "editor-action-buttons-bg-primary",
-            iconFill: "fill_white",
-          })
-        : (changedColor = {
-            bg: "editor-action-buttons-bg-white",
-            iconFill: "fill_primary ",
-          });
+    changedColor = is
+      ? (changedColor = {
+          bg: "editor-action-buttons-bg-primary",
+          iconFill: "fill_white",
+        })
+      : (changedColor = {
+          bg: "editor-action-buttons-bg-white",
+          iconFill: "fill_primary ",
+        });
     return (
       <section
-        onClick={() => setSelectedActionButton("text")}
+        onClick={() => handeler(actions.TEXT)}
         className={
           "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem " +
           changedColor.bg
@@ -87,24 +94,23 @@ export default function ({ selectedActionButton, setSelectedActionButton }) {
       </section>
     );
   };
-  const Shape = () => {
+  const Shape = ({ is }) => {
     let changedColor = {
       bg: " ",
       iconFill: " ",
     };
-    changedColor =
-      selectedActionButton == "shape"
-        ? (changedColor = {
-            bg: "editor-action-buttons-bg-primary",
-            iconFill: "fill_white",
-          })
-        : (changedColor = {
-            bg: "editor-action-buttons-bg-white",
-            iconFill: "fill_primary ",
-          });
+    changedColor = is
+      ? (changedColor = {
+          bg: "editor-action-buttons-bg-primary",
+          iconFill: "fill_white",
+        })
+      : (changedColor = {
+          bg: "editor-action-buttons-bg-white",
+          iconFill: "fill_primary ",
+        });
     return (
       <section
-        onClick={() => setSelectedActionButton("shape")}
+        onClick={() => handeler(actions.SHAPE)}
         className={
           "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem position-relative " +
           changedColor.bg
@@ -126,10 +132,10 @@ export default function ({ selectedActionButton, setSelectedActionButton }) {
 
   return (
     <div className="w-100 d-flex flex-column align-items-center ">
-      <Select />
-      <Hand />
-      <Text />
-      <Shape />
+      <Select is={useSelection} />
+      <View is={useView} />
+      <Text is={useUseText} />
+      <Shape is={useUseShape} />
     </div>
   );
 }
