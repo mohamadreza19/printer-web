@@ -1,10 +1,13 @@
 import { Input, TextField } from "@mui/material";
+import ContentEditable from "react-contenteditable";
 import { useDynamicCssClass, useLanguage } from "../../recoil/readStore";
 import Icons from "./Icons";
 import Typography from "./Typography";
 import { useRecoilState, useRecoilValue } from "recoil";
 //
 import { isView } from "../../recoil/userEditorStore/selectionButtonsStore/actionButton";
+import { useRef, useState } from "react";
+import shortid from "shortid";
 export default class {
   static v1({ children = "", className = "" }) {
     return <TextField className={className} />;
@@ -366,20 +369,47 @@ export const Editor_Cell_Input = ({
   id = "",
   placeholder = " ",
   isSelected = false,
+  onBackspaceDown = () => {},
+  onClick = () => {},
+  font = "Arial",
 }) => {
   const isViewMode = useRecoilValue(isView);
-  console.log(isViewMode);
 
   return (
     <>
       <input
         className="editor-cell-input"
-        value={value}
+        value={value || ""}
+        style={{
+          fontFamily: "inherit",
+          fontWeight: "inherit",
+        }}
+        // onSelect={(e) => console.log(e)}
         // placeholder={placeholder}
         disabled={isViewMode || isSelected}
-        onChange={(e) => {
-          onChange(e.target.value);
+        onClick={() => {
+          onClick();
+          // showSelectedText();
         }}
+        onChange={(e) => onChange(e.target.value)}
+        // onKeyDown={(e) => {
+        //   if (e.key == "Backspace") {
+        //     console.log("hi");
+        //     onBackspaceDown();
+        //   }
+        //   if (
+        //     e.key !== "Backspace" &&
+        //     e.key !== "ArrowLeft" &&
+        //     e.key !== "ArrowRight" &&
+        //     e.key !== "ArrowUp" &&
+        //     e.key !== "ArrowDown"
+        //   ) {
+        //     console.log(e.key);
+        //     onChange(e.key);
+        //     // setValue(e.key);
+        //   }
+        // }}
+        id="text"
       />
     </>
   );

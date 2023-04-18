@@ -5,9 +5,9 @@ import SplitedColumn from "./SplitedColumn";
 export default function ({
   children,
   description = "Miniator circle braker F21",
-  cellWidth = 71.23,
+  cellWidth = 100,
   cell,
-  HandleSelect,
+
   HandleChangeInputValue,
   childrenHandleChangeInputValue,
 }) {
@@ -24,11 +24,12 @@ export default function ({
 
   return (
     <section
-      onClick={HandleSelect}
       style={{
-        width: `${cellWidth}px`,
+        width: `${100}px`,
         background: cell.isSelected && "#f36523",
         opacity: cell.isSelected && "0.6",
+        fontFamily: `'${cell.content.style.fontFamily}', sans-serif`,
+        fontWeight: cell.content.style.fontStyle == "bold" ? 600 : 400,
       }}
       className="h-100  edit-rail-child-border position-relative"
     >

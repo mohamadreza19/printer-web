@@ -1,0 +1,18 @@
+export default {
+  SPLITROW: {
+    READ: "READSPLITROW",
+    SET: "SETSPLITROW",
+  },
+  JOINROW: {
+    READ: "READJOINROW",
+    SET: "SETJOINROW",
+  },
+  SPLITCOLUMN: {
+    READ: "READJOINROW",
+    SET: "SETSET",
+  },
+  JOINCOLUMN: {
+    READ: "READJOINCOLUMN",
+    SET: "SETJOINCOLUMN",
+  },
+};

@@ -1,23 +1,21 @@
+import { useRecoilState } from "recoil";
+import { ColumnOne_joinRow } from "../../../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import { Editor_Cell_Input } from "../../../../../../../../../../../../../styles/__ready/Textfields";
 import CellSplitController from "./CellSplitController";
+import { useEffect } from "react";
+import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 
 export default function ({
+  parent = { id: " ", isSelected: false },
   children,
-  HandleChangeInputValue = () => {},
   setCell = () => {},
-  isSelected = false,
-  childrenHandleChangeInputValue = [() => {}, () => {}],
 }) {
   return (
-    <main className="w-100 h-100 d-flex flex-column  ">
+    <main
+      // onClick={handleSelectCell_Via_onClick}
+      className="w-100 h-100 d-flex flex-column  "
+    >
       {children.map((child, index) => {
-        function HandleChangeInputValue(value) {
-          const payload = {
-            id: child.id,
-            content: value,
-          };
-          setCell(payload, "SETCONTENT");
-        }
         return (
           <div
             key={child + index}
@@ -25,16 +23,7 @@ export default function ({
           ${index > 0 ? "splitedColumn-border-left" : " "}
           `}
           >
-            {child.split == "none" ? (
-              <Editor_Cell_Input
-                value={child.content || undefined}
-                disabled={isSelected}
-                // onChange={childrenHandleChangeInputValue[index]}
-                onChange={HandleChangeInputValue}
-              />
-            ) : (
-              <CellSplitController cellForCheck={child} />
-            )}
+            <CellSplitController cellForCheck={child} />
           </div>
         );
       })}

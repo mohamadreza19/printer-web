@@ -1,3 +1,5 @@
+import { atom } from "recoil";
+
 export const ColumnOne_splitRow = atom({
   key: "splitRow",
   default: false,
@@ -14,9 +16,14 @@ export const ColumnOne_joinColumn = atom({
   key: "joinColumn",
   default: false,
 });
-export const ColumnTwo_fonts = atom({
-  key: "fonts",
-  default: ["Arial"],
+
+export const ColumnTwo_font = atom({
+  key: "font",
+  default: {
+    isShow: false,
+    font: "arial",
+    isOnClick: false,
+  },
 });
 export const ColumnTwo_textRight = atom({
   key: "textRight",

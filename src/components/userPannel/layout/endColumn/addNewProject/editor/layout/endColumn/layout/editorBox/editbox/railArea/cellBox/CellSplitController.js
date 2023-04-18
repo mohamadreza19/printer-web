@@ -10,29 +10,22 @@ export default function ({
 }) {
   const setCell = useCellReducer();
   if (cellForCheck.split == "none") {
-    function HandleChangeInputValue(value) {
-      const payload = {
-        id: cellForCheck.id,
-        content: value,
-      };
-      setCell(payload, "SETCONTENT");
-    }
     return (
       <Full
         HandleChangeInputValue={HandleChangeInputValue}
-        content={cellForCheck.content}
+        cell={cellForCheck}
         isSelected={cellForCheck.isSelected}
+        setCell={setCell}
       />
     );
   }
   if (cellForCheck.split == "vertical") {
     return (
       <SplitedColumn
-        id={cellForCheck.id}
         setCell={setCell}
+        parent={cellForCheck}
         children={cellForCheck.children}
         isSelected={cellForCheck.isSelected}
-        childrenHandleChangeInputValue={childrenHandleChangeInputValue}
       />
     );
   }
@@ -40,12 +33,11 @@ export default function ({
   if (cellForCheck.split == "horizontal") {
     return (
       <SplitedRow
-        id={cellForCheck.id}
         setCell={setCell}
         HandleChangeInputValue={HandleChangeInputValue}
+        parent={cellForCheck}
         children={cellForCheck.children}
         isSelected={cellForCheck.isSelected}
-        childrenHandleChangeInputValue={childrenHandleChangeInputValue}
       />
     );
   }
