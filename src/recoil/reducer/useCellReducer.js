@@ -1,12 +1,73 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { cells } from "../userEditorStore/cellsStore";
+import {
+  cells,
+  cells_history,
+  selectedCellForReadStyle,
+} from "../userEditorStore/cellsStore";
 import selectionAction from "../actions/editor/actionButton/selectionbuttons";
 import cellAction from "../actions/editor/cell/cell";
 import editorHeaderActionButton from "../actions/editor/actionButton/editorHeaderActionButton";
 import shortid from "shortid";
+import { useUndoRedo } from "../../utility/undoRedo";
+import {
+  ColumnFour_redo,
+  ColumnFour_undo,
+} from "../userEditorStore/EditorHeaderActionButton";
 
 export default function () {
-  const [state, setState] = useRecoilState(cells);
+  const [state, setState] = useRecoilState(cells_history);
+  const setSelectedCellForReadStyle = useSetRecoilState(
+    selectedCellForReadStyle
+  );
+  const setCanUseUndo = useSetRecoilState(ColumnFour_undo);
+  const setCanUseRedo = useSetRecoilState(ColumnFour_redo);
+  const { future, past, present } = state;
+
+  const isUndoPossible = past && past.length > 0;
+  const isRedoPossible = future && future.length > 0;
+
+  if (isUndoPossible) {
+    setCanUseUndo(true);
+  } else {
+    setCanUseUndo(false);
+  }
+  if (isRedoPossible) {
+    setCanUseRedo(true);
+  } else {
+    setCanUseRedo(false);
+  }
+
+  const HistoryChanger = (newState) => {
+    const { type = "", value = "" } = newState;
+    if (type === "SET_HISTORY") {
+      setState(() => {
+        return {
+          past: [...past, present],
+          present: value,
+          future: [],
+        };
+      });
+    }
+    if (type === "UNDO") {
+      setState(() => {
+        return {
+          past: past.slice(0, past.length - 1),
+          present: past[past.length - 1],
+          future: [present, ...future],
+        };
+      });
+    }
+
+    if (type === "REDO") {
+      setState(() => {
+        return {
+          past: [...past, present],
+          present: future[0],
+          future: future.slice(1),
+        };
+      });
+    }
+  };
 
   function setCell(
     payload = {
@@ -25,22 +86,17 @@ export default function () {
   ) {
     if (!action) throw new Error("need action");
 
-    if (
-      action == selectionAction.SELECT ||
-      action == selectionAction.SELECTPARENT
-    ) {
+    if (action == selectionAction.SELECT) {
       //requirement
       // payload.id
 
       function cellSplitController(cell) {
         function fullCellChecker(cellForCheck) {
-          if (action == selectionAction.SELECTPARENT) {
-            if (payload.cellId == cellForCheck.id && !cellForCheck.payload) {
-              return { ...cellForCheck, isSelected: true };
-            }
-          }
           if (payload.cellId == cellForCheck.id) {
-            return { ...cellForCheck, isSelected: true };
+            const a = { ...cellForCheck, isSelected: true };
+
+            setSelectedCellForReadStyle(a.content?.style || null);
+            return a;
           }
           return { ...cellForCheck, isSelected: false };
         }
@@ -88,45 +144,25 @@ export default function () {
         }
       }
 
-      const newState = state.map((item) => {
+      const newState = state.present.map((item) => {
         return cellSplitController(item);
       });
 
-      return setState(newState);
+      return setState((draft) => ({
+        ...draft,
+        present: newState,
+      }));
     }
     if (action == selectionAction.VIEW) {
-      const newState = state.map((item) => {
-        return { ...item, isSelected: false };
-      });
-      return setState(newState);
-    }
-    if (action == cellAction.NEWSETCONTENT) {
       function cellSplitController(cell) {
-        function fullCellChecker(cellForcheck) {
-          if (cellForcheck.id == payload.cellId) {
-            //  add new content
+        function fullCellChecker(cellForCheck) {
+          const a = { ...cellForCheck, isSelected: false };
 
-            let newContent = {
-              values: "",
-              style: "",
-            };
-            if (!cellForcheck.parentId) {
-              newContent = {
-                values: payload.content.value,
-                style: cellForcheck.content.style,
-              };
-            } else {
-              newContent = {
-                values: payload.content.value,
-                style: null,
-              };
-            }
-            return { ...cellForcheck, content: newContent };
-          }
-          return cellForcheck;
+          // setSelectedCellForReadStyle(a.content?.style || null);
+          return a;
         }
-        function verticalCellChecker(cellForcheck) {
-          const newChilren = cellForcheck.children.map((child) => {
+        function verticalCellChecker(cellForCheck) {
+          const mapedChildren = cellForCheck.children.map((child) => {
             if (child.split == "none") {
               return fullCellChecker(child);
             }
@@ -138,10 +174,11 @@ export default function () {
             }
             return child;
           });
-          return { ...cellForcheck, children: newChilren };
+
+          return { ...cellForCheck, children: mapedChildren };
         }
-        function horizontalCellChecker(cellForcheck) {
-          const newChilren = cellForcheck.children.map((child) => {
+        function horizontalCellChecker(cellForCheck) {
+          const mapedChildren = cellForCheck.children.map((child) => {
             if (child.split == "none") {
               return fullCellChecker(child);
             }
@@ -153,7 +190,8 @@ export default function () {
             }
             return child;
           });
-          return { ...cellForcheck, children: newChilren };
+
+          return { ...cellForCheck, children: mapedChildren };
         }
 
         if (cell.split == "none") {
@@ -165,12 +203,78 @@ export default function () {
         if (cell.split == "horizontal") {
           return horizontalCellChecker(cell);
         }
-        return cell;
       }
-      const newState = state.map((item) => {
+      const newState = state.present.map((item) => {
         return cellSplitController(item);
       });
-      return setState(newState);
+      return setState((draft) => ({
+        draft,
+        present: newState,
+      }));
+    }
+    if (action == cellAction.NEWSETCONTENT) {
+      function cellSplitController(cell) {
+        function fullCellChecker(cellForcheck) {
+          if (cellForcheck.id == payload.cellId) {
+            //  add new content
+
+            let newContent = {
+              values: "",
+              style: "",
+            };
+
+            newContent = {
+              values: payload.content.value,
+              style: cellForcheck.content.style,
+            };
+
+            const a = { ...cellForcheck, content: newContent };
+
+            return a;
+          }
+          return cellForcheck;
+        }
+        function verticalCellChecker(cellForcheck) {
+          const newChilren = cellForcheck.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: verticalCellChecker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: verticalCellChecker(child) };
+            }
+            return child;
+          });
+          return newChilren;
+        }
+
+        if (cell.split == "none") {
+          return fullCellChecker(cell);
+        }
+        if (cell.split == "vertical") {
+          return {
+            ...cell,
+            children: verticalCellChecker(cell),
+          };
+        }
+        if (cell.split == "horizontal") {
+          return {
+            ...cell,
+            children: verticalCellChecker(cell),
+          };
+        }
+        return cell;
+      }
+      const newState = state.present.map((item) => {
+        return cellSplitController(item);
+      });
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
     }
     if (action == cellAction.DELETECONTENT) {
       function cellSplitController(cell) {
@@ -226,10 +330,14 @@ export default function () {
         }
         return cell;
       }
-      const newState = state.map((item) => {
+      const newState = state.present.map((item) => {
         return cellSplitController(item);
       });
-      return setState(newState);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
     }
     if (action == cellAction.SPLITCOLUMN) {
       //requirement
@@ -241,8 +349,8 @@ export default function () {
             const a = {
               ...cellforSplit,
               content: {
-                values: null,
-                style: cellforSplit.content?.style,
+                values: " ",
+                style: cellforSplit.content.style,
               },
               split: "vertical",
               children: [
@@ -251,7 +359,10 @@ export default function () {
                   parentId: cellforSplit.id,
                   id: shortid.generate(),
                   split: "none",
-                  content: cellforSplit.content,
+                  content: {
+                    values: " ",
+                    style: cellforSplit.content?.style,
+                  },
 
                   isSelected: false,
                 },
@@ -260,7 +371,10 @@ export default function () {
                   parentId: cellforSplit.id,
                   id: shortid.generate(),
                   split: "none",
-                  content: null,
+                  content: {
+                    values: null,
+                    style: cellforSplit.content?.style,
+                  },
 
                   isSelected: false,
                 },
@@ -273,7 +387,6 @@ export default function () {
         }
 
         function verticalCellChecker(cellforSplit) {
-          console.log({ cellforSplit });
           const mapedChildren = cellforSplit.children.map((child) => {
             if (child.split == "none") {
               return fullCellChecker(child);
@@ -294,7 +407,6 @@ export default function () {
           return fullCellChecker(cellForSplit);
         }
         if (cellForSplit.split == "vertical") {
-          // return verticalCellChecker(cellForSplit);
           return {
             ...cellForSplit,
             children: verticalCellChecker(cellForSplit),
@@ -310,10 +422,14 @@ export default function () {
         return cellForSplit;
       }
 
-      const newState = state.map((item) => {
+      const newState = state.present.map((item) => {
         return splitColumnController(item);
       });
-      return setState(newState);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
     }
     if (action == cellAction.SPLITROW) {
       //requirement
@@ -335,7 +451,10 @@ export default function () {
                   parentId: cellforSplit.id,
                   id: shortid.generate(),
                   split: "none",
-                  content: cellforSplit.content,
+                  content: {
+                    values: null,
+                    style: cellforSplit.content?.style,
+                  },
 
                   isSelected: false,
                 },
@@ -344,7 +463,10 @@ export default function () {
                   parentId: cellforSplit.id,
                   id: shortid.generate(),
                   split: "none",
-                  content: null,
+                  content: {
+                    values: null,
+                    style: cellforSplit.content?.style,
+                  },
 
                   isSelected: false,
                 },
@@ -354,7 +476,6 @@ export default function () {
           return cellforSplit;
         }
         function horizontalCellChecker(cellforSplit) {
-          console.log({ cellforSplit });
           const mapedChildren = cellforSplit.children.map((child) => {
             if (child.split == "none") {
               return fullCellChecker(child);
@@ -391,10 +512,14 @@ export default function () {
         return cellForSplit;
       }
 
-      const newState = state.map((item) => {
+      const newState = state.present.map((item) => {
         return splitRowController(item);
       });
-      return setState(newState);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
     }
     if (action == cellAction.JOINROW) {
       //requirement
@@ -460,10 +585,14 @@ export default function () {
         return cellForJoin;
       }
 
-      const newState = state.map((item) => {
+      const newState = state.present.map((item) => {
         return JoinRowController(item);
       });
-      return setState(newState);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
     }
     if (action == cellAction.JOINCOLUMN) {
       //requirement
@@ -529,91 +658,627 @@ export default function () {
         return cellForJoin;
       }
 
-      const newState = state.map((item) => {
+      const newState = state.present.map((item) => {
         return JoinColumnController(item);
       });
-      return setState(newState);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
     }
     if (action == cellAction.SETFONT) {
       //requirement
       //payload.cellId == parentId
       //action
       function setFountForRoot(cellForSetFont) {
-        if (cellForSetFont.id == payload.cellId) {
+        function fullCellChecker(cell) {
+          if (cell.id == payload.cellId) {
+            console.log(payload);
+            const a = {
+              ...cell,
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  fontFamily: payload.content,
+                },
+              },
+            };
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cell;
+        }
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cellForSetFont.split == "none") {
+          return fullCellChecker(cellForSetFont);
+        }
+        if (cellForSetFont.split == "vertical") {
           return {
             ...cellForSetFont,
-            content: {
-              ...cellForSetFont.content,
-              style: {
-                ...cellForSetFont.content.style,
-                fontFamily: payload.content,
-              },
-            },
+            children: checker(cellForSetFont),
           };
         }
-        return cellForSetFont;
+        if (cellForSetFont.split == "horizontal") {
+          return {
+            ...cellForSetFont,
+            children: checker(cellForSetFont),
+          };
+        }
       }
 
-      const newState = state.map((item) => {
+      const newState = state.present.map((item) => {
         return setFountForRoot(item);
       });
-      return setState(newState);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
     }
-    if (action == cellAction.TEXTBOLD) {
+    if (action == cellAction.FONTSTYLE) {
       //requirement
       //payload.cellId == parentId
       //action
-      function setTextBoldForRoot(cellForSetFont) {
-        if (cellForSetFont.id == payload.cellId) {
-          // console.log(cellForSetFont);
-          const a = {
-            ...cellForSetFont,
-            content: {
-              ...cellForSetFont.content,
-              style: {
-                ...cellForSetFont.content.style,
-                fontStyle: payload.content,
+
+      function setTextFontStyle(cellForSetFontStyle) {
+        function fullCellChecker(cell) {
+          if (cell.id == payload.cellId) {
+            const a = {
+              ...cell,
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  fontStyle: payload.content,
+                },
               },
-            },
-          };
-          console.log(a);
-          return a;
+            };
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cell;
         }
-        return cellForSetFont;
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cellForSetFontStyle.split == "none") {
+          return fullCellChecker(cellForSetFontStyle);
+        }
+        if (cellForSetFontStyle.split == "vertical") {
+          return {
+            ...cellForSetFontStyle,
+            children: checker(cellForSetFontStyle),
+          };
+        }
+        if (cellForSetFontStyle.split == "horizontal") {
+          return {
+            ...cellForSetFontStyle,
+            children: checker(cellForSetFontStyle),
+          };
+        }
       }
 
-      const newState = state.map((item) => {
-        return setTextBoldForRoot(item);
+      const newState = state.present.map((item) => {
+        return setTextFontStyle(item);
       });
-      return setState(newState);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
     }
-    if (action == cellAction.REGULAR) {
+    if (action == cellAction.TEXTALIGN) {
       //requirement
       //payload.cellId == parentId
       //action
-      function setTextBoldForRoot(cellForSetFont) {
-        if (cellForSetFont.id == payload.cellId) {
-          // console.log(cellForSetFont);
-          const a = {
-            ...cellForSetFont,
-            content: {
-              ...cellForSetFont.content,
-              style: {
-                ...cellForSetFont.content.style,
-                fontStyle: payload.content,
-              },
-            },
-          };
 
-          return a;
+      function setTextAlign(cellTextAlign) {
+        function fullCellChecker(cell) {
+          if (cell.id == payload.cellId) {
+            console.log(payload);
+            const a = {
+              ...cell,
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  textAlign: payload.content,
+                },
+              },
+            };
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cell;
         }
-        return cellForSetFont;
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cellTextAlign.split == "none") {
+          return fullCellChecker(cellTextAlign);
+        }
+        if (cellTextAlign.split == "vertical") {
+          return {
+            ...cellTextAlign,
+            children: checker(cellTextAlign),
+          };
+        }
+        if (cellTextAlign.split == "horizontal") {
+          return {
+            ...cellTextAlign,
+            children: checker(cellTextAlign),
+          };
+        }
       }
 
-      const newState = state.map((item) => {
-        return setTextBoldForRoot(item);
+      const newState = state.present.map((item) => {
+        return setTextAlign(item);
       });
-      return setState(newState);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.CHANGEFONTSIZE) {
+      //requirement
+      //payload.cellId == parentId
+      //action
+
+      function setTextAlign(cellTextAlign) {
+        function fullCellChecker(cell) {
+          if (cell.id == payload.cellId) {
+            let fontSizeValue;
+            let cellFontSize = cell.content.style.fontSize;
+            if (payload.content == "increment") {
+              fontSizeValue = +cellFontSize + 1;
+            }
+            if (payload.content == "decrement") {
+              if (cell.content.style.fontSize > 1) {
+                fontSizeValue = cellFontSize - 1;
+              } else {
+                fontSizeValue = 1;
+              }
+            }
+
+            const a = {
+              ...cell,
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  fontSize: fontSizeValue,
+                },
+              },
+            };
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cell;
+        }
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cellTextAlign.split == "none") {
+          return fullCellChecker(cellTextAlign);
+        }
+        if (cellTextAlign.split == "vertical") {
+          return {
+            ...cellTextAlign,
+            children: checker(cellTextAlign),
+          };
+        }
+        if (cellTextAlign.split == "horizontal") {
+          return {
+            ...cellTextAlign,
+            children: checker(cellTextAlign),
+          };
+        }
+      }
+
+      const newState = state.present.map((item) => {
+        return setTextAlign(item);
+      });
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.CHANGEFONTANGLE) {
+      //requirement
+      //payload.cellId == parentId
+      //action
+
+      function setTextAlign(cellTextAlign) {
+        function fullCellChecker(cell) {
+          if (cell.id == payload.cellId) {
+            let fontAngleValue;
+            let cellFontAngle = cell.content.style.angle;
+            if (payload.content == "increment") {
+              fontAngleValue = +cellFontAngle + 1;
+            }
+            if (payload.content == "decrement") {
+              // if (cell.content.style.fontSize > 1) {
+              fontAngleValue = cellFontAngle - 1;
+              // } else {
+              //   fontAngleValue = 1;
+              // }
+            }
+
+            const a = {
+              ...cell,
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  angle: fontAngleValue,
+                },
+              },
+            };
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cell;
+        }
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cellTextAlign.split == "none") {
+          return fullCellChecker(cellTextAlign);
+        }
+        if (cellTextAlign.split == "vertical") {
+          return {
+            ...cellTextAlign,
+            children: checker(cellTextAlign),
+          };
+        }
+        if (cellTextAlign.split == "horizontal") {
+          return {
+            ...cellTextAlign,
+            children: checker(cellTextAlign),
+          };
+        }
+      }
+
+      const newState = state.present.map((item) => {
+        return setTextAlign(item);
+      });
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.CHANGECELLMARGIN) {
+      //requirement
+      //payload.cellId == parentId
+      //action
+
+      function setTextAlign(cell) {
+        function fullCellChecker(cellFotCheck) {
+          if (cellFotCheck.id == payload.cellId) {
+            let newMargin;
+            let cellMargin = cellFotCheck.content.style.margin;
+            if (payload.content == "increment") {
+              newMargin = +cellMargin + 1;
+            }
+
+            if (payload.content == "decrement") {
+              console.log("de");
+              if (cellFotCheck.content.style.margin > 0) {
+                console.log(newMargin);
+                newMargin = cellMargin - 1;
+              } else {
+                newMargin = 0;
+              }
+            }
+
+            console.log(cellFotCheck.content.style.margin);
+            const a = {
+              ...cellFotCheck,
+              content: {
+                ...cellFotCheck.content,
+                style: {
+                  ...cellFotCheck.content.style,
+                  margin: newMargin,
+                },
+              },
+            };
+
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cellFotCheck;
+        }
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cell.split == "none") {
+          return fullCellChecker(cell);
+        }
+        if (cell.split == "vertical") {
+          return {
+            ...cell,
+            children: checker(cell),
+          };
+        }
+        if (cell.split == "horizontal") {
+          return {
+            ...cell,
+            children: checker(cell),
+          };
+        }
+      }
+
+      const newState = state.present.map((item) => {
+        return setTextAlign(item);
+      });
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.CHANGECELLPADDING) {
+      //requirement
+      //payload.cellId == parentId
+      //action
+
+      function setPadding(cellTextAlign) {
+        function fullCellChecker(cell) {
+          if (cell.id == payload.cellId) {
+            let newPadding;
+            let cellPadding = cell.content.style.padding;
+            if (payload.content == "increment") {
+              newPadding = +cellPadding + 1;
+            }
+            if (payload.content == "decrement") {
+              if (cell.content.style.padding > 0) {
+                newPadding = cellPadding - 1;
+              } else {
+                newPadding = 0;
+              }
+            }
+
+            const a = {
+              ...cell,
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  padding: newPadding,
+                },
+              },
+            };
+
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cell;
+        }
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cellTextAlign.split == "none") {
+          return fullCellChecker(cellTextAlign);
+        }
+        if (cellTextAlign.split == "vertical") {
+          return {
+            ...cellTextAlign,
+            children: checker(cellTextAlign),
+          };
+        }
+        if (cellTextAlign.split == "horizontal") {
+          return {
+            ...cellTextAlign,
+            children: checker(cellTextAlign),
+          };
+        }
+      }
+
+      const newState = state.present.map((item) => {
+        return setPadding(item);
+      });
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.DELETECELL) {
+      const newState = state.present.filter(
+        (item) => item.id !== payload.cellId
+      );
+      console.log({ newState });
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.DUPLICATECELL) {
+      const matchedCellIndex = state.present.findIndex(
+        (item) => item.id == payload.cellId
+      );
+      const newState = [...state.present];
+      const cellFinded = newState[matchedCellIndex];
+
+      function cellSplitController(cell) {
+        function fullCellChecker(cellForCheck) {
+          return { ...cellForCheck, id: shortid.generate() };
+        }
+        function verticalCellChecker(cellForCheck) {
+          const mapedChildren = cellForCheck.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return verticalCellChecker(child);
+            }
+            if (child.split == "horizontal") {
+              return horizontalCellChecker(child);
+            }
+            return child;
+          });
+
+          return { ...cellForCheck, children: mapedChildren };
+        }
+        function horizontalCellChecker(cellForCheck) {
+          const mapedChildren = cellForCheck.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return verticalCellChecker(child);
+            }
+            if (child.split == "horizontal") {
+              return horizontalCellChecker(child);
+            }
+            return child;
+          });
+
+          return { ...cellForCheck, children: mapedChildren };
+        }
+
+        if (cell.split == "none") {
+          return fullCellChecker(cell);
+        }
+        if (cell.split == "vertical") {
+          return verticalCellChecker(cell);
+        }
+        if (cell.split == "horizontal") {
+          return horizontalCellChecker(cell);
+        }
+      }
+      const cellWithNewId = cellSplitController(cellFinded);
+
+      newState.splice(matchedCellIndex, 0, cellWithNewId);
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newState,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.UNDO) {
+      const historyPayload = {
+        type: "UNDO",
+      };
+      if (isUndoPossible) {
+        HistoryChanger(historyPayload);
+      } else {
+      }
+    }
+    if (action == cellAction.REDO) {
+      const historyPayload = {
+        type: "REDO",
+      };
+      if (isRedoPossible) {
+        HistoryChanger(historyPayload);
+      } else {
+      }
     }
   }
 

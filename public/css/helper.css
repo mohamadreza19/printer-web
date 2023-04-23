@@ -29,6 +29,10 @@ html {
 /* * {
   outline: 1.5px solid red;
 } */
+input:focus,
+input:focus {
+  outline: none;
+}
 a {
   color: inherit !important;
 }

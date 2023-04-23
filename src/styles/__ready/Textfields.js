@@ -371,7 +371,12 @@ export const Editor_Cell_Input = ({
   isSelected = false,
   onBackspaceDown = () => {},
   onClick = () => {},
-  font = "Arial",
+  style = {
+    fontFamily: "",
+    fontStyle: "",
+    angle: 0,
+    fontSize: "",
+  },
 }) => {
   const isViewMode = useRecoilValue(isView);
 
@@ -381,34 +386,21 @@ export const Editor_Cell_Input = ({
         className="editor-cell-input"
         value={value || ""}
         style={{
-          fontFamily: "inherit",
-          fontWeight: "inherit",
+          fontFamily: style.fontFamily,
+          fontWeight: style.fontStyle == "bold" ? 600 : 400,
+          fontSize: style.fontSize,
+          fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
+          textDecoration: style.fontStyle == "underline" ? "underline" : "none",
+          textAlign: style.textAlign,
+          rotate: `${style.angle}deg`,
+          margin: `${style.margin}px 0`,
+          padding: `${style.padding}px`,
         }}
-        // onSelect={(e) => console.log(e)}
-        // placeholder={placeholder}
         disabled={isViewMode || isSelected}
         onClick={() => {
           onClick();
-          // showSelectedText();
         }}
         onChange={(e) => onChange(e.target.value)}
-        // onKeyDown={(e) => {
-        //   if (e.key == "Backspace") {
-        //     console.log("hi");
-        //     onBackspaceDown();
-        //   }
-        //   if (
-        //     e.key !== "Backspace" &&
-        //     e.key !== "ArrowLeft" &&
-        //     e.key !== "ArrowRight" &&
-        //     e.key !== "ArrowUp" &&
-        //     e.key !== "ArrowDown"
-        //   ) {
-        //     console.log(e.key);
-        //     onChange(e.key);
-        //     // setValue(e.key);
-        //   }
-        // }}
         id="text"
       />
     </>

@@ -16,19 +16,13 @@ export default function ({
   return (
     <main className="w-100 h-100 d-flex ">
       {children.map((child, index) => {
-        function HandleChangeInputValue(value) {
-          const payload = {
-            id: child.id,
-            content: value,
-          };
-          setCell(payload, "SETCONTENT");
-        }
-
         return (
           <div
             key={index}
+            // className={`w-50 h-100 d-flex justify-content-center align-items-center
+            //  ${index > 0 ? " splitedColumn-border-left" : " "}
+            // `}
             className={`w-50 h-100 d-flex justify-content-center align-items-center
-            ${index > 0 ? " splitedColumn-border-left" : " "}
             `}
           >
             <CellSplitController cellForCheck={child} />

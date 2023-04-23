@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { cells } from "../recoil/userEditorStore/cellsStore";
 
 export const useUndoRedo = (initialState = {}) => {
   const [history, setHistory] = useState({
@@ -15,10 +17,7 @@ export const useUndoRedo = (initialState = {}) => {
       setHistory(() => {
         return {
           past: [...past, present],
-          present: {
-            ...present,
-            [key]: value,
-          },
+          present: value,
           future: [],
         };
       });

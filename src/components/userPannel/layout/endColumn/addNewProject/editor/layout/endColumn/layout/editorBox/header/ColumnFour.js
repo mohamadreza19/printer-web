@@ -1,29 +1,90 @@
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  ColumnFour_justify_start,
+  ColumnFour_redo,
+  ColumnFour_undo,
+} from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import {
   LeftToRight,
   Redo,
   RightToLeft,
   Undo,
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
+import useCellReducer from "../../../../../../../../../../../recoil/reducer/useCellReducer";
 
 export default function () {
-  return (
-    <article className="">
-      <header className="d-flex mb-2">
-        <section className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center">
-          <Redo />
-        </section>
-        <section className="editor-small-cell-box d-flex justify-content-center align-items-center">
-          <Undo />
-        </section>
-      </header>
+  const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
+  const useRedo = useRecoilValue(ColumnFour_redo);
+  const useUndo = useRecoilValue(ColumnFour_undo);
+  const setCell = useCellReducer();
+  const JustifyRealBox = () => {
+    function onClick(justifyToSet) {
+      if (justifyToSet == "start") {
+        setJustify(true);
+      }
+      if (justifyToSet == "end") {
+        setJustify(false);
+      }
+    }
+    return (
       <footer className="d-flex">
-        <section className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center">
+        <section
+          onClick={() => onClick("start")}
+          className={`editor-small-cell-box me-2 d-flex justify-content-center align-items-center ${
+            justify && "opacity-4"
+          }`}
+        >
           <RightToLeft />
         </section>
-        <section className="editor-small-cell-box d-flex justify-content-center align-items-center">
+        <section
+          onClick={() => onClick("end")}
+          className={`editor-small-cell-box d-flex justify-content-center align-items-center ${
+            !justify && "opacity-4"
+          }`}
+        >
           <LeftToRight />
         </section>
       </footer>
+    );
+  };
+  const RedoBox = () => {
+    function onClick() {
+      setCell(undefined, "REDO");
+    }
+
+    return (
+      <section
+        onClick={onClick}
+        className={`editor-small-cell-box me-2 d-flex justify-content-center align-items-center ${
+          useRedo ? "" : "opacity-4"
+        }`}
+      >
+        <Redo />
+      </section>
+    );
+  };
+  const UndoBox = () => {
+    function onClick() {
+      setCell(undefined, "UNDO");
+    }
+    return (
+      <section
+        onClick={onClick}
+        className={`editor-small-cell-box d-flex justify-content-center align-items-center ${
+          useUndo ? "" : "opacity-4"
+        }`}
+      >
+        <Undo />
+      </section>
+    );
+  };
+  return (
+    <article className="">
+      <header className="d-flex mb-2">
+        <RedoBox />
+        <UndoBox />
+      </header>
+      <JustifyRealBox />
     </article>
   );
 }

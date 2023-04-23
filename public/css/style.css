@@ -687,6 +687,11 @@ html[dir="ltr"] .editor-end-column-r {
   border-radius: 10px;
   background: #ececec;
 }
+.editor-angle-symbol {
+  position: absolute;
+  /* left: 10px; */
+  bottom: 5px;
+}
 .editor-group-button-right-box {
   width: 38px;
   height: 38px;
@@ -822,7 +827,7 @@ html[dir="ltr"] .editor-end-column-r {
 }
 .edit-rail {
   height: 53.14px;
-  width: 800px;
+  width: 700px;
   background: #cbcbcb;
 }
 .edit-rail-child-border {

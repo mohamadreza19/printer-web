@@ -10,16 +10,18 @@ import {
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 import {
+  ColumnThree_FontStyle,
+  ColumnTwo_TextAlign,
   ColumnTwo_font,
-  ColumnTwo_textBold,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
-import { SelectedRootCell } from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
+import { selectedCellForReadStyle } from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 
 export default function () {
   const [font, setFont] = useRecoilState(ColumnTwo_font);
-  const [textBold, setTextBold] = useRecoilState(ColumnTwo_textBold);
+  const [fontStyle, setFontStyle] = useRecoilState(ColumnThree_FontStyle);
+  const [textAlign, setTextAlign] = useRecoilState(ColumnTwo_TextAlign);
 
-  const selectedRoot = useRecoilValue(SelectedRootCell);
+  const cellForReadStyle = useRecoilValue(selectedCellForReadStyle);
 
   const SelectFont = () => {
     function onClick() {
@@ -109,25 +111,167 @@ export default function () {
           }}
           className="h-100 d-flex justify-content-center align-items-center position-relative"
         >
-          <Typography.H8>{selectedRoot.fontFamily}</Typography.H8>
+          <Typography.H8>{cellForReadStyle.fontFamily}</Typography.H8>
           <FontsMenu />
         </span>
       </section>
     );
   };
+
   const TextBoldBox = () => {
     function onClick() {
-      setTextBold(!textBold);
+      setFontStyle((draft) => {
+        if (cellForReadStyle.fontStyle == "regular") {
+          return {
+            chosenStyle: "bold",
+            isUsed: true,
+          };
+        }
+        if (cellForReadStyle.fontStyle == "bold") {
+          console.log("is bold");
+          return {
+            chosenStyle: "regular",
+            isUsed: true,
+          };
+        }
+        return {
+          chosenStyle: "bold",
+          isUsed: true,
+        };
+      });
     }
     return (
       <span
         onClick={onClick}
         className={`editor-group-button-left-box d-flex justify-content-center align-item-center ${
-          selectedRoot.fontStyle == "bold" && "opacity-4"
+          // cellForReadStyle.fontStyle == "bold" && "opacity-4"
+          fontStyle.chosenStyle == "bold" ? "opacity-4" : " "
         }`}
       >
         <TextBold />
       </span>
+    );
+  };
+  const TextUnderLineBox = () => {
+    function onClick() {
+      setFontStyle((draft) => {
+        if (cellForReadStyle.fontStyle == "regular") {
+          return {
+            chosenStyle: "underline",
+            isUsed: true,
+          };
+        }
+        if (cellForReadStyle.fontStyle == "underline") {
+          return {
+            chosenStyle: "regular",
+            isUsed: true,
+          };
+        }
+        return {
+          chosenStyle: "underline",
+          isUsed: true,
+        };
+      });
+    }
+    return (
+      <span
+        onClick={onClick}
+        className={`editor-group-button-right-box  d-flex justify-content-center align-item-center ${
+          // cellForReadStyle.fontStyle == "bold" && "opacity-4"
+          fontStyle.chosenStyle == "underline" && "opacity-4"
+        }`}
+      >
+        <TextUnderLine />
+      </span>
+    );
+  };
+  const TextItalicBox = () => {
+    function onClick() {
+      setFontStyle((draft) => {
+        if (cellForReadStyle.fontStyle == "regular") {
+          return {
+            chosenStyle: "italic",
+            isUsed: true,
+          };
+        }
+        if (cellForReadStyle.fontStyle == "italic") {
+          console.log("isbold");
+          return {
+            chosenStyle: "regular",
+            isUsed: true,
+          };
+        }
+        return {
+          chosenStyle: "italic",
+          isUsed: true,
+        };
+      });
+    }
+    return (
+      <span
+        onClick={onClick}
+        className={`editor-group-button-center-box d-flex justify-content-center align-item-center ${
+          // cellForReadStyle.fontStyle == "bold" && "opacity-4"
+          fontStyle.chosenStyle == "italic" && "opacity-4"
+        }`}
+      >
+        <TextItalic />
+      </span>
+    );
+  };
+  const TextJustify = () => {
+    function onClickRight() {
+      setTextAlign((draft) => {
+        return {
+          chosenAlign: "right",
+          isUsed: true,
+        };
+      });
+    }
+    function onClickCenter() {
+      setTextAlign((draft) => {
+        return {
+          chosenAlign: "center",
+          isUsed: true,
+        };
+      });
+    }
+    function onClickLeft() {
+      setTextAlign((draft) => {
+        return {
+          chosenAlign: "left",
+          isUsed: true,
+        };
+      });
+    }
+
+    return (
+      <section className="d-flex ">
+        <span
+          onClick={onClickRight}
+          className={`editor-group-button-right-box d-flex justify-content-center align-item-center ${
+            cellForReadStyle.textAlign == "right" && "opacity-4"
+          }`}
+        >
+          <TextRight />
+        </span>
+        <span
+          onClick={onClickCenter}
+          className={`editor-group-button-center-box d-flex justify-content-center align-item-center  ${
+            cellForReadStyle.textAlign == "center" && "opacity-4"
+          }`}
+        >
+          <TextCenter />
+        </span>
+        <span
+          onClick={onClickLeft}
+          className={`editor-group-button-left-box d-flex justify-content-center align-item-center  ${
+            cellForReadStyle.textAlign == "left" && "opacity-4"
+          }`}
+        >
+          <TextLeft />
+        </span>
+      </section>
     );
   };
   return (
@@ -136,24 +280,10 @@ export default function () {
         <SelectFont />
       </header>
       <footer className="d-flex justify-content-between">
-        <section className="d-flex ">
-          <span className="editor-group-button-right-box d-flex justify-content-center align-item-center">
-            <TextRight />
-          </span>
-          <span className="editor-group-button-center-box d-flex justify-content-center align-item-center ">
-            <TextCenter />
-          </span>
-          <span className="editor-group-button-left-box d-flex justify-content-center align-item-center">
-            <TextLeft />
-          </span>
-        </section>
+        <TextJustify />
         <section className="d-flex">
-          <span className="editor-group-button-right-box d-flex justify-content-center align-item-center">
-            <TextUnderLine />
-          </span>
-          <span className="editor-group-button-center-box d-flex justify-content-center align-item-center">
-            <TextItalic />
-          </span>
+          <TextUnderLineBox />
+          <TextItalicBox />
           <TextBoldBox />
         </section>
       </footer>
