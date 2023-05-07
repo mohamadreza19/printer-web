@@ -316,7 +316,7 @@ export const TextFieldFUN_v5 = ({
   const changedClass = language == "fa" ? " " : "font-English";
 
   return (
-    <>
+    <article className="text-filed-medium-v1">
       <div
         className={` bg-white border  d-flex align-items-center border-r-20 ${className}`}
       >
@@ -337,7 +337,7 @@ export const TextFieldFUN_v5 = ({
           {value.length}/120
         </Typography.Button_v2>
       </footer>
-    </>
+    </article>
   );
 };
 export const TextFieldFUN_v5_Big = ({

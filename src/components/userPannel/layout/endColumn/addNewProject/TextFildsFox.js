@@ -7,12 +7,13 @@ import Textfields, {
 } from "../../../../../styles/__ready/Textfields";
 import Typography from "../../../../../styles/__ready/Typography";
 import Buttons from "../../../../../styles/__ready/Buttons";
-import { Grid } from "@mui/material";
+import { Grid, css } from "@mui/material";
 import { ProjectPost_Mutation } from "../../../../../helper/UserApiQueries";
 import useToastReducer from "../../../../../recoil/reducer/useToastReducer";
 import add_project_validation from "../../../../../validation/add_project_validation";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDynamicCssClass } from "../../../../../recoil/readStore";
 
 export default function ({
   ms_2 = " ",
@@ -28,6 +29,7 @@ export default function ({
 }) {
   const navigate = useNavigate();
   const { isSuccess, isLoading, mutate, error, data } = ProjectPost_Mutation();
+  const cssClass = useDynamicCssClass();
   const [state, setState] = useState({
     createdBy: {
       value: "",
@@ -74,6 +76,7 @@ export default function ({
     try {
       await add_project_validation(body);
       mutate(body);
+      console.log(isSuccess);
     } catch (error) {
       if (error.inner) {
         error.inner.map((err) => {
@@ -104,19 +107,27 @@ export default function ({
     }
   }, [isLoading]);
   if (isSuccess) {
-    console.log(data);
     setLoading({
       isShow: false,
       message: "",
     });
-    // navigate(`/user/add-project/editor`);
+    // data = {
+    //   createdAt: "2023-05-07T10:56:14.762Z",
+    //   createdBy: "dsfdsf",
+    //   id: 127,
+    //   numberOfRails: 1,
+    //   projectName: "dfsdf",
+    //   updatedAt: "2023-05-07T10:56:14.762Z",
+    //   userId: 1,
+    // }
+    navigate(`/user/add-project/editor/${data.id}`);
   }
   return (
-    <div className="w-100 mt-7 px-5">
+    <div className={`w-100 mt-7 px-5 ${cssClass.ms_3}`}>
       <header className="px-3">
-        <Typography.H8 className="font-500">{content.header}</Typography.H8>
+        <Typography.H7 className="font-500">{content.header}</Typography.H7>
       </header>
-      <article className="mt-4 w-60">
+      <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {content.inputLabelOne}
         </Typography.H8>
@@ -132,7 +143,7 @@ export default function ({
         </section>
       </article>
 
-      <article className="mt-4 w-60 ">
+      <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {content.inputLabelTwo}
         </Typography.H8>
@@ -149,7 +160,7 @@ export default function ({
         </section>
       </article>
 
-      <article className="d-flex align-item-center mt-4">
+      <article className="d-flex align-item-center mt-7">
         <div
           style={{
             width: "80px",
@@ -184,7 +195,12 @@ export default function ({
         </section>
       </article>
 
-      <article className="w-100 mt-6 ">
+      <article
+        className="w-100  pt-4 pb-4 "
+        style={{
+          marginTop: "10rem",
+        }}
+      >
         <Grid container className={"d-flex justify-content-end "}>
           <Grid item lg={3} md={5} sm={10} xs={10}>
             <Buttons.Contained

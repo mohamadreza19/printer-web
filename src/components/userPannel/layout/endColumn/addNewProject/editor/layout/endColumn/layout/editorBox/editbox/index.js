@@ -15,6 +15,7 @@ import { UserProjectFindOne_Qury } from "../../../../../../../../../../../helper
 import useToastReducer from "../../../../../../../../../../../recoil/reducer/useToastReducer";
 
 export default function () {
+  const { error, data, isLoading } = UserProjectFindOne_Qury();
   const [wantNewRail, SetwantNewRail] = useRecoilState(addRail);
   const setLoading = useToastReducer();
   const setRail = useRailReducer();
@@ -28,6 +29,26 @@ export default function () {
       SetwantNewRail(false);
     }
   }, [wantNewRail]);
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+    if (data) {
+      console.log(data);
+      setRail((draft) => ({
+        ...draft,
+        present: [data],
+      }));
+      setLoading({
+        isShow: false,
+        message: "",
+      });
+    }
+  }, [isLoading, data, error]);
   const AddNewRailButton = () => {
     function onClick() {
       SetwantNewRail(true);
@@ -39,25 +60,6 @@ export default function () {
       </div>
     );
   };
-  const { error, data, isLoading } = UserProjectFindOne_Qury();
-  useEffect(() => {
-    if (isLoading) {
-      setLoading({
-        isShow: true,
-        message: "",
-      });
-    }
-    if (data) {
-      setRail((draft) => ({
-        ...draft,
-        present: [data],
-      }));
-      setLoading({
-        isShow: false,
-        message: "",
-      });
-    }
-  }, [isLoading, data, error]);
 
   return (
     <div className=" bg-white scrollable-x-large position-relative">

@@ -5,6 +5,7 @@ import useCachedToken from "../utility/useCachedToken";
 import { delete_alert } from "../recoil/recoilStore";
 import { useRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
+import { ResetTv } from "@mui/icons-material";
 
 //user projects GET
 let projectsKey = 1;
@@ -36,18 +37,16 @@ export const LoginUser_Mutation = () => {
 export const ProjectPost_Mutation = () => {
   const queryClient = useQueryClient();
   const { value: token } = useCachedToken();
-  const res = useMutation({
+  return useMutation({
     mutationKey: "project-post",
     mutationFn: (body) => {
-      user_callApi.project_post(token, body);
+      return user_callApi.project_post(token, body);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(projectsKey);
       projectsKey = Math.random() * 20;
     },
   });
-
-  return res;
 };
 //ProjectDeleteOne DELETE
 export const ProjectDeleteOne_Mutation = () => {

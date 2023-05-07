@@ -60,7 +60,7 @@ export default class {
         },
         data: body,
       });
-      // console.log(res);
+
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
