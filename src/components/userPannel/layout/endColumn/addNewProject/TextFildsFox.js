@@ -8,6 +8,11 @@ import Textfields, {
 import Typography from "../../../../../styles/__ready/Typography";
 import Buttons from "../../../../../styles/__ready/Buttons";
 import { Grid } from "@mui/material";
+import { ProjectPost_Mutation } from "../../../../../helper/UserApiQueries";
+import useToastReducer from "../../../../../recoil/reducer/useToastReducer";
+import add_project_validation from "../../../../../validation/add_project_validation";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ({
   ms_2 = " ",
@@ -21,25 +26,91 @@ export default function ({
   },
   isFa = false,
 }) {
-  const [projectNameInput, setProjectNameInput] = useState("");
-  const [creatorNameInput, setCreatorNameInput] = useState("");
+  const navigate = useNavigate();
+  const { isSuccess, isLoading, mutate, error, data } = ProjectPost_Mutation();
+  const [state, setState] = useState({
+    createdBy: {
+      value: "",
+      errMsg: "",
+    },
+    projectName: {
+      value: "",
+      errMsg: "",
+    },
+  });
+  const setLoading = useToastReducer();
   const [isRightToleft, setIsRightToleft] = useState(true);
-
   const handleToggleiSRightToleft = () => {
     setIsRightToleft(!isRightToleft);
   };
-  // const [inputTwo, setInputTwo] = useState("");
-  const handleChange = (event) => {
+  const handleChangeProductName = (event) => {
     const value = event.target.value;
 
-    setProjectNameInput(value);
+    setState((draft) => ({
+      ...draft,
+      projectName: {
+        value,
+        errMsg: "",
+      },
+    }));
   };
-  const handleChangeCreatorNameInput = (event) => {
+  const handleChangeCreatedBy = (event) => {
     const value = event.target.value;
 
-    setCreatorNameInput(value);
+    setState((draft) => ({
+      ...draft,
+      createdBy: {
+        value,
+        errMsg: "",
+      },
+    }));
   };
+  async function submitForm() {
+    const body = {
+      createdBy: state.createdBy.value,
+      projectName: state.projectName.value,
+    };
 
+    try {
+      await add_project_validation(body);
+      mutate(body);
+    } catch (error) {
+      if (error.inner) {
+        error.inner.map((err) => {
+          const path = err.path;
+          const errMsg = err.message;
+          setState((draft) => ({
+            ...draft,
+            [path]: {
+              ...[path],
+              errMsg,
+            },
+          }));
+        });
+      }
+      setLoading({
+        isShow: false,
+        message: error.massage,
+      });
+    }
+  }
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+  }, [isLoading]);
+  if (isSuccess) {
+    console.log(data);
+    setLoading({
+      isShow: false,
+      message: "",
+    });
+    // navigate(`/user/add-project/editor`);
+  }
   return (
     <div className="w-100 mt-7 px-5">
       <header className="px-3">
@@ -49,25 +120,32 @@ export default function ({
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {content.inputLabelOne}
         </Typography.H8>
-        <section className="w-100">
+        <section className="w-100 position-relative">
           <TextFieldFUN_v5
             ImputclassName={ms_2}
-            value={projectNameInput}
-            onChange={handleChange}
+            value={state.projectName.value}
+            onChange={handleChangeProductName}
           />
+          <span className="position-absolute color_danger">
+            <Typography.H9>{state.projectName.errMsg}</Typography.H9>
+          </span>
         </section>
       </article>
 
-      <article className="mt-4 w-60">
+      <article className="mt-4 w-60 ">
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {content.inputLabelTwo}
         </Typography.H8>
-        <section className="w-100">
+
+        <section className="w-100 position-relative">
           <TextFieldFUN_v5
             ImputclassName={ms_2}
-            value={creatorNameInput}
-            onChange={handleChangeCreatorNameInput}
+            value={state.createdBy.value}
+            onChange={handleChangeCreatedBy}
           />
+          <span className="position-absolute color_danger">
+            <Typography.H9>{state.createdBy.errMsg}</Typography.H9>
+          </span>
         </section>
       </article>
 
@@ -109,9 +187,11 @@ export default function ({
       <article className="w-100 mt-6 ">
         <Grid container className={"d-flex justify-content-end "}>
           <Grid item lg={3} md={5} sm={10} xs={10}>
-            <Buttons.Contained className="w-100 button_large ">
+            <Buttons.Contained
+              className="w-100 button_large "
+              onClick={submitForm}
+            >
               <Typography.H6 className=" font-200 ">
-                {/* {login.enterButton} */}
                 {content.continueButton}
               </Typography.H6>
             </Buttons.Contained>

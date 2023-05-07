@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 
 export default function ({
+  railId = "",
   parent = { id: " ", isSelected: false },
   children,
   setCell = () => {},
@@ -23,7 +24,7 @@ export default function ({
           ${index > 0 ? "splitedColumn-border-left" : " "}
           `}
           >
-            <CellSplitController cellForCheck={child} />
+            <CellSplitController cellForCheck={child} railId={railId} />
           </div>
         );
       })}

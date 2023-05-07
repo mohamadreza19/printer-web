@@ -19,25 +19,19 @@ export default function () {
       "/image/login_slider/image_13.png",
     ],
   };
-  //   const ads = {
-  //     items: [
-  //       "https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg",
-  //       "https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg",
-  //       "https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg",
-  //     ],
-  //   };
+
   const language = useLanguage();
 
   const swiperRef = useRef(null);
-  console.log(swiperRef);
 
   return (
     <div
       style={{
-        height: "40%",
+        height: "240px",
         position: "relative",
+        maxHeight: "240px",
       }}
-      className="w-100 py-3"
+      className="w-100 arrow-test-box"
     >
       <RightArrow
         language={language}
@@ -47,12 +41,13 @@ export default function () {
         language={language}
         onClick={() => swiperRef.current?.slidePrev()}
       />
+
       <Swiper
         className="border-radius4 h-100"
         slidesPerView={2.5}
         loop={true}
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={0}
+        spaceBetween={3}
         style={{
           //   direction: language === "fa" ? "rtl" : "ltr",
           direction: "ltr",
@@ -67,18 +62,16 @@ export default function () {
           return (
             <SwiperSlide
               style={{
+                width: "260px",
+                maxWidth: "260px",
+                maxHeight: "260px",
+                height: "260px",
                 display: "flex",
                 justifyContent: "center",
               }}
               key={index}
             >
-              <img
-                style={{
-                  width: "90%",
-                  borderRadius: "50px",
-                }}
-                src={item}
-              />
+              <img className="w-100 h-100" src={item} />
             </SwiperSlide>
           );
         })}

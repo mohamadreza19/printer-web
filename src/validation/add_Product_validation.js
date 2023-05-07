@@ -11,7 +11,6 @@ export default function (
   },
   language = "fa"
 ) {
-  console.log(value);
   let messages = {
     produnctName: {
       persian: "",

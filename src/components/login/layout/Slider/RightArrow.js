@@ -7,10 +7,9 @@ export default function ({ language, onClick }) {
         // opacity: "0.3",
         width: "2.55rem",
         height: "5rem",
-        top: "7.5rem",
+        top: "10.5vh",
         position: "absolute",
-        zIndex: 2,
-        right: "0",
+        zIndex: 5,
         borderTopRightRadius: "10rem",
         borderBottomRightRadius: "10rem",
         display: "flex",
@@ -19,15 +18,7 @@ export default function ({ language, onClick }) {
         transform: "rotate(-180deg)",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          left: "",
-          top: "1.7rem",
-          right: "0.5rem",
-          zIndex: 10,
-        }}
-      >
+      <div className="d-flex  justify-content-center align-items-center w-100 h-100">
         <svg
           width="2rem"
           height="2rem"

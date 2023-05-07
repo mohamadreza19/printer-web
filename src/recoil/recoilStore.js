@@ -19,8 +19,25 @@ export const isAdminLogin = atom({
 });
 export const isUserLogin = atom({
   key: "user-authentication",
+  default: false,
+});
+export const toastifyStore = atom({
+  key: "toast-message",
   default: {
-    isLoggin: true,
+    isShow: false,
+    message: "",
+    project: {
+      isShow: false,
+      Delete_Product_Fn: () => {},
+    },
+  },
+});
+export const delete_alert = atom({
+  key: "delete_alert",
+  default: {
+    isShow: false,
+    message: "",
+    deleteFn: () => {},
   },
 });
 export const ageIn2 = selector({

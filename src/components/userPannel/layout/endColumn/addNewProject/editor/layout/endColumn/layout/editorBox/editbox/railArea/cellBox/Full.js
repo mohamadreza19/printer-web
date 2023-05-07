@@ -1,8 +1,10 @@
 import { useRecoilState } from "recoil";
 import { Editor_Cell_Input } from "../../../../../../../../../../../../../styles/__ready/Textfields";
 import {
+  ColumnFive_barcode,
   ColumnFive_delete,
   ColumnFive_duplicate,
+  ColumnFive_qr,
   ColumnOne_joinColumn,
   ColumnOne_joinRow,
   ColumnOne_splitColumn,
@@ -19,6 +21,7 @@ import { useEffect } from "react";
 import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 
 export default function ({
+  railId = "",
   cell = {
     id: " ",
     content: {
@@ -30,6 +33,7 @@ export default function ({
         fontStyle: "bold",
       },
     },
+    wantBarcode: false,
     isSelected: false,
   },
   setCell = () => {},
@@ -48,12 +52,12 @@ export default function ({
   const [cellPadding, setCellPadding] = useRecoilState(ColumnThree_padding);
   const [fontSizeAction, setFontSizeAction] =
     useRecoilState(ColumnThree_fontSize);
-  const [deleteAction, setdeleteAction] = useRecoilState(ColumnFive_delete);
-  const [duplicateAction, setDuplicateAction] =
-    useRecoilState(ColumnFive_duplicate);
+  const [bacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
+  const [qrWant, setQrWant] = useRecoilState(ColumnFive_qr);
   function handleSelectCell_Via_onClick() {
     if (!cell.parentId && !cell.isSelected) {
       const payload = {
+        railId: railId,
         cellId: cell.id,
       };
 
@@ -61,6 +65,7 @@ export default function ({
     }
     if (!isSelection && !cell.isSelected) return;
     const payload = {
+      railId: railId,
       cellId: cell.id,
     };
 
@@ -69,6 +74,7 @@ export default function ({
 
   function handleChangeValue(value) {
     const payload = {
+      railId: railId,
       cellId: cell.id,
       content: {
         value,
@@ -78,164 +84,196 @@ export default function ({
   }
   function handleDeleteContent() {
     const payload = {
+      railId: railId,
       cellId: cell.id,
     };
     setCell(payload, "DELETECONTENT");
   }
 
   useEffect(() => {
-    if (splitColumn && cell.isSelected) {
-      const payload = {
-        cellId: cell.id,
-      };
+    if (cell.isSelected) {
+      if (splitColumn) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+        };
 
-      setCell(payload, "SPLITCOLUMN");
-      setSplitColumn(false);
-    }
-    if (splitRow && cell.isSelected) {
-      const payload = {
-        cellId: cell.id,
-      };
-      setCell(payload, "SPLITROW");
-      setSplitRow(false);
-    }
-    if (joinColumn && cell.isSelected) {
-      if (cell.parentId) {
-        const payload = {
-          cellId: undefined,
-          parentId: cell.parentId,
-        };
-        setCell(payload, "JOINCOLUMN");
-        setJoinColumn(false);
-      } else {
-        const payload = {
-          cellId: cell.id,
-          parentId: undefined,
-        };
-        setCell(payload, "JOINCOLUMN");
-        setJoinColumn(false);
+        setCell(payload, "SPLITCOLUMN");
+        setSplitColumn(false);
       }
-    }
-    if (joinRow && cell.isSelected) {
-      if (cell.parentId) {
+      if (splitRow) {
         const payload = {
-          cellId: undefined,
-          parentId: cell.parentId,
-        };
-        setCell(payload, "JOINROW");
-        setJoinRow(false);
-      } else {
-        const payload = {
+          railId: railId,
           cellId: cell.id,
-          parentId: undefined,
         };
-        setCell(payload, "JOINROW");
-        setJoinRow(false);
+        setCell(payload, "SPLITROW");
+        setSplitRow(false);
       }
-    }
-    if (font.isOnClick && cell.isSelected) {
-      const payload = {
-        cellId: cell.id,
-        content: font.font,
-      };
-      setCell(payload, "SETFONT");
-      setFont((draft) => ({ ...draft, isOnClick: false, font: "Arial" }));
-    }
-    if (
-      fontStyle.isUsed &&
-      fontStyle.chosenStyle == "bold" &&
-      cell.isSelected
-    ) {
-      const payload = {
-        cellId: cell.id,
-        content: "bold",
-      };
-      setCell(payload, "FONTSTYLE");
-      setFontStyle((draft) => ({ ...draft, isUsed: false }));
-    }
-    if (
-      fontStyle.isUsed &&
-      fontStyle.chosenStyle == "italic" &&
-      cell.isSelected
-    ) {
-      const payload = {
-        cellId: cell.id,
-        content: "italic",
-      };
-      setCell(payload, "FONTSTYLE");
-      setFontStyle((draft) => ({ ...draft, isUsed: false }));
-    }
-    if (
-      fontStyle.isUsed &&
-      fontStyle.chosenStyle == "underline" &&
-      cell.isSelected
-    ) {
-      const payload = {
-        cellId: cell.id,
-        content: "underline",
-      };
-      setCell(payload, "FONTSTYLE");
-      setFontStyle((draft) => ({ ...draft, isUsed: false }));
-    }
-    if (
-      fontStyle.isUsed &&
-      fontStyle.chosenStyle == "regular" &&
-      cell.isSelected
-    ) {
-      const payload = {
-        cellId: cell.id,
-        content: "regular",
-      };
-      setCell(payload, "FONTSTYLE");
-      setFontStyle((draft) => ({ ...draft, isUsed: false }));
-    }
-    if (textAlign.isUsed == true && cell.isSelected) {
-      const payload = {
-        cellId: cell.id,
-        content: textAlign.chosenAlign,
-      };
-      setCell(payload, "TEXTALIGN");
-      setTextAlign((draft) => ({
-        ...draft,
-        textAlign: "none",
-        isUsed: false,
-      }));
-    }
-    if (fontSizeAction.isUsed == true && cell.isSelected) {
-      const payload = {
-        cellId: cell.id,
-        content: fontSizeAction.chosenAction,
-      };
-      setCell(payload, "CHANGEFONTSIZE");
-      setFontSizeAction((draft) => ({
-        ...draft,
-        chosenAction: "none",
-        isUsed: false,
-      }));
-    }
-    if (fontAngle.isUsed == true && cell.isSelected) {
-      const payload = {
-        cellId: cell.id,
-        content: fontAngle.chosenAction,
-      };
-      setCell(payload, "CHANGEFONTANGLE");
-      setFontAngle((draft) => ({
-        ...draft,
-        chosenAction: "none",
-        isUsed: false,
-      }));
-    }
-    if (cellMargin.isUsed == true && cell.isSelected) {
-      const payload = {
-        cellId: cell.id,
-        content: cellMargin.chosenAction,
-      };
-      setCell(payload, "CHANGECELLMARGIN");
-      setCellMargin((draft) => ({
-        ...draft,
-        chosenAction: "none",
-        isUsed: false,
-      }));
+      if (joinColumn) {
+        if (cell.parentId) {
+          const payload = {
+            railId: railId,
+            cellId: undefined,
+            parentId: cell.parentId,
+          };
+          setCell(payload, "JOINCOLUMN");
+          setJoinColumn(false);
+        } else {
+          const payload = {
+            railId: railId,
+            cellId: cell.id,
+            parentId: undefined,
+          };
+          setCell(payload, "JOINCOLUMN");
+          setJoinColumn(false);
+        }
+      }
+      if (joinRow) {
+        if (cell.parentId) {
+          const payload = {
+            railId: railId,
+            cellId: undefined,
+            parentId: cell.parentId,
+          };
+          setCell(payload, "JOINROW");
+          setJoinRow(false);
+        } else {
+          const payload = {
+            railId: railId,
+            cellId: cell.id,
+            parentId: undefined,
+          };
+          setCell(payload, "JOINROW");
+          setJoinRow(false);
+        }
+      }
+      if (font.isOnClick) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: font.font,
+        };
+        setCell(payload, "SETFONT");
+        setFont((draft) => ({ ...draft, isOnClick: false, font: "Arial" }));
+      }
+      if (fontStyle.isUsed && fontStyle.chosenStyle == "bold") {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: "bold",
+        };
+        setCell(payload, "FONTSTYLE");
+        setFontStyle((draft) => ({ ...draft, isUsed: false }));
+      }
+      if (fontStyle.isUsed && fontStyle.chosenStyle == "italic") {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: "italic",
+        };
+        setCell(payload, "FONTSTYLE");
+        setFontStyle((draft) => ({ ...draft, isUsed: false }));
+      }
+      if (fontStyle.isUsed && fontStyle.chosenStyle == "underline") {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: "underline",
+        };
+        setCell(payload, "FONTSTYLE");
+        setFontStyle((draft) => ({ ...draft, isUsed: false }));
+      }
+      if (fontStyle.isUsed && fontStyle.chosenStyle == "regular") {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: "regular",
+        };
+        setCell(payload, "FONTSTYLE");
+        setFontStyle((draft) => ({ ...draft, isUsed: false }));
+      }
+      if (textAlign.isUsed) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: textAlign.chosenAlign,
+        };
+        setCell(payload, "TEXTALIGN");
+        setTextAlign((draft) => ({
+          ...draft,
+          textAlign: "none",
+          isUsed: false,
+        }));
+      }
+      if (fontSizeAction.isUsed) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: fontSizeAction.chosenAction,
+        };
+        setCell(payload, "CHANGEFONTSIZE");
+        setFontSizeAction((draft) => ({
+          ...draft,
+          chosenAction: "none",
+          isUsed: false,
+        }));
+      }
+      if (fontAngle.isUsed) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: fontAngle.chosenAction,
+        };
+        setCell(payload, "CHANGEFONTANGLE");
+        setFontAngle((draft) => ({
+          ...draft,
+          chosenAction: "none",
+          isUsed: false,
+        }));
+      }
+      if (cellMargin.isUsed) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: cellMargin.chosenAction,
+        };
+        setCell(payload, "CHANGECELLMARGIN");
+        setCellMargin((draft) => ({
+          ...draft,
+          chosenAction: "none",
+          isUsed: false,
+        }));
+      }
+      if (cellPadding.isUsed == true) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+          content: cellPadding.chosenAction,
+        };
+
+        setCell(payload, "CHANGECELLPADDING");
+        setCellPadding((draft) => ({
+          ...draft,
+          chosenAction: "none",
+          isUsed: false,
+        }));
+      }
+      if (bacodeWant) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+        };
+        setCell(payload, "ISBACODE");
+        setIsBacodeWant(false);
+      }
+      if (qrWant) {
+        const payload = {
+          railId: railId,
+          cellId: cell.id,
+        };
+        setCell(payload, "QRCODE");
+        setQrWant(false);
+      }
     }
   }, [
     splitColumn,
@@ -249,10 +287,9 @@ export default function ({
     fontAngle.isUsed,
     cellMargin.isUsed,
     cellPadding.isUsed,
-    deleteAction,
-    duplicateAction,
+    bacodeWant,
+    qrWant,
   ]);
-  // console.table({ textAlign });
 
   return (
     <main
@@ -273,6 +310,8 @@ export default function ({
         onChange={handleChangeValue}
         onBackspaceDown={handleDeleteContent}
         style={cell.content?.style}
+        wantBarcode={cell.wantBarcode}
+        wantQr={cell.wantQr}
         // font={font.font}
       />
     </main>

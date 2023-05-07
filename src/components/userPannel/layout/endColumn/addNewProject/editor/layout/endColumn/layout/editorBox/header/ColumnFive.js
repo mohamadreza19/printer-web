@@ -6,8 +6,10 @@ import {
   OneTwo,
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
 import {
+  ColumnFive_barcode,
   ColumnFive_delete,
   ColumnFive_duplicate,
+  ColumnFive_qr,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 
 export default function () {
@@ -15,6 +17,8 @@ export default function () {
     useRecoilState(ColumnFive_delete);
   const [duplicateAction, setDuplicateAction] =
     useRecoilState(ColumnFive_duplicate);
+  const [isBacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
+  const [isQrWant, setisQrWant] = useRecoilState(ColumnFive_qr);
   const DeleteBox = () => {
     function onClick() {
       setdeleteDeleteAction(true);
@@ -41,6 +45,32 @@ export default function () {
       </section>
     );
   };
+  const BarcodeBox = () => {
+    function onClick() {
+      setIsBacodeWant(true);
+    }
+    return (
+      <section
+        onClick={onClick}
+        className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
+      >
+        <OneTwo />
+      </section>
+    );
+  };
+  const QrcodeBox = () => {
+    function onClick() {
+      setisQrWant(true);
+    }
+    return (
+      <section
+        onClick={onClick}
+        className="editor-small-cell-box  d-flex justify-content-center align-items-center"
+      >
+        <Barcode />
+      </section>
+    );
+  };
   return (
     <article className="">
       <header className="d-flex mb-2">
@@ -48,12 +78,8 @@ export default function () {
         <DuplicateBox />
       </header>
       <footer className="d-flex">
-        <section className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center">
-          <OneTwo />
-        </section>
-        <section className="editor-small-cell-box  d-flex justify-content-center align-items-center">
-          <Barcode />
-        </section>
+        <BarcodeBox />
+        <QrcodeBox />
       </footer>
     </article>
   );

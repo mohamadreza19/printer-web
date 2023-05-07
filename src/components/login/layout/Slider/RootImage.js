@@ -1,10 +1,11 @@
 export default function () {
   return (
     <div
-      className="  d-flex justify-content-center  pt-4"
+      className="  d-flex justify-content-center  pt-3"
       style={{
-        width: "85%",
-        height: "60%",
+        width: "560px",
+        // height: "380px",
+        minHeight: "380px !important",
       }}
     >
       <img

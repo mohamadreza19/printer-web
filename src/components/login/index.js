@@ -6,9 +6,41 @@ import RememberPassword from "./layout/RememberPassword";
 import SelectedLanguage from "./layout/SelectedLanguage";
 import Slider from "./layout/Slider";
 import TextfiledsBox from "./layout/TextfiledsBox";
+import { LoginUser_Mutation } from "../../helper/UserApiQueries";
+import useCachedToken from "../../utility/useCachedToken";
+import useToastReducer from "../../recoil/reducer/useToastReducer";
+import { useMutation, useQuery } from "react-query";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { isUserLogin } from "../../recoil/recoilStore";
 
 export default function () {
   const cssClass = useDynamicCssClass();
+  const reducer = useCachedToken();
+  const navigate = useNavigate();
+  const setToast = useToastReducer();
+  const [_, setIsUserLogin] = useRecoilState(isUserLogin);
+  const { set: setUserToken } = useCachedToken();
+  const { isLoading, error, data, mutate } = LoginUser_Mutation();
+
+  if (error) {
+    setToast({ isShow: true, message: error });
+  }
+  function handleLogin(body) {
+    mutate(body);
+  }
+  if (data) {
+    setToast({ isShow: false, message: "" });
+    setUserToken(data);
+    setIsUserLogin(true);
+    navigate("/user");
+  }
+  if (isLoading) {
+    setToast({ isShow: true, message: "" });
+  }
+
   return (
     <Grid container className={"bg_secondray  vh100"}>
       <Grid
@@ -23,12 +55,11 @@ export default function () {
         }
       >
         <Header />
-        <TextfiledsBox />
-        <FooterButton />
+        <TextfiledsBox handleLogin={handleLogin} />
 
         <SelectedLanguage />
       </Grid>
-      <Grid className="h-100  bg_secondray " item lg={6} md={6}>
+      <Grid className="h-100 bg_secondray " item lg={6} md={6}>
         <Slider />
       </Grid>
     </Grid>

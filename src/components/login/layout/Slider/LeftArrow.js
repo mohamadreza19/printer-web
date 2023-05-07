@@ -1,31 +1,7 @@
 export default function ({ language, onClick }) {
   return (
-    <div
-      onClick={onClick}
-      style={{
-        backgroundColor: "rgba(0, 0, 0, 0.301)",
-        // opacity: "0.3",
-        width: "2.5rem",
-        height: "5rem",
-        top: "7.5rem",
-        position: "absolute",
-        right: "95.5%",
-        zIndex: 2,
-        // right: language == "fa" ? "94.5%" : "0",
-        borderTopRightRadius: "10rem",
-        borderBottomRightRadius: "10rem",
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          left: "",
-          top: "1.5rem",
-          right: "0.5rem",
-        }}
-      >
+    <div onClick={onClick} className="footer-slider-left-arrow">
+      <div className="d-flex  justify-content-center align-items-center w-100 h-100">
         <svg
           width="2rem"
           height="2rem"

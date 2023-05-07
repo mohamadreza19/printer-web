@@ -13,6 +13,7 @@ import {
   ColumnOne_splitColumn,
   ColumnOne_splitRow,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
+import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
 export default function () {
   const setCell = useCellReducer();

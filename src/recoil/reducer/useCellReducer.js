@@ -1,21 +1,18 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
-import {
-  cells,
-  cells_history,
-  selectedCellForReadStyle,
-} from "../userEditorStore/cellsStore";
+import { rails, selectedCellForReadStyle } from "../userEditorStore/cellsStore";
 import selectionAction from "../actions/editor/actionButton/selectionbuttons";
 import cellAction from "../actions/editor/cell/cell";
-import editorHeaderActionButton from "../actions/editor/actionButton/editorHeaderActionButton";
+
 import shortid from "shortid";
-import { useUndoRedo } from "../../utility/undoRedo";
+
 import {
   ColumnFour_redo,
   ColumnFour_undo,
 } from "../userEditorStore/EditorHeaderActionButton";
+import { useEffect } from "react";
 
 export default function () {
-  const [state, setState] = useRecoilState(cells_history);
+  const [state, setState] = useRecoilState(rails);
   const setSelectedCellForReadStyle = useSetRecoilState(
     selectedCellForReadStyle
   );
@@ -26,16 +23,18 @@ export default function () {
   const isUndoPossible = past && past.length > 0;
   const isRedoPossible = future && future.length > 0;
 
-  if (isUndoPossible) {
-    setCanUseUndo(true);
-  } else {
-    setCanUseUndo(false);
-  }
-  if (isRedoPossible) {
-    setCanUseRedo(true);
-  } else {
-    setCanUseRedo(false);
-  }
+  useEffect(() => {
+    if (isUndoPossible) {
+      setCanUseUndo(true);
+    } else {
+      setCanUseUndo(false);
+    }
+    if (isRedoPossible) {
+      setCanUseRedo(true);
+    } else {
+      setCanUseRedo(false);
+    }
+  }, [isUndoPossible, isRedoPossible]);
 
   const HistoryChanger = (newState) => {
     const { type = "", value = "" } = newState;
@@ -71,7 +70,8 @@ export default function () {
 
   function setCell(
     payload = {
-      cellId: " ",
+      cellId: "",
+      railId: "",
       content: {
         value: "",
         style: {
@@ -143,22 +143,35 @@ export default function () {
           return horizontalCellChecker(cell);
         }
       }
+      function railController(rail) {
+        if (rail.id == payload.railId) {
+          const newCells = rail.cells.map((item) => {
+            return cellSplitController(item);
+          });
+          return { ...rail, cells: newCells };
+        } else {
+          const newCells = rail.cells.map((item) => {
+            return cellSplitController(item);
+          });
+          return { ...rail, cells: newCells };
+        }
+      }
 
-      const newState = state.present.map((item) => {
-        return cellSplitController(item);
+      const newRails = state.present.map((rail) => {
+        return railController(rail);
       });
 
-      return setState((draft) => ({
-        ...draft,
-        present: newState,
-      }));
+      return setState((draft) => {
+        return {
+          ...draft,
+          present: newRails,
+        };
+      });
     }
     if (action == selectionAction.VIEW) {
       function cellSplitController(cell) {
         function fullCellChecker(cellForCheck) {
           const a = { ...cellForCheck, isSelected: false };
-
-          // setSelectedCellForReadStyle(a.content?.style || null);
           return a;
         }
         function verticalCellChecker(cellForCheck) {
@@ -204,15 +217,22 @@ export default function () {
           return horizontalCellChecker(cell);
         }
       }
-      const newState = state.present.map((item) => {
-        return cellSplitController(item);
+
+      const newRails = present.map((rail) => {
+        const newCells = rail.cells.map((c) => cellSplitController(c));
+
+        return { ...rail, cells: newCells };
       });
-      return setState((draft) => ({
-        draft,
-        present: newState,
-      }));
+
+      return setState((draft) => {
+        return {
+          ...draft,
+          present: newRails,
+        };
+      });
     }
     if (action == cellAction.NEWSETCONTENT) {
+      console.log(payload);
       function cellSplitController(cell) {
         function fullCellChecker(cellForcheck) {
           if (cellForcheck.id == payload.cellId) {
@@ -267,12 +287,24 @@ export default function () {
         }
         return cell;
       }
-      const newState = state.present.map((item) => {
+      const findedRail = state.present.find(
+        (rail) => rail.id === payload.railId
+      );
+
+      console.log(state.present);
+      const newCells = findedRail.cells.map((item) => {
         return cellSplitController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -330,12 +362,21 @@ export default function () {
         }
         return cell;
       }
-      const newState = state.present.map((item) => {
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
         return cellSplitController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -422,12 +463,21 @@ export default function () {
         return cellForSplit;
       }
 
-      const newState = state.present.map((item) => {
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
         return splitColumnController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -511,13 +561,21 @@ export default function () {
 
         return cellForSplit;
       }
+      const findedRail = present.find((rail) => rail.id === payload.railId);
 
-      const newState = state.present.map((item) => {
+      const newCells = findedRail.cells.map((item) => {
         return splitRowController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -585,12 +643,23 @@ export default function () {
         return cellForJoin;
       }
 
-      const newState = state.present.map((item) => {
+      const findedRail = present.find((rail) => {
+        return rail.cells.find((cell) => cell.id === payload.cellId);
+      });
+
+      const newCells = findedRail.cells.map((item) => {
         return JoinRowController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -658,12 +727,21 @@ export default function () {
         return cellForJoin;
       }
 
-      const newState = state.present.map((item) => {
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
         return JoinColumnController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -724,12 +802,21 @@ export default function () {
         }
       }
 
-      const newState = state.present.map((item) => {
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
         return setFountForRoot(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -790,12 +877,21 @@ export default function () {
         }
       }
 
-      const newState = state.present.map((item) => {
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
         return setTextFontStyle(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -857,12 +953,21 @@ export default function () {
         }
       }
 
-      const newState = state.present.map((item) => {
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
         return setTextAlign(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -871,7 +976,7 @@ export default function () {
       //payload.cellId == parentId
       //action
 
-      function setTextAlign(cellTextAlign) {
+      function cellSplitController(cellTextAlign) {
         function fullCellChecker(cell) {
           if (cell.id == payload.cellId) {
             let fontSizeValue;
@@ -936,12 +1041,21 @@ export default function () {
         }
       }
 
-      const newState = state.present.map((item) => {
-        return setTextAlign(item);
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
+        return cellSplitController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -950,7 +1064,7 @@ export default function () {
       //payload.cellId == parentId
       //action
 
-      function setTextAlign(cellTextAlign) {
+      function cellSplitController(cellTextAlign) {
         function fullCellChecker(cell) {
           if (cell.id == payload.cellId) {
             let fontAngleValue;
@@ -1015,12 +1129,21 @@ export default function () {
         }
       }
 
-      const newState = state.present.map((item) => {
-        return setTextAlign(item);
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
+        return cellSplitController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -1029,7 +1152,7 @@ export default function () {
       //payload.cellId == parentId
       //action
 
-      function setTextAlign(cell) {
+      function cellSplitController(cell) {
         function fullCellChecker(cellFotCheck) {
           if (cellFotCheck.id == payload.cellId) {
             let newMargin;
@@ -1039,9 +1162,7 @@ export default function () {
             }
 
             if (payload.content == "decrement") {
-              console.log("de");
               if (cellFotCheck.content.style.margin > 0) {
-                console.log(newMargin);
                 newMargin = cellMargin - 1;
               } else {
                 newMargin = 0;
@@ -1099,12 +1220,21 @@ export default function () {
         }
       }
 
-      const newState = state.present.map((item) => {
-        return setTextAlign(item);
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
+        return cellSplitController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
@@ -1113,7 +1243,7 @@ export default function () {
       //payload.cellId == parentId
       //action
 
-      function setPadding(cellTextAlign) {
+      function cellSplitController(cellTextAlign) {
         function fullCellChecker(cell) {
           if (cell.id == payload.cellId) {
             let newPadding;
@@ -1179,33 +1309,44 @@ export default function () {
         }
       }
 
-      const newState = state.present.map((item) => {
-        return setPadding(item);
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
+        return cellSplitController(item);
       });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
     if (action == cellAction.DELETECELL) {
-      const newState = state.present.filter(
-        (item) => item.id !== payload.cellId
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.filter(
+        (cell) => cell.id !== payload.cellId
       );
-      console.log({ newState });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }
     if (action == cellAction.DUPLICATECELL) {
-      const matchedCellIndex = state.present.findIndex(
-        (item) => item.id == payload.cellId
-      );
-      const newState = [...state.present];
-      const cellFinded = newState[matchedCellIndex];
-
       function cellSplitController(cell) {
         function fullCellChecker(cellForCheck) {
           return { ...cellForCheck, id: shortid.generate() };
@@ -1224,7 +1365,11 @@ export default function () {
             return child;
           });
 
-          return { ...cellForCheck, children: mapedChildren };
+          return {
+            ...cellForCheck,
+            id: shortid.generate(),
+            children: mapedChildren,
+          };
         }
         function horizontalCellChecker(cellForCheck) {
           const mapedChildren = cellForCheck.children.map((child) => {
@@ -1240,7 +1385,11 @@ export default function () {
             return child;
           });
 
-          return { ...cellForCheck, children: mapedChildren };
+          return {
+            ...cellForCheck,
+            id: shortid.generate(),
+            children: mapedChildren,
+          };
         }
 
         if (cell.split == "none") {
@@ -1253,12 +1402,162 @@ export default function () {
           return horizontalCellChecker(cell);
         }
       }
-      const cellWithNewId = cellSplitController(cellFinded);
+      const findedRail = present.find((rail) => rail.id === payload.railId);
 
-      newState.splice(matchedCellIndex, 0, cellWithNewId);
+      const newCells = findedRail.cells.map((item) => {
+        return cellSplitController(item);
+      });
+
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
       const NewHistory = {
         type: "SET_HISTORY",
-        value: newState,
+        value: newRails,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.ISBACODE) {
+      //requirement
+      //payload.cellId == parentId
+      //action
+
+      function cellSplitController(cell) {
+        function fullCellChecker(cell) {
+          if (cell.id == payload.cellId) {
+            const a = {
+              ...cell,
+              wantBarcode: !cell.wantBarcode,
+            };
+
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cell;
+        }
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cell.split == "none") {
+          return fullCellChecker(cell);
+        }
+        if (cell.split == "vertical") {
+          return {
+            ...cell,
+            children: checker(cell),
+          };
+        }
+        if (cell.split == "horizontal") {
+          return {
+            ...cell,
+            children: checker(cell),
+          };
+        }
+      }
+
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
+        return cellSplitController(item);
+      });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newRails,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.QRCODE) {
+      //requirement
+      //payload.cellId == parentId
+      //action
+
+      function cellSplitController(cell) {
+        function fullCellChecker(cell) {
+          if (cell.id == payload.cellId) {
+            const a = {
+              ...cell,
+              wantQr: !cell.wantQr,
+            };
+
+            setSelectedCellForReadStyle(a.content.style);
+            return a;
+          }
+          return cell;
+        }
+        function checker(cellforSplit) {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
+              return fullCellChecker(child);
+            }
+            if (child.split == "vertical") {
+              return { ...child, children: checker(child) };
+            }
+            if (child.split == "horizontal") {
+              return { ...child, children: checker(child) };
+            }
+            return child;
+          });
+
+          // return { ...cellForSplit, children: mapedChildren };
+          return mapedChildren;
+        }
+        if (cell.split == "none") {
+          return fullCellChecker(cell);
+        }
+        if (cell.split == "vertical") {
+          return {
+            ...cell,
+            children: checker(cell),
+          };
+        }
+        if (cell.split == "horizontal") {
+          return {
+            ...cell,
+            children: checker(cell),
+          };
+        }
+      }
+
+      const findedRail = present.find((rail) => rail.id === payload.railId);
+
+      const newCells = findedRail.cells.map((item) => {
+        return cellSplitController(item);
+      });
+      const newRails = present.map((rail) => {
+        if (rail.id == payload.railId) {
+          return { ...rail, cells: newCells };
+        }
+        return rail;
+      });
+
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newRails,
       };
       return HistoryChanger(NewHistory);
     }

@@ -1,13 +1,12 @@
-import { TroubleshootTwoTone } from "@mui/icons-material";
 import { atom } from "recoil";
 
 export const isSelect = atom({
   key: "inSelect",
-  default: TroubleshootTwoTone,
+  default: false,
 });
 export const isView = atom({
   key: "inView",
-  default: false,
+  default: true,
 });
 export const isUseText = atom({
   key: "inUseText",

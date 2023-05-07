@@ -1,18 +1,31 @@
+import { useNavigate } from "react-router-dom";
 import { useDynamicCssClass } from "../../../../../recoil/readStore";
 import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 
-export default function () {
+export default function ({
+  project = {
+    id: "0",
+    projectName: "",
+    createdBy: "",
+    productsCount: "",
+  },
+  showDeleteMassge = () => {},
+}) {
   const cssClass = useDynamicCssClass();
+  const navigate = useNavigate();
   const ActionButton = () => {
+    function navigateEditorById() {
+      navigate(`/user/add-project/editor/${project.id}`);
+    }
     return (
-      <div className={"d-flex align-items-center "}>
-        <div className="">
+      <div className={"d-flex align-items-center cur-pointer "}>
+        <div className="" onClick={showDeleteMassge}>
           <Icons.Trash />
         </div>
 
-        <div className="mx-4">
+        <div className="mx-4" onClick={navigateEditorById}>
           <Icons.Edit />
         </div>
         <Buttons.Contained_Custom className="bg_primary py-3 px-3  ">
@@ -21,29 +34,39 @@ export default function () {
       </div>
     );
   };
-  return (
-    <div className="w-100 bg-white border py-2 px-1 d-flex align-items-center  border-r-25 mb-2">
+  const ProjectName_Box = () => {
+    return (
       <section className=" d-flex align-items-center justify-content-between">
         <Typography.Body2 className={"font-500 " + cssClass.ms_3}>
-          موتور صنعتی 1400 وات{" "}
+          {project.projectName}
         </Typography.Body2>
       </section>
+    );
+  };
+  const CreatedBy_Box = () => {
+    return (
+      <>
+        <Typography.Body2 className={"font-300 " + cssClass.ms_3}>
+          <span className={cssClass.me_1}>
+            <Icons.Persion />
+          </span>
+          {project.createdBy}
+        </Typography.Body2>
+      </>
+    );
+  };
+  return (
+    <div className="w-100 bg-white border py-2 px-1 d-flex align-items-center  border-r-25 mb-2">
+      <ProjectName_Box />
       <div className={"d-flex  " + cssClass.ms_auto}>
-        <section className={"d-flex align-item-center " + cssClass.me_5}>
-          <div>
-            <Typography.Body2 className={"font-300 " + cssClass.ms_3}>
-              <span className={cssClass.me_1}>
-                <Icons.Persion />
-              </span>
-              محمد جواد حسنی
-            </Typography.Body2>
-          </div>
+        <article className={"d-flex align-item-center " + cssClass.me_5}>
+          <CreatedBy_Box />
           <div>
             <Typography.Body2 className={"font-300 " + cssClass.ms_3}>
               <span className={cssClass.me_1}>
                 <Icons.Stack />
               </span>
-              21 محصول
+              {project.productsCount}محصول
             </Typography.Body2>
           </div>
           <div>
@@ -54,7 +77,7 @@ export default function () {
               راست به چپ
             </Typography.Body2>
           </div>
-        </section>
+        </article>
         <ActionButton />
       </div>
     </div>

@@ -94,11 +94,11 @@ export const ColumnFive_duplicate = atom({
   key: "duplicate",
   default: false,
 });
-export const ColumnFive_OneTwo = atom({
-  key: "OneTwo",
+export const ColumnFive_barcode = atom({
+  key: "barcode",
   default: false,
 });
-export const ColumnFive_barcode = atom({
-  key: "barcode ",
+export const ColumnFive_qr = atom({
+  key: "qrcode ",
   default: false,
 });

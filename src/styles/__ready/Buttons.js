@@ -1,15 +1,19 @@
 import { Button } from "@mui/material";
 
 export default class {
-  static Contained({ children, onClick = () => {}, className }) {
+  static Contained({ children, onClick = () => {}, className, form }) {
     return (
-      <Button
+      <button
+        form={form}
         onClick={onClick}
         variant="contained"
-        className={"bg_primary px-3 py-1_4rem " + className}
+        className={
+          "bg_primary color-white px-3 py-1_4rem d-flex justify-content-center align-items-center " +
+          className
+        }
       >
         {children}
-      </Button>
+      </button>
     );
   }
   static Contained_Custom({

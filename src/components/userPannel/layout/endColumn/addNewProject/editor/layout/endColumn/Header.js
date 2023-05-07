@@ -11,7 +11,7 @@ export default function () {
 
   const beForward = language == "fa" ? true : false;
   const cssClass = useDynamicCssClass();
-  console.log(language);
+
   return (
     <header className="w-100 d-flex align-items-center justify-content-between  pt-4 px-4">
       <article className="d-flex">

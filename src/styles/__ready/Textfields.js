@@ -6,8 +6,10 @@ import Typography from "./Typography";
 import { useRecoilState, useRecoilValue } from "recoil";
 //
 import { isView } from "../../recoil/userEditorStore/selectionButtonsStore/actionButton";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import shortid from "shortid";
+import Barcode from "react-barcode";
+import { QRCodeSVG } from "qrcode.react";
 export default class {
   static v1({ children = "", className = "" }) {
     return <TextField className={className} />;
@@ -114,37 +116,31 @@ export default class {
       </div>
     );
   }
-  static v2_userName({
-    children = "",
-    className = "",
-    Input_marginStart_based_Language = "ms-3",
-  }) {
-    return (
-      <div
-        className={
-          "w-100 bg-white border py-3 px-3 d-flex align-items-center border-r-20 " +
-          className
-        }
-      >
-        <Icons.UserName />
-        <input
-          className={"text-filed-input-v2 " + Input_marginStart_based_Language}
-        />
-      </div>
-    );
-  }
+  // static v2_userName({
+  //   children = "",
+  //   className = "",
+  //   Input_marginStart_based_Language = "ms-3",
+  //   value = "",
+  //   onChange = () => {},
+  // }) {
+  //   return (
+  //     <div className={"login-input-box px-3 " + className}>
+  //       <Icons.UserName />
+  //       <input
+  //         value={value}
+  //         onChange={onChange}
+  //         className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+  //       />
+  //     </div>
+  //   );
+  // }
   static v2_password({
     children = "",
     className = "",
     Input_marginStart_based_Language = "ms-3",
   }) {
     return (
-      <div
-        className={
-          "w-100 bg-white border py-3 px-3 d-flex align-items-center border-r-20 " +
-          className
-        }
-      >
+      <div className={"login-input-box px-3 " + className}>
         <img src="/svg/icon/password.svg" className="" />
         <input
           className={"text-filed-input-v2 " + Input_marginStart_based_Language}
@@ -153,6 +149,53 @@ export default class {
     );
   }
 }
+export const UserNameTextField = ({
+  content = "content",
+  children = "",
+  className = "",
+  Input_marginStart_based_Language = "ms-3",
+  value = "",
+
+  onChange = () => {},
+}) => {
+  return (
+    <div className="d-flex flex-column mb-3">
+      <Typography.H6>{content}</Typography.H6>
+      <section className={"login-input-box px-3 " + className}>
+        <Icons.UserName />
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+          className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+        />
+      </section>
+    </div>
+  );
+};
+export const LoginPasswordTextField = ({
+  content = "content",
+  children = "",
+  className = "",
+  Input_marginStart_based_Language = "ms-3",
+  value = "",
+  onChange = () => {},
+}) => {
+  return (
+    <div className="d-flex flex-column mt-4">
+      <Typography.H6>{content}</Typography.H6>
+      <section className={"login-input-box px-3 " + className}>
+        <img src="/svg/icon/password.svg" className="" />
+        <input
+          type="password"
+          value={value}
+          onChange={onChange}
+          className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+        />
+      </section>
+    </div>
+  );
+};
 export const EditorSearchBox = ({
   children = "",
   className = "",
@@ -377,32 +420,77 @@ export const Editor_Cell_Input = ({
     angle: 0,
     fontSize: "",
   },
+  wantBarcode = false,
+  wantQr = false,
 }) => {
   const isViewMode = useRecoilValue(isView);
 
+  const barCodeRef = useRef(null);
+  const qrcodeRef = useRef(null);
+  useEffect(() => {
+    if (wantBarcode) {
+      barCodeRef.current.renderElementRef.current.style.rotate = `${style.angle}deg`;
+      barCodeRef.current.renderElementRef.current.style.padding = `${style.padding}px`;
+    }
+  }, [style.angle, style.padding]);
+  const BarcodeAndQrCodeController = () => {
+    if (wantBarcode) {
+      return (
+        <Barcode
+          value={value}
+          fontSize={style.fontSize}
+          displayValue={false}
+          margin={style.margin}
+          ref={barCodeRef}
+        />
+      );
+    }
+    if (wantQr) {
+      return (
+        <QRCodeSVG
+          value={value}
+          width="100%"
+          height="100%"
+          rotate={`${style.angle}deg`}
+          style={{
+            rotate: `${style.angle}deg`,
+            margin: `${style.margin}px 0`,
+            padding: `${style.padding}px`,
+          }}
+        />
+      );
+    }
+  };
   return (
     <>
-      <input
-        className="editor-cell-input"
-        value={value || ""}
-        style={{
-          fontFamily: style.fontFamily,
-          fontWeight: style.fontStyle == "bold" ? 600 : 400,
-          fontSize: style.fontSize,
-          fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
-          textDecoration: style.fontStyle == "underline" ? "underline" : "none",
-          textAlign: style.textAlign,
-          rotate: `${style.angle}deg`,
-          margin: `${style.margin}px 0`,
-          padding: `${style.padding}px`,
-        }}
-        disabled={isViewMode || isSelected}
-        onClick={() => {
-          onClick();
-        }}
-        onChange={(e) => onChange(e.target.value)}
-        id="text"
-      />
+      {wantBarcode || wantQr ? (
+        <BarcodeAndQrCodeController />
+      ) : (
+        <input
+          className="editor-cell-input"
+          value={value || " "}
+          style={{
+            fontFamily: style.fontFamily,
+            fontWeight: style.fontStyle == "bold" ? 600 : 400,
+            fontSize: style.fontSize,
+            fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
+            textDecoration:
+              style.fontStyle == "underline" ? "underline" : "none",
+            textAlign: style.textAlign,
+            rotate: `${style.angle}deg`,
+            margin: `${style.margin}px 0`,
+            padding: `${style.padding}px`,
+          }}
+          disabled={isViewMode || isSelected}
+          onClick={() => {
+            onClick();
+          }}
+          onChange={(e) => {
+            onChange(e.target.value);
+          }}
+          id="text"
+        />
+      )}
     </>
   );
 };

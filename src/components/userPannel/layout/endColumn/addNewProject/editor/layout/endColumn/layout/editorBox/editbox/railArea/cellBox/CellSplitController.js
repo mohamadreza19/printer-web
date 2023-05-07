@@ -4,6 +4,7 @@ import SplitedColumn from "./SplitedColumn";
 import SplitedRow from "./SplitedRow";
 
 export default function ({
+  railId,
   cellForCheck,
   HandleChangeInputValue,
   childrenHandleChangeInputValue,
@@ -13,6 +14,7 @@ export default function ({
     return (
       <Full
         HandleChangeInputValue={HandleChangeInputValue}
+        railId={railId}
         cell={cellForCheck}
         isSelected={cellForCheck.isSelected}
         setCell={setCell}
@@ -24,6 +26,7 @@ export default function ({
       <SplitedColumn
         setCell={setCell}
         parent={cellForCheck}
+        railId={railId}
         children={cellForCheck.children}
         isSelected={cellForCheck.isSelected}
       />
@@ -36,6 +39,7 @@ export default function ({
         setCell={setCell}
         HandleChangeInputValue={HandleChangeInputValue}
         parent={cellForCheck}
+        railId={railId}
         children={cellForCheck.children}
         isSelected={cellForCheck.isSelected}
       />

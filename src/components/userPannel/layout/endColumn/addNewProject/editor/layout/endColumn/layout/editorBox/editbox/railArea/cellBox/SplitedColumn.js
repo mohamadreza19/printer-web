@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 
 export default function ({
+  railId = "",
   children,
   parent = {
     id: " ",
@@ -25,7 +26,7 @@ export default function ({
             className={`w-50 h-100 d-flex justify-content-center align-items-center
             `}
           >
-            <CellSplitController cellForCheck={child} />
+            <CellSplitController cellForCheck={child} railId={railId} />
           </div>
         );
       })}

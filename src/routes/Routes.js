@@ -34,6 +34,7 @@ import AdminAddLabel_UploadFile from "../components/adminPannel/layout/endColumn
 import ElsePath from "../controller/ElsePath";
 import { Suspense } from "react";
 import ViewPrinitChart from "../components/adminPannel/layout/endColumn/viewPrinitChart";
+import Loading from "../styles/__ready/Loading";
 const ListOfProject = React.lazy(() =>
   import("../components/userPannel/layout/endColumn/listOfProject")
 );
@@ -50,7 +51,10 @@ export const AdminRoutePath = {
   controlPannel_History: "/admin/control-pannel/history",
   addProduct_Or_Label: "/admin/add-product-label",
 };
-
+const Test = ({ children }) => {
+  console.log("hi");
+  return <>{children}</>;
+};
 export default function () {
   const { value: cachedLanguage } = useCachedLanguage();
 
@@ -70,7 +74,7 @@ export default function () {
         <Route
           path="project-list"
           element={
-            <Suspense fallback={<h1>loading</h1>}>
+            <Suspense>
               <ListOfProject />
             </Suspense>
           }
@@ -82,7 +86,7 @@ export default function () {
       </Route>
       {/* editor */}
       <Route
-        path="user/add-project/editor"
+        path="user/add-project/editor/:projectId"
         element={<AddNewProject_Editor />}
       />
       <Route

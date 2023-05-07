@@ -14,11 +14,13 @@ import useHandleDirection_Based_Langiage from "./utility/useHandleDirection_Base
 import Routes from "./routes/Routes";
 import useHandleLanguage_Based_CachedLanguage from "./utility/useHandleLanguage_Based_CachedLanguage";
 import { useLanguage } from "./recoil/readStore";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ToastContainer } from "./styles/__ready/Toasts";
 
 function App() {
   useHandleDirection_Based_Langiage();
   useHandleLanguage_Based_CachedLanguage();
-
+  const queryClient = new QueryClient();
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackComponent}>
       <MycacheProider>
@@ -27,7 +29,9 @@ function App() {
           // theme={language == "fa" ? RtlTheme : LtrTheme}
           theme={RtlTheme}
         >
-          <Routes />
+          <ToastContainer>
+            <QueryClientProvider client={queryClient} children={<Routes />} />
+          </ToastContainer>
         </ThemeProvider>
       </MycacheProider>
     </ErrorBoundary>
