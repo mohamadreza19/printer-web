@@ -5,7 +5,6 @@ import useCachedToken from "../utility/useCachedToken";
 import { delete_alert } from "../recoil/recoilStore";
 import { useRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
-import { ResetTv } from "@mui/icons-material";
 
 //user projects GET
 let projectsKey = 1;
@@ -15,6 +14,24 @@ export const UserProjects_Qury = () => {
     queryKey: ["user-projects", projectsKey],
     queryFn: () => user_callApi.project_list(token),
   });
+};
+// user  product GET
+export const UserProduct_Qury = () => {
+  const { value: token } = useCachedToken();
+  return useQuery({
+    queryKey: ["product_list", projectsKey],
+    queryFn: () => user_callApi.product_list(token),
+  });
+};
+// user labels GET
+export const UserLabels_Qury = () => {
+  const { value: token } = useCachedToken();
+  const a = useQuery({
+    queryKey: ["label_list"],
+    queryFn: () => user_callApi.label_list(token),
+  });
+
+  return a;
 };
 //user project GET
 export const UserProjectFindOne_Qury = () => {
@@ -33,6 +50,8 @@ export const LoginUser_Mutation = () => {
     mutationFn: (body) => user_callApi.login(body),
   });
 };
+//admin-login POST
+
 //ProjectPost POST
 export const ProjectPost_Mutation = () => {
   const queryClient = useQueryClient();

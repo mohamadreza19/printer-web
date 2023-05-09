@@ -22,12 +22,15 @@ export default function () {
     pathname === "/admin/control-pannel" ? true : false;
 
   return (
-    <div className={`bg_info h-100 pt-4 px-4 ${cssClass.border_r_s_30px}`}>
+    <div className={`bg_info vh-100 pt-4 px-4 ${cssClass.border_r_s_30px}`}>
       <Header />
       <main
-        className={`   mt-3 ${
+        className={` mt-3 ${
           isControlPannelPath ? " " : "  pt-4 bg-white"
         } border-r-top-30`}
+        style={{
+          height: "90%",
+        }}
       >
         <Outlet />
       </main>

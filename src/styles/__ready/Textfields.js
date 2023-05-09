@@ -316,7 +316,7 @@ export const TextFieldFUN_v5 = ({
   const changedClass = language == "fa" ? " " : "font-English";
 
   return (
-    <article className="text-filed-medium-v1">
+    <article className="text-filed-add-product">
       <div
         className={` bg-white border  d-flex align-items-center border-r-20 ${className}`}
       >

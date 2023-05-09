@@ -6,10 +6,10 @@ export default class {
     //   username: "test1",
     //   password: "123456",
     // };
-
+    console.log(body);
     try {
       const res = await axios.post(`${api}/user/login`, body);
-      // console.log(res);
+      console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data.accessToken);
       });
@@ -25,6 +25,48 @@ export default class {
     try {
       const res = await axios({
         url: `${api}/project/user?page=1&limit=10`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async product_list(token = "") {
+    if (!token) throw new Error("there isnt token");
+
+    try {
+      const res = await axios({
+        url: `${api}/product?page=1&limit=10`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async label_list(token = "") {
+    if (!token) throw new Error("there isnt token");
+
+    try {
+      const res = await axios({
+        url: `${api}/label?page=1&limit=10`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

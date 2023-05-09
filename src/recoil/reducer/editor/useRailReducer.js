@@ -4,7 +4,7 @@ import railAction from "../../actions/editor/railAction";
 import shortid from "shortid";
 export default function () {
   const [rail, setRail] = useRecoilState(rails);
-  console.log(rail);
+
   function setRailReducer(payload = { railId: "" }, action = "") {
     if (action == railAction.ADDRAIL) {
       let id;

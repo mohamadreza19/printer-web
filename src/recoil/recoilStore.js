@@ -13,9 +13,7 @@ export const userData = atom({
 });
 export const isAdminLogin = atom({
   key: "admin-authentication",
-  default: {
-    isLoggin: true,
-  },
+  default: false,
 });
 export const isUserLogin = atom({
   key: "user-authentication",

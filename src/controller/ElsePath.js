@@ -4,7 +4,12 @@ import { Navigate } from "react-router-dom";
 export default function () {
   const isAdminLogin = useIsAdminLogin();
   const isUserLogin = useIsUserLogin();
-  return isAdminLogin && <Navigate to={"/admin"} replace />;
-  return isUserLogin && <Navigate to={"/user"} replace />;
+  if (isAdminLogin) {
+    return <Navigate to={"/admin"} replace />;
+  }
+  if (isUserLogin) {
+    return <Navigate to={"/user"} replace />;
+  }
+
   return <Navigate to={"/login"} replace />;
 }

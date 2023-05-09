@@ -195,12 +195,7 @@ export default function ({
         </section>
       </article>
 
-      <article
-        className="w-100  pt-4 pb-4 "
-        style={{
-          marginTop: "10rem",
-        }}
-      >
+      <article className="w-100 mt-5   pb-4 ">
         <Grid container className={"d-flex justify-content-end "}>
           <Grid item lg={3} md={5} sm={10} xs={10}>
             <Buttons.Contained

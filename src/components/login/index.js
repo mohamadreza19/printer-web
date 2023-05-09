@@ -14,7 +14,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { isUserLogin } from "../../recoil/recoilStore";
+import { isUserLogin, language } from "../../recoil/recoilStore";
 
 export default function () {
   const cssClass = useDynamicCssClass();
@@ -23,6 +23,8 @@ export default function () {
   const setToast = useToastReducer();
   const [_, setIsUserLogin] = useRecoilState(isUserLogin);
   const { set: setUserToken } = useCachedToken();
+
+  const [languageState, setLanguageState] = useRecoilState(language);
   const { isLoading, error, data, mutate } = LoginUser_Mutation();
 
   if (error) {

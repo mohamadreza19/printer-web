@@ -6,10 +6,12 @@ import Labels_Products from "./Labels_Products";
 import Search from "./Search";
 import { useRecoilValue } from "recoil";
 import { product_column } from "../../../../../../../../../../recoil/userEditorStore/cellsStore";
+import { UserProduct_Qury } from "../../../../../../../../../../helper/UserApiQueries";
 
 export default function () {
   const cssClass = useDynamicCssClass();
   const product_column_ = useRecoilValue(product_column);
+  const { data, isLoading, error } = UserProduct_Qury();
 
   return (
     <div

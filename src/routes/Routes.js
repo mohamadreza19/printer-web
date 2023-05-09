@@ -6,6 +6,7 @@ import Authentication from "../controller/Authentication";
 import SelectLanguage from "../components/selectLanguage";
 import useCachedLanguage from "../utility/useCachedLanguage";
 import Login from "../components/login";
+import AdminLogin from "../components/admin-login";
 import UserPannel from "../components/userPannel";
 
 // import ListOfProject from "../components/userPannel/layout/endColumn/listOfProject";
@@ -35,6 +36,7 @@ import ElsePath from "../controller/ElsePath";
 import { Suspense } from "react";
 import ViewPrinitChart from "../components/adminPannel/layout/endColumn/viewPrinitChart";
 import Loading from "../styles/__ready/Loading";
+import AdminAuthentication from "../controller/AdminAuthentication";
 const ListOfProject = React.lazy(() =>
   import("../components/userPannel/layout/endColumn/listOfProject")
 );
@@ -51,14 +53,9 @@ export const AdminRoutePath = {
   controlPannel_History: "/admin/control-pannel/history",
   addProduct_Or_Label: "/admin/add-product-label",
 };
-const Test = ({ children }) => {
-  console.log("hi");
-  return <>{children}</>;
-};
+
 export default function () {
   const { value: cachedLanguage } = useCachedLanguage();
-
-  // if (!cachedLanguage) return <SelectLanguage />;
 
   return (
     <Routes>
@@ -92,9 +89,9 @@ export default function () {
       <Route
         path="/admin"
         element={
-          <Authentication>
+          <AdminAuthentication>
             <AdminPannel />
-          </Authentication>
+          </AdminAuthentication>
         }
       >
         <Route path="control-pannel" element={<AdminControlPannel />} />
@@ -134,6 +131,7 @@ export default function () {
       </Route>
 
       <Route path="/login" element={<Login />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="*" element={<ElsePath />} />
     </Routes>
   );

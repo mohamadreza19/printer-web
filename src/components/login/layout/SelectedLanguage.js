@@ -5,11 +5,12 @@ import useLanguageReducer from "../../../recoil/reducer/useLanguageReducer";
 import Icons from "../../../styles/__ready/Icons";
 import Typography from "../../../styles/__ready/Typography";
 import useCachedLanguage from "../../../utility/useCachedLanguage";
+import { useEffect, useState } from "react";
 
 export default function () {
-  const language = useLanguage();
   const cssClass = useDynamicCssClass();
   const { set } = useCachedLanguage();
+  const language = useLanguage();
   const languageSet = useLanguageReducer();
 
   const lanArr = [
@@ -17,6 +18,7 @@ export default function () {
     ["en", "English"],
     ["tr", "Turkish"],
   ];
+
   return (
     <div className={"w-100  " + cssClass.ms_3}>
       <section className="d-flex align-item-center">

@@ -229,10 +229,18 @@ a {
   max-width: 180px !important ;
   max-height: 62px !important;
 }
-.text-filed-medium-v1 {
+.text-filed-add-product {
   width: 420px !important;
   height: 52px !important;
   max-width: 420px !important;
+  min-width: 420px !important;
+  max-height: 52px !important;
+}
+.text-filed-medium-v1 {
+  width: 490px !important;
+  height: 52px !important;
+  max-width: 490px !important;
+  min-width: 490px;
   max-height: 52px !important;
 }
 .text-filed-medium {
@@ -631,7 +639,12 @@ line {
   overflow-y: scroll;
 }
 .scrollable-medium-test {
-  max-height: 33rem;
+  max-height: 90%;
+
+  overflow-y: scroll;
+}
+.scrollable-label-list {
+  max-height: 83%;
 
   overflow-y: scroll;
 }

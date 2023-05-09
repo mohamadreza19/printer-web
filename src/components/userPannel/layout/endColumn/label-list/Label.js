@@ -1,10 +1,52 @@
-import { useDynamicCssClass } from "../../../../../recoil/readStore";
+import {
+  useDynamicCssClass,
+  useLanguage,
+} from "../../../../../recoil/readStore";
 import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 
-export default function () {
+//need edit image url
+export default function ({
+  label = {
+    id: 1,
+    name: {
+      english: "",
+      persian: "",
+      turkish: "",
+    },
+    width: 0,
+    height: 0,
+    nameId: "",
+    pictures: [],
+  },
+}) {
   const cssClass = useDynamicCssClass();
+  const language = useLanguage();
+
+  const DynamicName = () => {
+    if (language == "fa") {
+      return (
+        <Typography.Body2 className="font-500 h_41px">
+          {label.name.persian}
+        </Typography.Body2>
+      );
+    }
+    if (language == "en") {
+      return (
+        <Typography.Body2 className="font-500 h_41px">
+          {label.name.english}
+        </Typography.Body2>
+      );
+    }
+    if (language == "tr") {
+      return (
+        <Typography.Body2 className="font-500 h_41px">
+          {label.name.turkish}
+        </Typography.Body2>
+      );
+    }
+  };
   return (
     <div
       style={{
@@ -13,7 +55,7 @@ export default function () {
         maxWidth: "220px",
         maxHeight: "164px",
       }}
-      className="bg_gray2 border-r-25"
+      className="bg_gray2 border-r-25 mx-1 my-2"
     >
       <section className="w-100 d-flex align-item-center justify-content-center">
         <img
@@ -35,9 +77,7 @@ export default function () {
         className="bg-white border mt-3 border border-r-25"
       >
         <div className="w-100 d-flex align-item-center justify-content-between mt-2 px-3 ">
-          <Typography.Body2 className="font-500 h_41px">
-            مانیتور چرخان گیرنده ی هوشمند F21
-          </Typography.Body2>
+          <DynamicName />
           <Icons.Star2 className="align-self-start cur-pointer" />
         </div>
         <div className="w-100 d-flex align-item-center justify-content-between  px-2 pb-2">
