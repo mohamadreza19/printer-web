@@ -26,13 +26,22 @@ export default function () {
 
   if (data)
     return (
-      <div className="w-100 h-100 bg">
+      <div
+        className="w-100 h-100 "
+        style={{
+          // height: "72.2%",
+
+          border: "1px solid blue",
+        }}
+      >
         <Header />
         <main
           className="w-100  mt-4 py-3 px-4 bg-white border-r-top-30"
           style={{
-            height: "72.2%",
+            // height: "72.2%",
+            height: "50%",
             overflowY: "scroll",
+            border: "1px solid red",
           }}
         >
           <MainHeader />

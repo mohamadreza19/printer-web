@@ -12,7 +12,7 @@ export default function () {
   const cssClass = useDynamicCssClass();
   const product_column_ = useRecoilValue(product_column);
   const { data, isLoading, error } = UserProduct_Qury();
-
+  console.log(product_column);
   return (
     <div
       className={"w-100  " + cssClass.ps_3}

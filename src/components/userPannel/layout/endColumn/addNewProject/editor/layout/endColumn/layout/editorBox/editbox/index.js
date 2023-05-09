@@ -29,7 +29,7 @@ export default function () {
   const setLoading = useToastReducer();
   const setRail = useRailReducer();
   const [railsState, setRailsState] = useRecoilState(rails);
-  const [scaleState, setScaleState] = useRecoilState(scaleStore);
+  const [scale, setScaleState] = useRecoilState(scaleStore);
 
   useEffect(() => {
     if (wantNewRail) {
@@ -92,11 +92,11 @@ export default function () {
   return (
     <div className=" bg-white scrollable-x-large position-relative">
       <ScaleContainer
-        scale={scaleState}
+        scale={scale}
         className={"w-100  dir-ltr pe-7rem pt-5   border-r-bottom-20"}
       >
-        <MapedRail />
-        {/* {railsState.present?.map((rail, index) => {
+        {/* <MapedRail /> */}
+        {railsState.present?.map((rail, index) => {
           return (
             <RailArea
               key={index}
@@ -104,7 +104,7 @@ export default function () {
               deleteRail={() => setRail({ railId: rail.id }, "DELETERAIL")}
             />
           );
-        })} */}
+        })}
         <AddNewRailButton />
       </ScaleContainer>
     </div>
