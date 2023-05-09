@@ -1,6 +1,6 @@
 {
-  "homepage": "http://212.23.201.119/",
-  "name": "smart",
+  "homepage": "http://212.23.201.119",
+  "name": "raad",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
