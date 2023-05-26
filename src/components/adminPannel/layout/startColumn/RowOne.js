@@ -10,7 +10,7 @@ export default function () {
   const content = useContent_Based_Language();
   const { value } = useCachedLanguage();
   return (
-    <div className="w-100 p-1 bg_info border-r-20 d-flex justify-content-center flex-column align-item-center box_shadow-v1">
+    <div className="w-100 p-1 mb-4  bg_info border-r-20 d-flex justify-content-center flex-column align-item-center box_shadow-v1">
       <section>
         <Typography.H7 className="my-2">
           {"شرکت تجهیز صنعت پاسارگاد"}

@@ -4,8 +4,12 @@ import {
   useContent_Based_Language,
 } from "../../../../../recoil/readStore";
 import { TextFieldFUN_v5 } from "../../../../../styles/__ready/Textfields";
+import useAdmin_Add_Label from "../../../../../helper/admin_add_product_label/control_label_dynamic_input";
 
 export default function ({ param }) {
+  const cssClass = useDynamicCssClass();
+  //
+  const { labelName } = useAdmin_Add_Label();
   const {
     labelValue = " ",
     labelHandler = () => {},
@@ -15,11 +19,8 @@ export default function ({ param }) {
       english: " ",
       turkish: " ",
     },
-  } = param;
-
-  const cssClass = useDynamicCssClass();
+  } = labelName;
   //
-
   return (
     <>
       <div className={"position-relative " + cssClass.ms_3}>
@@ -39,12 +40,19 @@ export default function ({ param }) {
         className="position-relative "
       >
         <article
-          className={cssClass.me_3 + " language-card-select position-absolute"}
+          className={cssClass.me_3 + "  language-card-select position-absolute"}
           style={{
             zIndex: "2",
           }}
         >
-          <TextFieldFUN_v5 onChange={labelHandler} value={labelValue} />
+          <TextFieldFUN_v5
+            className=""
+            onChange={labelHandler}
+            value={labelValue}
+          />
+          <Typography.H9 className="color_danger">
+            {labelName.validateErr}
+          </Typography.H9>
         </article>
         <article className="position-absolute d-flex add-product-medium-text-area-header-card">
           <section

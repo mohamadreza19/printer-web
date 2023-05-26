@@ -11,9 +11,9 @@ import Textfields, {
 import login_validation from "../../../validation/login_validation";
 import RememberPassword from "./RememberPassword";
 import FooterButton from "./FooterButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Typography from "../../../styles/__ready/Typography";
-export default function ({ handleLogin = () => {} }) {
+export default function ({ error = "", handleLogin = () => {} }) {
   const content = useContent_Based_Language();
   const lan = useLanguage();
   const cssClass = useDynamicCssClass();
@@ -67,6 +67,15 @@ export default function ({ handleLogin = () => {} }) {
       });
     }
   }
+  useEffect(() => {
+    if (error) {
+      setState((draft) => ({
+        ...draft,
+        username: { ...draft.username, errMsg: error },
+        password: { ...draft.password, errMsg: error },
+      }));
+    }
+  }, [error]);
 
   return (
     <Grid container className=" d-flex justify-content-center ">

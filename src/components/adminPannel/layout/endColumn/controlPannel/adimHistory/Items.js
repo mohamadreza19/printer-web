@@ -1,10 +1,11 @@
+import Print from "../../../../../../styles/__ready/common/Print";
 import Item from "./Item";
 
-export default function () {
+export default function ({ items }) {
   return (
-    <div className="w-100 scrollable1 px-4 ">
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
-        <Item key={item} />
+    <div className="w-100  position-relative  px-4 ">
+      {items.map((item, index) => (
+        <Print key={index} print={item} />
       ))}
     </div>
   );

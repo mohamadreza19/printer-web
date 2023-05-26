@@ -27,9 +27,9 @@ export default function () {
   const [languageState, setLanguageState] = useRecoilState(language);
   const { isLoading, error, data, mutate } = LoginUser_Mutation();
 
-  if (error) {
-    setToast({ isShow: true, message: error });
-  }
+  // if (error) {
+  //   setToast({ isShow: true, message: error });
+  // }
   function handleLogin(body) {
     mutate(body);
   }
@@ -44,7 +44,13 @@ export default function () {
   }
 
   return (
-    <Grid container className={"bg_secondray  vh100"}>
+    <Grid
+      container
+      className={"bg_secondray  vh100"}
+      style={{
+        minHeight: "768px",
+      }}
+    >
       <Grid
         item
         lg={6}
@@ -57,7 +63,7 @@ export default function () {
         }
       >
         <Header />
-        <TextfiledsBox handleLogin={handleLogin} />
+        <TextfiledsBox handleLogin={handleLogin} error={error} />
 
         <SelectedLanguage />
       </Grid>

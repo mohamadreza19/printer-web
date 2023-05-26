@@ -7,7 +7,8 @@ import Icons from "../../../../../../../../../../../../styles/__ready/Icons";
 export default function ({
   rail = {
     id: "",
-    customLabels: [],
+    // customLabels: [],
+    cells: [],
   },
   deleteRail = () => {},
 }) {
@@ -29,7 +30,11 @@ export default function ({
       <article className="d-flex align-items-center position-relative">
         <TrashBox />
         <Title children={"ریل اول"} />
-        <CellsBox customLabels={rail.customLabels} railId={rail.id} />
+        <CellsBox
+          //  customLabels={rail.customLabels} railId={rail.id}
+          cells={rail.cells}
+          railId={rail.id}
+        />
       </article>
     </div>
   );

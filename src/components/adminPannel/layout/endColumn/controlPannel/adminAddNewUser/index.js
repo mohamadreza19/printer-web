@@ -1,69 +1,68 @@
-import { Grid } from "@mui/material";
 import { useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
 import {
   useContent_Based_Language,
   useDynamicCssClass,
 } from "../../../../../../recoil/readStore";
+import useAdd_user_controller from "../../../../../../helper/admin_add_user/controlInputs";
+import add_user_validate from "../../../../../../helper/admin_add_user/add_user_validate";
+
 import Buttons from "../../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../../styles/__ready/Icons";
-import Textfields, {
-  TextFieldFUN_v3,
-  TextFieldFUN_v4,
-} from "../../../../../../styles/__ready/Textfields";
+
 import Typography from "../../../../../../styles/__ready/Typography";
+//
 import Header from "./Header";
+import Company_or_Institution from "./Company_or_Institution";
+import ManagementName from "./ManagementName";
+import PhoneNumber from "./PhoneNumber";
+import UserName from "./UserName";
+import Email from "./Email";
+import CompanyZipCode from "./CompanyZipCode";
+import Province from "./Province";
+import City from "./City";
+import CompanyAddress from "./CompanyAddress";
+import Expirition from "./Expirition";
+import AccessProductBox from "./AccessProductBox";
+import { AdminAddUser_Mutation } from "../../../../../../helper/AdminApiQueries";
+import moment from "moment";
+import "moment/locale/fa";
+import "moment/locale/tr";
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =
     useContent_Based_Language().AdminPannel.end_col.controlPannel.AddNewUser;
   const allContent = useContent_Based_Language();
-  const [accessProduct, setAccessProduct] = useState(false);
-  const response = false;
-  function handleToggleAccessProduct() {
-    setAccessProduct(!accessProduct);
-  }
-  const AccessProductBox = () => {
-    const changedJustify = accessProduct
-      ? "justify-content-start"
-      : "justify-content-end";
-    const changedBackGround = accessProduct ? "#F36523" : "rgb(238 170 139)";
-    return (
-      <div
-        style={{
-          width: "62px",
-          height: "36px",
-          backgroundColor: "#FBD1BD",
-          borderRadius: "18px",
-        }}
-        className={"mt-1 d-flex align-item-center  dir-rtl " + changedJustify}
-      >
-        <span
-          onClick={handleToggleAccessProduct}
-          style={{
-            width: "29.95px",
-            height: "29.95px",
-            backgroundColor: changedBackGround,
-            borderRadius: "18px",
-          }}
-          className="transition-all-v1  "
-        ></span>
-      </div>
-    );
-  };
-  const fakeData = {
-    header: " شرکت تجهیز صنعت پاسارگاد",
-    title: " sبا مدیریت محسن رشیدی",
-    username: "usertest13443 ",
-    password: "@#dww5543@!",
-  };
-  const fakeDataClass = {
-    header: fakeData.header.length > 25 ? "x-scroll" : " ",
-    username: fakeData.username.length > 17 ? "x-scroll" : " ",
-    password: fakeData.password.length > 17 ? "x-scroll" : " ",
-  };
+  const state = useAdd_user_controller(true);
+  const validate = add_user_validate();
+  const { isSuccess, data, mutateAsync } = AdminAddUser_Mutation();
 
-  if (response)
+  const response = false;
+  async function addUser() {
+    try {
+      await validate();
+      console.log(state);
+      await mutateAsync(state);
+
+      console.log("hhh");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function format() {
+    const d = new Date("2023-06-13T21:15:25.829Z");
+    let mypersiandate = d.toLocaleDateString("fa-IR");
+    const momentDate = moment("2023-05-15T20:12:57.454Z").locale("fa");
+    const diff = moment("2023-06-13T21:15:25.829Z").diff(
+      moment(),
+      "millisecond"
+    );
+
+    console.log(mypersiandate);
+  }
+  format();
+
+  if (data)
     return (
       <div className="w-100">
         <Header />
@@ -79,18 +78,16 @@ export default function () {
         <section className="w-100 d-flex  justify-content-center mt-3">
           <article className="card-1  ">
             <header className="w-100 d-flex justify-content-center  ">
-              <Typography.H5
-                className={"font-500 mt-3 " + fakeDataClass.header}
-              >
-                {fakeData.header}
+              <Typography.H5 className={"font-500 mt-3 "}>
+                {data.managerName}
               </Typography.H5>
             </header>
             <main className="w-100 d-flex justify-content-center mt-3 ">
               <Typography.H8 className="font-400 ">
-                {fakeData.title}
+                با مدیریت {data.managerName}
               </Typography.H8>
             </main>
-            <main className="w-100 d-flex justify-content-center flex-column align-item-center mt-4 card-header-1 ">
+            <main className="w-100 d-flex justify-content-center flex-column align-item-center mt-3 card-header-1 ">
               <div className="user-pass-box d-flex">
                 <article className="w-100 d-flex  border-bottom">
                   <section className="user-pass-child-box  ">
@@ -104,8 +101,13 @@ export default function () {
                     }}
                     className={"d-flex justify-content-end px-2   "}
                   >
-                    <p className={"font-400 " + fakeDataClass.username}>
-                      {fakeData.username}
+                    <p
+                      className={"font-400 " + data.username}
+                      style={{
+                        overflowY: "auto",
+                      }}
+                    >
+                      {data.username}
                     </p>
                   </section>
                 </article>
@@ -121,170 +123,99 @@ export default function () {
                     }}
                     className="d-flex justify-content-end px-2 "
                   >
-                    <p className={"font-400 " + fakeDataClass.password}>
-                      {fakeData.password}
+                    <p
+                      style={{
+                        overflowY: "auto",
+                      }}
+                      className={"font-400 " + data.password}
+                    >
+                      {data.password}
                     </p>
                   </section>
                 </article>
               </div>
             </main>
             <footer className="w-100 d-flex justify-content-center mt-3">
-              <Typography.H9_5 className={"font-300 " + cssClass.me_2}>
-                انقضا اعتبار(سه ماهه)
+              <Typography.H9_5 className={"font-400 " + cssClass.me_2}>
+                <span className={cssClass.me_2}>
+                  انقضا اعتبار({state.daysToExpire})
+                </span>
+                {new Date(data.expiresIn).toLocaleDateString("fa-IR")}
               </Typography.H9_5>
-              <Typography.H9_5 className="font-300">۱٤۰۱/۰٥/۲٥</Typography.H9_5>
             </footer>
           </article>
         </section>
         <footer className="w-100 d-flex  justify-content-center mt-6 pb-4_2rem">
           <Buttons.Outlined className="button_extra-large ">
-            <Typography.H8>
+            <Typography.H7>
               {allContent.AdminPannel.end_col.controlPannel.row1.usersList}
-            </Typography.H8>
+            </Typography.H7>
           </Buttons.Outlined>
           <Buttons.Contained_Custom
             className={"button_extra-large bg_primary " + cssClass.ms_2}
           >
-            <Typography.H8 className={"font-400 "}>
+            <Typography.H7 className={"font-400 "}>
               {allContent.AdminPannel.end_col.controlPannel.row1.AddNewProduct}
-            </Typography.H8>
+            </Typography.H7>
           </Buttons.Contained_Custom>
         </footer>
       </div>
     );
+
+  const AddUserButton = () => {
+    return (
+      <div className="w-100 d-flex justify-content-end">
+        <Buttons.Contained
+          onClick={addUser}
+          className="button_large border-r-20 "
+        >
+          <Typography.H7 className="font-400">
+            {content.row6.AddUser}
+          </Typography.H7>
+        </Buttons.Contained>
+      </div>
+    );
+  };
   return (
-    <div className="w-100 ">
+    <div className="w-100 h-100 bg-white">
       <Header />
-      <Grid
-        container
-        className="mt-2 px-4 scrollable2"
-        columnSpacing={3}
-        rowSpacing={2}
-      >
-        <Grid item lg={6} className="d-flex justify-content-end">
-          <div className="w-90">
-            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-              {content.row1.Name_of_the_company_or_institution}
-            </Typography.H8>
-            <TextFieldFUN_v3 />
-          </div>
-        </Grid>
-        <Grid item lg={6} className="d-flex justify-content-start">
-          <div className="w-90">
-            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-              {content.row1.ManagementName}
-            </Typography.H8>
-            <TextFieldFUN_v3 />
-          </div>
-        </Grid>
-        <Grid item lg={6} className="d-flex justify-content-end">
-          <div className="w-90">
-            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-              {content.row2.phoneNumber}
-            </Typography.H8>
-            <TextFieldFUN_v3 />
-          </div>
-        </Grid>
-        <Grid item lg={6} className="d-flex justify-content-start">
-          <div className="w-90">
-            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-              {content.row2.userName}
-            </Typography.H8>
-            <TextFieldFUN_v3 />
-          </div>
-        </Grid>
-        <Grid item lg={6} className="d-flex justify-content-end">
-          <div className="w-90">
-            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-              {content.row3.Email}
-            </Typography.H8>
-            <TextFieldFUN_v3 />
-          </div>
-        </Grid>
-        <Grid item lg={6} className="d-flex justify-content-start">
-          <div className="w-90">
-            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-              {content.row3.CompanyZipCode}
-            </Typography.H8>
-            <TextFieldFUN_v3 />
-          </div>
-        </Grid>
-        {/* // */}
-        <Grid item lg={4}>
-          <div className="d-flex">
-            <article className={cssClass.me_3 + " language-card-select"}>
-              <span>
-                <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-                  {content.row4.State}
-                </Typography.H8>
-              </span>
-              <select name="cars" id="cars" className="select-rtl">
-                <option value="تهران">
-                  <Typography.H8>تهران</Typography.H8>
-                </option>
-                <option value="کرج">
-                  <Typography.H9>کرج</Typography.H9>
-                </option>
-              </select>
-            </article>
-            <article>
-              <span>
-                <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-                  {content.row4.City}
-                </Typography.H8>
-              </span>
-              <select name="cars" id="cars" className="select-rtl">
-                <option value="تهران">
-                  <Typography.H8>تهران</Typography.H8>
-                </option>
-                <option value="کرج">
-                  <Typography.H9>کرج</Typography.H9>
-                </option>
-              </select>
-            </article>
-          </div>
-          <article className={cssClass.me_3 + " mt-5 "}>
-            <select name="cars" id="cars" className="select-rtl">
-              <option value="یک ماهه">
-                <Typography.H8>یک ماهه</Typography.H8>
-              </option>
-              <option value="دو ماهه">
-                <Typography.H9>دو ماهه</Typography.H9>
-              </option>
-            </select>
-          </article>
-        </Grid>
-        <Grid item lg={8} className="d-flex justify-content-start">
-          <div className={"w-85  " + cssClass.ms_6}>
-            <Typography.H8 className={"font-400 mb-2 " + cssClass.ms_3}>
-              {content.row4.CompanyAddress}
-            </Typography.H8>
-            <TextFieldFUN_v4 />
-          </div>
-        </Grid>
-        <Grid item lg={6} className="d-flex align-item-center">
-          <AccessProductBox />
-          <span>
-            <Typography.H8 className={"font-400  " + cssClass.ms_3}>
-              {content.row5.AccessToProducts}
-            </Typography.H8>
-          </span>
-        </Grid>
-        <Grid item lg={6} className="d-flex justify-content-end ">
-          <div
-            style={{
-              position: "relative",
-              top: "0.8rem",
-            }}
-          >
-            <Buttons.Contained className="button_large border-r-20 ">
-              <Typography.H7 className="font-400">
-                {content.row6.AddUser}
-              </Typography.H7>
-            </Buttons.Contained>
-          </div>
-        </Grid>
-      </Grid>
+      <main className="w-100 px-3-58 d-flex justify-content-between flex-wrap pt-4 bg-white">
+        <Company_or_Institution
+          Name_of_the_company_or_institution={
+            content.row1.Name_of_the_company_or_institution
+          }
+          margin={cssClass.ms_3}
+        />
+        <ManagementName
+          ManagementName={content.row1.ManagementName}
+          margin={cssClass.ms_3}
+        />
+        <PhoneNumber
+          margin={cssClass.ms_3}
+          phoneNumber={content.row2.phoneNumber}
+        />
+        <UserName userName={content.row2.userName} margin={cssClass.ms_3} />
+        <Email Email={content.row3.Email} margin={cssClass.ms_3} />
+        <CompanyZipCode
+          margin={cssClass.ms_3}
+          CompanyZipCode={content.row3.CompanyZipCode}
+        />
+        <article className="state-city-box d-flex justify-content-between">
+          <Province State={content.row4.State} margin={cssClass.ms_3} />
+          <City City={content.row4.City} margin={cssClass.ms_3} />
+        </article>
+        <CompanyAddress
+          CompanyAddress={content.row4.CompanyAddress}
+          margin={cssClass.ms_3}
+        />
+        <Expirition margin={cssClass.ms_3} />
+        <AccessProductBox
+          AccessToProducts={content.row5.AccessToProducts}
+          accessProduct={state.productAccess}
+          margin={cssClass.ms_3}
+        />
+        <AddUserButton />
+      </main>
     </div>
   );
 }

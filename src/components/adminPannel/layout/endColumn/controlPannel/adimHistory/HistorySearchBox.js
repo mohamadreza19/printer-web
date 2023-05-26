@@ -7,27 +7,74 @@ import {
   useDynamicCssClass,
 } from "../../../../../../recoil/readStore";
 
-export default function () {
+export default function ({
+  justProduct = "",
+  justLabel = "",
+  setJustProduct = () => {},
+  setJustLabel = () => {},
+}) {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
+  const AllPrints = () => {
+    function onClick() {
+      setJustLabel(false);
+      setJustProduct(false);
+    }
+    const background =
+      justProduct === false && justLabel == false
+        ? "bg_primary"
+        : "button_contained_v2";
+    return (
+      <Buttons.Contained_Custom
+        className={"button_medium  box_shadow_disabled " + background}
+        onClick={onClick}
+      >
+        <Typography.H8 className="font-400 ">
+          {content.AdminPannel.end_col.controlPannel.history.allPrints}
+        </Typography.H8>
+      </Buttons.Contained_Custom>
+    );
+  };
+  const OnlyProducts = () => {
+    const background = justProduct ? "bg_primary" : "button_contained_v2";
+    function onClick() {
+      setJustLabel(false);
+      setJustProduct(true);
+    }
+    return (
+      <Buttons.Contained_Custom
+        className={"button_medium  box_shadow_disabled mx-2 " + background}
+        onClick={onClick}
+      >
+        <Typography.H8 className="font-400 ">
+          {content.AdminPannel.end_col.controlPannel.history.onlyProducts}
+        </Typography.H8>
+      </Buttons.Contained_Custom>
+    );
+  };
+  const OnlyLabels = () => {
+    const background = justLabel ? "bg_primary" : "button_contained_v2";
+    function onClick() {
+      setJustLabel(true);
+      setJustProduct(false);
+    }
+    return (
+      <Buttons.Contained_Custom
+        onClick={onClick}
+        className={"button_medium  box_shadow_disabled " + background}
+      >
+        <Typography.H8 className="font-400 ">
+          {content.AdminPannel.end_col.controlPannel.history.onlyLabels}
+        </Typography.H8>
+      </Buttons.Contained_Custom>
+    );
+  };
   return (
     <Grid container className="px-4">
       <Grid item lg={6}>
-        <Buttons.Contained_Custom className="button_medium bg_primary">
-          <Typography.H8 className="font-400 ">
-            {content.AdminPannel.end_col.controlPannel.history.allPrints}
-          </Typography.H8>
-        </Buttons.Contained_Custom>
-        <Buttons.Contained_Custom className="button_medium button_contained_v2 box_shadow_disabled mx-3">
-          <Typography.H8 className="font-400 ">
-            {content.AdminPannel.end_col.controlPannel.history.onlyProducts}
-          </Typography.H8>
-        </Buttons.Contained_Custom>
-        <Buttons.Contained_Custom className="button_medium button_contained_v2 box_shadow_disabled">
-          <Typography.H8 className="font-400 ">
-            {content.AdminPannel.end_col.controlPannel.history.onlyLabels}
-          </Typography.H8>
-        </Buttons.Contained_Custom>
+        <AllPrints />
+        <OnlyProducts />
+        <OnlyLabels />
       </Grid>
       <Grid item lg={6} className={cssClass.ps_2}>
         <TextFields.v2_SearchBox

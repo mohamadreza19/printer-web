@@ -5,11 +5,21 @@ import StartColumn from "./layout/startColumn/index";
 import { Outlet } from "react-router-dom";
 export default function () {
   return (
-    <Grid container className="bg_secondray  ">
+    <Grid
+      container
+      className="bg_secondray  "
+      style={{
+        // minHeight: () => {},
+        minHeight: "768px",
+        // maxHeight: "768px",
+        // minWidth: "1366px",
+        // maxWidth: "768px",
+      }}
+    >
       <Grid item lg={3} className="">
         <StartColumn />
       </Grid>
-      <Grid item lg={9} className="vh-100">
+      <Grid item lg={9}>
         <EndColumn />
       </Grid>
     </Grid>

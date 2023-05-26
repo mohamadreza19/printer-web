@@ -24,7 +24,7 @@ export const ToastContainer = ({ children }) => {
             </span>
             <main>
               <Typography.H7 className="font-400">
-                از حذف پروژه خود مطمئن هستید؟
+                {deleteAlert.message}
               </Typography.H7>
             </main>
             <footer className="d-flex w-85 justify-content-evenly">

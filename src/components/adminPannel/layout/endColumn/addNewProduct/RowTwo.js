@@ -4,31 +4,27 @@ import {
   useContent_Based_Language,
 } from "../../../../../recoil/readStore";
 import { TextFieldFUN_v5 } from "../../../../../styles/__ready/Textfields";
-// import useAdminAdd_Product from "../../../../../controller/Admin-add-product-label/useAdmin_Add_Product";
-import useAdmin_Add_Product from "../../../../../controller/Admin-add-product-label/useAdmin_Add_Product";
-export default function ({ param }) {
-  const {
-    productHandler = () => {},
-    productValue = " ",
-    handleSetLanguage_Of_ProductName_Header_Card,
-    headerCardCurrentBackground = {
-      persian: " ",
-      english: " ",
-      turkish: " ",
-    },
-  } = param;
+import useAdminAdd_Product from "../../../../../helper/admin_add_product_label/control_product_dynamic_input";
 
+export default function () {
   const cssClass = useDynamicCssClass();
   //
   const content =
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label
       .rowTwo;
   //
+  const {
+    handleSetLanguage_Of_ProductName_Header_Card,
+    productHandler,
+    productValue,
+    validateErr,
+    headerCardCurrentBackground,
+  } = useAdminAdd_Product("productName");
 
   return (
     <>
       <div className={"position-relative  " + cssClass.ms_3}>
-        <article
+        <header
           style={{
             top: "2rem",
             // right: "0",
@@ -38,9 +34,9 @@ export default function ({ param }) {
           <Typography.H8 className="font-400">
             {content.productName}
           </Typography.H8>
-        </article>
+        </header>
       </div>
-      <div
+      <main
         style={{
           top: "4.2rem",
         }}
@@ -52,7 +48,12 @@ export default function ({ param }) {
             zIndex: "2",
           }}
         >
-          <TextFieldFUN_v5 onChange={productHandler} value={productValue} />
+          <TextFieldFUN_v5
+            onChange={productHandler}
+            value={productValue}
+            className="add-product-label-textFelid"
+          />
+          <Typography.H9 className="color_danger">{validateErr}</Typography.H9>
         </article>
         <article className="position-absolute d-flex add-product-medium-text-area-header-card">
           <section
@@ -126,7 +127,7 @@ export default function ({ param }) {
             </span>
           </section>
         </article>
-      </div>
+      </main>
     </>
   );
 }

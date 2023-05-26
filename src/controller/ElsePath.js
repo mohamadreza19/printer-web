@@ -5,7 +5,7 @@ export default function () {
   const isAdminLogin = useIsAdminLogin();
   const isUserLogin = useIsUserLogin();
   if (isAdminLogin) {
-    return <Navigate to={"/admin"} replace />;
+    return <Navigate to={"/admin/login"} replace />;
   }
   if (isUserLogin) {
     return <Navigate to={"/user"} replace />;

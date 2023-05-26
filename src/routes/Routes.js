@@ -23,15 +23,17 @@ import AdimHistory from "../components/adminPannel/layout/endColumn/controlPanne
 import AdminAddNewUser from "../components/adminPannel/layout/endColumn/controlPannel/adminAddNewUser";
 import AdminAddProduct from "../components/adminPannel/layout/endColumn/addNewProduct";
 import AdminAddProduct_UploadFile from "../components/adminPannel/layout/endColumn/addNewProduct/uploadFile";
+
 import AdminList_Of_Label_And_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product";
-import AdminList_Of_Label_And_Product_edit from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/edit";
+import Admin_Edit_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/ProductEdit";
+import Admin_Edit_Label from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/LabelEdit";
 
 import AdminList_Of_User_Manager from "../components/adminPannel/layout/endColumn/list_Of_User_Manager";
 import AdminList_Of_User_Manager_edit from "../components/adminPannel/layout/endColumn/list_Of_User_Manager/edit";
 import AdminList_Of_User_Manager_Printer from "../components/adminPannel/layout/endColumn/list_Of_User_Manager/printer";
 //
 import AdminAddLabel from "../components/adminPannel/layout/endColumn/addNewLabel";
-import AdminAddLabel_UploadFile from "../components/adminPannel/layout/endColumn/addNewLabel/uploadFile";
+
 import ElsePath from "../controller/ElsePath";
 import { Suspense } from "react";
 import ViewPrinitChart from "../components/adminPannel/layout/endColumn/viewPrinitChart";
@@ -45,7 +47,7 @@ export const UserRoutePath = {
   projectList: "/user/project-list",
   createProject: "/user/add-project",
   labelList: "/user/label-list",
-  priningHistory: "/user/prining-history",
+  priningHistory: "/user/print-history",
 };
 export const AdminRoutePath = {
   index: "/admin",
@@ -79,7 +81,7 @@ export default function () {
         <Route path="add-project" element={<AddNewProject />} />
 
         <Route path="label-list" element={<LabelList />} />
-        <Route path="prining-history" element={<HistoryPrining />} />
+        <Route path="print-history" element={<HistoryPrining />} />
       </Route>
       {/* editor */}
       <Route
@@ -97,30 +99,27 @@ export default function () {
         <Route path="control-pannel" element={<AdminControlPannel />} />
         <Route path="control-pannel/history" element={<AdimHistory />} />
         <Route path="control-pannel/add-user" element={<AdminAddNewUser />} />
-        <Route path="add-product" element={<AdminAddProduct />} />
+        <Route path="add-product/" element={<AdminAddProduct />} />
+        <Route
+          path="add-product/edit/:productid"
+          element={<Admin_Edit_Product />}
+        />
         <Route
           path="add-product/upload-flie"
           element={<AdminAddProduct_UploadFile />}
         />
         <Route path="add-label" element={<AdminAddLabel />} />
-        <Route
-          path="add-label/upload-file"
-          element={<AdminAddLabel_UploadFile />}
-        />
+        <Route path="add-label/edit/:labelid" element={<Admin_Edit_Label />} />
         <Route
           path="list-labels-products"
           element={<AdminList_Of_Label_And_Product />}
-        />
-        <Route
-          path="list-labels-products/edit"
-          element={<AdminList_Of_Label_And_Product_edit />}
         />
         <Route
           path="list-user-manager"
           element={<AdminList_Of_User_Manager />}
         />
         <Route
-          path="list-user-manager/edit"
+          path="list-user-manager/edit/:id"
           element={<AdminList_Of_User_Manager_edit />}
         />
         <Route

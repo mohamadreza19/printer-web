@@ -5,12 +5,23 @@ import {
 import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
-import useCachedLanguage from "../../../../../utility/useCachedLanguage";
 
-export default function () {
+import useCachedLanguage from "../../../../../utility/useCachedLanguage";
+import formatDate from "../../../../../utility/useFormetDate";
+export default function ({
+  project = {
+    id: "",
+    printsCount: "",
+    projectName: "",
+    createdBy: "",
+    createdAt: "",
+  },
+  language = "",
+}) {
   const cssClass = useDynamicCssClass();
   const { value: currentLanguage } = useCachedLanguage();
   const content = useContent_Based_Language();
+
   const ActionButton = () => {
     return (
       <div className={"d-flex align-items-center "}>
@@ -19,7 +30,7 @@ export default function () {
             currentLanguage != "fa" && "font-English"
           }`}
         >
-          <span>21</span>
+          <span>{project.printsCount}</span>
           <span>{content.userPannel.end_col.historyOfPrinting.print}</span>
         </Typography.Body2>
         <Buttons.Contained_Custom className="bg_primary py-3 px-3   ">
@@ -35,7 +46,7 @@ export default function () {
     <div className="w-100 bg-white border py-2 px-1 d-flex align-items-center justify-content-between  border-r-25 mb-2 ">
       <section className=" d-flex align-items-center justify-content-between">
         <Typography.Body2 className={"font-500 " + cssClass.ms_3}>
-          موتور صنعتی 1400 وات{" "}
+          {project.projectName}
         </Typography.Body2>
       </section>
       <div className="d-flex ">
@@ -45,13 +56,13 @@ export default function () {
               <span className={cssClass.me_1}>
                 <Icons.Persion />
               </span>
-              محمد جواد حسنی
+              {project.createdBy}
             </Typography.Body2>
           </div>
 
           <div className={" position-relative " + cssClass.right_5rem}>
             <Typography.Body2 className={"font-300 " + cssClass.ms_3}>
-              چند دقیقه پیش
+              {formatDate(project.createdAt, language)}
             </Typography.Body2>
           </div>
         </section>

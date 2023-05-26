@@ -183,36 +183,7 @@ export default function () {
       </Link>
     );
   };
-  const History = () => {
-    const dynamicColor = pathname.includes("prining-history")
-      ? {
-          bg: "bg_primary ",
-          color: "color-white ",
-          fill: "fill_white",
-        }
-      : {
-          bg: "bg_secondray box_shadow_disabled",
-          color: "color_secondray_v2",
-          fill: "fill_secondray_v2",
-        };
-    return (
-      <Link to={UserRoutePath.priningHistory}>
-        <Buttons.Contained_Custom
-          className={
-            "w-100 d-flex justify-content-start py-3  px-3  border-r-20 mb-3 " +
-            dynamicColor.bg
-          }
-        >
-          <Icons.History classNameForPath={dynamicColor.fill} />
-          <Typography.H7
-            className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
-          >
-            {buttonsText.historyOfPrinting}
-          </Typography.H7>
-        </Buttons.Contained_Custom>
-      </Link>
-    );
-  };
+
   const Setting = () => {
     const dynamicColor = pathname.includes("prining-history")
       ? {
@@ -243,13 +214,13 @@ export default function () {
   };
 
   return (
-    <div className="w-100  mt-4">
+    <div className="w-100  ">
       <ControlPannel />
       <AddProject_OrLanel />
       <LabelList />
       <ViewPrinitChart />
       <Admin_And_User_List />
-      <History />
+
       <Setting />
     </div>
   );

@@ -8,37 +8,36 @@ import Header from "./Header";
 import CalendersBox from "./CalendersBox";
 import Items from "./Items";
 
+import SortBox from "../../../../../styles/__ready/datepicker/SortBox";
+import useDateObject from "../../../../../utility/useDateObject";
+import { UserProjects_Qury } from "../../../../../helper/UserApiQueries";
 export default function () {
-  // function CustomInput({ openCalendar, stringDate, handleValueChange }) {
-  //   return (
-  //     <div className="calendar-input bg-white border py-3 px-1 d-flex align-items-center border-r-20 justify-content-center">
-  //       <input
-  //         onFocus={openCalendar}
-  //         value={stringDate}
-  //         onChange={handleValueChange}
-  //         style={{
-  //           textAlign: "center",
-  //         }}
-  //         className={"text-filed-input-v2 placeholder-v1 disabled_gray2"}
-  //       />
-  //       <span
-  //         style={{
-  //           position: "relative",
-  //           left: "15px",
-  //         }}
-  //         onClick={openCalendar}
-  //         className="cur-pointer "
-  //       >
-  //         <Icons.Vector />
-  //       </span>
-  //     </div>
-  //   );
-  // }
-  return (
-    <div className="w-100">
-      <Header />
-      <CalendersBox />
-      <Items />
-    </div>
-  );
+  const datePickred = useDateObject();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setendDate] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  //
+
+  const project = UserProjects_Qury(page, limit, startDate, endDate);
+
+  function submitDataPickred() {
+    const from = datePickred.server.from;
+    console.log(from);
+    const to = datePickred.server.to;
+    console.log(to);
+    setStartDate(from);
+    setendDate(to);
+  }
+  if (project.data)
+    return (
+      <div className="w-100">
+        <Header />
+        <article className="mt-4 pb-4 border-bottom">
+          <SortBox submitDataPickred={submitDataPickred} />
+        </article>
+        {/* <CalendersBox /> */}
+        <Items projects={project.data.items} />
+      </div>
+    );
 }

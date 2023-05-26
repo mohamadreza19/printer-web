@@ -130,6 +130,7 @@ export default function ({
       }
       if (joinRow) {
         if (cell.parentId) {
+          console.log("has parent");
           const payload = {
             railId: railId,
             cellId: undefined,
@@ -138,6 +139,7 @@ export default function ({
           setCell(payload, "JOINROW");
           setJoinRow(false);
         } else {
+          console.log('hasn"t parent');
           const payload = {
             railId: railId,
             cellId: cell.id,

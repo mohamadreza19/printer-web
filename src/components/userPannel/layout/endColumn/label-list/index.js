@@ -8,6 +8,7 @@ import {
 import Header from "./Header";
 
 import Labels from "./Labels";
+import { Admin_User_Image } from "../../../../../helper/AdminApiQueries";
 
 export default function () {
   const content = useContent_Based_Language();
@@ -33,6 +34,12 @@ export default function () {
         isShow: true,
         message: error,
       });
+    }
+    if (isSuccess) {
+      // const option = {
+      //   fileId: data.pictures[0]?.id,
+      // };
+      // imageResponse.mutate(option);
     }
   }, [data, isSuccess, isLoading, error]);
 

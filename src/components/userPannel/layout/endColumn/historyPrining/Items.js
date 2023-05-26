@@ -1,10 +1,12 @@
+import { useLanguage } from "../../../../../recoil/readStore";
 import Item from "./Item";
 
-export default function () {
+export default function ({ projects }) {
+  const lan = useLanguage();
   return (
-    <div className="w-100 mt-3 history-scrollable  px-4">
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
-        <Item key={item} />
+    <div className="w-100 mt-3   px-4">
+      {projects.map((project, key) => (
+        <Item project={project} key={key} language={lan} />
       ))}
     </div>
   );

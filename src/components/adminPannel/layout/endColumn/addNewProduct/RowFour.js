@@ -1,27 +1,21 @@
-import useAdmin_Add_Product from "../../../../../controller/Admin-add-product-label/useAdmin_Add_Product";
 import {
   useDynamicCssClass,
   useContent_Based_Language,
 } from "../../../../../recoil/readStore";
 import { TextFieldFUN_v5_Big } from "../../../../../styles/__ready/Textfields";
 import Typography from "../../../../../styles/__ready/Typography";
-
-export default function ({ worker }) {
-  const {
-    handleSetLanguage_Of__AdditionalInfo_Header_Card = () => {},
-    additionalInfoHandeler = () => {},
-    additionalInfoValue = "",
-    AdditionalInfo_headerCardCurrentBackground = {
-      persion: "",
-      english: "",
-      turkish: "",
-    },
-  } = worker;
+import useAdminAdd_Product from "../../../../../helper/admin_add_product_label/control_product_dynamic_input";
+export default function () {
   const cssClass = useDynamicCssClass();
   const content =
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label
       .rowFour;
-  console.log(AdditionalInfo_headerCardCurrentBackground);
+  const {
+    additionalInfoValue,
+    additionalInfoHandeler,
+    handleSetLanguage_Of__AdditionalInfo_Header_Card,
+    AdditionalInfo_headerCardCurrentBackground,
+  } = useAdminAdd_Product("additionalInfo");
   return (
     <>
       <div className={"position-relative " + cssClass.ms_3}>

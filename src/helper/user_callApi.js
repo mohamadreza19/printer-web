@@ -19,12 +19,22 @@ export default class {
       });
     }
   }
-  static async project_list(token = "") {
+  static async project_list(
+    token = "",
+    page = "1",
+    limit = "10",
+    startDate = null,
+    endDate = null
+  ) {
     if (!token) throw new Error("there isnt token");
-
+    let url = `${api}/project/user?`;
+    if (page) url = url.concat(`page=${page}&`);
+    if (limit) url = url.concat(`limit=${page}&`);
+    if (startDate) url = url.concat(`startDate=${startDate}&`);
+    if (endDate) url = url.concat(`endDate=${endDate}&`);
     try {
       const res = await axios({
-        url: `${api}/project/user?page=1&limit=10`,
+        url: url,
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

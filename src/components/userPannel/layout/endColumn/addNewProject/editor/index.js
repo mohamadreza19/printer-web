@@ -5,7 +5,13 @@ import IconBox from "./layout/startColumn/IconBox";
 
 export default function () {
   return (
-    <Grid container className="w-100 vh-100 ">
+    <Grid
+      container
+      className="w-100 vh-100 "
+      style={{
+        minHeight: "768px",
+      }}
+    >
       <Grid className="bg_secondray h-100 " item lg={1}>
         <StartColumn />
       </Grid>

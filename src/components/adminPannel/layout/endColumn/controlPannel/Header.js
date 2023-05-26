@@ -4,9 +4,29 @@ import Typography from "../../../../../styles/__ready/Typography";
 import useCachedLanguage from "../../../../../utility/useCachedLanguage";
 import { useContent_Based_Language } from "../../../../../recoil/readStore";
 import { Link } from "react-router-dom";
+import {
+  AdminActive_users,
+  AdminPrintsStatistics,
+} from "../../../../../helper/AdminApiQueries";
+import { useEffect } from "react";
+import useToastReducer from "../../../../../recoil/reducer/useToastReducer";
 export default function () {
   const { value: currenctLanguage } = useCachedLanguage();
   const content = useContent_Based_Language();
+  //
+  const setLoading = useToastReducer();
+  //
+
+  const { data = { allActiveUsers: 0, havingPrint: 0 } } = AdminActive_users();
+  //
+  const {
+    data: printsStatistics_data = {
+      totalPrints: 3,
+      distinctCompanies: 1,
+      productsAndLabels: 1,
+    },
+  } = AdminPrintsStatistics();
+
   const StartCol = ({
     value = {
       row1: " ",
@@ -56,7 +76,7 @@ export default function () {
         <article className=" d-flex justify-content-between w-100 ">
           <StartCol
             value={{
-              row1: "1,258",
+              row1: data.allActiveUsers,
               row2: content.AdminPannel.end_col.controlPannel.row1.activeUser,
             }}
           />
@@ -72,27 +92,29 @@ export default function () {
     );
   };
   const SeceondCard = () => {
-    return (
-      <div className="w-100 bg_primary_opacity-7  border-r-25 d-flex ">
-        <article className=" d-flex justify-content-between w-100 ">
-          <StartCol
-            value={{
-              row1: "125",
-              row2: content.AdminPannel.end_col.controlPannel.row1
-                .ProductAndLabel,
-            }}
-          />
-          <EndCol
-            value={{
-              row1: content.AdminPannel.end_col.controlPannel.row1.productsList,
-              row2: content.AdminPannel.end_col.controlPannel.row1
-                .AddNewProduct,
-              row2Link: "/admin/add-product",
-            }}
-          />
-        </article>
-      </div>
-    );
+    if (data)
+      return (
+        <div className="w-100 bg_primary_opacity-7  border-r-25 d-flex ">
+          <article className=" d-flex justify-content-between w-100 ">
+            <StartCol
+              value={{
+                row1: printsStatistics_data.productsAndLabels,
+                row2: content.AdminPannel.end_col.controlPannel.row1
+                  .ProductAndLabel,
+              }}
+            />
+            <EndCol
+              value={{
+                row1: content.AdminPannel.end_col.controlPannel.row1
+                  .productsList,
+                row2: content.AdminPannel.end_col.controlPannel.row1
+                  .AddNewProduct,
+                row2Link: "/admin/add-product",
+              }}
+            />
+          </article>
+        </div>
+      );
   };
 
   return (

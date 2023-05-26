@@ -99,7 +99,7 @@ export const content_Based_Language = selector({
               row2: {
                 listOfProjects: "List of projects",
                 addNewProject: "Add new project",
-                listOfLabels: "List of labels",
+                listOfLabels: "List of products and labels",
                 historyOfPrinting: "History of printing",
                 settings: "Settings",
               },
@@ -207,6 +207,7 @@ export const content_Based_Language = selector({
                   },
                   row6: {
                     AddUser: "Add user",
+                    EditUser: "edit user",
                   },
                   success: {
                     NewUserSuccessfullyCreated: "New user successfully created",
@@ -294,7 +295,7 @@ export const content_Based_Language = selector({
               row2: {
                 listOfProjects: "لیست پروژه ها",
                 addNewProject: "افزودن پروژه جدید",
-                listOfLabels: "لیست لیبل ها",
+                listOfLabels: "لیست محصولات و لیبل ها",
                 historyOfPrinting: "تاریخچه چاپ",
                 settings: "تنظیمات",
               },
@@ -406,6 +407,7 @@ export const content_Based_Language = selector({
                   },
                   row6: {
                     AddUser: "افزودن کاربر",
+                    EditUser: "ویرایش کاربر",
                   },
                   success: {
                     NewUserSuccessfullyCreated: "کاربر جدید با موفقیت ساخته شد",
@@ -493,7 +495,7 @@ export const content_Based_Language = selector({
               row2: {
                 listOfProjects: "proje listesi",
                 addNewProject: "Add new project",
-                listOfLabels: "Yeni proje ekle",
+                listOfLabels: "Ürün ve etiket listesi",
                 historyOfPrinting: "baskı tarihi",
                 settings: "Ayarlar",
               },
@@ -601,6 +603,7 @@ export const content_Based_Language = selector({
                   },
                   row6: {
                     AddUser: "Kullanıcı Ekle",
+                    EditUser: "Kullanıcıyı düzenle",
                   },
                   success: {
                     NewUserSuccessfullyCreated:

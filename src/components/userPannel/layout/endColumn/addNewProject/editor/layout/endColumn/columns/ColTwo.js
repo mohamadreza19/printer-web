@@ -9,7 +9,6 @@ export default function ({ isShow, setShow = () => {} }) {
       key={"11"}
       item
       lg={4}
-      // className={`position-relative ${isShow && "d-none"}`}
       className={`position-relative ${isShow && "d-none"}`}
     >
       <SearchBox />

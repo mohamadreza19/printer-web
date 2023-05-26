@@ -35,6 +35,23 @@ a {
 .logo {
   width: 15rem !important;
 }
+.file-progress {
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 210px;
+  height: 9.25px;
+  background: #cbcbcb;
+  border-radius: 4.62695px;
+}
+.file-progress::-webkit-progress-bar {
+  background: #cbcbcb;
+  border-radius: 4.62695px;
+}
+.file-progress::-webkit-progress-value {
+  background: #f36523;
+  border-radius: 4.62695px;
+}
 
 .text-filed-input-v2 {
   border: 0;
@@ -544,6 +561,7 @@ html[dir="ltr"] .add-product-big-text-area-header-card {
 .upload-file-area-progress-bar {
   width: 211.75px !important;
   max-width: 211.75px !important;
+  background-color: #f36523;
 }
 
 .cheched-box {
@@ -1007,6 +1025,7 @@ html[dir="ltr"] .add-new-rail-btn {
   z-index: 10000;
   width: 100vw;
   height: 100vh;
+  min-height: 768px;
   background-color: #00000031;
   display: flex;
   justify-content: center;
@@ -1128,4 +1147,67 @@ html[dir="ltr"] .add-new-rail-btn {
 .delete-message-trash-icon {
   width: 33.97px;
   height: 43.91px;
+}
+.add-product-label-textFelid {
+  width: 490px !important;
+  height: 52px !important;
+}
+.admin-print-histoy-box {
+  width: 880px;
+  height: 62px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #cbcbcb;
+  padding-right: 1.5rem;
+}
+.admin-print-histoy-child-box {
+  width: 220px;
+}
+.add-user-input-box {
+  width: 420px;
+  height: 52px;
+  background: #ffffff;
+  border: 2px solid #ececec;
+  border-radius: 20px;
+}
+.add-user-big-input-box {
+  width: 496.69px;
+  height: 52px;
+  background: #ffffff;
+  border: 2px solid #ececec;
+  border-radius: 20px;
+}
+.state-city-box {
+  width: 341px;
+  height: 52px;
+}
+.select-drop-down {
+  position: absolute;
+  width: 160px;
+  min-height: 52px;
+  max-height: 200px;
+  overflow-y: auto;
+  top: 51px;
+  border: 1px solid #454545;
+  background-color: #f8f4f2;
+  z-index: 10;
+}
+.select-drop-child {
+  background-color: #454545;
+}
+.select-drop-child:hover {
+  background: linear-gradient(111.74deg, #ff7d41 24.86%, #ff5100 69.34%);
+  box-shadow: 0px 25px 40px -20px rgba(255, 81, 0, 0.8) !important;
+}
+.product-label-upload-file {
+  width: 860px;
+}
+.product-label-upload-file-small-input {
+  width: 200px !important;
+  height: 52px !important;
+}
+.infinite-scroll-component__outerdiv {
+  overflow: hidden;
+  height: 100%;
 }

@@ -4,13 +4,16 @@ import {
   useContent_Based_Language,
 } from "../../../../../recoil/readStore";
 import Typography from "../../../../../styles/__ready/Typography";
-import useAdmin_Add_Product from "../../../../../controller/Admin-add-product-label/useAdmin_Add_Product";
+import useAdminAdd_Product from "../../../../../helper/admin_add_product_label/control_product_dynamic_input";
+//this component havent value and onChange
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label
       .rowThree;
-  const { productLinkValue, handeler } = useAdmin_Add_Product().productLink;
+  const { productLinkValue, handeler, validateErr } =
+    useAdminAdd_Product("productLink");
+
   return (
     <div className="mt-4_5 ">
       <Typography.H8 className={"font-400 mb-1 " + cssClass.ms_3}>
@@ -21,6 +24,7 @@ export default function () {
         value={productLinkValue}
         onChange={handeler}
       />
+      <Typography.H9 className="color_danger">{validateErr}</Typography.H9>
     </div>
   );
 }

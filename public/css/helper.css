@@ -22,6 +22,18 @@
 p {
   margin: 0 !important;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 html {
   /* font-size: var(--base-size); */
   /* background-color: #434343; */
@@ -182,6 +194,10 @@ a {
   padding-top: 1.2rem !important;
   padding-bottom: 1.2rem !important;
 }
+.px-3-58 {
+  padding-left: 3.58rem;
+  padding-right: 3.58rem;
+}
 .px-2_3rem {
   padding-left: 2.3rem !important;
   padding-right: 2.3rem !important;
@@ -268,6 +284,9 @@ a {
 .w-95 {
   width: 95% !important;
 }
+.w-91-5 {
+  width: 91.5% !important;
+}
 .w-90 {
   width: 90% !important;
 }
@@ -304,6 +323,12 @@ a {
 
 /* height
  */
+.min-h-768 {
+  min-height: 768px;
+}
+.max-h-100 {
+  max-height: 100%;
+}
 .h_100vh {
   height: 100vh;
 }
@@ -671,4 +696,7 @@ html[dir="ltr"] .border-r-top-left-30 {
 .scroll-bar::-webkit-scrollbar {
   position: absolute;
   left: 0;
+}
+.white-space-nowrap {
+  white-space: nowrap;
 }

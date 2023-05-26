@@ -90,6 +90,7 @@ export default class {
     Input_marginStart_based_Language = "ms-3",
     placeholder = "",
     iconMarginStart = " ",
+    onClickAndGetValeFn = () => {},
   }) {
     return (
       <div
@@ -97,12 +98,16 @@ export default class {
           "w-100 bg-white border py-2 px-3 d-flex align-items-center justify-content-between border-r-20 " +
           className
         }
+        style={{
+          height: "52px",
+        }}
       >
         <input
           style={{
             position: "relative",
             top: "-0.1rem",
           }}
+          id="serach-input"
           placeholder={placeholder}
           // placeholder="جست و جو بر اساس نام پروژه"
           className={
@@ -110,7 +115,15 @@ export default class {
             Input_marginStart_based_Language
           }
         />
-        <span className={"cur-pointer " + iconMarginStart}>
+        <span
+          className={"cur-pointer " + iconMarginStart}
+          onClick={() => {
+            const serach_input = document.getElementById("serach-input");
+            const value = serach_input.value;
+
+            onClickAndGetValeFn(value);
+          }}
+        >
           <Icons.Search />
         </span>
       </div>
@@ -242,19 +255,24 @@ export const TextFieldFUN_v3 = ({
   onChange = " ",
   placeholder = " ",
   className = " ",
+  type = "text",
 }) => {
   const cssClass = useDynamicCssClass();
-
+  const lan = useLanguage();
   return (
     <div
-      className={` bg-white border  d-flex align-items-center border-r-20 ${className}`}
+      className={` h-100   d-flex align-items-center border-r-20 ${className}`}
     >
       <input
-        className={`text-filed-input-v2 text-filed-medium 
+        className={`text-filed-input-v2 
           ${cssClass.ms_2}`}
-        // value={value}
+        type={type}
+        value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e)}
+        style={{
+          textAlign: lan === "fa" ? "right" : "left",
+        }}
       />
     </div>
   );
@@ -283,23 +301,29 @@ export const TextFieldFUN_v4 = ({
 };
 export const TextField_small_Custom = ({
   value = " ",
-  onChange = " ",
+  onChange = () => {},
   placeholder = " ",
   className = " ",
+  type = "text",
 }) => {
   const cssClass = useDynamicCssClass();
+  const language = useLanguage();
 
   return (
     <div
-      className={` bg-white border  d-flex align-items-center border-r-20 text-filed-medium-v1 ${className}`}
+      className={` bg-white border  d-flex align-items-center border-r-20  ${className}`}
     >
       <span className={cssClass.ms_2}>mm</span>
       <input
+        type={type}
         className={`text-filed-input-v2 text-filed-large
           ${cssClass.ms_2}`}
-        // value={value}
+        value={value}
         placeholder={placeholder}
-        onChange={(e) => onChange(e)}
+        onChange={onChange}
+        style={{
+          textAlign: language === "fa" ? "right" : "left",
+        }}
       />
     </div>
   );
@@ -316,9 +340,9 @@ export const TextFieldFUN_v5 = ({
   const changedClass = language == "fa" ? " " : "font-English";
 
   return (
-    <article className="text-filed-add-product">
+    <article className="text-filed-medium-v1">
       <div
-        className={` bg-white border  d-flex align-items-center border-r-20 ${className}`}
+        className={` bg-white border   d-flex align-items-center border-r-20 ${className}`}
       >
         <input
           className={`${ImputclassName} text-filed-input-v2 text-filed-large

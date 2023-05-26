@@ -44,6 +44,7 @@ export default function ({
         if (!cell.parentId) {
           const payload = {
             cellId: cell.id,
+            railId,
           };
           setCell(payload, "DUPLICATECELL");
           setDuplicateAction(false);
@@ -53,6 +54,7 @@ export default function ({
         if (!cell.parentId) {
           const payload = {
             cellId: cell.id,
+            railId,
           };
           setCell(payload, "DELETECELL");
           setdeleteAction(false);

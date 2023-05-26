@@ -24,48 +24,47 @@ import useToastReducer from "../../../../../../../../../../../recoil/reducer/use
 // };
 
 export default function () {
-  const { error, data, isLoading } = UserProjectFindOne_Qury();
+  // const { error, data, isLoading } = UserProjectFindOne_Qury();
   const [wantNewRail, SetwantNewRail] = useRecoilState(addRail);
   const setLoading = useToastReducer();
   const setRail = useRailReducer();
   const [railsState, setRailsState] = useRecoilState(rails);
-  const [scaleState, setScaleState] = useRecoilState(scaleStore);
+  const [scaleState_, setScaleState] = useRecoilState(scaleStore);
 
   useEffect(() => {
     if (wantNewRail) {
       setRail({}, "ADDRAIL");
-      console.log(railsState);
       SetwantNewRail(false);
     }
   }, [wantNewRail]);
 
-  useEffect(() => {
-    if (isLoading) {
-      setLoading({
-        isShow: true,
-        message: "",
-      });
-    }
-    if (data) {
-      let numberOfRailsArr = [];
-      for (let i = 0; i < data.numberOfRails; i++) {
-        numberOfRailsArr.push(i);
-      }
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     setLoading({
+  //       isShow: true,
+  //       message: "",
+  //     });
+  //   }
+  //   if (data) {
+  //     let numberOfRailsArr = [];
+  //     for (let i = 0; i < data.numberOfRails; i++) {
+  //       numberOfRailsArr.push(i);
+  //     }
 
-      const modifiedDate = { ...data };
-      delete modifiedDate.createdAt;
-      delete modifiedDate.deleteDate;
-      delete modifiedDate.updatedAt;
-      setRailsState((draft) => ({
-        ...draft,
-        present: [modifiedDate],
-      }));
-      setLoading({
-        isShow: false,
-        message: "",
-      });
-    }
-  }, [isLoading, data, error]);
+  //     const modifiedDate = { ...data };
+  //     delete modifiedDate.createdAt;
+  //     delete modifiedDate.deleteDate;
+  //     delete modifiedDate.updatedAt;
+  //     setRailsState((draft) => ({
+  //       ...draft,
+  //       present: [modifiedDate],
+  //     }));
+  //     setLoading({
+  //       isShow: false,
+  //       message: "",
+  //     });
+  //   }
+  // }, [isLoading, data, error]);
 
   const AddNewRailButton = () => {
     function onClick() {
@@ -78,25 +77,25 @@ export default function () {
       </div>
     );
   };
-  const MapedRail = () => {
-    for (let i = 0; i < data?.numberOfRails; i++) {
-      return (
-        <RailArea
-          key={i}
-          rail={railsState.present[i]}
-          deleteRail={() => setRail({ railId: data.id }, "DELETERAIL")}
-        />
-      );
-    }
-  };
+  // const MapedRail = () => {
+  //   for (let i = 0; i < data?.numberOfRails; i++) {
+  //     return (
+  //       <RailArea
+  //         key={i}
+  //         rail={railsState.present[i]}
+  //         deleteRail={() => setRail({ railId: data.id }, "DELETERAIL")}
+  //       />
+  //     );
+  //   }
+  // };
   return (
     <div className=" bg-white scrollable-x-large position-relative">
       <ScaleContainer
-        scale={scaleState}
+        scale={scaleState_}
         className={"w-100  dir-ltr pe-7rem pt-5   border-r-bottom-20"}
       >
-        <MapedRail />
-        {/* {railsState.present?.map((rail, index) => {
+        {/* <MapedRail /> */}
+        {railsState.present?.map((rail, index) => {
           return (
             <RailArea
               key={index}
@@ -104,7 +103,7 @@ export default function () {
               deleteRail={() => setRail({ railId: rail.id }, "DELETERAIL")}
             />
           );
-        })} */}
+        })}
         <AddNewRailButton />
       </ScaleContainer>
     </div>

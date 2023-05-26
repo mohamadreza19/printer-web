@@ -1,8 +1,8 @@
 import moment from "moment";
 import "moment/locale/fa";
 import "moment/locale/tr";
-export default function (timeStamp = "", language = "") {
+export default function (timeStamp = "", language = "", withoutSuffix = false) {
   const date = new Date(timeStamp);
-
-  return moment(timeStamp).locale(language).fromNow();
+  console.log(moment(timeStamp).daysInMonth());
+  return moment(timeStamp).locale(language).fromNow(withoutSuffix);
 }

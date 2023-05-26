@@ -112,7 +112,7 @@ export default function () {
     );
   };
   const History = () => {
-    const dynamicColor = pathname.includes("prining-history")
+    const dynamicColor = pathname.includes("print-history")
       ? {
           bg: "bg_primary box_shadow_disabled",
           color: "color-white ",

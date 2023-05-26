@@ -22,7 +22,7 @@ export default function () {
 
   const isUndoPossible = past && past.length > 0;
   const isRedoPossible = future && future.length > 0;
-
+  console.log({ state: state.present });
   useEffect(() => {
     if (isUndoPossible) {
       setCanUseUndo(true);
@@ -71,6 +71,7 @@ export default function () {
   function setCell(
     payload = {
       cellId: "",
+      parentId: "",
       railId: "",
       content: {
         value: "",
@@ -232,7 +233,6 @@ export default function () {
       });
     }
     if (action == cellAction.NEWSETCONTENT) {
-      console.log(payload);
       function cellSplitController(cell) {
         function fullCellChecker(cellForcheck) {
           if (cellForcheck.id == payload.cellId) {
@@ -488,7 +488,7 @@ export default function () {
       function splitRowController(cellForSplit) {
         function fullCellChecker(cellforSplit) {
           if (cellforSplit.id == payload.cellId) {
-            return {
+            const a = {
               ...cellforSplit,
               content: {
                 values: null,
@@ -522,6 +522,8 @@ export default function () {
                 },
               ],
             };
+
+            return a;
           }
           return cellforSplit;
         }
@@ -597,6 +599,7 @@ export default function () {
             return a;
           }
           if (cellForJoin.id == payload.parentId) {
+            console.log({ cellForJoin });
             const a = {
               ...cellForJoin,
               split: "none",
@@ -643,9 +646,7 @@ export default function () {
         return cellForJoin;
       }
 
-      const findedRail = present.find((rail) => {
-        return rail.cells.find((cell) => cell.id === payload.cellId);
-      });
+      const findedRail = present.find((rail) => rail.id === payload.railId);
 
       const newCells = findedRail.cells.map((item) => {
         return JoinRowController(item);
@@ -1328,7 +1329,9 @@ export default function () {
       return HistoryChanger(NewHistory);
     }
     if (action == cellAction.DELETECELL) {
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = state.present.find(
+        (rail) => rail.id === payload.railId
+      );
 
       const newCells = findedRail.cells.filter(
         (cell) => cell.id !== payload.cellId
@@ -1402,19 +1405,27 @@ export default function () {
           return horizontalCellChecker(cell);
         }
       }
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      let findedRail = state.present.find((rail) => rail.id === payload.railId);
 
-      const newCells = findedRail.cells.map((item) => {
-        return cellSplitController(item);
-      });
+      const findedCellIndex = findedRail.cells.findIndex(
+        (cell) => cell.id === payload.cellId
+      );
+      let newCell = findedRail.cells[findedCellIndex];
 
+      newCell = cellSplitController(newCell);
+
+      const copyCells = [...findedRail.cells];
+      console.log({ newCell });
+      copyCells.splice(findedCellIndex, 0, newCell);
+
+      // const newRail = { ...findedRail, cells: copyCells };
       const newRails = present.map((rail) => {
         if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+          return { ...rail, cells: copyCells };
         }
         return rail;
       });
-
+      console.log({ newRails });
       const NewHistory = {
         type: "SET_HISTORY",
         value: newRails,

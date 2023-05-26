@@ -54,7 +54,13 @@ export default function () {
   }, [data, isLoading]);
 
   return (
-    <Grid container className={"bg_secondray  vh100"}>
+    <Grid
+      container
+      className={"bg_secondray  vh100"}
+      style={{
+        minHeight: "768px",
+      }}
+    >
       <Grid
         item
         lg={6}
