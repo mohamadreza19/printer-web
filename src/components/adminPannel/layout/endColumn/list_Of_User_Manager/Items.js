@@ -2,8 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../../recoil/readStore";
 import useFormateDate from "../../../../../utility/useFormetDate";
 import Item from "./Item";
-import { AdminDelete_User_Mutation } from "../../../../../helper/AdminApiQueries";
+
 import useDeleteAlert from "../../../../../recoil/reducer/useDeleteAlert";
+import { AdminDelete_User_Mutation } from "../../../../../reactQuery/admin/callDeleteService";
 
 export default function ({ items = [] }) {
   const lan = useLanguage();

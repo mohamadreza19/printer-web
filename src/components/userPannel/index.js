@@ -11,6 +11,7 @@ export default function () {
       style={{
         // minHeight: () => {},
         minHeight: "768px",
+        // height: "768px",
         // maxHeight: "768px",
         // minWidth: "1366px",
         // maxWidth: "768px",

@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 
 import {
-  AdminDelete_Label_Mutation,
   AdminDelete_Product_Mutation,
-  Admin_User_Image,
-} from "../../../../../../helper/AdminApiQueries";
+  AdminDelete_Label_Mutation,
+} from "../../../../../../reactQuery/admin/callDeleteService";
+
+import { Admin_User_Image } from "../../../../../../reactQuery/common/callGetService";
+
 import {
   useDynamicCssClass,
   useLanguage,

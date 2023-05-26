@@ -19,14 +19,14 @@ import TextFieldsBox from "./TextFieldsBox";
 import Buttons from "../../../../../../../styles/__ready/Buttons";
 
 import SuccessBox from "./SuccessBox";
+
+import { Admin_User_Image } from "../../../../../../../reactQuery/common/callGetService";
+import { AdminLabel_findOne } from "../../../../../../../reactQuery/admin/callGetService";
 import {
-  AdminAddImage_Mutation,
-  AdminAddLabel_Mutation,
   AdminEditImage_Mutation,
   AdminEditLabel_Mutation,
-  AdminLabel_findOne,
-  Admin_User_Image,
-} from "../../../../../../../helper/AdminApiQueries";
+} from "../../../../../../../reactQuery/admin/callPutService";
+
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 

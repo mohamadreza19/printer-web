@@ -23,10 +23,11 @@ import City from "./City";
 import CompanyAddress from "./CompanyAddress";
 import Expirition from "./Expirition";
 import AccessProductBox from "./AccessProductBox";
-import { AdminAddUser_Mutation } from "../../../../../../helper/AdminApiQueries";
+
 import moment from "moment";
 import "moment/locale/fa";
 import "moment/locale/tr";
+import { AdminAddUser_Mutation } from "../../../../../../reactQuery/admin/callPostService";
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =
@@ -34,6 +35,7 @@ export default function () {
   const allContent = useContent_Based_Language();
   const state = useAdd_user_controller(true);
   const validate = add_user_validate();
+
   const { isSuccess, data, mutateAsync } = AdminAddUser_Mutation();
 
   const response = false;

@@ -1,13 +1,14 @@
 import axios from "axios";
-const api = "http://212.23.201.119:1235/api";
+import { apiUrl } from "../urlStore";
 
 export default class {
-  static async provinces(language = "") {
+  static async admin_user_image(token = "", fileId = "") {
     try {
-      const res = await axios.get(`${api}/provinces`, {
+      const res = await axios.get(`${apiUrl}/file/${fileId}`, {
         headers: {
-          language: language,
+          Authorization: `Bearer ${token}`,
         },
+        responseType: "blob",
       });
 
       return new Promise((resolve, _) => {
@@ -20,20 +21,16 @@ export default class {
       });
     }
   }
-  static async cities(province = "", language = "") {
+  static async admin_user_labelList(token = "") {
     try {
-      const res = await axios.get(
-        `${api}/provinces/cities?province=${province}`,
-        {
-          headers: {
-            language: language,
-          },
-        }
-      );
+      const res = await axios.get(`${apiUrl}/label`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return new Promise((resolve, _) => {
         resolve(res.data);
-        console.log(res);
       });
     } catch (error) {
       console.log(error);

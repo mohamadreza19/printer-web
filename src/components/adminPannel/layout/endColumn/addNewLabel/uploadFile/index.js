@@ -24,10 +24,12 @@ import TextFieldsBox from "./TextFieldsBox";
 import Buttons from "../../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../../styles/__ready/Icons";
 import SuccessBox from "./SuccessBox";
+
 import {
   AdminAddImage_Mutation,
   AdminAddLabel_Mutation,
-} from "../../../../../../helper/AdminApiQueries";
+} from "../../../../../../reactQuery/admin/callPostService";
+
 import { useEffect } from "react";
 
 export default function () {

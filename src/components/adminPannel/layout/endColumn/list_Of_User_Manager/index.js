@@ -1,8 +1,9 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-import { AdminUsers } from "../../../../../helper/AdminApiQueries";
+
 import Header from "./Header";
 import Items from "./Items";
 import { useRef } from "react";
+import { AdminUsers } from "../../../../../reactQuery/admin/callGetService";
 
 export default function () {
   const resposne = AdminUsers();

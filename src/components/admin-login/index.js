@@ -1,32 +1,20 @@
 import { Grid } from "@mui/material";
 import { useDynamicCssClass } from "../../recoil/readStore";
-import FooterButton from "./layout/FooterButton";
+
 import Header from "./layout/Header";
-import RememberPassword from "./layout/RememberPassword";
+
 import SelectedLanguage from "./layout/SelectedLanguage";
 import Slider from "./layout/Slider";
 import TextfiledsBox from "./layout/TextfiledsBox";
-import { LoginUser_Mutation } from "../../helper/UserApiQueries";
-import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
-import useToastReducer from "../../recoil/reducer/useToastReducer";
-import { useMutation, useQuery } from "react-query";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { isAdminLogin, language } from "../../recoil/recoilStore";
-import { AdminLogin_Mutation } from "../../helper/AdminApiQueries";
+
 import useCachedLanguage from "../../utility/useCachedLanguage";
+import { AdminLogin_Mutation } from "../../reactQuery/admin/callPostService";
 
 export default function () {
   const { value: cachedValue, set: setCachedLanguage } = useCachedLanguage();
   const cssClass = useDynamicCssClass();
   // const reducer = useCachedToken();
-  const navigate = useNavigate();
-  const setLoading = useToastReducer();
-  const [_, setIsAdminLogin] = useRecoilState(isAdminLogin);
 
-  const { set: setAdminToken } = useAdmin_CachedToken();
   const { isLoading, error, data, mutate, statusCode } = AdminLogin_Mutation();
 
   if (error) {
@@ -39,19 +27,6 @@ export default function () {
     }
     mutate(body);
   }
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      setLoading({ isShow: false, message: "" });
-      setAdminToken(data);
-      setIsAdminLogin(true);
-      navigate("/admin");
-    }
-    if (isLoading) {
-      // setLoading({ isShow: true, message: "" });
-    }
-  }, [data, isLoading]);
 
   return (
     <Grid

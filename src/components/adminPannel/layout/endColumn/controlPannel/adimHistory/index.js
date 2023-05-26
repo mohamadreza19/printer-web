@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AdminPrints } from "../../../../../../helper/AdminApiQueries";
+
 import useDateObject from "../../../../../../utility/useDateObject";
 import HistoryHeader from "./HistoryHeader";
 import HistorySearchBox from "./HistorySearchBox";
@@ -7,6 +7,7 @@ import Items from "./Items";
 import SortBox from "./SortBox";
 import { useQueryClient } from "react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { AdminPrints } from "../../../../../../reactQuery/admin/callGetService";
 
 export default function () {
   const datePickred = useDateObject();

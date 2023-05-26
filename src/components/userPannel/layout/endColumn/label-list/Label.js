@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Admin_User_Image } from "../../../../../helper/AdminApiQueries";
+import { Admin_User_Image } from "../../../../../reactQuery/common/callGetService";
 import {
   useDynamicCssClass,
   useLanguage,

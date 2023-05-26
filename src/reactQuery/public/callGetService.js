@@ -1,16 +1,11 @@
-import use_addUser_controller from "./admin_add_user/controlInputs";
-
-import { useMutation, useQuery, useQueryClient } from "react-query";
-
-import admin_callApi from "./admin_callApi";
-import useAdmin_CachedToken from "../utility/useAdmin_CachedToken";
-import useToastReducer from "../recoil/reducer/useToastReducer";
+import { useQuery, useQueryClient } from "react-query";
+import useToastReducer from "../../recoil/reducer/useToastReducer";
+import { useLanguage } from "../../recoil/readStore";
 import { useEffect } from "react";
-import public_callApi from "./public_callApi";
-import { useLanguage } from "../recoil/readStore";
-import { useRecoilValue } from "recoil";
-import { province_store } from "../recoil/store/admin_add_user/add_user_store";
 
+import use_addUser_controller from "../../helper/admin_add_user/controlInputs";
+
+import api_get from "../../services/public/api_get";
 export const Public_Provinces = () => {
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
@@ -32,7 +27,7 @@ export const Public_Provinces = () => {
 
   const result = useQuery({
     queryKey: ["provinces"],
-    queryFn: () => public_callApi.provinces(lanForBackend),
+    queryFn: () => api_get.provinces(lanForBackend),
   });
   const { isLoading, isSuccess, error, data } = result;
   let modifiedData = [];
@@ -94,7 +89,7 @@ export const Public_Provinces_Cities = () => {
 
   const result = useQuery({
     queryKey: ["cities", province],
-    queryFn: () => public_callApi.cities(province, lanForBackend),
+    queryFn: () => api_get.cities(province, lanForBackend),
   });
   const { isLoading, isSuccess, error, data } = result;
   let modifiedData = data;

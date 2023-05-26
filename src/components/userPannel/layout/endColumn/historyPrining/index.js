@@ -1,7 +1,3 @@
-import DatePicker from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
-import InputIcon from "react-multi-date-picker/components/input_icon";
 import { useState } from "react";
 import Icons from "../../../../../styles/__ready/Icons";
 import Header from "./Header";
@@ -10,16 +6,22 @@ import Items from "./Items";
 
 import SortBox from "../../../../../styles/__ready/datepicker/SortBox";
 import useDateObject from "../../../../../utility/useDateObject";
-import { UserProjects_Qury } from "../../../../../helper/UserApiQueries";
+
+import { UserProjects_Call } from "../../../../../reactQuery/user/callGetService";
 export default function () {
   const datePickred = useDateObject();
+  const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setendDate] = useState(null);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  // const [page, setPage] = useState(1);
+  // const [limit, setLimit] = useState(10);
   //
 
-  const project = UserProjects_Qury(page, limit, startDate, endDate);
+  const { data, hasNextPage, fetchNextPage } = UserProjects_Call(
+    search,
+    startDate,
+    endDate
+  );
 
   function submitDataPickred() {
     const from = datePickred.server.from;
@@ -29,15 +31,20 @@ export default function () {
     setStartDate(from);
     setendDate(to);
   }
-  if (project.data)
+
+  if (data)
     return (
       <div className="w-100">
-        <Header />
+        <Header setSearch={setSearch} />
         <article className="mt-4 pb-4 border-bottom">
           <SortBox submitDataPickred={submitDataPickred} />
         </article>
         {/* <CalendersBox /> */}
-        <Items projects={project.data.items} />
+        <Items
+          projects={data}
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+        />
       </div>
     );
 }

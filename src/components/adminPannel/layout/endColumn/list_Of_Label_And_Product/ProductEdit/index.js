@@ -17,7 +17,7 @@ import UploadFile from "./uploadFile";
 import useValidateproduct from "../../../../../../helper/admin_add_product_label/validate_product";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { AdminProduct_findOne } from "../../../../../../helper/AdminApiQueries";
+import { AdminProduct_findOne } from "../../../../../../reactQuery/admin/callGetService";
 
 export default function () {
   const [allowNextFlow, setAllowNextFlow] = useState(false);

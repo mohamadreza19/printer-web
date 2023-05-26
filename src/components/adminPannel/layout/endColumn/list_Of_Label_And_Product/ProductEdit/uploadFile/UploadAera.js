@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useDynamicCssClass } from "../../../../../../../recoil/readStore";
 
 import use_PictureInput_Controller from "../../../../../../../helper/admin_add_product_label/control_product_dynamic_input/";
-import { Admin_User_Image } from "../../../../../../../helper/AdminApiQueries";
+import { Admin_User_Image } from "../../../../../../../reactQuery/common/callGetService";
 import { useEffect } from "react";
 export default function ({ onLoadedMeta = null, res, imageForFirstShow }) {
   //onLoadedMeta= {

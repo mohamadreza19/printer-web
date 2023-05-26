@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { UserLabels_Qury } from "../../../../../helper/UserApiQueries";
+
 import useToastReducer from "../../../../../recoil/reducer/useToastReducer";
 import {
   useContent_Based_Language,
@@ -8,14 +8,18 @@ import {
 import Header from "./Header";
 
 import Labels from "./Labels";
-import { Admin_User_Image } from "../../../../../helper/AdminApiQueries";
+
+import { Admin_User_LabelList_Call } from "../../../../../reactQuery/common/callGetService";
+import { useState } from "react";
 
 export default function () {
+  const [search, setSearch] = useState();
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
   const setLoading = useToastReducer();
 
-  const { isLoading, data, isSuccess, error } = UserLabels_Qury();
+  const { isLoading, data, isSuccess, error, hasNextPage, fetchNextPage } =
+    Admin_User_LabelList_Call("user", search);
 
   useEffect(() => {
     if (isLoading) {
@@ -47,6 +51,7 @@ export default function () {
     return (
       <div className="w-100 h-100 d-flex flex-column align-items-center">
         <Header
+          setSearch={setSearch}
           content={{
             labelList: content.userPannel.start_col.row2.listOfLabels,
             selectedLabelButton:
@@ -64,7 +69,11 @@ export default function () {
             pe_2: cssClass.pe_2,
           }}
         />
-        <Labels labels={data.items} />
+        <Labels
+          labels={data}
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+        />
       </div>
     );
 }

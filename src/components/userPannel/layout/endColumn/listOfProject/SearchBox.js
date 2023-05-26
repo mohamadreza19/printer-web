@@ -6,7 +6,7 @@ import {
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 import TextFields from "../../../../../styles/__ready/Textfields";
-export default function () {
+export default function ({ setSearch = () => {} }) {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
   return (
@@ -22,6 +22,7 @@ export default function () {
       <Grid xs={6} item className=" ">
         <div className={" w-90 " + cssClass.ms_auto}>
           <TextFields.v2_SearchBox
+            onClickAndGetValeFn={setSearch}
             placeholder={content.userPannel.end_col.row2.searchPlaceHolder}
           />
         </div>

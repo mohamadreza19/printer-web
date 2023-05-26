@@ -3,7 +3,9 @@ import useAdmin_Add_Label from "../../../../../../helper/admin_add_product_label
 
 import { useDynamicCssClass } from "../../../../../../recoil/readStore";
 import Typography from "../../../../../../styles/__ready/Typography";
-import { AdminLabel_findOne } from "../../../../../../helper/AdminApiQueries";
+
+import { AdminLabel_findOne } from "../../../../../../reactQuery/admin/callGetService";
+
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 

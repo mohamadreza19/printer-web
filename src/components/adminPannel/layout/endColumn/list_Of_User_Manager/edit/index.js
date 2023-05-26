@@ -23,15 +23,14 @@ import City from "./City";
 import CompanyAddress from "./CompanyAddress";
 import Expirition from "./Expirition";
 import AccessProductBox from "./AccessProductBox";
-import {
-  AdminEditUser_Mutation,
-  AdminUser_FindOne,
-} from "../../../../../../helper/AdminApiQueries";
+
 import moment from "moment";
 import "moment/locale/fa";
 import "moment/locale/tr";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { AdminUser_FindOne } from "../../../../../../reactQuery/admin/callGetService";
+import { AdminEditUser_Mutation } from "../../../../../../reactQuery/admin/callPutService";
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =

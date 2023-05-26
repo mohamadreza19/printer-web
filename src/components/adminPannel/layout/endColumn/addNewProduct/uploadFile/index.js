@@ -24,11 +24,11 @@ import TextFieldsBox from "./TextFieldsBox";
 import Buttons from "../../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../../styles/__ready/Icons";
 import SuccessBox from "./SuccessBox";
+import { useEffect } from "react";
 import {
   AdminAddImage_Mutation,
   AdminAddProduct_Mutation,
-} from "../../../../../../helper/AdminApiQueries";
-import { useEffect } from "react";
+} from "../../../../../../reactQuery/admin/callPostService";
 
 export default function () {
   const content =

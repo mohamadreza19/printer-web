@@ -4,6 +4,7 @@ import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 import TextFields from "../../../../../styles/__ready/Textfields";
 export default function ({
+  setSearch = () => {},
   content = {
     labelList: " ",
     selectedLabelButton: " ",
@@ -33,6 +34,7 @@ export default function ({
         <Grid item lg={6}>
           <div className="w-100 d-flex align-item-center">
             <TextFields.v2_SearchBox
+              onClickAndGetValeFn={setSearch}
               placeholder={content.searchPlaceHolder}
               Input_marginStart_based_Language={margin.ms_1}
             />

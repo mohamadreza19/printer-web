@@ -6,7 +6,7 @@ import {
 import Icons from "../../../../../styles/__ready/Icons";
 import TextFields from "../../../../../styles/__ready/Textfields";
 import { Grid } from "@mui/material";
-export default function () {
+export default function ({ setSearch }) {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
   return (
@@ -19,6 +19,7 @@ export default function () {
       </Grid>
       <Grid item lg={6} className="d-flex align-items-center">
         <TextFields.v2_SearchBox
+          onClickAndGetValeFn={setSearch}
           Input_marginStart_based_Language={cssClass.ms_1}
           placeholder={content.userPannel.end_col.labelList.searchPlaceHolder}
         />

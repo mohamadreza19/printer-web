@@ -1,17 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 // import InfiniteScroll from "react-infinite-scroller";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {
-  AdminProduct_Label,
-  Admin_User_Image,
-} from "../../../../../helper/AdminApiQueries";
+import { AdminProduct_Label } from "../../../../../reactQuery/admin/callGetService";
 import Header from "./Header";
 import Items from "./Items";
-import {
-  useRead_admin_label_param,
-  useReducer_admin_label_param,
-} from "../../../../../recoil/store/params/admin_product_label";
-import { memo } from "react";
 
 export default function () {
   const [currentListValues, setCurrentValues] = useState(null);
@@ -27,12 +19,6 @@ export default function () {
   });
 
   return (
-    // <div
-    //   style={{
-    //     overflowY: "hidden",
-    //     height: "100%",
-    //   }}
-    // >
     <InfiniteScroll
       className="w-100  px-4 "
       pullDownToRefreshThreshold={300}
@@ -50,6 +36,5 @@ export default function () {
       />
       <Items items={res.data} currentList={currentList} />
     </InfiniteScroll>
-    // </div>
   );
 }

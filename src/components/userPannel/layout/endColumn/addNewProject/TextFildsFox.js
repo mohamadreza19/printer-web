@@ -1,19 +1,16 @@
 import { useState } from "react";
-import { atom, useRecoilState } from "recoil";
-import { useImmer } from "use-immer";
+
 import Icons from "../../../../../styles/__ready/Icons";
-import Textfields, {
-  TextFieldFUN_v5,
-} from "../../../../../styles/__ready/Textfields";
+import { TextFieldFUN_v5 } from "../../../../../styles/__ready/Textfields";
 import Typography from "../../../../../styles/__ready/Typography";
 import Buttons from "../../../../../styles/__ready/Buttons";
-import { Grid, css } from "@mui/material";
-import { ProjectPost_Mutation } from "../../../../../helper/UserApiQueries";
-import useToastReducer from "../../../../../recoil/reducer/useToastReducer";
+import { Grid } from "@mui/material";
+
 import add_project_validation from "../../../../../validation/add_project_validation";
-import { useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { useDynamicCssClass } from "../../../../../recoil/readStore";
+import { AddProject_Mutation } from "../../../../../reactQuery/user/callPostServices";
 
 export default function ({
   ms_2 = " ",
@@ -28,7 +25,7 @@ export default function ({
   isFa = false,
 }) {
   const navigate = useNavigate();
-  const { isSuccess, isLoading, mutate, error, data } = ProjectPost_Mutation();
+  const { isSuccess, isLoading, mutate, error, data } = AddProject_Mutation();
   const cssClass = useDynamicCssClass();
   const [state, setState] = useState({
     createdBy: {
@@ -40,11 +37,13 @@ export default function ({
       errMsg: "",
     },
   });
-  const setLoading = useToastReducer();
+
   const [isRightToleft, setIsRightToleft] = useState(true);
+
   const handleToggleiSRightToleft = () => {
     setIsRightToleft(!isRightToleft);
   };
+
   const handleChangeProductName = (event) => {
     const value = event.target.value;
 
@@ -56,6 +55,7 @@ export default function ({
       },
     }));
   };
+
   const handleChangeCreatedBy = (event) => {
     const value = event.target.value;
 
@@ -75,13 +75,14 @@ export default function ({
 
     try {
       await add_project_validation(body);
+
       mutate(body);
-      console.log(isSuccess);
     } catch (error) {
       if (error.inner) {
         error.inner.map((err) => {
           const path = err.path;
           const errMsg = err.message;
+
           setState((draft) => ({
             ...draft,
             [path]: {
@@ -91,35 +92,10 @@ export default function ({
           }));
         });
       }
-      setLoading({
-        isShow: false,
-        message: error.massage,
-      });
     }
   }
 
-  useEffect(() => {
-    if (isLoading) {
-      setLoading({
-        isShow: true,
-        message: "",
-      });
-    }
-  }, [isLoading]);
   if (isSuccess) {
-    setLoading({
-      isShow: false,
-      message: "",
-    });
-    // data = {
-    //   createdAt: "2023-05-07T10:56:14.762Z",
-    //   createdBy: "dsfdsf",
-    //   id: 127,
-    //   numberOfRails: 1,
-    //   projectName: "dfsdf",
-    //   updatedAt: "2023-05-07T10:56:14.762Z",
-    //   userId: 1,
-    // }
     navigate(`/user/add-project/editor/${data.id}`);
   }
   return (

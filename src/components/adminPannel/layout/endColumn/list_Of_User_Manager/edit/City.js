@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Public_Provinces_Cities } from "../../../../../../helper/PublicApiQueries";
+
 import use_addUser_controller from "../../../../../../helper/admin_add_user/controlInputs";
 
 import Typography from "../../../../../../styles/__ready/Typography";
 import User_DropDown from "../../../../../../styles/__ready/common/User_DropDown";
+import { Public_Provinces_Cities } from "../../../../../../reactQuery/public/callGetService";
 
 export default function ({ City = "", margin }) {
   const [currentCity, SetcurrentCity] = useState(null);

@@ -1,29 +1,23 @@
-import { UserProjects_Qury } from "../../../../../helper/UserApiQueries";
-import useToastReducer from "../../../../../recoil/reducer/useToastReducer";
 import Projects from "./Projects";
 import SearchBox from "./SearchBox";
-import Loading from "../../../../../styles/__ready/Loading";
-import { useEffect } from "react";
+
+import { useState } from "react";
+import { UserProjects_Call } from "../../../../../reactQuery/user/callGetService";
 
 export default function () {
-  const { isLoading, error, data } = UserProjects_Qury();
-  const SetLoading = useToastReducer();
-
-  useEffect(() => {
-    if (isLoading) {
-      SetLoading({ isShow: true, message: "" });
-    }
-  }, [isLoading]);
-  if (error) {
-    SetLoading({ isShow: true, message: error });
-  }
+  const [search, setSearch] = useState("");
+  const { isLoading, error, data, hasNextPage, fetchNextPage } =
+    UserProjects_Call(search);
+  console.log(data);
   if (data) {
-    SetLoading({ isShow: false, message: "" });
-
     return (
-      <div className="w-100   h-100">
-        <SearchBox />
-        <Projects projectList={data.items} />
+      <div className="w-100   ">
+        <SearchBox setSearch={setSearch} />
+        <Projects
+          projectList={data}
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+        />
       </div>
     );
   }

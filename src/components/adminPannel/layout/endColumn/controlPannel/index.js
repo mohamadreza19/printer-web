@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { AdminPrints } from "../../../../../helper/AdminApiQueries";
+
 import useToastReducer from "../../../../../recoil/reducer/useToastReducer";
 import Header from "./Header";
 import MainHeader from "./MainHeader";
 import Prints from "./Prints";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { AdminPrints } from "../../../../../reactQuery/admin/callGetService";
 
 export default function () {
-  const setLoading = useToastReducer();
   const { data, isLoading, error, hasNextPage, fetchNextPage } = AdminPrints(
     1,
     10,
@@ -18,32 +18,13 @@ export default function () {
     "ASC"
   );
 
-  useEffect(() => {
-    if (isLoading) {
-      setLoading({
-        isShow: true,
-        message: "",
-      });
-    }
-    if (data) {
-      setLoading({
-        isShow: false,
-        message: "",
-      });
-    }
-  }, [isLoading, error, data]);
-
   if (data)
     return (
-      <div
-        className="w-100 h-100 max-h-100  "
-        // style={{ overflowY: "scroll" }}
-      >
+      <div className="w-100 h-100 max-h-100  ">
         <Header />
         <main
           style={{
             height: "73%",
-            // overflowY: "auto",
           }}
           className="w-100   mt-4 py-3 px-4 bg-white border-r-top-30"
         >

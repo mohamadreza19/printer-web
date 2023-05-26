@@ -6,41 +6,17 @@ import RememberPassword from "./layout/RememberPassword";
 import SelectedLanguage from "./layout/SelectedLanguage";
 import Slider from "./layout/Slider";
 import TextfiledsBox from "./layout/TextfiledsBox";
-import { LoginUser_Mutation } from "../../helper/UserApiQueries";
 import useCachedToken from "../../utility/useCachedToken";
-import useToastReducer from "../../recoil/reducer/useToastReducer";
-import { useMutation, useQuery } from "react-query";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { isUserLogin, language } from "../../recoil/recoilStore";
+import { UserLogin_Mutation } from "../../reactQuery/user/callPostServices";
 
 export default function () {
   const cssClass = useDynamicCssClass();
   const reducer = useCachedToken();
-  const navigate = useNavigate();
-  const setToast = useToastReducer();
-  const [_, setIsUserLogin] = useRecoilState(isUserLogin);
-  const { set: setUserToken } = useCachedToken();
 
-  const [languageState, setLanguageState] = useRecoilState(language);
-  const { isLoading, error, data, mutate } = LoginUser_Mutation();
+  const { isLoading, error, data, mutate } = UserLogin_Mutation();
 
-  // if (error) {
-  //   setToast({ isShow: true, message: error });
-  // }
   function handleLogin(body) {
     mutate(body);
-  }
-  if (data) {
-    setToast({ isShow: false, message: "" });
-    setUserToken(data);
-    setIsUserLogin(true);
-    navigate("/user");
-  }
-  if (isLoading) {
-    setToast({ isShow: true, message: "" });
   }
 
   return (

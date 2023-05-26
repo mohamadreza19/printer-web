@@ -5,10 +5,9 @@ import { useState } from "react";
 import { useDynamicCssClass } from "../../../../../../../recoil/readStore";
 
 import use_PictureInput_Controller from "../../../../../../../helper/admin_add_product_label/control_label_dynamic_input/";
-import {
-  AdminLabel_findOne,
-  Admin_User_Image,
-} from "../../../../../../../helper/AdminApiQueries";
+
+import { Admin_User_Image } from "../../../../../../../reactQuery/common/callGetService";
+
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 export default function ({ onLoadedMeta = null, res }) {

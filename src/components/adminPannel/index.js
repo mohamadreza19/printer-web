@@ -7,10 +7,11 @@ export default function () {
   return (
     <Grid
       container
-      className="bg_secondray vh-100  "
+      className="bg_secondray   "
       style={{
         // minHeight: () => {},
         minHeight: "768px",
+        // height: "768px",
         // maxHeight: "768px",
         // minWidth: "1366px",
         // maxWidth: "768px",

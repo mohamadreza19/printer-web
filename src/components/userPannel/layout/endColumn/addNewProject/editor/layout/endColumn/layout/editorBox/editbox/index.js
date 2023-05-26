@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import useRailReducer from "../../../../../../../../../../../recoil/reducer/editor/useRailReducer";
 import scaleStore from "../../../../../../../../../../../recoil/userEditorStore/scaleStore";
 import ScaleContainer from "./layout/ScaleContainer";
-import { UserProjectFindOne_Qury } from "../../../../../../../../../../../helper/UserApiQueries";
+
 import useToastReducer from "../../../../../../../../../../../recoil/reducer/useToastReducer";
 
 //  data = {

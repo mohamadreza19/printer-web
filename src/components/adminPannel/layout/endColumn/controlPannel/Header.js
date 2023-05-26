@@ -3,29 +3,22 @@ import { Grid } from "@mui/material";
 import Typography from "../../../../../styles/__ready/Typography";
 import useCachedLanguage from "../../../../../utility/useCachedLanguage";
 import { useContent_Based_Language } from "../../../../../recoil/readStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import {
   AdminActive_users,
   AdminPrintsStatistics,
-} from "../../../../../helper/AdminApiQueries";
-import { useEffect } from "react";
-import useToastReducer from "../../../../../recoil/reducer/useToastReducer";
+} from "../../../../../reactQuery/admin/callGetService";
 export default function () {
   const { value: currenctLanguage } = useCachedLanguage();
   const content = useContent_Based_Language();
+  const navigate = useNavigate();
   //
-  const setLoading = useToastReducer();
   //
 
   const { data = { allActiveUsers: 0, havingPrint: 0 } } = AdminActive_users();
   //
-  const {
-    data: printsStatistics_data = {
-      totalPrints: 3,
-      distinctCompanies: 1,
-      productsAndLabels: 1,
-    },
-  } = AdminPrintsStatistics();
+  const { data: printsStatistics_data } = AdminPrintsStatistics();
 
   const StartCol = ({
     value = {
@@ -33,6 +26,12 @@ export default function () {
       row2: " ",
     },
   }) => {
+    // function row1OnClick() {
+    //   navigate(value.row1Link);
+    // }
+    // function row2OnClick() {
+    //   navigate(value.row2Link);
+    // }
     return (
       <section className="w-52">
         <div className="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
@@ -57,15 +56,22 @@ export default function () {
       row2Link: " ",
     },
   }) => {
+    function row1OnClick() {
+      navigate(value.row1Link);
+    }
+    function row2OnClick() {
+      navigate(value.row2Link);
+    }
     return (
       <section className="w-48 d-flex align-items-center flex-column bg-white border-r-25 py-3 px-3">
-        <Buttons.Outlined className="button_big mb-2">
+        <Buttons.Outlined className="button_big mb-2" onClick={row1OnClick}>
           <Typography.H7>{value.row1}</Typography.H7>
         </Buttons.Outlined>
-        <Buttons.Contained_Custom className="button_big bg_primary   ">
-          <Link to={value.row2Link} replace>
-            <Typography.H7 className="font-300">{value.row2}</Typography.H7>
-          </Link>
+        <Buttons.Contained_Custom
+          className="button_big bg_primary   "
+          onClick={row2OnClick}
+        >
+          <Typography.H7 className="font-300">{value.row2}</Typography.H7>
         </Buttons.Contained_Custom>
       </section>
     );
@@ -84,7 +90,8 @@ export default function () {
             value={{
               row1: content.AdminPannel.end_col.controlPannel.row1.usersList,
               row2: content.AdminPannel.end_col.controlPannel.row1.AddNewUser,
-              row2Link: "add-user",
+              row1Link: "/admin/list-user-manager",
+              row2Link: "/admin/control-pannel/add-user",
             }}
           />
         </article>
@@ -109,6 +116,7 @@ export default function () {
                   .productsList,
                 row2: content.AdminPannel.end_col.controlPannel.row1
                   .AddNewProduct,
+                row1Link: "/admin/list-labels-products",
                 row2Link: "/admin/add-product",
               }}
             />
@@ -117,14 +125,15 @@ export default function () {
       );
   };
 
-  return (
-    <Grid container columnSpacing={1.5}>
-      <Grid item lg={6}>
-        <FirstCard />
+  if (printsStatistics_data)
+    return (
+      <Grid container columnSpacing={1.5}>
+        <Grid item lg={6}>
+          <FirstCard />
+        </Grid>
+        <Grid item lg={6}>
+          <SeceondCard />
+        </Grid>
       </Grid>
-      <Grid item lg={6}>
-        <SeceondCard />
-      </Grid>
-    </Grid>
-  );
+    );
 }

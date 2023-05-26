@@ -4,8 +4,7 @@ import Typography from "../../../../../../../styles/__ready/Typography";
 import { useDynamicCssClass } from "../../../../../../../recoil/readStore";
 import useController from "../../../../../../../helper/admin_add_product_label/control_label_dynamic_input/index";
 import Icons from "../../../../../../../styles/__ready/Icons";
-import { AdminLabel_findOne } from "../../../../../../../helper/AdminApiQueries";
-import { useParams } from "react-router-dom";
+
 import { useEffect } from "react";
 export default function ({
   param = {

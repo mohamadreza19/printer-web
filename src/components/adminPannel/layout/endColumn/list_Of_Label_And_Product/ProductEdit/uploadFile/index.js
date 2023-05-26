@@ -19,13 +19,13 @@ import TextFieldsBox from "./TextFieldsBox";
 import Buttons from "../../../../../../../styles/__ready/Buttons";
 
 import SuccessBox from "./SuccessBox";
+
+import { Admin_User_Image } from "../../../../../../../reactQuery/common/callGetService";
+import { AdminLabel_findOne } from "../../../../../../../reactQuery/admin/callGetService";
 import {
-  AdminAddImage_Mutation,
-  AdminAddProduct_Mutation,
   AdminEditImage_Mutation,
   AdminEditProduct_Mutation,
-  Admin_User_Image,
-} from "../../../../../../../helper/AdminApiQueries";
+} from "../../../../../../../reactQuery/admin/callPutService";
 import { useEffect } from "react";
 
 export default function ({ res }) {
@@ -40,7 +40,6 @@ export default function ({ res }) {
   const imageForFirstShow = Admin_User_Image("admin");
   const mutate = AdminEditProduct_Mutation();
 
-  const AddImagemutate = AdminAddImage_Mutation();
   const editImagemutate = AdminEditImage_Mutation();
   //
   const validateFn = validatePage2();
