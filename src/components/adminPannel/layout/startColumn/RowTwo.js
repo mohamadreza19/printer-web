@@ -18,8 +18,10 @@ export default function () {
     addNewProject: content.userPannel.start_col.row2.addNewProject,
     projectList: content.userPannel.start_col.row2.projectList,
     projectList: content.userPannel.start_col.row2.projectList,
-    listOfLabels: content.userPannel.start_col.row2.listOfLabels,
+    listOfLabels: content.AdminPannel.start_col.row2.listOfLabelsAndProduct,
     historyOfPrinting: content.userPannel.start_col.row2.historyOfPrinting,
+    ViewPrintStatistics: content.AdminPannel.start_col.row2.ViewPrintStatistics,
+    ListOfUserAndAdmin: content.AdminPannel.start_col.row2.ListOfUserAndAdmin,
     settings: content.userPannel.start_col.row2.settings,
   };
   const colorClass = true
@@ -147,26 +149,27 @@ export default function () {
           <Typography.H7
             className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
           >
-            مشاهده آمار چاپ
+            {buttonsText.ViewPrintStatistics}
           </Typography.H7>
         </Buttons.Contained_Custom>
       </Link>
     );
   };
   const Admin_And_User_List = () => {
-    const dynamicColor = pathname.includes("list-user-manager")
-      ? {
-          bg: "bg_primary ",
-          color: "color-white ",
-          fill: "fill_white",
-        }
-      : {
-          bg: "bg_secondray box_shadow_disabled",
-          color: "color_secondray_v2",
-          fill: "fill_secondray_v2",
-        };
+    const dynamicColor =
+      pathname.includes("list-user") || pathname.includes("list-manager")
+        ? {
+            bg: "bg_primary ",
+            color: "color-white ",
+            fill: "fill_white",
+          }
+        : {
+            bg: "bg_secondray box_shadow_disabled",
+            color: "color_secondray_v2",
+            fill: "fill_secondray_v2",
+          };
     return (
-      <Link to={"/admin/list-user-manager"}>
+      <Link to={"/admin/list-user"}>
         <Buttons.Contained_Custom
           className={
             "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
@@ -177,7 +180,7 @@ export default function () {
           <Typography.H7
             className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
           >
-            لیست کاربران و مدیران
+            {buttonsText.ListOfUserAndAdmin}
           </Typography.H7>
         </Buttons.Contained_Custom>
       </Link>

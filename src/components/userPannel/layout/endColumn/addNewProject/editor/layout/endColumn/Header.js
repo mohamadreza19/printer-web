@@ -5,19 +5,47 @@ import {
 import Icons from "../../../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../../../styles/__ready/Typography";
 import Buttons from "../../../../../../../../styles/__ready/Buttons";
+import { useRecoilValue } from "recoil";
+import profile_store from "../../../../../../../../recoil/store/user/profile_store";
+import project_store from "../../../../../../../../recoil/store/user/project_store";
+import useBundleProject from "../../../../../../../../utility/useBundleProject";
+import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
   const language = useLanguage();
 
   const beForward = language == "fa" ? true : false;
   const cssClass = useDynamicCssClass();
+  const navigate = useNavigate();
 
+  const profile_state = useRecoilValue(profile_store);
+  const project_state = useRecoilValue(project_store);
+
+  const mutate = EditProject_Mutation();
+
+  const handle_bundled_project = useBundleProject();
+
+  function handleSubmitProject() {
+    mutate.mutate({
+      body: handle_bundled_project(),
+    });
+  }
+  console.log(mutate.data);
+  useEffect(() => {
+    if (mutate.isSuccess) {
+      navigate("/user/add-project");
+    }
+  }, [mutate.isSuccess]);
   return (
     <header className="w-100 d-flex align-items-center justify-content-between  pt-4 px-4">
       <article className="d-flex">
-        <section className="d-flex">
+        <section className="d-flex dir-ltr">
+          <Typography.H8 language="en" className="">
+            @{profile_state.username}
+          </Typography.H8>
           <Icons.UserName svgClassName="mx-2" />
-          <Typography.H8 className="">@taghizsandatpsgad</Typography.H8>
         </section>
         <section className="d-flex">
           <Icons.Back
@@ -35,7 +63,9 @@ export default function () {
             pathClassName="fill_disabled"
             beForward={beForward}
           />
-          <Typography.H8 className="">نام پروژه</Typography.H8>
+          <Typography.H8 className="">
+            {project_state.projectName}
+          </Typography.H8>
         </section>
         <section className="d-flex">
           <Icons.Back
@@ -58,7 +88,10 @@ export default function () {
             چاپ
           </Typography.H7>
         </Buttons.Contained>
-        <Buttons.Contained className="editor-header-button_extra-large">
+        <Buttons.Contained
+          className="editor-header-button_extra-large"
+          onClick={handleSubmitProject}
+        >
           <Icons.Editor_Save size="medium" />
           <Typography.H7 className={cssClass.ms_1 + " font-300"}>
             ذخیره سازی و ادامه

@@ -433,10 +433,7 @@ export const TextFieldFUN_ClipBoardBadge = ({
 export const Editor_Cell_Input = ({
   value = " ",
   onChange = () => {},
-  id = "",
-  placeholder = " ",
   isSelected = false,
-  onBackspaceDown = () => {},
   onClick = () => {},
   style = {
     fontFamily: "",
@@ -444,21 +441,21 @@ export const Editor_Cell_Input = ({
     angle: 0,
     fontSize: "",
   },
-  wantBarcode = false,
-  wantQr = false,
+  isBarcode = false,
+  isQrcode = false,
 }) => {
   const isViewMode = useRecoilValue(isView);
 
   const barCodeRef = useRef(null);
   const qrcodeRef = useRef(null);
   useEffect(() => {
-    if (wantBarcode) {
+    if (isBarcode) {
       barCodeRef.current.renderElementRef.current.style.rotate = `${style.angle}deg`;
       barCodeRef.current.renderElementRef.current.style.padding = `${style.padding}px`;
     }
   }, [style.angle, style.padding]);
   const BarcodeAndQrCodeController = () => {
-    if (wantBarcode) {
+    if (isBarcode) {
       return (
         <Barcode
           value={value}
@@ -469,7 +466,7 @@ export const Editor_Cell_Input = ({
         />
       );
     }
-    if (wantQr) {
+    if (isQrcode) {
       return (
         <QRCodeSVG
           value={value}
@@ -487,7 +484,7 @@ export const Editor_Cell_Input = ({
   };
   return (
     <>
-      {wantBarcode || wantQr ? (
+      {isBarcode || isQrcode ? (
         <BarcodeAndQrCodeController />
       ) : (
         <input

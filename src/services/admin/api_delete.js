@@ -52,4 +52,21 @@ export default class {
       });
     }
   }
+  static async delete_admin(token = "", id) {
+    try {
+      const res = await axios.delete(`${apiUrl}/admin/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.response.data);
+      });
+    }
+  }
 }

@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   AdminActive_users,
   AdminPrintsStatistics,
+  AdminProduct_Label_Count,
 } from "../../../../../reactQuery/admin/callGetService";
 export default function () {
   const { value: currenctLanguage } = useCachedLanguage();
@@ -18,7 +19,7 @@ export default function () {
 
   const { data = { allActiveUsers: 0, havingPrint: 0 } } = AdminActive_users();
   //
-  const { data: printsStatistics_data } = AdminPrintsStatistics();
+  const { data: product_Label_countData } = AdminProduct_Label_Count();
 
   const StartCol = ({
     value = {
@@ -90,7 +91,7 @@ export default function () {
             value={{
               row1: content.AdminPannel.end_col.controlPannel.row1.usersList,
               row2: content.AdminPannel.end_col.controlPannel.row1.AddNewUser,
-              row1Link: "/admin/list-user-manager",
+              row1Link: "/admin/list-user",
               row2Link: "/admin/control-pannel/add-user",
             }}
           />
@@ -105,7 +106,7 @@ export default function () {
           <article className=" d-flex justify-content-between w-100 ">
             <StartCol
               value={{
-                row1: printsStatistics_data.productsAndLabels,
+                row1: product_Label_countData.all,
                 row2: content.AdminPannel.end_col.controlPannel.row1
                   .ProductAndLabel,
               }}
@@ -125,7 +126,7 @@ export default function () {
       );
   };
 
-  if (printsStatistics_data)
+  if (product_Label_countData)
     return (
       <Grid container columnSpacing={1.5}>
         <Grid item lg={6}>

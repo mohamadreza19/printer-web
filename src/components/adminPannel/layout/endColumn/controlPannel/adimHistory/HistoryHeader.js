@@ -8,8 +8,12 @@ import { AdminRoutePath } from "../../../../../../routes/Routes";
 import Buttons from "../../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../styles/__ready/Typography";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function () {
+  const [storeUpdateTime, setStoreUpdateTime] = useState();
+
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
   return (

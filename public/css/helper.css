@@ -308,6 +308,9 @@ a {
 .w-48 {
   width: 48% !important;
 }
+.w-33 {
+  width: 33.33333333333333% !important;
+}
 .w-60 {
   width: 60% !important;
 }
@@ -385,6 +388,7 @@ a {
 .bg_primary_v1 {
   background: #ff7d41 !important;
 }
+
 .bg_primary_g {
   background: linear-gradient(111.74deg, #ff7d41 24.86%, #ff5100 69.34%);
 }

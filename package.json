@@ -18,6 +18,7 @@
     "font-awesome": "^4.7.0",
     "formik": "^2.2.9",
     "gh-pages": "^5.0.0",
+    "jalali-moment": "^3.3.11",
     "libphonenumber-js": "^1.10.30",
     "moment": "^2.29.4",
     "qrcode.react": "^3.1.0",

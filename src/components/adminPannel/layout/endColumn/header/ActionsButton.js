@@ -6,21 +6,25 @@ import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 
 import Buttons from "../../../../../styles/__ready/Buttons";
+import { useRecoilValue } from "recoil";
+import { adminRole } from "../../../../../recoil/recoilStore";
 
 export default function () {
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
+  const role = useRecoilValue(adminRole);
   const AddNewAdmin = () => {
-    return (
-      <div className="mx-2">
-        <Buttons.Outlined>
-          <Icons.AdminAvatar />
-          <Typography.Button className={cssClass.ms_1}>
-            {content.AdminPannel.end_col.row1.add_new_admin}
-          </Typography.Button>
-        </Buttons.Outlined>
-      </div>
-    );
+    if (role === "superAdmin")
+      return (
+        <div className="mx-2">
+          <Buttons.Outlined>
+            <Icons.AdminAvatar />
+            <Typography.Button className={cssClass.ms_1}>
+              {content.AdminPannel.end_col.row1.add_new_admin}
+            </Typography.Button>
+          </Buttons.Outlined>
+        </div>
+      );
   };
   const FileUpload = () => {
     return (

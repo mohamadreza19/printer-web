@@ -4,22 +4,23 @@ import Header from "./Header";
 import Items from "./Items";
 import { useRef } from "react";
 import { AdminUsers } from "../../../../../reactQuery/admin/callGetService";
+import { useContent_Based_Language } from "../../../../../recoil/readStore";
 
 export default function () {
   const resposne = AdminUsers();
-  const ref = useRef(null);
-  console.log(ref);
+  const content = useContent_Based_Language();
+  const headerContent = content.AdminPannel.end_col.listOfUserAndAdmin.header;
+  const itemContent = content.AdminPannel.end_col.listOfUserAndAdmin.component;
   if (resposne.isSuccess)
     return (
       <div
         className="w-100 
-      //scrollable3 
-      px-3"
+      
+      "
       >
-        <Header />
+        <Header headerContent={headerContent} />
         <InfiniteScroll
-          className="w-100  "
-          ref={ref}
+          className="w-100 px-3 "
           pullDownToRefreshThreshold={300}
           next={resposne.fetchNextPage}
           dataLength={resposne.data}
@@ -28,8 +29,7 @@ export default function () {
           height={580}
           scrollableTarget
         >
-          <Items items={resposne.data} />
-          <Items items={resposne.data} />
+          <Items items={resposne.data} itemContent={itemContent} />
         </InfiniteScroll>
       </div>
     );

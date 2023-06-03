@@ -1,0 +1,29 @@
+{
+  "rails": [
+    {
+      "id": "rail1",
+      "customLabels": [
+        {
+          "id": "1",
+          "split": "none",
+          "content": {
+            "values": "",
+            "style": {
+              "fontFamily": "Arial",
+              "fontSize": 14,
+              "angle": 0,
+              "textAlign": "none",
+              "fontStyle": "regular",
+              "margin": 0,
+              "padding": 0
+            }
+          },
+          "isQrcodee": false,
+          "isBarcode": false,
+          "width": 200,
+          "isSelected": false
+        }
+      ]
+    }
+  ]
+}

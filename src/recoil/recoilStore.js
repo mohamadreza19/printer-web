@@ -15,6 +15,10 @@ export const isAdminLogin = atom({
   key: "admin-authentication",
   default: false,
 });
+export const adminRole = atom({
+  key: "adminRole",
+  default: "",
+});
 export const isUserLogin = atom({
   key: "user-authentication",
   default: false,
@@ -72,6 +76,7 @@ export const content_Based_Language = selector({
   key: "Content_Based_Language",
   get: ({ get }) => {
     const selectedLanguage = get(language);
+
     switch (selectedLanguage) {
       case "en":
         return {
@@ -99,7 +104,7 @@ export const content_Based_Language = selector({
               row2: {
                 listOfProjects: "List of projects",
                 addNewProject: "Add new project",
-                listOfLabels: "List of products and labels",
+                listOfLabels: "List of labels",
                 historyOfPrinting: "History of printing",
                 settings: "Settings",
               },
@@ -145,8 +150,11 @@ export const content_Based_Language = selector({
                 // epirationOfCredit: "Expiration of credit",
               },
               row2: {
+                listOfLabelsAndProduct: "list of lbl/Product",
                 controlPannel: "Control pannel",
                 addNewProductAndLabel: "Add new prduct/lbl",
+                ViewPrintStatistics: "View print statistics",
+                ListOfUserAndAdmin: "users and admin",
               },
               // row3: "Sign out",
             },
@@ -255,6 +263,19 @@ export const content_Based_Language = selector({
                 selectedLabelsButton: "selected Labels",
                 searchPlaceHolder: "Search for a label or product name",
               },
+              listOfUserAndAdmin: {
+                header: {
+                  header: "List of users and admin",
+                  goToAdminList: "Go to the list of admins",
+                  goToUserList: "Go to the list of users",
+                  searchBoxPlaceHolder: "Company search",
+                },
+                component: {
+                  createdBy: "createdBy",
+                  creditExpiration: "Credit Expiration",
+                  print: "print",
+                },
+              },
               historyOfPrinting: {
                 calender: {
                   from: "Sorting from date",
@@ -295,7 +316,7 @@ export const content_Based_Language = selector({
               row2: {
                 listOfProjects: "لیست پروژه ها",
                 addNewProject: "افزودن پروژه جدید",
-                listOfLabels: "لیست محصولات و لیبل ها",
+                listOfLabels: "لیست لیبل ها",
                 historyOfPrinting: "تاریخچه چاپ",
                 settings: "تنظیمات",
               },
@@ -348,6 +369,9 @@ export const content_Based_Language = selector({
                 // settings: "Settings",
                 controlPannel: "پنل مدیریت",
                 addNewProductAndLabel: "افزودن محصول / لیبل جدید",
+                listOfLabelsAndProduct: "لیست لیبل و محصولات",
+                ViewPrintStatistics: "مشاهده امار چاپ",
+                ListOfUserAndAdmin: "لیست کاربران و مدیران",
               },
               // row3: "Sign out",
             },
@@ -454,6 +478,19 @@ export const content_Based_Language = selector({
                 selectedLabelsButton: "selected Labels",
                 searchPlaceHolder: "Search for a label or product name",
               },
+              listOfUserAndAdmin: {
+                header: {
+                  header: "لیست کاربران و مدیران",
+                  goToAdminList: "برو به لیست ادمین ها",
+                  goToUserList: "برو به لیست کاربر ها",
+                  searchBoxPlaceHolder: "جست و جوی شرکت",
+                },
+                component: {
+                  createdBy: "ایجاد توسط",
+                  creditExpiration: "انقضا اعتبار",
+                  print: " چاپ",
+                },
+              },
               historyOfPrinting: {
                 calender: {
                   from: "Sorting from date",
@@ -495,7 +532,7 @@ export const content_Based_Language = selector({
               row2: {
                 listOfProjects: "proje listesi",
                 addNewProject: "Add new project",
-                listOfLabels: "Ürün ve etiket listesi",
+                listOfLabels: "etiket listesi",
                 historyOfPrinting: "baskı tarihi",
                 settings: "Ayarlar",
               },
@@ -543,6 +580,9 @@ export const content_Based_Language = selector({
               row2: {
                 addNewProductAndLabel: "Yeni ürün / etiket ekle",
                 controlPannel: "kontrol Paneli",
+                listOfLabelsAndProduct: "Etiketler ve ürünler",
+                ViewPrintStatistics: "İstatistikleri yazdır",
+                ListOfUserAndAdmin: "kullanıcılar ve idareci",
               },
               // row3: "Sign out",
             },
@@ -650,6 +690,19 @@ export const content_Based_Language = selector({
               labelList: {
                 selectedLabelsButton: "selected Labels",
                 searchPlaceHolder: "Search for a label or product name",
+              },
+              listOfUserAndAdmin: {
+                header: {
+                  header: "Kullanıcıların ve yöneticinin listesi",
+                  goToAdminList: "Yönetici listesine gits",
+                  goToUserList: "Kullanıcı listesine git",
+                  searchBoxPlaceHolder: "şirket arama",
+                },
+                component: {
+                  createdBy: "tarafından yaratıldı",
+                  creditExpiration: "Kredi Bitişi",
+                  print: "Yazdır",
+                },
               },
               historyOfPrinting: {
                 calender: {

@@ -29,6 +29,7 @@ import {
 import { useEffect } from "react";
 
 export default function ({ res }) {
+  console.log(res);
   const content =
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label;
   const cssClass = useDynamicCssClass();
@@ -66,8 +67,6 @@ export default function ({ res }) {
       editImagemutate.mutate(payload);
     }
   }, [mutate.data]);
-
-  // console.log({ addImageData: AddImagemutate });
 
   if (res.data)
     return (
@@ -116,7 +115,7 @@ export default function ({ res }) {
                   return mutate.data.name.turkish;
                 }
               },
-              id: mutate.data.id,
+              id: mutate.data?.id,
             }}
           />
         )}

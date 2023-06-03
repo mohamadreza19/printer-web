@@ -11,6 +11,40 @@ import {
   setProduct_label_key,
 } from "../querykey/admin_key";
 import { useLanguage } from "../../recoil/readStore";
+// export const Admin_Profile = ()
+export const Admin_Profile_Call = () => {
+  const { value } = useAdmin_CachedToken();
+  const setLoading = useToastReducer();
+  const result = useQuery({
+    queryKey: "user_profile",
+    queryFn: () => api_get.profile_info(value),
+  });
+
+  const { isSuccess, isLoading, error } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+    if (isSuccess) {
+      setLoading({
+        isShow: false,
+        message: "",
+      });
+    }
+    if (error) {
+      setLoading({
+        isShow: true,
+        message: error.message,
+      });
+    }
+  }, [isSuccess, error]);
+
+  return result;
+};
 
 export const AdminUser_FindOne = (role = "admin", id) => {
   const { value: token } = useAdmin_CachedToken();
@@ -157,6 +191,7 @@ export const AdminPrints = (
   if (justLabel) {
     url = url.concat(`justLabel=${justLabel}&`);
   }
+
   const result = useInfiniteQuery({
     queryKey: [
       "admin-print",
@@ -170,17 +205,37 @@ export const AdminPrints = (
     queryFn: ({ pageParam = url }) =>
       api_get.prints(
         token,
-        page,
-        limit,
-        justProduct,
-        justLabel,
-        startDate,
-        endDate,
-        order,
+        // page,
+        // limit,
+        // justProduct,
+        // justLabel,
+        // startDate,
+        // endDate,
+        // order,
         pageParam
       ),
     getNextPageParam: (lastPageResult) => {
-      return lastPageResult.links.next || undefined;
+      let url = lastPageResult.links.next;
+      // if (url) {
+      //   if (startDate && endDate) {
+      //     url = url
+      //       .concat(`startDate=${startDate}&`)
+      //       .concat(`endDate=${endDate}&`);
+      //   }
+
+      //   if (order) {
+      //     url = url.concat(`&order=${order}&`);
+      //   }
+
+      //   if (justProduct) {
+      //     url = url.concat(`justProduct=${justProduct}&`);
+      //   }
+      //   if (justLabel) {
+      //     url = url.concat(`justLabel=${justLabel}&`);
+      //   }
+      // }
+
+      return url || undefined;
     },
   });
   const { isLoading, isSuccess, error } = result;
@@ -247,14 +302,18 @@ export const AdminActive_users = () => {
   return result;
 };
 
-export const AdminPrintsStatistics = () => {
+export const AdminPrintsStatistics = (
+  startDate,
+  endDate,
+  key_for_apiCall_acordingToDate
+) => {
   const { value: token } = useAdmin_CachedToken();
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
 
   const result = useQuery({
-    queryKey: "prints-statistics",
-    queryFn: () => api_get.print_statistics(token),
+    queryKey: ["prints-statistics", key_for_apiCall_acordingToDate],
+    queryFn: () => api_get.print_statistics(token, startDate, endDate),
   });
   const { isLoading, isSuccess, error } = result;
   useEffect(() => {
@@ -277,7 +336,40 @@ export const AdminPrintsStatistics = () => {
       }));
     }
   }, [isSuccess, isLoading, error]);
-  console.log(result);
+
+  return result;
+};
+export const AdminProduct_Label_Count = () => {
+  const { value: token } = useAdmin_CachedToken();
+  const queryClient = useQueryClient();
+  const setLoading = useToastReducer();
+
+  const result = useQuery({
+    queryKey: "product_label_count",
+    queryFn: () => api_get.product_label_count(token),
+  });
+  const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
   return result;
 };
 
@@ -430,6 +522,60 @@ export const AdminProduct_findOne = (id = "") => {
     queryKey: ["label-findOne"],
     queryFn: () => {
       return api_get.product_findOne(token, id);
+    },
+  });
+
+  const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
+};
+export const Admin_Print_Info_Chart = (
+  interval,
+  scale,
+  key_for_apiCall_acordingToDate,
+  startDate,
+  endDate
+) => {
+  const { value: token } = useAdmin_CachedToken();
+
+  const setLoading = useToastReducer();
+
+  console.log(scale);
+  const result = useQuery({
+    queryKey: [
+      "print_info_chart",
+      interval,
+      scale,
+      key_for_apiCall_acordingToDate,
+    ],
+    queryFn: () => {
+      return api_get.print_info_chart(
+        token,
+        interval,
+        scale,
+        startDate,
+        endDate
+      );
     },
   });
 

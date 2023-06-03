@@ -19,22 +19,24 @@ export default function () {
   });
 
   return (
-    <InfiniteScroll
-      className="w-100  px-4 "
-      pullDownToRefreshThreshold={300}
-      next={res.fetchNextPage}
-      dataLength={res.data.length}
-      hasMore={res.hasNextPage}
-      threshold={100}
-      height={768}
-      scrollableTarget
-    >
+    <div className="w-100  ">
       <Header
         setCurrentList={setCurrentList}
         currentList={currentList}
         setSearch={setSearch}
       />
-      <Items items={res.data} currentList={currentList} />
-    </InfiniteScroll>
+      <InfiniteScroll
+        className="w-100 px-4"
+        pullDownToRefreshThreshold={300}
+        next={res.fetchNextPage}
+        dataLength={res.data.length}
+        hasMore={res.hasNextPage}
+        threshold={100}
+        height={768}
+        scrollableTarget
+      >
+        <Items items={res.data} currentList={currentList} />
+      </InfiniteScroll>
+    </div>
   );
 }

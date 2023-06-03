@@ -8,7 +8,6 @@ export default function () {
   const [search, setSearch] = useState("");
   const { isLoading, error, data, hasNextPage, fetchNextPage } =
     UserProjects_Call(search);
-  console.log(data);
   if (data) {
     return (
       <div className="w-100   ">

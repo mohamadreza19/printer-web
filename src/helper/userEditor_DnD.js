@@ -2,17 +2,17 @@ import shortid from "shortid";
 
 export default class {
   static createCellFrom_Drag_Product(
-    findedRail = { id: "", cells: [] },
-    findedProduct = { id: "", width: "" },
+    findedRail = { frontId: "", customLabels: [] },
+    findedProduct = { frontId: "", width: "", description: {} },
     destination = { index: "" },
     railsArrayPresent
   ) {
-    const copyCells = [...findedRail.cells];
+    const copyCells = [...findedRail.customLabels];
     const newCell = {
-      id: shortid.generate(),
+      frontId: shortid.generate(),
       productId: findedProduct.id,
       split: "none",
-      content: {
+      structure: {
         values: "",
         style: {
           fontFamily: "Arial",
@@ -28,30 +28,31 @@ export default class {
       wantQr: false,
       width: findedProduct.width,
       isSelected: false,
+      description: findedProduct.description.english,
     };
     copyCells.splice(destination.index, 0, newCell);
     const newRails = railsArrayPresent.map((rail) => {
-      if (rail.id == findedRail.id) {
-        return { ...rail, cells: copyCells };
+      if (rail.frontId == findedRail.frontId) {
+        return { ...rail, customLabels: copyCells };
       }
       return rail;
     });
     return newRails;
   }
   static reorderCell(
-    findedRail = { cells: [], id: "" },
+    findedRail = { customLabels: [], frontId: "" },
     draggableId = "",
     destination = { index: "" },
     source = { index: "" },
     railsArrayPresent = []
   ) {
-    const copyCells = [...findedRail.cells];
-    const cellFinded = copyCells.find((cell) => cell.id === draggableId);
+    const copyCells = [...findedRail.customLabels];
+    const cellFinded = copyCells.find((cell) => cell.frontId === draggableId);
     copyCells.splice(source.index, 1);
     copyCells.splice(destination.index, 0, cellFinded);
     const newRails = railsArrayPresent.map((rail) => {
-      if (rail.id == findedRail.id) {
-        return { ...rail, cells: copyCells };
+      if (rail.frontId == findedRail.frontId) {
+        return { ...rail, customLabels: copyCells };
       }
       return rail;
     });

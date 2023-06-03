@@ -43,7 +43,7 @@ export default function ({
       if (duplicateAction) {
         if (!cell.parentId) {
           const payload = {
-            cellId: cell.id,
+            cellId: cell.frontId,
             railId,
           };
           setCell(payload, "DUPLICATECELL");
@@ -53,7 +53,7 @@ export default function ({
       if (deleteAction) {
         if (!cell.parentId) {
           const payload = {
-            cellId: cell.id,
+            cellId: cell.frontId,
             railId,
           };
           setCell(payload, "DELETECELL");
@@ -65,9 +65,9 @@ export default function ({
 
   return (
     <Draggable
-      draggableId={cell.id}
+      draggableId={cell.frontId}
       index={index}
-      key={cell.id}
+      key={cell.frontId}
       disableInteractiveElementBlocking={true}
     >
       {(provided, snapshot) => {

@@ -14,13 +14,14 @@ import { useEffect } from "react";
 import { useQueryClient } from "react-query";
 import useFormetDate from "../../../../../utility/useFormetDate";
 import { useRef } from "react";
+import { setProduct_label_key } from "../../../../../reactQuery/querykey/admin_key";
 export default function () {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
   const [startTime, setstartTime] = useState(null);
   const [nowTime, setTime] = useState(null);
   const language = useLanguage();
-  const queryClient = useQueryClient();
+
   const fromNowDate = useFormetDate(nowTime, language);
   const watchNow_interval_ref = useRef(null);
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function () {
   }, [startTime]);
 
   function updateProjectlist() {
-    queryClient.invalidateQueries("admin-projects");
+    setProduct_label_key(Math.random() * 10);
     const time = Date.now();
     setTime(time);
   }

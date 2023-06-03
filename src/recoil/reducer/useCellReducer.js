@@ -12,17 +12,18 @@ import {
 import { useEffect } from "react";
 
 export default function () {
-  const [state, setState] = useRecoilState(rails);
+  // const [state, setState] = useRecoilState(rails);
   const setSelectedCellForReadStyle = useSetRecoilState(
     selectedCellForReadStyle
   );
+  const [state, setState] = useRecoilState(rails);
   const setCanUseUndo = useSetRecoilState(ColumnFour_undo);
   const setCanUseRedo = useSetRecoilState(ColumnFour_redo);
   const { future, past, present } = state;
 
   const isUndoPossible = past && past.length > 0;
   const isRedoPossible = future && future.length > 0;
-  console.log({ state: state.present });
+
   useEffect(() => {
     if (isUndoPossible) {
       setCanUseUndo(true);
@@ -73,7 +74,7 @@ export default function () {
       cellId: "",
       parentId: "",
       railId: "",
-      content: {
+      structure: {
         value: "",
         style: {
           fontSize: "14",
@@ -89,14 +90,14 @@ export default function () {
 
     if (action == selectionAction.SELECT) {
       //requirement
-      // payload.id
+      // payload.frontId
 
       function cellSplitController(cell) {
         function fullCellChecker(cellForCheck) {
-          if (payload.cellId == cellForCheck.id) {
+          if (payload.cellId == cellForCheck.frontId) {
             const a = { ...cellForCheck, isSelected: true };
 
-            setSelectedCellForReadStyle(a.content?.style || null);
+            setSelectedCellForReadStyle(a.structure?.style || null);
             return a;
           }
           return { ...cellForCheck, isSelected: false };
@@ -145,16 +146,16 @@ export default function () {
         }
       }
       function railController(rail) {
-        if (rail.id == payload.railId) {
-          const newCells = rail.cells.map((item) => {
+        if (rail.frontId == payload.railId) {
+          const newCells = rail.customLabels.map((item) => {
             return cellSplitController(item);
           });
-          return { ...rail, cells: newCells };
+          return { ...rail, customLabels: newCells };
         } else {
-          const newCells = rail.cells.map((item) => {
+          const newCells = rail.customLabels.map((item) => {
             return cellSplitController(item);
           });
-          return { ...rail, cells: newCells };
+          return { ...rail, customLabels: newCells };
         }
       }
 
@@ -220,9 +221,9 @@ export default function () {
       }
 
       const newRails = present.map((rail) => {
-        const newCells = rail.cells.map((c) => cellSplitController(c));
+        const newCells = rail.customLabels.map((c) => cellSplitController(c));
 
-        return { ...rail, cells: newCells };
+        return { ...rail, customLabels: newCells };
       });
 
       return setState((draft) => {
@@ -235,8 +236,8 @@ export default function () {
     if (action == cellAction.NEWSETCONTENT) {
       function cellSplitController(cell) {
         function fullCellChecker(cellForcheck) {
-          if (cellForcheck.id == payload.cellId) {
-            //  add new content
+          if (cellForcheck.frontId == payload.cellId) {
+            //  add new structure
 
             let newContent = {
               values: "",
@@ -244,11 +245,11 @@ export default function () {
             };
 
             newContent = {
-              values: payload.content.value,
-              style: cellForcheck.content.style,
+              values: payload.structure.value,
+              style: cellForcheck.structure.style,
             };
 
-            const a = { ...cellForcheck, content: newContent };
+            const a = { ...cellForcheck, structure: newContent };
 
             return a;
           }
@@ -288,16 +289,16 @@ export default function () {
         return cell;
       }
       const findedRail = state.present.find(
-        (rail) => rail.id === payload.railId
+        (rail) => rail.frontId === payload.railId
       );
 
       console.log(state.present);
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return cellSplitController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -311,7 +312,7 @@ export default function () {
     if (action == cellAction.DELETECONTENT) {
       function cellSplitController(cell) {
         function fullCellChecker(cellForcheck) {
-          if (cellForcheck.id == payload.cellId) {
+          if (cellForcheck.frontId == payload.cellId) {
             const copy = [...cellForcheck.contents];
             copy.pop();
             return { ...cellForcheck, contents: copy };
@@ -362,14 +363,16 @@ export default function () {
         }
         return cell;
       }
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return cellSplitController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -386,35 +389,35 @@ export default function () {
       //payload.cellId
       function splitColumnController(cellForSplit) {
         function fullCellChecker(cellforSplit) {
-          if (cellforSplit.id == payload.cellId) {
+          if (cellforSplit.frontId == payload.cellId) {
             const a = {
               ...cellforSplit,
-              content: {
+              structure: {
                 values: " ",
-                style: cellforSplit.content.style,
+                style: cellforSplit.structure.style,
               },
               split: "vertical",
               children: [
                 {
                   // parentId: newParentId,
-                  parentId: cellforSplit.id,
-                  id: shortid.generate(),
+                  parentId: cellforSplit.frontId,
+                  frontId: shortid.generate(),
                   split: "none",
-                  content: {
+                  structure: {
                     values: " ",
-                    style: cellforSplit.content?.style,
+                    style: cellforSplit.structure?.style,
                   },
 
                   isSelected: false,
                 },
                 {
                   // parentId: newParentId,
-                  parentId: cellforSplit.id,
-                  id: shortid.generate(),
+                  parentId: cellforSplit.frontId,
+                  frontId: shortid.generate(),
                   split: "none",
-                  content: {
+                  structure: {
                     values: null,
-                    style: cellforSplit.content?.style,
+                    style: cellforSplit.structure?.style,
                   },
 
                   isSelected: false,
@@ -463,14 +466,16 @@ export default function () {
         return cellForSplit;
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return splitColumnController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -487,35 +492,35 @@ export default function () {
       //payload.cellId
       function splitRowController(cellForSplit) {
         function fullCellChecker(cellforSplit) {
-          if (cellforSplit.id == payload.cellId) {
+          if (cellforSplit.frontId == payload.cellId) {
             const a = {
               ...cellforSplit,
-              content: {
+              structure: {
                 values: null,
-                style: cellforSplit.content?.style,
+                style: cellforSplit.structure?.style,
               },
               split: "horizontal",
               children: [
                 {
                   // parentId: newParentId,
-                  parentId: cellforSplit.id,
-                  id: shortid.generate(),
+                  parentId: cellforSplit.frontId,
+                  frontId: shortid.generate(),
                   split: "none",
-                  content: {
+                  structure: {
                     values: null,
-                    style: cellforSplit.content?.style,
+                    style: cellforSplit.structure?.style,
                   },
 
                   isSelected: false,
                 },
                 {
                   // parentId: newParentId,
-                  parentId: cellforSplit.id,
-                  id: shortid.generate(),
+                  parentId: cellforSplit.frontId,
+                  frontId: shortid.generate(),
                   split: "none",
-                  content: {
+                  structure: {
                     values: null,
-                    style: cellforSplit.content?.style,
+                    style: cellforSplit.structure?.style,
                   },
 
                   isSelected: false,
@@ -563,14 +568,16 @@ export default function () {
 
         return cellForSplit;
       }
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return splitRowController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -588,7 +595,7 @@ export default function () {
 
       function JoinRowController(cellForJoin) {
         function fullCellChecker(cellForJoin) {
-          if (cellForJoin.id == payload.cellId) {
+          if (cellForJoin.frontId == payload.cellId) {
             const a = {
               ...cellForJoin,
               split: "none",
@@ -598,7 +605,7 @@ export default function () {
 
             return a;
           }
-          if (cellForJoin.id == payload.parentId) {
+          if (cellForJoin.frontId == payload.parentId) {
             console.log({ cellForJoin });
             const a = {
               ...cellForJoin,
@@ -627,7 +634,7 @@ export default function () {
           return mapedChild;
         }
 
-        if (cellForJoin.id == payload.parentId) {
+        if (cellForJoin.frontId == payload.parentId) {
           return fullCellChecker(cellForJoin);
         }
         if (cellForJoin.split == "vertical") {
@@ -646,14 +653,16 @@ export default function () {
         return cellForJoin;
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return JoinRowController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -671,7 +680,7 @@ export default function () {
 
       function JoinColumnController(cellForJoin) {
         function fullCellChecker(cellForJoin) {
-          if (cellForJoin.id == payload.cellId) {
+          if (cellForJoin.frontId == payload.cellId) {
             const a = {
               ...cellForJoin,
               split: "none",
@@ -681,7 +690,7 @@ export default function () {
 
             return a;
           }
-          if (cellForJoin.id == payload.parentId) {
+          if (cellForJoin.frontId == payload.parentId) {
             const a = {
               ...cellForJoin,
               split: "none",
@@ -709,7 +718,7 @@ export default function () {
           return mapedChild;
         }
 
-        if (cellForJoin.id == payload.parentId) {
+        if (cellForJoin.frontId == payload.parentId) {
           return fullCellChecker(cellForJoin);
         }
         if (cellForJoin.split == "vertical") {
@@ -728,14 +737,16 @@ export default function () {
         return cellForJoin;
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return JoinColumnController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -752,19 +763,19 @@ export default function () {
       //action
       function setFountForRoot(cellForSetFont) {
         function fullCellChecker(cell) {
-          if (cell.id == payload.cellId) {
+          if (cell.frontId == payload.cellId) {
             console.log(payload);
             const a = {
               ...cell,
-              content: {
-                ...cell.content,
+              structure: {
+                ...cell.structure,
                 style: {
-                  ...cell.content.style,
-                  fontFamily: payload.content,
+                  ...cell.structure.style,
+                  fontFamily: payload.structure,
                 },
               },
             };
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cell;
@@ -803,14 +814,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return setFountForRoot(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -828,18 +841,18 @@ export default function () {
 
       function setTextFontStyle(cellForSetFontStyle) {
         function fullCellChecker(cell) {
-          if (cell.id == payload.cellId) {
+          if (cell.frontId == payload.cellId) {
             const a = {
               ...cell,
-              content: {
-                ...cell.content,
+              structure: {
+                ...cell.structure,
                 style: {
-                  ...cell.content.style,
-                  fontStyle: payload.content,
+                  ...cell.structure.style,
+                  fontStyle: payload.structure,
                 },
               },
             };
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cell;
@@ -878,14 +891,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return setTextFontStyle(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -903,19 +918,19 @@ export default function () {
 
       function setTextAlign(cellTextAlign) {
         function fullCellChecker(cell) {
-          if (cell.id == payload.cellId) {
+          if (cell.frontId == payload.cellId) {
             console.log(payload);
             const a = {
               ...cell,
-              content: {
-                ...cell.content,
+              structure: {
+                ...cell.structure,
                 style: {
-                  ...cell.content.style,
-                  textAlign: payload.content,
+                  ...cell.structure.style,
+                  textAlign: payload.structure,
                 },
               },
             };
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cell;
@@ -954,14 +969,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return setTextAlign(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -979,14 +996,14 @@ export default function () {
 
       function cellSplitController(cellTextAlign) {
         function fullCellChecker(cell) {
-          if (cell.id == payload.cellId) {
+          if (cell.frontId == payload.cellId) {
             let fontSizeValue;
-            let cellFontSize = cell.content.style.fontSize;
-            if (payload.content == "increment") {
+            let cellFontSize = cell.structure.style.fontSize;
+            if (payload.structure == "increment") {
               fontSizeValue = +cellFontSize + 1;
             }
-            if (payload.content == "decrement") {
-              if (cell.content.style.fontSize > 1) {
+            if (payload.structure == "decrement") {
+              if (cell.structure.style.fontSize > 1) {
                 fontSizeValue = cellFontSize - 1;
               } else {
                 fontSizeValue = 1;
@@ -995,15 +1012,15 @@ export default function () {
 
             const a = {
               ...cell,
-              content: {
-                ...cell.content,
+              structure: {
+                ...cell.structure,
                 style: {
-                  ...cell.content.style,
+                  ...cell.structure.style,
                   fontSize: fontSizeValue,
                 },
               },
             };
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cell;
@@ -1042,14 +1059,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return cellSplitController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -1067,14 +1086,14 @@ export default function () {
 
       function cellSplitController(cellTextAlign) {
         function fullCellChecker(cell) {
-          if (cell.id == payload.cellId) {
+          if (cell.frontId == payload.cellId) {
             let fontAngleValue;
-            let cellFontAngle = cell.content.style.angle;
-            if (payload.content == "increment") {
+            let cellFontAngle = cell.structure.style.angle;
+            if (payload.structure == "increment") {
               fontAngleValue = +cellFontAngle + 1;
             }
-            if (payload.content == "decrement") {
-              // if (cell.content.style.fontSize > 1) {
+            if (payload.structure == "decrement") {
+              // if (cell.structure.style.fontSize > 1) {
               fontAngleValue = cellFontAngle - 1;
               // } else {
               //   fontAngleValue = 1;
@@ -1083,15 +1102,15 @@ export default function () {
 
             const a = {
               ...cell,
-              content: {
-                ...cell.content,
+              structure: {
+                ...cell.structure,
                 style: {
-                  ...cell.content.style,
+                  ...cell.structure.style,
                   angle: fontAngleValue,
                 },
               },
             };
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cell;
@@ -1130,14 +1149,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return cellSplitController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -1155,34 +1176,34 @@ export default function () {
 
       function cellSplitController(cell) {
         function fullCellChecker(cellFotCheck) {
-          if (cellFotCheck.id == payload.cellId) {
+          if (cellFotCheck.frontId == payload.cellId) {
             let newMargin;
-            let cellMargin = cellFotCheck.content.style.margin;
-            if (payload.content == "increment") {
+            let cellMargin = cellFotCheck.structure.style.margin;
+            if (payload.structure == "increment") {
               newMargin = +cellMargin + 1;
             }
 
-            if (payload.content == "decrement") {
-              if (cellFotCheck.content.style.margin > 0) {
+            if (payload.structure == "decrement") {
+              if (cellFotCheck.structure.style.margin > 0) {
                 newMargin = cellMargin - 1;
               } else {
                 newMargin = 0;
               }
             }
 
-            console.log(cellFotCheck.content.style.margin);
+            console.log(cellFotCheck.structure.style.margin);
             const a = {
               ...cellFotCheck,
-              content: {
-                ...cellFotCheck.content,
+              structure: {
+                ...cellFotCheck.structure,
                 style: {
-                  ...cellFotCheck.content.style,
+                  ...cellFotCheck.structure.style,
                   margin: newMargin,
                 },
               },
             };
 
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cellFotCheck;
@@ -1221,14 +1242,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return cellSplitController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -1246,14 +1269,14 @@ export default function () {
 
       function cellSplitController(cellTextAlign) {
         function fullCellChecker(cell) {
-          if (cell.id == payload.cellId) {
+          if (cell.frontId == payload.cellId) {
             let newPadding;
-            let cellPadding = cell.content.style.padding;
-            if (payload.content == "increment") {
+            let cellPadding = cell.structure.style.padding;
+            if (payload.structure == "increment") {
               newPadding = +cellPadding + 1;
             }
-            if (payload.content == "decrement") {
-              if (cell.content.style.padding > 0) {
+            if (payload.structure == "decrement") {
+              if (cell.structure.style.padding > 0) {
                 newPadding = cellPadding - 1;
               } else {
                 newPadding = 0;
@@ -1262,16 +1285,16 @@ export default function () {
 
             const a = {
               ...cell,
-              content: {
-                ...cell.content,
+              structure: {
+                ...cell.structure,
                 style: {
-                  ...cell.content.style,
+                  ...cell.structure.style,
                   padding: newPadding,
                 },
               },
             };
 
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cell;
@@ -1310,14 +1333,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return cellSplitController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -1330,15 +1355,15 @@ export default function () {
     }
     if (action == cellAction.DELETECELL) {
       const findedRail = state.present.find(
-        (rail) => rail.id === payload.railId
+        (rail) => rail.frontId === payload.railId
       );
 
-      const newCells = findedRail.cells.filter(
-        (cell) => cell.id !== payload.cellId
+      const newCells = findedRail.customLabels.filter(
+        (cell) => cell.frontId !== payload.cellId
       );
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -1352,7 +1377,7 @@ export default function () {
     if (action == cellAction.DUPLICATECELL) {
       function cellSplitController(cell) {
         function fullCellChecker(cellForCheck) {
-          return { ...cellForCheck, id: shortid.generate() };
+          return { ...cellForCheck, frontId: shortid.generate() };
         }
         function verticalCellChecker(cellForCheck) {
           const mapedChildren = cellForCheck.children.map((child) => {
@@ -1370,7 +1395,7 @@ export default function () {
 
           return {
             ...cellForCheck,
-            id: shortid.generate(),
+            frontId: shortid.generate(),
             children: mapedChildren,
           };
         }
@@ -1390,7 +1415,7 @@ export default function () {
 
           return {
             ...cellForCheck,
-            id: shortid.generate(),
+            frontId: shortid.generate(),
             children: mapedChildren,
           };
         }
@@ -1405,23 +1430,25 @@ export default function () {
           return horizontalCellChecker(cell);
         }
       }
-      let findedRail = state.present.find((rail) => rail.id === payload.railId);
-
-      const findedCellIndex = findedRail.cells.findIndex(
-        (cell) => cell.id === payload.cellId
+      let findedRail = state.present.find(
+        (rail) => rail.frontId === payload.railId
       );
-      let newCell = findedRail.cells[findedCellIndex];
+
+      const findedCellIndex = findedRail.customLabels.findIndex(
+        (cell) => cell.frontId === payload.cellId
+      );
+      let newCell = findedRail.customLabels[findedCellIndex];
 
       newCell = cellSplitController(newCell);
 
-      const copyCells = [...findedRail.cells];
+      const copyCells = [...findedRail.customLabels];
       console.log({ newCell });
       copyCells.splice(findedCellIndex, 0, newCell);
 
-      // const newRail = { ...findedRail, cells: copyCells };
+      // const newRail = { ...findedRail, customLabels: copyCells };
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: copyCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: copyCells };
         }
         return rail;
       });
@@ -1436,16 +1463,16 @@ export default function () {
       //requirement
       //payload.cellId == parentId
       //action
-
+      console.log(payload);
       function cellSplitController(cell) {
         function fullCellChecker(cell) {
-          if (cell.id == payload.cellId) {
+          if (cell.frontId == payload.cellId) {
             const a = {
               ...cell,
-              wantBarcode: !cell.wantBarcode,
+              isBarcode: !cell.isBarcode,
             };
 
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cell;
@@ -1484,14 +1511,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return cellSplitController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });
@@ -1509,13 +1538,13 @@ export default function () {
 
       function cellSplitController(cell) {
         function fullCellChecker(cell) {
-          if (cell.id == payload.cellId) {
+          if (cell.frontId == payload.cellId) {
             const a = {
               ...cell,
-              wantQr: !cell.wantQr,
+              isQrcode: !cell.isQrcode,
             };
 
-            setSelectedCellForReadStyle(a.content.style);
+            setSelectedCellForReadStyle(a.structure.style);
             return a;
           }
           return cell;
@@ -1554,14 +1583,16 @@ export default function () {
         }
       }
 
-      const findedRail = present.find((rail) => rail.id === payload.railId);
+      const findedRail = present.find(
+        (rail) => rail.frontId === payload.railId
+      );
 
-      const newCells = findedRail.cells.map((item) => {
+      const newCells = findedRail.customLabels.map((item) => {
         return cellSplitController(item);
       });
       const newRails = present.map((rail) => {
-        if (rail.id == payload.railId) {
-          return { ...rail, cells: newCells };
+        if (rail.frontId == payload.railId) {
+          return { ...rail, customLabels: newCells };
         }
         return rail;
       });

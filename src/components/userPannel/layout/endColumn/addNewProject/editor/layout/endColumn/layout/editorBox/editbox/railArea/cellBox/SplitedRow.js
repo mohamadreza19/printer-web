@@ -7,7 +7,7 @@ import { useSelection } from "../../../../../../../../../../../../../recoil/read
 
 export default function ({
   railId = "",
-  parent = { id: " ", isSelected: false },
+  parent = { frontId: " ", isSelected: false },
   children,
   setCell = () => {},
 }) {

@@ -597,20 +597,25 @@ export const OneTwo = () => {
     </svg>
   );
 };
-export const StarOne = ({ className, className_for_path }) => {
+export const StarOne = ({
+  className,
+  className_for_path,
+  isBookMark = false,
+}) => {
   const value = {
     // width: "1.7rem",
     // height: "1.7rem",
     // width: "68%",
     // height: "68%",
   };
+  const fill = isBookMark ? "#F36523" : "#AEAEAE";
   return (
     <svg
       className={className}
       width="29"
       height="28"
       viewBox="0 0 29 28"
-      fill="none"
+      fill={fill}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

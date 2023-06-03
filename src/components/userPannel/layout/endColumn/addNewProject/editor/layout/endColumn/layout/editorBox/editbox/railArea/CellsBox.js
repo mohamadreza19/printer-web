@@ -1,11 +1,11 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import CellBox from "./cellBox";
 import { ColumnFour_justify_start } from "../../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
-import useCells from "../../../../../../../../../../../../recoil/readStore/editor/Readcells";
+
 import { Container } from "./layout/CellsContainer";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
-export default function ({ children, key, cells, railId }) {
+export default function ({ children, key, customLabels, railId }) {
   // const cells = useCells();
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   //
@@ -28,9 +28,15 @@ export default function ({ children, key, cells, railId }) {
             {...provided.droppableProps}
             isDragingOver={snapshot.isDraggingOver}
           >
-            {cells?.map((c, index) => {
+            {customLabels?.map((c, index) => {
               return (
-                <CellBox key={index} index={index} cell={c} railId={railId} />
+                <CellBox
+                  key={index}
+                  index={index}
+                  cell={c}
+                  railId={railId}
+                  description={c.description}
+                />
               );
             })}
             {provided.placeholder}

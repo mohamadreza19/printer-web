@@ -1,6 +1,28 @@
 import axios from "axios";
 import { apiUrl } from "../urlStore";
 export default class {
+  static async profile_info(token = "") {
+    if (!token) throw new Error("there isnt token");
+    const url = `${apiUrl}/user/profile`;
+
+    try {
+      const res = await axios({
+        url: url,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
   static async project_list(token = "", url) {
     if (!token) throw new Error("there isnt token");
     // let url = `${apiUrl}/project/user?`;

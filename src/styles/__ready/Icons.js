@@ -830,7 +830,7 @@ export default class {
       </svg>
     );
   }
-  static RightArrow_v1({
+  static LeftArrow_v1({
     svgClassName = " ",
     pathClassName = " ",
     size = " ",
@@ -871,13 +871,12 @@ export default class {
       </svg>
     );
   }
-  static LeftArrow_v1({
+  static RightArrow_v1({
     svgClassName = " ",
     pathClassName = " ",
     size = " ",
     Isactive = false,
   }) {
-    console.log(size);
     let value = {
       width: " ",
       height: " ",
@@ -920,7 +919,6 @@ export default class {
     size = " ",
     Isactive = false,
   }) {
-    console.log(size);
     let value = {
       width: " ",
       height: " ",

@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import EndColumn from "./layout/endColumn";
 import StartColumn from "./layout/startColumn";
 import IconBox from "./layout/startColumn/IconBox";
+import SuccessBox from "../successBox";
 
 export default function () {
   return (

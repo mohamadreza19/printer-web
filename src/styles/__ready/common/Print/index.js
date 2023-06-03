@@ -14,12 +14,14 @@ import Icons from "../../Icons";
 
 export default function ({
   print = {
+    updatedAt: "",
     createdBy: "",
     createdAt: "",
     project: {
       printsCount: "",
       productsCount: "",
     },
+    label: {},
     user: {
       companyName: "",
     },
@@ -29,10 +31,24 @@ export default function ({
   const currentLanguage = useLanguage();
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
-  const fromNowDate = useFormetDate(print.updatedAt, currentLanguage);
-  console.log(print);
+  const fromNowDate = useFormetDate(print.createdAt, currentLanguage);
+  function change_background_based_project_label() {
+    if (print.project) {
+      return "bg_primary_v1";
+    }
+    if (print.label) {
+      return "bg_gray2";
+    }
+    return "bg_primary_v1";
+  }
+
   return (
-    <div className="w-100 bg_primary_v1 d-flex  border-r-25   mb-2 cur-pointer">
+    <div
+      className={
+        "w-100 d-flex  border-r-25   mb-2 cur-pointer " +
+        change_background_based_project_label()
+      }
+    >
       <Grid
         style={{
           height: "62px",

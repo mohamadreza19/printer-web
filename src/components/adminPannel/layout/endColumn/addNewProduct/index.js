@@ -15,7 +15,8 @@ import RowTwo from "./RowTwo";
 import UploadFile from "./uploadFile";
 //__v
 import useValidateproduct from "../../../../../helper/admin_add_product_label/validate_product";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { setProduct_label_key } from "../../../../../reactQuery/querykey/admin_key";
 
 export default function () {
   const [allowNextFlow, setAllowNextFlow] = useState(false);
@@ -34,6 +35,7 @@ export default function () {
   if (allowNextFlow) {
     return <UploadFile />;
   }
+
   return (
     <div
       className="w-100 h-100

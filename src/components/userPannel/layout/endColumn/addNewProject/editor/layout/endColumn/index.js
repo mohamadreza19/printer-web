@@ -16,13 +16,22 @@ import {
 import { showHide_Btn } from "../../../../../../../../recoil/userEditorStore/searchboxStore";
 
 import userEditor_DnD from "../../../../../../../../helper/userEditor_DnD";
+import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
+import { is_project_sucess_edit_store } from "../../../../../../../../recoil/store/user/project_store";
+import SuccessBox from "../../../successBox";
 
 export default function () {
   const cssClass = useDynamicCssClass();
+
+  const [is_project_sucess_edit, SetIs_project_sucess_edit_store] =
+    useRecoilState(is_project_sucess_edit_store);
   const [railsArray, setRailsArray] = useRecoilState(rails);
+
   const products = useRecoilValue(product_column);
+
   const [showHide, setShowHide] = useRecoilState(showHide_Btn);
 
+  // if (is_project_sucess_edit ) return <SuccessBox />;
   return (
     <div
       className={"w-100 h-100 bg_info editor-end-column-r position-relative  "}
@@ -37,11 +46,12 @@ export default function () {
         <DragDropContext
           onDragEnd={(result) => {
             const { destination, source, draggableId } = result;
+
             const findedProduct = products.find(
               (product) => product.id == draggableId
             );
             const findedRail = railsArray.present.find(
-              (rail) => rail.id == destination.droppableId
+              (rail) => rail.frontId == destination.droppableId
             );
 
             if (findedRail && findedProduct) {
@@ -55,8 +65,8 @@ export default function () {
             }
             if (
               !findedProduct &&
-              source.droppableId == findedRail.id &&
-              destination.droppableId == findedRail.id
+              source.droppableId == findedRail.frontId &&
+              destination.droppableId == findedRail.frontId
             ) {
               const newRails = userEditor_DnD.reorderCell(
                 findedRail,

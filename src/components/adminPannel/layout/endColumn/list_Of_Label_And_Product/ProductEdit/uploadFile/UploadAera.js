@@ -21,7 +21,7 @@ export default function ({ onLoadedMeta = null, res, imageForFirstShow }) {
   const cssClass = useDynamicCssClass();
 
   useEffect(() => {
-    if (res.isSuccess) {
+    if (res.isSuccess && res.data?.pictures?.length > 0) {
       const option = {
         fileId: res.data.pictures[0].id,
       };

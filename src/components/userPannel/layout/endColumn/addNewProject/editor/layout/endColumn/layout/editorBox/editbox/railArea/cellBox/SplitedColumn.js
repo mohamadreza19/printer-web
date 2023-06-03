@@ -9,7 +9,7 @@ export default function ({
   railId = "",
   children,
   parent = {
-    id: " ",
+    frontId: " ",
     isSelected: false,
   },
   setCell = () => {},

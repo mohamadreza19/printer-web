@@ -23,4 +23,48 @@ export default class {
       });
     }
   }
+  static async label_bookmark_delete(token = "", id = "") {
+    if (!token) throw new Error("there isnt token");
+
+    try {
+      const res = await axios({
+        url: `${apiUrl}/api/label/${id}/bookmark`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async product_bookmark_delete(token = "", id = "") {
+    if (!token) throw new Error("there isnt token");
+
+    try {
+      const res = await axios({
+        url: `${apiUrl}/api/product/${id}/bookmark`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
 }

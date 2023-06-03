@@ -1,9 +1,21 @@
 import Items from "./items";
 
-export default function () {
+export default function ({
+  data,
+  hasNextPage,
+  fetchNextPage,
+  setOrder,
+  displayPriority,
+}) {
   return (
     <div className="w-100  ">
-      <Items />
+      <Items
+        data={data}
+        hasNextPage={hasNextPage}
+        displayPriority={displayPriority}
+        fetchNextPage={fetchNextPage}
+        setOrder={setOrder}
+      />
     </div>
   );
 }

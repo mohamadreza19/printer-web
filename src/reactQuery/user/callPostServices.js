@@ -87,3 +87,75 @@ export const AddProject_Mutation = () => {
   }
   return result;
 };
+export const Add_Label_Bookmark_Mutation = () => {
+  const queryClient = useQueryClient();
+
+  const { value: token } = useCachedToken();
+
+  const setLoading = useToastReducer();
+
+  const result = useMutation({
+    mutationKey: "label-bookmark",
+    mutationFn: (option) => {
+      return callPostServices.add_label_bookmark(token, option.id);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(projectsKey);
+      // projectsKey = Math.random() * 20;
+      setProjectsKey(Math.random() * 20);
+    },
+  });
+  const { isLoading, isSuccess, data } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+  }, [isLoading]);
+
+  if (isSuccess) {
+    setLoading({
+      isShow: false,
+      message: "",
+    });
+  }
+  return result;
+};
+export const Add_Product_Bookmark_Mutation = () => {
+  const queryClient = useQueryClient();
+
+  const { value: token } = useCachedToken();
+
+  const setLoading = useToastReducer();
+
+  const result = useMutation({
+    mutationKey: "product-bookmark",
+    mutationFn: (option) => {
+      return callPostServices.add_product_bookmark(token, option.id);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(projectsKey);
+      // projectsKey = Math.random() * 20;
+      setProjectsKey(Math.random() * 20);
+    },
+  });
+  const { isLoading, isSuccess, data } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+  }, [isLoading]);
+
+  if (isSuccess) {
+    setLoading({
+      isShow: false,
+      message: "",
+    });
+  }
+  return result;
+};

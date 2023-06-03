@@ -6,7 +6,7 @@ export default class {
     //   username: "test1",
     //   password: "123456",
     // };
-    console.log(body);
+
     try {
       const res = await axios.post(`${apiUrl}/user/login`, body);
       console.log(res);
@@ -38,6 +38,48 @@ export default class {
           "Content-Type": "application/json",
         },
         data: body,
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async add_label_bookmark(token = "", id = "") {
+    if (!token) throw new Error("there isnt token");
+
+    try {
+      const res = await axios({
+        url: `${apiUrl}/label/${id}/bookmark`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async add_product_bookmark(token = "", id = "") {
+    if (!token) throw new Error("there isnt token");
+
+    try {
+      const res = await axios({
+        url: `${apiUrl}/product/${id}/bookmark`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       return new Promise((resolve, _) => {

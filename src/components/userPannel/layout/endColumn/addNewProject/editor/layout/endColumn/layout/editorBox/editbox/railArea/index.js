@@ -6,9 +6,9 @@ import Icons from "../../../../../../../../../../../../styles/__ready/Icons";
 
 export default function ({
   rail = {
-    id: "",
+    frontId: "",
     // customLabels: [],
-    cells: [],
+    customLabels: [],
   },
   deleteRail = () => {},
 }) {
@@ -31,9 +31,9 @@ export default function ({
         <TrashBox />
         <Title children={"ریل اول"} />
         <CellsBox
-          //  customLabels={rail.customLabels} railId={rail.id}
-          cells={rail.cells}
-          railId={rail.id}
+          //  customLabels={rail.customLabels} railId={rail.frontId}
+          customLabels={rail.customLabels}
+          railId={rail.frontId}
         />
       </article>
     </div>

@@ -23,8 +23,8 @@ import { useSelection } from "../../../../../../../../../../../../../recoil/read
 export default function ({
   railId = "",
   cell = {
-    id: " ",
-    content: {
+    frontId: " ",
+    structure: {
       values: "",
       style: {
         fontSize: "14",
@@ -33,7 +33,8 @@ export default function ({
         fontStyle: "bold",
       },
     },
-    wantBarcode: false,
+    isBarcode: false,
+    isQrcode: false,
     isSelected: false,
   },
   setCell = () => {},
@@ -58,7 +59,7 @@ export default function ({
     if (!cell.parentId && !cell.isSelected) {
       const payload = {
         railId: railId,
-        cellId: cell.id,
+        cellId: cell.frontId,
       };
 
       setCell(payload, "SELECT/PARENT");
@@ -66,7 +67,7 @@ export default function ({
     if (!isSelection && !cell.isSelected) return;
     const payload = {
       railId: railId,
-      cellId: cell.id,
+      cellId: cell.frontId,
     };
 
     setCell(payload, "SELECT");
@@ -75,8 +76,8 @@ export default function ({
   function handleChangeValue(value) {
     const payload = {
       railId: railId,
-      cellId: cell.id,
-      content: {
+      cellId: cell.frontId,
+      structure: {
         value,
       },
     };
@@ -85,7 +86,7 @@ export default function ({
   function handleDeleteContent() {
     const payload = {
       railId: railId,
-      cellId: cell.id,
+      cellId: cell.frontId,
     };
     setCell(payload, "DELETECONTENT");
   }
@@ -95,7 +96,7 @@ export default function ({
       if (splitColumn) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
+          cellId: cell.frontId,
         };
 
         setCell(payload, "SPLITCOLUMN");
@@ -104,7 +105,7 @@ export default function ({
       if (splitRow) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
+          cellId: cell.frontId,
         };
         setCell(payload, "SPLITROW");
         setSplitRow(false);
@@ -121,7 +122,7 @@ export default function ({
         } else {
           const payload = {
             railId: railId,
-            cellId: cell.id,
+            cellId: cell.frontId,
             parentId: undefined,
           };
           setCell(payload, "JOINCOLUMN");
@@ -142,7 +143,7 @@ export default function ({
           console.log('hasn"t parent');
           const payload = {
             railId: railId,
-            cellId: cell.id,
+            cellId: cell.frontId,
             parentId: undefined,
           };
           setCell(payload, "JOINROW");
@@ -152,8 +153,8 @@ export default function ({
       if (font.isOnClick) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: font.font,
+          cellId: cell.frontId,
+          structure: font.font,
         };
         setCell(payload, "SETFONT");
         setFont((draft) => ({ ...draft, isOnClick: false, font: "Arial" }));
@@ -161,8 +162,8 @@ export default function ({
       if (fontStyle.isUsed && fontStyle.chosenStyle == "bold") {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: "bold",
+          cellId: cell.frontId,
+          structure: "bold",
         };
         setCell(payload, "FONTSTYLE");
         setFontStyle((draft) => ({ ...draft, isUsed: false }));
@@ -170,8 +171,8 @@ export default function ({
       if (fontStyle.isUsed && fontStyle.chosenStyle == "italic") {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: "italic",
+          cellId: cell.frontId,
+          structure: "italic",
         };
         setCell(payload, "FONTSTYLE");
         setFontStyle((draft) => ({ ...draft, isUsed: false }));
@@ -179,8 +180,8 @@ export default function ({
       if (fontStyle.isUsed && fontStyle.chosenStyle == "underline") {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: "underline",
+          cellId: cell.frontId,
+          structure: "underline",
         };
         setCell(payload, "FONTSTYLE");
         setFontStyle((draft) => ({ ...draft, isUsed: false }));
@@ -188,8 +189,8 @@ export default function ({
       if (fontStyle.isUsed && fontStyle.chosenStyle == "regular") {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: "regular",
+          cellId: cell.frontId,
+          structure: "regular",
         };
         setCell(payload, "FONTSTYLE");
         setFontStyle((draft) => ({ ...draft, isUsed: false }));
@@ -197,8 +198,8 @@ export default function ({
       if (textAlign.isUsed) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: textAlign.chosenAlign,
+          cellId: cell.frontId,
+          structure: textAlign.chosenAlign,
         };
         setCell(payload, "TEXTALIGN");
         setTextAlign((draft) => ({
@@ -210,8 +211,8 @@ export default function ({
       if (fontSizeAction.isUsed) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: fontSizeAction.chosenAction,
+          cellId: cell.frontId,
+          structure: fontSizeAction.chosenAction,
         };
         setCell(payload, "CHANGEFONTSIZE");
         setFontSizeAction((draft) => ({
@@ -223,8 +224,8 @@ export default function ({
       if (fontAngle.isUsed) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: fontAngle.chosenAction,
+          cellId: cell.frontId,
+          structure: fontAngle.chosenAction,
         };
         setCell(payload, "CHANGEFONTANGLE");
         setFontAngle((draft) => ({
@@ -236,8 +237,8 @@ export default function ({
       if (cellMargin.isUsed) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: cellMargin.chosenAction,
+          cellId: cell.frontId,
+          structure: cellMargin.chosenAction,
         };
         setCell(payload, "CHANGECELLMARGIN");
         setCellMargin((draft) => ({
@@ -249,8 +250,8 @@ export default function ({
       if (cellPadding.isUsed == true) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
-          content: cellPadding.chosenAction,
+          cellId: cell.frontId,
+          structure: cellPadding.chosenAction,
         };
 
         setCell(payload, "CHANGECELLPADDING");
@@ -263,7 +264,7 @@ export default function ({
       if (bacodeWant) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
+          cellId: cell.frontId,
         };
         setCell(payload, "ISBACODE");
         setIsBacodeWant(false);
@@ -271,7 +272,7 @@ export default function ({
       if (qrWant) {
         const payload = {
           railId: railId,
-          cellId: cell.id,
+          cellId: cell.frontId,
         };
         setCell(payload, "QRCODE");
         setQrWant(false);
@@ -296,7 +297,7 @@ export default function ({
   return (
     <main
       onClick={handleSelectCell_Via_onClick}
-      className="w-100 h-100 d-flex justify-content-center align-item-center bg-white  "
+      className="w-100 h-100 d-flex justify-structure-center align-item-center bg-white  "
       style={{
         border: cell.isSelected
           ? "2px solid #F36523"
@@ -307,13 +308,13 @@ export default function ({
       }}
     >
       <Editor_Cell_Input
-        value={cell.content?.values}
+        value={cell.structure?.values}
         disabled={cell.isSelected}
         onChange={handleChangeValue}
         onBackspaceDown={handleDeleteContent}
-        style={cell.content?.style}
-        wantBarcode={cell.wantBarcode}
-        wantQr={cell.wantQr}
+        style={cell.structure?.style}
+        isBarcode={cell.isBarcode}
+        isQrcode={cell.isQrcode}
         // font={font.font}
       />
     </main>

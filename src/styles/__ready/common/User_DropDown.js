@@ -8,11 +8,14 @@ export default function ({
   onChange = () => {},
   currentValue = "",
   isAllow_ShowCurrentValue_Whitout_Seariching_in_option = false,
+  disabled = false,
 }) {
-  console.log(currentValue);
   const [isShow, setIsShow] = useState(false);
   const [value, setValue] = useState(null);
 
+  const disabledClass = disabled ? "disabled-select-box" : "";
+
+  // show finded option from currentValue prop for first time
   useEffect(() => {
     const currentOption = options?.find(
       (option) => option.value === currentValue
@@ -23,8 +26,9 @@ export default function ({
   useEffect(() => {
     if (value) onChange(value.value, value.label);
   }, [value?.value]);
+
   const DropDwon = () => {
-    if (isShow) {
+    if (isShow && !disabled) {
       return (
         <div className="select-drop-down">
           {options?.map((option, index) => (
@@ -49,7 +53,10 @@ export default function ({
   return (
     <ClickAwayListener onClickAway={() => setIsShow(false)}>
       <article
-        className="select-rtl position-relative  d-flex justify-content-center align-items-center"
+        className={
+          "select-rtl position-relative  d-flex justify-content-center align-items-center " +
+          disabledClass
+        }
         onClick={() => setIsShow(!isShow)}
       >
         {!isAllow_ShowCurrentValue_Whitout_Seariching_in_option

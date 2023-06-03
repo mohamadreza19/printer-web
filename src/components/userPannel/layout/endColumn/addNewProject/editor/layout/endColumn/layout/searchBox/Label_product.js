@@ -8,25 +8,50 @@ import {
 } from "../../../../../../../../../../styles/__ready/EditorIcons";
 import Typography from "../../../../../../../../../../styles/__ready/Typography";
 import { Draggable } from "react-beautiful-dnd";
-import styled from "styled-components";
+
 import DragibleContainerNeedStyled from "./layout/DragibleContainerNeedStyled";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { Admin_User_Image } from "../../../../../../../../../../reactQuery/common/callGetService";
+import { Add_Product_Bookmark_Mutation } from "../../../../../../../../../../reactQuery/user/callPostServices";
 const inital = {
   id: " ",
   link: "string",
   name: {
-    persion: "",
+    persian: "",
+    turkish: "",
+    english: "",
   },
-  description:
-    "ترمينال هاي هادي حفاظتي از لحاظ جزئيات طراحي و ويژگي ها مشابه ترمينال RTP می باشند که دارای بدنه عایقی ... ",
+  description: {
+    persian: "",
+    turkish: "",
+    english: "",
+  },
   width: 300,
+  widthOfPrintingArea: "",
+  pictures: [],
+  bookmarked: false,
 };
 
 export default function ({ product = inital, myKey, index }) {
   const cssClass = useDynamicCssClass();
-
+  const imageResonse = Admin_User_Image("user");
+  const add_product_Bookmark_response = Add_Product_Bookmark_Mutation();
+  useEffect(() => {
+    if (product?.pictures?.length > 0) {
+      const option = {
+        fileId: product.pictures[product.pictures.length - 1].id,
+      };
+      imageResonse.mutate(option);
+    }
+  }, []);
+  function handleAddBookBark() {
+    const option = {
+      id: product.id,
+    };
+    add_product_Bookmark_response.mutate(option);
+  }
   return (
-    <Draggable key={myKey} draggableId={product.id} index={index}>
+    <Draggable key={myKey} draggableId={product.id.toString()} index={index}>
       {(provided, snapshot) => {
         return (
           <DragibleContainerNeedStyled
@@ -44,18 +69,20 @@ export default function ({ product = inital, myKey, index }) {
               <div className="d-flex">
                 <header className="d-flex  align-items-center justify-content-center">
                   <span className="product-label-picture d-flex justify-content-center align-items-center">
-                    <img
-                      className="w-100 h-100"
-                      src="/image/editor/image-25.png"
-                    />
+                    {imageResonse.data && (
+                      <img
+                        className="w-100 h-100 border-r-20"
+                        src={URL.createObjectURL(imageResonse.data)}
+                      />
+                    )}
                   </span>
                 </header>
                 <footer className={"d-flex flex-column " + cssClass.ms_1}>
                   <Typography.H8 className="font-500 mb-1">
-                    {product.name.persion}
+                    {product.name.persian}
                   </Typography.H8>
                   <Typography.H9 className="font-400">
-                    {product.description}
+                    {product.description.persian}
                   </Typography.H9>
                 </footer>
               </div>
@@ -79,17 +106,19 @@ export default function ({ product = inital, myKey, index }) {
                 <footer className="w-100 d-flex align-items-center justify-content-between  ">
                   <span
                     className={
-                      "d-flex justify-content-center align-items-center " +
+                      "d-flex justify-content-center align-items-center cur-pointer " +
                       cssClass.ms_2
                     }
+                    onClick={handleAddBookBark}
                   >
                     <StarOne
+                      isBookMark={product.bookmarked}
                       className="bookmark-secendary"
                       className_for_path="fill_secondray_v2"
                     />
                   </span>
                   <section>
-                    <Link>
+                    <Link to={product.link}>
                       <Typography.H9_5 className="font-400 see-in-site">
                         مشاهده در سایت
                       </Typography.H9_5>

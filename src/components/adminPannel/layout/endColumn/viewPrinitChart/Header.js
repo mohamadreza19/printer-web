@@ -1,10 +1,22 @@
+import { useCallback } from "react";
 import { useDynamicCssClass } from "../../../../../recoil/readStore";
 import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
+import DateRangeSelector from "../../../../../styles/__ready/datepicker/DateRangeSelector";
 
-export default function () {
+import DropDown from "../../../../../styles/__ready/common/User_DropDown";
+import { useState } from "react";
+
+export default function ({
+  setSelectedDate = () => {},
+  setInterval = () => {},
+  options = [],
+  currentValue = "",
+  disabled,
+}) {
   const cssClass = useDynamicCssClass();
+
   return (
     <div className="w-100 d-flex justify-content-between align-items-center pb-3 border-bottom-gray">
       <section className="d-flex">
@@ -14,16 +26,15 @@ export default function () {
         </Typography.H8>
       </section>
       <section className="d-flex">
-        <Buttons.Outlined_Custom className="button_medium_v1">
-          <Icons.Vector svgClassName="mx-1" />
-          <Typography.H8 className={cssClass.ms_1}>
-            بازه زمانی دلخواه
-          </Typography.H8>
-        </Buttons.Outlined_Custom>
-        <select className={"select-large " + cssClass.ms_2} id="select-medium">
-          <option>هفتگی</option>
-          <option>روزانه</option>
-        </select>
+        <DateRangeSelector setSelectedDate={setSelectedDate} />
+        <section className={cssClass.ms_2}>
+          <DropDown
+            options={options}
+            currentValue={currentValue}
+            onChange={setInterval}
+            disabled={disabled}
+          />
+        </section>
       </section>
     </div>
   );

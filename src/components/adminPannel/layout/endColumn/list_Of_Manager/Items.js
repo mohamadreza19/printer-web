@@ -4,19 +4,19 @@ import useFormateDate from "../../../../../utility/useFormetDate";
 import Item from "./Item";
 
 import useDeleteAlert from "../../../../../recoil/reducer/useDeleteAlert";
-import { AdminDelete_User_Mutation } from "../../../../../reactQuery/admin/callDeleteService";
+import { Super_AdminDelete_Admin_Mutation } from "../../../../../reactQuery/admin/callDeleteService";
 
-export default function ({ items = [] }) {
+export default function ({ items = [], itemContent }) {
   const lan = useLanguage();
   const navigate = useNavigate();
-  const delete_entity_mutation = AdminDelete_User_Mutation();
+  const delete_entity_mutation = Super_AdminDelete_Admin_Mutation();
   const setDeleteAlert = useDeleteAlert();
-  function onClick_delete(id, companyName) {
+  function onClick_delete(id, username) {
     const option = {
       id,
     };
-    console.log("delete");
-    const message = `ایا از حدف ${companyName} مطمعا هستید`;
+
+    const message = `ایا از حدف ${username} مطمعا هستید`;
     setDeleteAlert({
       deleteFn: () => delete_entity_mutation.mutate(option),
       isShow: true,
@@ -30,12 +30,13 @@ export default function ({ items = [] }) {
     <>
       {items.map((item, key) => (
         <Item
+          itemContent={itemContent}
           key={key}
           item={item}
           language={lan}
           formatDate={useFormateDate}
           navigate={navigate}
-          deleteFn={() => onClick_delete(item.id, item.companyName)}
+          deleteFn={() => onClick_delete(item.id, item.username)}
           navigateToAdd_printer={navigateToAdd_printer}
         />
       ))}

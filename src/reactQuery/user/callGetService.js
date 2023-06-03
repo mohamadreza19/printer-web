@@ -8,6 +8,49 @@ import { useInfiniteQuery, useQuery } from "react-query";
 import { projectsKey } from "../querykey/user_key";
 
 import { apiUrl } from "../../services/urlStore";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import profile_store from "../../recoil/store/user/profile_store";
+import project_store from "../../recoil/store/user/project_store";
+
+export const User_Profile_Call = () => {
+  const { value: userToken } = useCachedToken();
+  const setProfile_store = useSetRecoilState(profile_store);
+  const setLoading = useToastReducer();
+  const result = useQuery({
+    queryKey: "user_profile",
+    queryFn: () => api_get.profile_info(userToken),
+  });
+
+  const { isSuccess, isLoading, error, data } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+    if (isSuccess) {
+      setLoading({
+        isShow: false,
+        message: "",
+      });
+      if (data) {
+        console.log(data);
+        setProfile_store(data);
+      }
+    }
+    if (error) {
+      setLoading({
+        isShow: true,
+        message: error.message,
+      });
+    }
+  }, [isSuccess, error]);
+
+  return result;
+};
+
 export const UserProjects_Call = (
   search = "",
   startDate = null,
@@ -62,13 +105,13 @@ export const UserProjects_Call = (
   return { ...result, data: modifiedData };
 };
 
-// export const UserProduct_Qury = () => {
-//   const { value: token } = useCachedToken();
-//   return useQuery({
-//     queryKey: ["product_list", projectsKey],
-//     queryFn: () => user_callApi.product_list(token),
-//   });
-// };
+export const UserProduct_Qury = () => {
+  const { value: token } = useCachedToken();
+  return useQuery({
+    queryKey: ["product_list", projectsKey],
+    queryFn: () => api_get.product_list(token),
+  });
+};
 
 // export const UserLabels_Qury = () => {
 //   const { value: token } = useCachedToken();
@@ -80,12 +123,49 @@ export const UserProjects_Call = (
 //   return a;
 // };
 
-// export const UserProjectFindOne_Qury = () => {
-//   const { projectId } = useParams();
-//   const { value: token } = useCachedToken();
-//   console.log(projectId);
-//   return useQuery({
-//     queryKey: "project",
-//     queryFn: () => user_callApi.project_findOne(token, projectId),
-//   });
-// };
+export const UserProjectFindOne_Qury = () => {
+  const setProjectState = useSetRecoilState(project_store);
+  const setLoading = useToastReducer();
+  const { value: token } = useCachedToken();
+  const { projectId } = useParams();
+  const result = useQuery({
+    queryKey: "project-findOne",
+    queryFn: () => api_get.project_findOne(token, projectId),
+  });
+  const { data, isLoading, isSuccess, error } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+    if (isSuccess) {
+      setLoading({
+        isShow: false,
+        message: "",
+      });
+      if (data) {
+        let copy = { ...data };
+
+        delete copy.userId;
+        delete copy.id;
+        delete copy.createdBy;
+        delete copy.createdAt;
+        delete copy.updatedAt;
+        delete copy.deleteDate;
+
+        setProjectState(copy);
+      }
+    }
+    if (error) {
+      setLoading({
+        isShow: true,
+        message: error.message,
+      });
+    }
+  }, [isSuccess, error]);
+
+  return result;
+};

@@ -276,7 +276,9 @@ a {
   border-radius: 20px;
   height: 52px;
   appearance: none;
+
   background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+
   background-repeat: no-repeat;
   background-position: left 1rem center;
   border-radius: 2px;
@@ -285,7 +287,10 @@ a {
   border-radius: 20px;
   text-align: center;
 }
-
+.disabled-select-box {
+  background-image: url("none");
+  color: #cbcbcb;
+}
 .select-lft {
   font-family: "Vazirmatn";
   width: 160px;
@@ -306,6 +311,7 @@ select:focus {
   outline: none;
   /* background-color: antiquewhite; */
 }
+
 .select-medium {
   font-family: "Vazirmatn";
   width: 140px;
@@ -627,8 +633,11 @@ line {
 }
 
 .scrollable-small {
-  max-height: 14.9rem;
-  overflow-y: scroll;
+  /* max-height: 14.9rem;
+  overflow-y: scroll; */
+}
+.infinite-scroll-component__outerdiv:has(.scrollable-small) {
+  width: 100%;
 }
 .scrollable-small::-webkit-scrollbar {
   width: 10px;
@@ -1210,4 +1219,27 @@ html[dir="ltr"] .add-new-rail-btn {
 .infinite-scroll-component__outerdiv {
   overflow: hidden;
   height: 100%;
+}
+.rmdp-panel-body li {
+  background: linear-gradient(111.74deg, #ff7d41 24.86%, #ff5100 69.34%);
+  border-radius: 20px !important;
+  box-shadow: 0px 25px 40px -20px rgba(255, 81, 0, 0.8) !important;
+}
+.rmdp-range {
+  background-color: #ff7d41 !important;
+  box-shadow: 0 0 3px #8798ad;
+  color: #fff;
+}
+.rmdp-day .rmdp-range .start {
+}
+.rmdp-day .rmdp-range .end {
+}
+
+.recharts-cartesian-axis-tick-value tspan {
+}
+.add-project-success {
+  width: 243.48px;
+  height: 265.12px;
+  border: 1px solid #cbcbcb;
+  border-radius: 31px;
 }

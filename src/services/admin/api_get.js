@@ -1,6 +1,28 @@
 import axios from "axios";
 import { apiUrl } from "../urlStore";
 export default class {
+  static async profile_info(token = "") {
+    if (!token) throw new Error("there isnt token");
+    const url = `${apiUrl}/admin/profile`;
+
+    try {
+      const res = await axios({
+        url: url,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
   static async projects(token = "") {
     try {
       const res = await axios.get(`${apiUrl}/project/admin?page=1&limit=10`, {
@@ -8,7 +30,7 @@ export default class {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
+      // // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
@@ -19,45 +41,14 @@ export default class {
       });
     }
   }
-  static async prints(
-    token = "",
-    page = 1,
-    limit = 10,
-    justProduct = false,
-    justLabel = false,
-    startDate = "",
-    endDate = "",
-    order = "ASC",
-    pageParam
-  ) {
-    // let url = `${api}/print?`;
-    // if (startDate && endDate) {
-    //   url = url.concat(`startDate=${startDate}&`).concat(`endDate=${endDate}&`);
-    // }
-    // if (page) {
-    //   url = url.concat(`page=${page}&`);
-    // }
-    // if (order) {
-    //   url = url.concat(`order=${order}&`);
-    // }
-    // if (limit) {
-    //   url = url.concat(`limit=${limit}&`);
-    // }
-    // if (justProduct) {
-    //   url = url.concat(`justProduct=${justProduct}&`);
-    // }
-    // if (justLabel) {
-    //   url = url.concat(`justLabel=${justLabel}&`);
-    // }
-
-    // console.log(url);
+  static async prints(token = "", pageParam) {
     try {
       const res = await axios.get(pageParam, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(res);
+      // // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
@@ -75,7 +66,7 @@ export default class {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
+      // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
@@ -93,7 +84,7 @@ export default class {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
+      // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
@@ -104,14 +95,56 @@ export default class {
       });
     }
   }
-  static async print_statistics(token = "") {
+  static async admins(token = "") {
+    const url = `${apiUrl}/admin`;
     try {
-      const res = await axios.get(`${apiUrl}/print/info/statistics`, {
+      const res = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
+      // console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async print_statistics(token = "", startDate, endDate) {
+    let url = `${apiUrl}/print/info/statistics?`;
+    if (startDate && endDate) {
+      url = url.concat(`startDate=${startDate}&`);
+      url = url.concat(`endDate=${endDate}&`);
+    }
+    try {
+      const res = await axios.get(`${url}/print/info/statistics`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async product_label_count(token = "") {
+    try {
+      const res = await axios.get(`${apiUrl}/product-label/count`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
@@ -156,7 +189,7 @@ export default class {
           language: lan,
         },
       });
-      console.log(res);
+      // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
@@ -174,7 +207,7 @@ export default class {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
+      // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
@@ -192,7 +225,7 @@ export default class {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
+      // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
@@ -212,7 +245,38 @@ export default class {
           accept: "application/json",
         },
       });
-      console.log(res);
+      // console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.response.data);
+      });
+    }
+  }
+  static async print_info_chart(token, interval, scale, startDate, endDate) {
+    let url = `${apiUrl}/print/info/chart?`;
+
+    if (interval) {
+      url = url.concat(`interval=${interval}&`);
+    }
+    if (scale) {
+      url = url.concat(`scale=${scale}&`);
+    }
+    if (startDate && endDate) {
+      url = url.concat(`startDate=${startDate}&`);
+      url = url.concat(`endDate=${endDate}&`);
+    }
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+      });
+      // // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);
       });

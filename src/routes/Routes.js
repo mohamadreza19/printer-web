@@ -28,9 +28,13 @@ import AdminList_Of_Label_And_Product from "../components/adminPannel/layout/end
 import Admin_Edit_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/ProductEdit";
 import Admin_Edit_Label from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/LabelEdit";
 
-import AdminList_Of_User_Manager from "../components/adminPannel/layout/endColumn/list_Of_User_Manager";
-import AdminList_Of_User_Manager_edit from "../components/adminPannel/layout/endColumn/list_Of_User_Manager/edit";
-import AdminList_Of_User_Manager_Printer from "../components/adminPannel/layout/endColumn/list_Of_User_Manager/printer";
+import AdminList_Of_User from "../components/adminPannel/layout/endColumn/list_Of_User";
+import AdminList_Of_User_edit from "../components/adminPannel/layout/endColumn/list_Of_User/edit";
+import AdminList_Of_User_Printer from "../components/adminPannel/layout/endColumn/list_Of_User/printer";
+//
+import AdminList_Of_Manager from "../components/adminPannel/layout/endColumn/list_Of_Manager";
+import AdminList_Of_Manager_edit from "../components/adminPannel/layout/endColumn/list_Of_Manager/edit";
+import AdminList_Of_Manager_Printer from "../components/adminPannel/layout/endColumn/list_Of_Manager/printer";
 //
 import AdminAddLabel from "../components/adminPannel/layout/endColumn/addNewLabel";
 
@@ -114,17 +118,20 @@ export default function () {
           path="list-labels-products"
           element={<AdminList_Of_Label_And_Product />}
         />
+        <Route path="list-user" element={<AdminList_Of_User />} />
+        <Route path="list-user/edit/:id" element={<AdminList_Of_User_edit />} />
         <Route
-          path="list-user-manager"
-          element={<AdminList_Of_User_Manager />}
+          path="list-user/add-printer"
+          element={<AdminList_Of_User_Printer />}
+        />
+        <Route path="list-manager" element={<AdminList_Of_Manager />} />
+        <Route
+          path="list-manager/edit/:id"
+          element={<AdminList_Of_Manager_edit />}
         />
         <Route
-          path="list-user-manager/edit/:id"
-          element={<AdminList_Of_User_Manager_edit />}
-        />
-        <Route
-          path="list-user-manager/add-printer"
-          element={<AdminList_Of_User_Manager_Printer />}
+          path="list-manager/add-printer"
+          element={<AdminList_Of_Manager_Printer />}
         />
         <Route path="charts" element={<ViewPrinitChart />} />
       </Route>

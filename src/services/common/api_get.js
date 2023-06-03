@@ -39,4 +39,22 @@ export default class {
       });
     }
   }
+  static async admin_user_productList(token = "", url) {
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
 }
