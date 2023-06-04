@@ -1,24 +1,21 @@
 import { Grid } from "@mui/material";
 import { useDynamicCssClass } from "../../../../../../../../recoil/readStore";
-import { Toggle_show_hide } from "../../../../../../../../styles/__ready/EditorIcons";
 import Header from "./Header";
 // import EditorBox from "./layout/editorBox";
 // import SearchBox from "./layout/searchBox";
-import { DragDropContext, DragDropContexte } from "react-beautiful-dnd";
-import ColOne from "./columns/ColOne";
-import ColTwo from "./columns/ColTwo";
+import { DragDropContext } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   product_column,
   rails,
 } from "../../../../../../../../recoil/userEditorStore/cellsStore";
+import ColOne from "./columns/ColOne";
+import ColTwo from "./columns/ColTwo";
 
 import { showHide_Btn } from "../../../../../../../../recoil/userEditorStore/searchboxStore";
 
 import userEditor_DnD from "../../../../../../../../helper/userEditor_DnD";
-import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
 import { is_project_sucess_edit_store } from "../../../../../../../../recoil/store/user/project_store";
-import SuccessBox from "../../../successBox";
 
 export default function () {
   const cssClass = useDynamicCssClass();

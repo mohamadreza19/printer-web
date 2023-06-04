@@ -77,9 +77,7 @@ export default function ({
     const payload = {
       railId: railId,
       cellId: cell.frontId,
-      structure: {
-        value,
-      },
+      content: value,
     };
     setCell(payload, "NEWSETCONTENT");
   }
@@ -131,7 +129,6 @@ export default function ({
       }
       if (joinRow) {
         if (cell.parentId) {
-          console.log("has parent");
           const payload = {
             railId: railId,
             cellId: undefined,
@@ -140,7 +137,6 @@ export default function ({
           setCell(payload, "JOINROW");
           setJoinRow(false);
         } else {
-          console.log('hasn"t parent');
           const payload = {
             railId: railId,
             cellId: cell.frontId,
@@ -308,11 +304,11 @@ export default function ({
       }}
     >
       <Editor_Cell_Input
-        value={cell.structure?.values}
+        value={cell.structure?.content.text}
         disabled={cell.isSelected}
         onChange={handleChangeValue}
         onBackspaceDown={handleDeleteContent}
-        style={cell.structure?.style}
+        style={cell.structure?.content.style}
         isBarcode={cell.isBarcode}
         isQrcode={cell.isQrcode}
         // font={font.font}

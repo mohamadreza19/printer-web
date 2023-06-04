@@ -11,12 +11,13 @@ export default function ({
   children,
   setCell = () => {},
 }) {
+  console.log({ children });
   return (
     <main
       // onClick={handleSelectCell_Via_onClick}
       className="w-100 h-100 d-flex flex-column  "
     >
-      {children.map((child, index) => {
+      {children.structure.children?.map((child, index) => {
         return (
           <div
             key={child + index}

@@ -14,9 +14,10 @@ export default function ({
   },
   setCell = () => {},
 }) {
+  console.log({ children });
   return (
     <main className="w-100 h-100 d-flex ">
-      {children.map((child, index) => {
+      {children.structure.children.map((child, index) => {
         return (
           <div
             key={index}
