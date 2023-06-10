@@ -4,25 +4,21 @@ import english from "react-date-object/calendars/gregorian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import gregorian_en from "react-date-object/locales/gregorian_en";
 
-import DatePicker, {
-  DateObject,
-  getAllDatesInRange,
-} from "react-multi-date-picker";
-import { useDynamicCssClass, useLanguage } from "../../../recoil/readStore";
+import DatePicker, { getAllDatesInRange } from "react-multi-date-picker";
+import {
+  useContent_Based_Language,
+  useDynamicCssClass,
+  useLanguage,
+} from "../../../recoil/readStore";
 import Buttons from "../Buttons";
 import Icons from "../Icons";
 import Typography from "../Typography";
 import { useState } from "react";
-import { useCallback } from "react";
-import { useMemo } from "react";
-import { memo } from "react";
-import useDateRangeSelector from "../../../utility/useDateRangeSelector";
-import { useEffect } from "react";
+
 import { useRecoilState } from "recoil";
 import dateRangeSelectorStore, {
   allDates_store,
 } from "../../../recoil/store/datepicker/dateRangeSelectorStore";
-import moment from "moment";
 
 export default function ({ setSelectedDate }) {
   /// not neccery _locale need to be in state
@@ -34,6 +30,9 @@ export default function ({ setSelectedDate }) {
 
   const language = useLanguage();
   const cssClass = useDynamicCssClass();
+  const content =
+    useContent_Based_Language().AdminPannel.end_col.view_Print_Statistics
+      .header;
 
   const Btn = ({ openCalendar, stringDate, handleValueChange }) => {
     return (
@@ -43,7 +42,7 @@ export default function ({ setSelectedDate }) {
       >
         <Icons.Vector svgClassName="mx-1" />
         <Typography.H8 className={cssClass.ms_1}>
-          بازه زمانی دلخواه
+          {content.Desired_time_scale}
         </Typography.H8>
       </Buttons.Outlined_Custom>
     );

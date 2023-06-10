@@ -4,6 +4,8 @@ import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 import TextFields from "../../../../../styles/__ready/Textfields";
 export default function ({
+  isAllowShowBookmarkedLabel = false,
+  setIsAllowShowBookmarkedLabel = () => {},
   setSearch = () => {},
   content = {
     labelList: " ",
@@ -13,6 +15,9 @@ export default function ({
   margin = { ms_1: " ", ms_2: " ", ms_auto: " " },
   padding = { pe_1: " ", pe_2: " " },
 }) {
+  function handleOnClickBookmarkedLabel() {
+    setIsAllowShowBookmarkedLabel((draft) => !draft);
+  }
   return (
     <header className="w-100  px-4">
       <Grid container className="border-bottom-gray pb-3">
@@ -23,7 +28,10 @@ export default function ({
               {content.labelList}
             </Typography.H8>
             {/* // */}
-            <Buttons.Outlined className={margin.ms_auto}>
+            <Buttons.Outlined
+              className={margin.ms_auto}
+              onClick={handleOnClickBookmarkedLabel}
+            >
               <Icons.Star1 />
               <Typography.Button className={margin.ms_1}>
                 {content.selectedLabelButton}

@@ -1,10 +1,16 @@
-export const JoinColumn = () => {
-  const value = {
+export const JoinColumn = ({ size }) => {
+  let value = {
     // width: "1.6rem",
     // height: "1.6rem",
     width: "70%",
     height: "70%",
   };
+  if (size == "popUp") {
+    value = {
+      width: "24px",
+      height: "24px",
+    };
+  }
   return (
     <svg
       width={value.width}
@@ -22,13 +28,20 @@ export const JoinColumn = () => {
     </svg>
   );
 };
-export const SpliteColumn = () => {
-  const value = {
+export const SpliteColumn = ({ size }) => {
+  let value = {
     // width: "1.6rem",
     // height: "1.6rem",
     width: "70%",
     height: "70%",
   };
+
+  if (size == "popUp") {
+    value = {
+      width: "24px",
+      height: "24px",
+    };
+  }
   return (
     <svg
       width={value.width}
@@ -46,13 +59,19 @@ export const SpliteColumn = () => {
     </svg>
   );
 };
-export const SpliteRow = () => {
-  const value = {
+export const SpliteRow = ({ size }) => {
+  let value = {
     // width: "1.6rem",
     // height: "1.6rem",
     width: "70%",
     height: "70%",
   };
+  if (size == "popUp") {
+    value = {
+      width: "24px",
+      height: "24px",
+    };
+  }
   return (
     <svg
       width={value.width}
@@ -70,13 +89,19 @@ export const SpliteRow = () => {
     </svg>
   );
 };
-export const JoinRow = () => {
-  const value = {
+export const JoinRow = ({ size }) => {
+  let value = {
     // width: "1.6rem",
     // height: "1.6rem",
     width: "70%",
     height: "70%",
   };
+  if (size == "popUp") {
+    value = {
+      width: "24px",
+      height: "24px",
+    };
+  }
   return (
     <svg
       width={value.width}
@@ -403,13 +428,21 @@ export const Text = () => {
     </svg>
   );
 };
-export const Undo = () => {
-  const value = {
+export const Undo = ({ size }) => {
+  let value = {
     // width: "1.6rem",
     // height: "1.6rem",
     width: "63%",
     height: "63%",
   };
+  if (size == "popUp") {
+    value = {
+      // width: "1.6rem",
+      // height: "1.6rem",
+      width: "24px",
+      height: "24px",
+    };
+  }
   return (
     <svg
       width={value.width}
@@ -427,13 +460,21 @@ export const Undo = () => {
     </svg>
   );
 };
-export const Redo = () => {
-  const value = {
+export const Redo = ({ size }) => {
+  let value = {
     // width: "1.6rem",
     // height: "1.6rem",
     width: "63%",
     height: "63%",
   };
+  if (size == "popUp") {
+    value = {
+      // width: "1.6rem",
+      // height: "1.6rem",
+      width: "24px",
+      height: "24px",
+    };
+  }
   return (
     <svg
       width={value.width}
@@ -451,13 +492,21 @@ export const Redo = () => {
     </svg>
   );
 };
-export const RightToLeft = () => {
-  const value = {
+export const RightToLeft = ({ size }) => {
+  let value = {
     // width: "1.6rem",
     // height: "1.6rem",
     width: "63%",
     height: "63%",
   };
+  if (size == "popUp") {
+    value = {
+      // width: "1.6rem",
+      // height: "1.6rem",
+      width: "24px",
+      height: "24px",
+    };
+  }
   return (
     <svg
       width={value.width}
@@ -475,13 +524,21 @@ export const RightToLeft = () => {
     </svg>
   );
 };
-export const LeftToRight = () => {
-  const value = {
+export const LeftToRight = ({ size }) => {
+  let value = {
     // width: "1.6rem",
     // height: "1.6rem",
     width: "63%",
     height: "63%",
   };
+  if (size == "popUp") {
+    value = {
+      // width: "1.6rem",
+      // height: "1.6rem",
+      width: "24px",
+      height: "24px",
+    };
+  }
   return (
     <svg
       width={value.width}
@@ -602,26 +659,20 @@ export const StarOne = ({
   className_for_path,
   isBookMark = false,
 }) => {
-  const value = {
-    // width: "1.7rem",
-    // height: "1.7rem",
-    // width: "68%",
-    // height: "68%",
-  };
   const fill = isBookMark ? "#F36523" : "#AEAEAE";
+
   return (
     <svg
       className={className}
       width="29"
       height="28"
       viewBox="0 0 29 28"
-      fill={fill}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         className={className_for_path}
         d="M13.3905 1.11537C13.7845 0.261231 14.9984 0.261233 15.3924 1.11538L18.6786 8.23993C18.8392 8.58804 19.1691 8.82773 19.5498 8.87287L27.3412 9.79666C28.2753 9.90741 28.6504 11.0619 27.9598 11.7006L22.1994 17.0276C21.918 17.2879 21.792 17.6757 21.8667 18.0517L23.3958 25.7472C23.5791 26.6698 22.597 27.3833 21.7762 26.9239L14.9299 23.0916C14.5953 22.9044 14.1876 22.9044 13.853 23.0916L7.00671 26.9239C6.18593 27.3833 5.20382 26.6698 5.38714 25.7472L6.91622 18.0517C6.99094 17.6757 6.86493 17.2879 6.58347 17.0276L0.823118 11.7006C0.132526 11.0619 0.507659 9.90741 1.44174 9.79666L9.2331 8.87287C9.61379 8.82773 9.9437 8.58804 10.1043 8.23993L13.3905 1.11537Z"
-        fill="#F36523"
+        fill={fill}
       />
     </svg>
   );

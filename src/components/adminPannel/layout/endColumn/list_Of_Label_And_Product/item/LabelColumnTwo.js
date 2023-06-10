@@ -1,8 +1,14 @@
-import { useDynamicCssClass } from "../../../../../../recoil/readStore";
+import {
+  useContent_Based_Language,
+  useDynamicCssClass,
+} from "../../../../../../recoil/readStore";
 import Typography from "../../../../../../styles/__ready/Typography";
 
 export default function ({ width, height }) {
   const cssClass = useDynamicCssClass();
+  const content =
+    useContent_Based_Language().AdminPannel.end_col.label_Product_List.item
+      .colOne.label;
   return (
     <div
       className={
@@ -11,13 +17,17 @@ export default function ({ width, height }) {
       }
     >
       <span className="d-flex mb-2">
-        <Typography.H9_5 className="font-500">طول لیبل</Typography.H9_5>
+        <Typography.H9_5 className="font-500">
+          {content.labelLength}
+        </Typography.H9_5>
         <Typography.H9_5 className={cssClass.ms_2} language="en">
           {height} mm
         </Typography.H9_5>
       </span>
       <span className="d-flex">
-        <Typography.H9_5 className="font-500">عرض لیبل</Typography.H9_5>
+        <Typography.H9_5 className="font-500">
+          {content.labelWidth}
+        </Typography.H9_5>
         <Typography.H9_5 className={cssClass.ms_2} language="en">
           {width} mm
         </Typography.H9_5>

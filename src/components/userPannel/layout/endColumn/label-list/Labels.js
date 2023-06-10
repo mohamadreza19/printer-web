@@ -6,6 +6,11 @@ export default function ({
   labels = [],
   hasNextPage,
   fetchNextPage = () => {},
+  handleAdd_Bookmark = () => {},
+  handleDeleteBookmark = () => {},
+  isAllowShowBookmarkedLabel = false,
+  filteredLabelList = [],
+  labelList = [],
 }) {
   return (
     <InfiniteScroll
@@ -15,9 +20,23 @@ export default function ({
       height={505}
       className="w-100 d-flex flex-wrap  justify-content-center px-4 mt-4"
     >
-      {labels.map((label, index) => (
-        <Label label={label} key={index} />
-      ))}
+      {!isAllowShowBookmarkedLabel
+        ? labelList.map((label, index) => (
+            <Label
+              label={label}
+              key={index}
+              handleAdd_Bookmark={() => handleAdd_Bookmark(label)}
+              handleDeleteBookmark={() => handleDeleteBookmark(label)}
+            />
+          ))
+        : filteredLabelList.map((label, index) => (
+            <Label
+              label={label}
+              key={index}
+              handleAdd_Bookmark={() => handleAdd_Bookmark(label)}
+              handleDeleteBookmark={() => handleDeleteBookmark(label)}
+            />
+          ))}
     </InfiniteScroll>
   );
 }

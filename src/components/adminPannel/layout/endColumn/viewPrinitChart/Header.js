@@ -1,5 +1,8 @@
 import { useCallback } from "react";
-import { useDynamicCssClass } from "../../../../../recoil/readStore";
+import {
+  useContent_Based_Language,
+  useDynamicCssClass,
+} from "../../../../../recoil/readStore";
 import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
@@ -16,13 +19,15 @@ export default function ({
   disabled,
 }) {
   const cssClass = useDynamicCssClass();
-
+  const content =
+    useContent_Based_Language().AdminPannel.end_col.view_Print_Statistics
+      .header;
   return (
     <div className="w-100 d-flex justify-content-between align-items-center pb-3 border-bottom-gray">
       <section className="d-flex">
         <Icons.Trade classNameForPath="fill_black" />
         <Typography.H8 className={"font-500 " + cssClass.ms_2}>
-          آمار چاپ کلی
+          {content.general_print_statistics}
         </Typography.H8>
       </section>
       <section className="d-flex">

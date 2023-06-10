@@ -12,8 +12,7 @@ import { Draggable } from "react-beautiful-dnd";
 import DragibleContainerNeedStyled from "./layout/DragibleContainerNeedStyled";
 import { useEffect } from "react";
 import { Admin_User_Image } from "../../../../../../../../../../reactQuery/common/callGetService";
-import { Add_Product_Bookmark_Mutation } from "../../../../../../../../../../reactQuery/user/callPostServices";
-import { Bookmark_Label_Delete } from "../../../../../../../../../../reactQuery/user/callDeleteServices";
+
 const inital = {
   id: " ",
   link: "string",
@@ -33,12 +32,16 @@ const inital = {
   bookmarked: false,
 };
 
-export default function ({ product = inital, myKey, index }) {
+export default function ({
+  handleAdd_Bookmark = () => {},
+  handleDeleteBookmark = () => {},
+  product = inital,
+  myKey,
+  index,
+}) {
   const cssClass = useDynamicCssClass();
   const imageResonse = Admin_User_Image("user");
-  const add_product_Bookmark_ = Add_Product_Bookmark_Mutation();
-  const delete_product_Bookmark_ = Bookmark_Label_Delete();
-  console.log(product);
+
   useEffect(() => {
     if (product?.pictures?.length > 0) {
       const option = {
@@ -47,16 +50,7 @@ export default function ({ product = inital, myKey, index }) {
       imageResonse.mutate(option);
     }
   }, []);
-  function handleAddBookBark() {
-    const option = {
-      id: product.id,
-    };
-    if (!product.bookmarked) {
-      add_product_Bookmark_.mutate(option);
-    } else {
-      delete_product_Bookmark_.mutate(option);
-    }
-  }
+
   return (
     <Draggable key={myKey} draggableId={product.id.toString()} index={index}>
       {(provided, snapshot) => {
@@ -116,7 +110,12 @@ export default function ({ product = inital, myKey, index }) {
                       "d-flex justify-content-center align-items-center cur-pointer " +
                       cssClass.ms_2
                     }
-                    onClick={handleAddBookBark}
+                    onClick={() => {
+                      console.log({ imCliced: product });
+
+                      handleAdd_Bookmark(product);
+                      handleDeleteBookmark(product);
+                    }}
                   >
                     <StarOne
                       isBookMark={product.bookmarked}

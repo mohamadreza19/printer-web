@@ -5,13 +5,14 @@ import {
 import Icons from "../../../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../../../styles/__ready/Typography";
 import Buttons from "../../../../../../../../styles/__ready/Buttons";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import profile_store from "../../../../../../../../recoil/store/user/profile_store";
 import project_store from "../../../../../../../../recoil/store/user/project_store";
 import useBundleProject from "../../../../../../../../utility/useBundleProject";
 import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { showPutProjectResponse } from "../../../../../../../../recoil/store/user/showPutProjectResponse";
 
 export default function () {
   const language = useLanguage();
@@ -23,6 +24,8 @@ export default function () {
   const profile_state = useRecoilValue(profile_store);
   const project_state = useRecoilValue(project_store);
 
+  const setShowPutProjectResponse = useSetRecoilState(showPutProjectResponse);
+
   const mutate = EditProject_Mutation();
 
   const handle_bundled_project = useBundleProject();
@@ -32,9 +35,11 @@ export default function () {
       body: handle_bundled_project(),
     });
   }
-  console.log(mutate.data);
+
   useEffect(() => {
     if (mutate.isSuccess) {
+      console.log(mutate.data);
+      setShowPutProjectResponse(mutate.data);
       navigate("/user/add-project");
     }
   }, [mutate.isSuccess]);

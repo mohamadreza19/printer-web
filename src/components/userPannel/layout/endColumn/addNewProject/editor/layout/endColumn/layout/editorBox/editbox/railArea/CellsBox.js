@@ -1,11 +1,11 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import CellBox from "./cellBox";
 import { ColumnFour_justify_start } from "../../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 
 import { Container } from "./layout/CellsContainer";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 
-export default function ({ children, key, customLabels, railId }) {
+export default function ({ key, customLabels, railId }) {
   // const cells = useCells();
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   //
@@ -22,7 +22,9 @@ export default function ({ children, key, customLabels, railId }) {
           <Container
             key={key}
             className={`edit-rail d-flex ${
-              justify ? "justify-content-start" : "justify-content-end"
+              justify === "right"
+                ? "justify-content-end"
+                : "justify-content-start"
             }`}
             ref={provided.innerRef}
             {...provided.droppableProps}
@@ -30,13 +32,7 @@ export default function ({ children, key, customLabels, railId }) {
           >
             {customLabels?.map((c, index) => {
               return (
-                <CellBox
-                  key={index}
-                  index={index}
-                  cell={c}
-                  railId={railId}
-                  description={c.description}
-                />
+                <CellBox key={index} index={index} cell={c} railId={railId} />
               );
             })}
             {provided.placeholder}

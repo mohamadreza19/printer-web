@@ -213,10 +213,15 @@ export const EditorSearchBox = ({
   children = "",
   className = "",
   Input_marginStart_based_Language = "ms-3",
-  placeholder = "",
+  placeholder = "نام محصول",
   iconMarginStart = " ",
+  setSearch = () => {},
 }) => {
   const cssClass = useDynamicCssClass();
+  function onChangeValue(e) {
+    const value = e.target.value;
+    setTimeout(() => setSearch(value), 500);
+  }
   return (
     <div
       style={{
@@ -227,11 +232,12 @@ export const EditorSearchBox = ({
       ${cssClass.ps_2} ${cssClass.pe_1} ${className} `}
     >
       <input
+        onChange={onChangeValue}
         style={{
           position: "relative",
           top: "-0.1rem",
         }}
-        placeholder={"نام محصول"}
+        placeholder={placeholder}
         // placeholder="جست و جو بر اساس نام پروژه"
         className={
           " editor-searchbox-input placeholder-v1 " +

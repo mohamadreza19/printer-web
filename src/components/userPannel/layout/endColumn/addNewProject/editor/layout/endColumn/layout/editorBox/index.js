@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { useDynamicCssClass } from "../../../../../../../../../../recoil/readStore";
+
 import { showHide_Btn } from "../../../../../../../../../../recoil/userEditorStore/searchboxStore";
 
 import Editbox from "./editbox";
@@ -7,10 +7,8 @@ import Editbox from "./editbox";
 import Header from "./header/index";
 import LargeHeader from "./largeHeader/index";
 import ScaleController from "./ScaleController";
-import { useState } from "react";
 
 export default function ({ column }) {
-  const cssClass = useDynamicCssClass();
   const [showHide, setShowHide] = useRecoilState(showHide_Btn);
 
   return (

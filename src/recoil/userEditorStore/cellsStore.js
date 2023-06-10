@@ -50,35 +50,35 @@ export const selectedCellForReadStyle = atom({
 export const product_column = atom({
   key: "product_column",
   default: [
-    {
-      id: shortid.generate(),
-      link: "string",
-      name: {
-        persion: " ترمینال پیچی سری آرت",
-      },
-      description:
-        "ترمينال هاي هادي حفاظتي از لحاظ جزئيات طراحي و ويژگي ها مشابه ترمينال RTP می باشند که دارای بدنه عایقی ... ",
-      width: 79,
-    },
-    {
-      id: shortid.generate(),
-      link: "string",
-      name: {
-        persion: " ترمینال پیچی سری آرت",
-      },
-      description:
-        "ترمينال هاي هادي حفاظتي از لحاظ جزئيات طراحي و ويژگي ها مشابه ترمينال RTP می باشند که دارای بدنه عایقی ... ",
-      width: 300,
-    },
-    {
-      id: shortid.generate(),
-      link: "string",
-      name: {
-        persion: " ترمینال پیچی سری آرت",
-      },
-      description:
-        "ترمينال هاي هادي حفاظتي از لحاظ جزئيات طراحي و ويژگي ها مشابه ترمينال RTP می باشند که دارای بدنه عایقی ... ",
-      width: 300,
-    },
+    // {
+    //   id: shortid.generate(),
+    //   link: "string",
+    //   name: {
+    //     persion: " ترمینال پیچی سری آرت",
+    //   },
+    //   description:
+    //     "ترمينال هاي هادي حفاظتي از لحاظ جزئيات طراحي و ويژگي ها مشابه ترمينال RTP می باشند که دارای بدنه عایقی ... ",
+    //   width: 79,
+    // },
+    // {
+    //   id: shortid.generate(),
+    //   link: "string",
+    //   name: {
+    //     persion: " ترمینال پیچی سری آرت",
+    //   },
+    //   description:
+    //     "ترمينال هاي هادي حفاظتي از لحاظ جزئيات طراحي و ويژگي ها مشابه ترمينال RTP می باشند که دارای بدنه عایقی ... ",
+    //   width: 300,
+    // },
+    // {
+    //   id: shortid.generate(),
+    //   link: "string",
+    //   name: {
+    //     persion: " ترمینال پیچی سری آرت",
+    //   },
+    //   description:
+    //     "ترمينال هاي هادي حفاظتي از لحاظ جزئيات طراحي و ويژگي ها مشابه ترمينال RTP می باشند که دارای بدنه عایقی ... ",
+    //   width: 300,
+    // },
   ],
 });

@@ -19,27 +19,28 @@ export default function () {
   const setCell = useCellReducer();
   const JustifyRealBox = () => {
     function onClick(justifyToSet) {
-      if (justifyToSet == "start") {
-        setJustify(true);
+      if (justifyToSet == "right") {
+        setJustify("right");
       }
-      if (justifyToSet == "end") {
-        setJustify(false);
+      if (justifyToSet == "left") {
+        setJustify("left");
       }
     }
+    console.log({ justify });
     return (
       <footer className="d-flex">
         <section
-          onClick={() => onClick("start")}
+          onClick={() => onClick("right")}
           className={`editor-small-cell-box me-2 d-flex justify-content-center align-items-center ${
-            justify && "opacity-4"
+            justify == "right" && "opacity-4"
           }`}
         >
           <RightToLeft />
         </section>
         <section
-          onClick={() => onClick("end")}
+          onClick={() => onClick("left")}
           className={`editor-small-cell-box d-flex justify-content-center align-items-center ${
-            !justify && "opacity-4"
+            justify == "left" && "opacity-4"
           }`}
         >
           <LeftToRight />

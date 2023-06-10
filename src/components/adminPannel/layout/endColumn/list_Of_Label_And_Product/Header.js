@@ -56,7 +56,9 @@ export default function ({ setSearch, setCurrentList, currentList }) {
         />
         <section className={"search_box " + cssClass.ms_2}>
           <Textfields.v2_SearchBox
-            placeholder="جست و جوی محصول"
+            placeholder={
+              content.AdminPannel.end_col.label_Product_List.searchPlaceHolder
+            }
             onClickAndGetValeFn={setSearch}
           />
         </section>

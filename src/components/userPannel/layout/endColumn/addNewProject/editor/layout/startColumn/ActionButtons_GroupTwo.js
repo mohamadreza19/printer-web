@@ -1,9 +1,17 @@
+import { useShowInfoPopUp_reducer } from "../../../../../../../../recoil/userEditorStore/showInfoPopUp_store";
 import Icons from "../../../../../../../../styles/__ready/Icons";
 
 export default function () {
+  const { SHOW } = useShowInfoPopUp_reducer();
   const Info = () => {
+    function onClick() {
+      SHOW();
+    }
     return (
-      <section className="editor-action-buttons editor-action-buttons-bg-white border-r-20 d-flex justify-content-center align-items-center mt-3 ">
+      <section
+        className="editor-action-buttons editor-action-buttons-bg-white border-r-20 d-flex justify-content-center align-items-center mt-3 "
+        onClick={onClick}
+      >
         <Icons.Info size="medium_v1" />
       </section>
     );

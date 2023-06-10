@@ -11,6 +11,8 @@ import add_project_validation from "../../../../../validation/add_project_valida
 import { useNavigate } from "react-router-dom";
 import { useDynamicCssClass } from "../../../../../recoil/readStore";
 import { AddProject_Mutation } from "../../../../../reactQuery/user/callPostServices";
+import { ColumnFour_justify_start } from "../../../../../recoil/userEditorStore/EditorHeaderActionButton";
+import { useRecoilState } from "recoil";
 
 export default function ({
   ms_2 = " ",
@@ -24,6 +26,7 @@ export default function ({
   },
   isFa = false,
 }) {
+  const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const navigate = useNavigate();
   const { isSuccess, isLoading, mutate, error, data } = AddProject_Mutation();
   const cssClass = useDynamicCssClass();
@@ -68,9 +71,12 @@ export default function ({
     }));
   };
   async function submitForm() {
+    const direction = isRightToleft ? "right" : "left";
+    setJustify(direction);
     const body = {
       createdBy: state.createdBy.value,
       projectName: state.projectName.value,
+      direction,
     };
 
     try {

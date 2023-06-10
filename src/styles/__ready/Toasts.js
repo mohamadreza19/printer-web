@@ -3,17 +3,26 @@ import { delete_alert, toastifyStore } from "../../recoil/recoilStore";
 import Typography from "./Typography";
 import Icons from "./Icons";
 import Buttons from "./Buttons";
+import { showInfoPopUp_store } from "../../recoil/userEditorStore/showInfoPopUp_store";
+import { PopUpInfo } from "../../components/userPannel/layout/endColumn/addNewProject/editor/layout/startColumn/PopUpInfo";
 
 export const ToastContainer = ({ children }) => {
   const [toast, setToast] = useRecoilState(toastifyStore);
   const [deleteAlert, setDeleteAlert] = useRecoilState(delete_alert);
+  const [showInfoPopUp, setShowInfoPopUp] = useRecoilState(showInfoPopUp_store);
   function unShowDeleteMesage() {
     setDeleteAlert((draft) => ({
       ...draft,
       isShow: false,
     }));
   }
-
+  if (showInfoPopUp)
+    return (
+      <>
+        <PopUpInfo setShowInfoPopUp={setShowInfoPopUp} />
+        {children}
+      </>
+    );
   if (deleteAlert.isShow) {
     return (
       <>

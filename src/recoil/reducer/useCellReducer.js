@@ -102,9 +102,8 @@ export default function () {
           rail,
           payload,
           setSelectedCellForReadStyle,
-          (cell) => {
-            return { ...cell, isSelected: true };
-          },
+          (cell) => ({ ...cell, isSelected: true }),
+
           (cell) => ({ ...cell, isSelected: false })
         );
       });
@@ -119,40 +118,33 @@ export default function () {
     if (action == selectionAction.VIEW) {
       function cellSplitController(cell) {
         function fullCellChecker(cellForCheck) {
-          const a = { ...cellForCheck, isSelected: false };
-          return a;
+          return { ...cellForCheck, isSelected: false };
         }
         function verticalCellChecker(cellForCheck) {
-          const mapedChildren = cellForCheck.structure.children.map((child) => {
-            if (child.structure.split == "none") {
+          const mapedChildren = cellForCheck.children.map((child) => {
+            if (child.split == "none") {
               return fullCellChecker(child);
             }
-            if (child.structure.split == "vertical") {
+            if (child.split == "vertical") {
               return verticalCellChecker(child);
             }
-            if (child.structure.split == "horizontal") {
+            if (child.split == "horizontal") {
               return horizontalCellChecker(child);
             }
             return child;
           });
 
-          return {
-            ...cellForCheck,
-            structure: {
-              ...cellForCheck.structure,
-              children: mapedChildren,
-            },
-          };
+          return { ...cellForCheck, children: mapedChildren };
         }
         function horizontalCellChecker(cellForCheck) {
-          const mapedChildren = cellForCheck.structure.children.map((child) => {
-            if (child.structure.split == "none") {
+          const mapedChildren = cellForCheck.children.map((child) => {
+            if (child.split == "none") {
               return fullCellChecker(child);
             }
-            if (child.structure.split == "vertical") {
+            if (child.split == "vertical") {
               return verticalCellChecker(child);
             }
-            if (child.structure.split == "horizontal") {
+            if (child.split == "horizontal") {
               return horizontalCellChecker(child);
             }
             return child;
@@ -161,23 +153,43 @@ export default function () {
           return { ...cellForCheck, children: mapedChildren };
         }
 
-        if (cell.structure.split == "none") {
+        if (cell.split == "none") {
           return fullCellChecker(cell);
         }
-        if (cell.structure.split == "vertical") {
+        if (cell.split == "vertical") {
           return verticalCellChecker(cell);
         }
-        if (cell.structure.split == "horizontal") {
+        if (cell.split == "horizontal") {
           return horizontalCellChecker(cell);
         }
       }
+      function railController(rail) {
+        if (rail.frontId == payload.railId) {
+          const newCells = rail.customLabels.map((item) => {
+            return {
+              ...item,
+              structure: cellSplitController(item.structure),
+            };
+          });
+          return { ...rail, customLabels: newCells };
+        } else {
+          return rail;
+        }
+      }
 
-      const newRails = present.map((rail) => {
-        const newCells = rail.customLabels.map((c) => cellSplitController(c));
+      // const newRails = state.present.map((rail) => {
+      //   return railController(rail);
+      // });
 
-        return { ...rail, customLabels: newCells };
+      const newRails = state.present.map((rail) => {
+        return railController_(
+          rail,
+          payload,
+          setSelectedCellForReadStyle,
+          (cell) => {},
+          (cell) => ({ ...cell, isSelected: false })
+        );
       });
-
       return setState((draft) => {
         return {
           ...draft,
@@ -191,22 +203,16 @@ export default function () {
           rail,
           payload,
           setSelectedCellForReadStyle,
-          (cell) => {
-            const newStructure = {
-              ...cell.structure,
-              content: {
-                ...cell.structure.content,
-                text: payload.content,
-              },
-            };
-
-            const a = { ...cell, structure: newStructure };
-            return a;
-          },
+          (cell) => ({
+            ...cell,
+            content: {
+              ...cell.content,
+              text: payload.content,
+            },
+          }),
           (cell) => cell
         );
       });
-
       const NewHistory = {
         type: "SET_HISTORY",
         value: newRails,
@@ -296,39 +302,29 @@ export default function () {
           if (cellforSplit.frontId == payload.cellId) {
             const a = {
               ...cellforSplit,
-              structure: {
-                split: "vertical",
-                children: [
-                  {
-                    // parentId: newParentId,
-                    parentId: cellforSplit.frontId,
-                    frontId: shortid.generate(),
-                    structure: {
-                      content: {
-                        text: "",
-                        style: cellforSplit.structure.content.style,
-                      },
-                      split: "none",
-                    },
-
-                    isSelected: false,
+              split: "vertical",
+              children: [
+                {
+                  split: "none",
+                  parentId: cellforSplit.frontId,
+                  frontId: shortid.generate(),
+                  content: {
+                    text: "",
+                    style: cellforSplit.content.style,
                   },
-                  {
-                    // parentId: newParentId,
-                    parentId: cellforSplit.frontId,
-                    frontId: shortid.generate(),
-                    structure: {
-                      content: {
-                        text: "",
-                        style: cellforSplit.structure.content.style,
-                      },
-                      split: "none",
-                    },
-
-                    isSelected: false,
+                  isSelected: false,
+                },
+                {
+                  split: "none",
+                  parentId: cellforSplit.frontId,
+                  frontId: shortid.generate(),
+                  content: {
+                    text: "",
+                    style: cellforSplit.content.style,
                   },
-                ],
-              },
+                  isSelected: false,
+                },
+              ],
             };
 
             return a;
@@ -337,26 +333,22 @@ export default function () {
         }
 
         function verticalCellChecker(cellforSplit) {
-          const mapedChildren = cellforSplit.structure.children.map((child) => {
-            if (child.structure.split == "none") {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
               return fullCellChecker(child);
             }
-            if (child.structure.split == "vertical") {
+            if (child.split == "vertical") {
               return {
                 ...child,
-                structure: {
-                  ...child.structure,
-                  children: verticalCellChecker(child),
-                },
+
+                children: verticalCellChecker(child),
               };
             }
-            if (child.structure.split == "horizontal") {
+            if (child.split == "horizontal") {
               return {
                 ...child,
-                structure: {
-                  ...child.structure,
-                  children: verticalCellChecker(child),
-                },
+
+                children: verticalCellChecker(child),
               };
             }
             return child;
@@ -365,25 +357,21 @@ export default function () {
           // return { ...cellForSplit, children: mapedChildren };
           return mapedChildren;
         }
-        if (cellForSplit.structure.split == "none") {
+        if (cellForSplit.split == "none") {
           return fullCellChecker(cellForSplit);
         }
-        if (cellForSplit.structure.split == "vertical") {
+        if (cellForSplit.split == "vertical") {
           return {
             ...cellForSplit,
-            structure: {
-              ...cellForSplit.structure,
-              children: verticalCellChecker(cellForSplit),
-            },
+
+            children: verticalCellChecker(cellForSplit),
           };
         }
-        if (cellForSplit.structure.split == "horizontal") {
+        if (cellForSplit.split == "horizontal") {
           return {
             ...cellForSplit,
-            structure: {
-              ...cellForSplit.structure,
-              children: verticalCellChecker(cellForSplit),
-            },
+
+            children: verticalCellChecker(cellForSplit),
           };
         }
 
@@ -395,7 +383,14 @@ export default function () {
       );
 
       const newCells = findedRail.customLabels.map((item) => {
-        return splitColumnController(item);
+        return {
+          ...item,
+          structure: splitColumnController({
+            ...item.structure,
+            frontId: item.frontId,
+          }),
+        };
+        // return splitColumnController(item);
       });
       const newRails = present.map((rail) => {
         if (rail.frontId == payload.railId) {
@@ -419,45 +414,38 @@ export default function () {
           if (cellforSplit.frontId == payload.cellId) {
             const a = {
               ...cellforSplit,
-              structure: {
-                // content: {
-                //   text: "",
-                //   style: cellforSplit.structure.content.style,
-                // },
-                split: "horizontal",
-                children: [
-                  {
-                    // parentId: newParentId,
-                    parentId: cellforSplit.frontId,
-                    frontId: shortid.generate(),
-                    structure: {
-                      split: "none",
-                      values: null,
-                      content: {
-                        text: "",
-                        style: cellforSplit.structure.content.style,
-                      },
-                    },
 
-                    isSelected: false,
+              // content: {
+              //   text: "",
+              //   style: cellforSplit.structure.content.style,
+              // },
+              split: "horizontal",
+              children: [
+                {
+                  parentId: cellforSplit.frontId,
+                  frontId: shortid.generate(),
+                  split: "none",
+                  values: null,
+                  content: {
+                    text: "",
+                    style: cellforSplit.content.style,
                   },
-                  {
-                    // parentId: newParentId,
-                    parentId: cellforSplit.frontId,
-                    frontId: shortid.generate(),
-                    structure: {
-                      split: "none",
-                      values: null,
-                      content: {
-                        text: "",
-                        style: cellforSplit.structure.content.style,
-                      },
-                    },
 
-                    isSelected: false,
+                  isSelected: false,
+                },
+                {
+                  parentId: cellforSplit.frontId,
+                  frontId: shortid.generate(),
+                  split: "none",
+                  values: null,
+                  content: {
+                    text: "",
+                    style: cellforSplit.content.style,
                   },
-                ],
-              },
+
+                  isSelected: false,
+                },
+              ],
             };
 
             return a;
@@ -465,26 +453,20 @@ export default function () {
           return cellforSplit;
         }
         function horizontalCellChecker(cellforSplit) {
-          const mapedChildren = cellforSplit.structure.children.map((child) => {
-            if (child.structure.split == "none") {
+          const mapedChildren = cellforSplit.children.map((child) => {
+            if (child.split == "none") {
               return fullCellChecker(child);
             }
-            if (child.structure.split == "vertical") {
+            if (child.split == "vertical") {
               return {
                 ...child,
-                structure: {
-                  ...child.structure,
-                  children: horizontalCellChecker(child),
-                },
+                children: horizontalCellChecker(child),
               };
             }
-            if (child.structure.split == "horizontal") {
+            if (child.split == "horizontal") {
               return {
                 ...child,
-                structure: {
-                  ...child.structure,
-                  children: horizontalCellChecker(child),
-                },
+                children: horizontalCellChecker(child),
               };
             }
             return child;
@@ -493,25 +475,21 @@ export default function () {
           return mapedChildren;
         }
 
-        if (cellForSplit.structure.split == "none") {
+        if (cellForSplit.split == "none") {
           return fullCellChecker(cellForSplit);
         }
-        if (cellForSplit.structure.split == "vertical") {
+        if (cellForSplit.split == "vertical") {
           return {
             ...cellForSplit,
-            structure: {
-              ...cellForSplit.structure,
-              children: horizontalCellChecker(cellForSplit),
-            },
+
+            children: horizontalCellChecker(cellForSplit),
           };
         }
-        if (cellForSplit.structure.split == "horizontal") {
+        if (cellForSplit.split == "horizontal") {
           return {
             ...cellForSplit,
-            structure: {
-              ...cellForSplit.structure,
-              children: horizontalCellChecker(cellForSplit),
-            },
+
+            children: horizontalCellChecker(cellForSplit),
           };
         }
 
@@ -522,7 +500,13 @@ export default function () {
       );
 
       const newCells = findedRail.customLabels.map((item) => {
-        return splitRowController(item);
+        return {
+          ...item,
+          structure: splitRowController({
+            ...item.structure,
+            frontId: item.frontId,
+          }),
+        };
       });
       const newRails = present.map((rail) => {
         if (rail.frontId == payload.railId) {
@@ -547,11 +531,7 @@ export default function () {
           if (cellForJoin.frontId == payload.cellId) {
             const a = {
               ...cellForJoin,
-
-              structure: {
-                ...cellForJoin.structure.children[0].structure,
-                split: "none",
-              },
+              split: "none",
             };
 
             return a;
@@ -560,10 +540,6 @@ export default function () {
             const a = {
               ...cellForJoin,
               split: "none",
-              structure: {
-                ...cellForJoin.structure.children[0].structure,
-                split: "none",
-              },
             };
             // delete a.parentId;
             return a;
@@ -572,7 +548,7 @@ export default function () {
           return cellForJoin;
         }
         function horizontalCellChecker(cellForJoin) {
-          const mapedChild = cellForJoin.structure.children.map((child) => {
+          const mapedChild = cellForJoin.children.map((child) => {
             let letIt = false;
             child.children?.map((c) => {
               if (c.children) letIt = true;
@@ -582,10 +558,7 @@ export default function () {
             } else {
               return {
                 ...child,
-                structure: {
-                  ...child.structure,
-                  children: horizontalCellChecker(child),
-                },
+                children: horizontalCellChecker(child),
               };
             }
           });
@@ -595,22 +568,16 @@ export default function () {
         if (cellForJoin.frontId == payload.parentId) {
           return fullCellChecker(cellForJoin);
         }
-        if (cellForJoin.structure.split == "vertical") {
+        if (cellForJoin.split == "vertical") {
           return {
             ...cellForJoin,
-            structure: {
-              ...cellForJoin.structure,
-              children: horizontalCellChecker(cellForJoin),
-            },
+            children: horizontalCellChecker(cellForJoin),
           };
         }
-        if (cellForJoin.structure.split == "horizontal") {
+        if (cellForJoin.split == "horizontal") {
           return {
             ...cellForJoin,
-            structure: {
-              ...cellForJoin.structure,
-              children: horizontalCellChecker(cellForJoin),
-            },
+            children: horizontalCellChecker(cellForJoin),
           };
         }
 
@@ -622,7 +589,13 @@ export default function () {
       );
 
       const newCells = findedRail.customLabels.map((item) => {
-        return JoinRowController(item);
+        return {
+          ...item,
+          structure: JoinRowController({
+            ...item.structure,
+            frontId: item.frontId,
+          }),
+        };
       });
       const newRails = present.map((rail) => {
         if (rail.frontId == payload.railId) {
@@ -648,10 +621,7 @@ export default function () {
             const a = {
               ...cellForJoin,
               split: "none",
-              structure: {
-                ...cellForJoin.structure.children[0].structure,
-                split: "none",
-              },
+              children: null,
             };
 
             return a;
@@ -660,10 +630,8 @@ export default function () {
             const a = {
               ...cellForJoin,
               split: "none",
-              structure: {
-                ...cellForJoin.structure.children[0].structure,
-                split: "none",
-              },
+              // ...cellForJoin.children[0],
+              children: null,
             };
             // delete a.parentId;
             return a;
@@ -672,7 +640,7 @@ export default function () {
           return cellForJoin;
         }
         function verticalCellChecker(cellForJoin) {
-          const mapedChild = cellForJoin.structure.children.map((child) => {
+          const mapedChild = cellForJoin.children.map((child) => {
             let letIt = false;
             child.children?.map((c) => {
               if (c.children) letIt = true;
@@ -682,10 +650,8 @@ export default function () {
             } else {
               return {
                 ...child,
-                structure: {
-                  ...child.structure,
-                  children: verticalCellChecker(child),
-                },
+
+                children: verticalCellChecker(child),
               };
             }
           });
@@ -695,22 +661,18 @@ export default function () {
         if (cellForJoin.frontId == payload.parentId) {
           return fullCellChecker(cellForJoin);
         }
-        if (cellForJoin.structure.split == "vertical") {
+        if (cellForJoin.split == "vertical") {
           return {
             ...cellForJoin,
-            structure: {
-              ...cellForJoin.structure,
-              children: verticalCellChecker(cellForJoin),
-            },
+
+            children: verticalCellChecker(cellForJoin),
           };
         }
-        if (cellForJoin.structure.split == "horizontal") {
+        if (cellForJoin.split == "horizontal") {
           return {
             ...cellForJoin,
-            structure: {
-              ...cellForJoin.structure,
-              children: verticalCellChecker(cellForJoin),
-            },
+
+            children: verticalCellChecker(cellForJoin),
           };
         }
 
@@ -722,7 +684,13 @@ export default function () {
       );
 
       const newCells = findedRail.customLabels.map((item) => {
-        return JoinColumnController(item);
+        return {
+          ...item,
+          structure: JoinColumnController({
+            ...item.structure,
+            frontId: item.frontId,
+          }),
+        };
       });
       const newRails = present.map((rail) => {
         if (rail.frontId == payload.railId) {
@@ -755,14 +723,12 @@ export default function () {
           (cell) => {
             return {
               ...cell,
-              structure: {
-                ...cell.structure,
-                content: {
-                  ...cell.structure.content,
-                  style: {
-                    ...cell.structure.content.style,
-                    fontFamily: payload.structure,
-                  },
+
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  fontFamily: payload.structure,
                 },
               },
             };
@@ -789,14 +755,12 @@ export default function () {
           (cell) => {
             return {
               ...cell,
-              structure: {
-                ...cell.structure,
-                content: {
-                  ...cell.structure.content,
-                  style: {
-                    ...cell.structure.content.style,
-                    fontStyle: payload.structure,
-                  },
+
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  fontStyle: payload.structure,
                 },
               },
             };
@@ -824,14 +788,12 @@ export default function () {
           (cell) => {
             return {
               ...cell,
-              structure: {
-                ...cell.structure,
-                content: {
-                  ...cell.structure.content,
-                  style: {
-                    ...cell.structure.content.style,
-                    textAlign: payload.structure,
-                  },
+
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  textAlign: payload.structure,
                 },
               },
             };
@@ -858,12 +820,12 @@ export default function () {
           setSelectedCellForReadStyle,
           (cell) => {
             let fontSizeValue;
-            let cellFontSize = cell.structure.content.style.fontSize;
+            let cellFontSize = cell.content.style.fontSize;
             if (payload.structure == "increment") {
               fontSizeValue = +cellFontSize + 1;
             }
             if (payload.structure == "decrement") {
-              if (cell.structure.content.style.fontSize > 1) {
+              if (cell.content.style.fontSize > 1) {
                 fontSizeValue = cellFontSize - 1;
               } else {
                 fontSizeValue = 1;
@@ -872,14 +834,12 @@ export default function () {
 
             return {
               ...cell,
-              structure: {
-                ...cell.structure,
-                content: {
-                  ...cell.structure.content,
-                  style: {
-                    ...cell.structure.content.style,
-                    fontSize: fontSizeValue,
-                  },
+
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  fontSize: fontSizeValue,
                 },
               },
             };
@@ -906,7 +866,7 @@ export default function () {
           setSelectedCellForReadStyle,
           (cell) => {
             let fontAngleValue;
-            let cellFontAngle = cell.structure.content.style.angle;
+            let cellFontAngle = cell.content.style.angle;
             if (payload.structure == "increment") {
               fontAngleValue = +cellFontAngle + 1;
             }
@@ -920,14 +880,12 @@ export default function () {
 
             return {
               ...cell,
-              structure: {
-                ...cell.structure,
-                content: {
-                  ...cell.structure.content,
-                  style: {
-                    ...cell.structure.content.style,
-                    angle: fontAngleValue,
-                  },
+
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  angle: fontAngleValue,
                 },
               },
             };
@@ -954,13 +912,13 @@ export default function () {
           setSelectedCellForReadStyle,
           (cell) => {
             let newMargin;
-            let cellMargin = cell.structure.content.style.margin;
+            let cellMargin = cell.content.style.margin;
             if (payload.structure == "increment") {
               newMargin = +cellMargin + 1;
             }
 
             if (payload.structure == "decrement") {
-              if (cell.structure.content.style.margin > 0) {
+              if (cell.content.style.margin > 0) {
                 newMargin = cellMargin - 1;
               } else {
                 newMargin = 0;
@@ -969,14 +927,12 @@ export default function () {
 
             return {
               ...cell,
-              structure: {
-                ...cell.structure,
-                content: {
-                  ...cell.structure.content,
-                  style: {
-                    ...cell.structure.content.style,
-                    margin: newMargin,
-                  },
+
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  margin: newMargin,
                 },
               },
             };
@@ -1003,12 +959,12 @@ export default function () {
           setSelectedCellForReadStyle,
           (cell) => {
             let newPadding;
-            let cellPadding = cell.structure.content.style.padding;
+            let cellPadding = cell.content.style.padding;
             if (payload.structure == "increment") {
               newPadding = +cellPadding + 1;
             }
             if (payload.structure == "decrement") {
-              if (cell.structure.content.style.padding > 0) {
+              if (cell.content.style.padding > 0) {
                 newPadding = cellPadding - 1;
               } else {
                 newPadding = 0;
@@ -1017,14 +973,12 @@ export default function () {
 
             return {
               ...cell,
-              structure: {
-                ...cell.structure,
-                content: {
-                  ...cell.structure.content,
-                  style: {
-                    ...cell.structure.content.style,
-                    padding: newPadding,
-                  },
+
+              content: {
+                ...cell.content,
+                style: {
+                  ...cell.content.style,
+                  padding: newPadding,
                 },
               },
             };
@@ -1043,7 +997,7 @@ export default function () {
       const findedRail = state.present.find(
         (rail) => rail.frontId === payload.railId
       );
-
+      console.log({ payload });
       const newCells = findedRail.customLabels.filter(
         (cell) => cell.frontId !== payload.cellId
       );

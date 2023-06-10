@@ -6,7 +6,9 @@ import Typography from "../../../../../../../../../../../styles/__ready/Typograp
 import RailArea from "./railArea";
 
 import { rails } from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
+import { ColumnFour_justify_start } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import { addRail } from "../../../../../../../../../../../recoil/userEditorStore/railAriaButton";
+
 import { useEffect, useState } from "react";
 
 import scaleStore from "../../../../../../../../../../../recoil/userEditorStore/scaleStore";
@@ -17,6 +19,7 @@ import useRailReducer from "../../../../../../../../../../../recoil/reducer/edit
 import { useParams } from "react-router-dom";
 import { UserProjectFindOne_Qury } from "../../../../../../../../../../../reactQuery/user/callGetService";
 import project_store from "../../../../../../../../../../../recoil/store/user/project_store";
+import { setUser_project_findOne } from "../../../../../../../../../../../reactQuery/querykey/user_key";
 
 //  data = {
 //   frontId: 112,
@@ -28,16 +31,32 @@ import project_store from "../../../../../../../../../../../recoil/store/user/pr
 // };
 
 export default function () {
-  const { error, data, isLoading } = UserProjectFindOne_Qury();
+  const { error, data, isLoading, isSuccess } = UserProjectFindOne_Qury();
 
   const setRail = useRailReducer();
   const [railsState, setRailsState] = useRecoilState(rails);
+  const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
 
   const [wantNewRail, SetwantNewRail] = useRecoilState(addRail);
   const setLoading = useToastReducer();
-
+  console.log({ justify });
   const [scaleState_, setScaleState] = useRecoilState(scaleStore);
+  useEffect(() => {
+    if (data) {
+      const rails = data.rails;
+      setRailsState((draft) => ({ ...draft, present: rails }));
 
+      const direction = data.direction;
+      setJustify(direction);
+    }
+    return () => {
+      setRailsState({
+        past: [],
+        present: [],
+        future: [],
+      });
+    };
+  }, [isSuccess]);
   useEffect(() => {
     if (wantNewRail) {
       setRail({}, "ADDRAIL");

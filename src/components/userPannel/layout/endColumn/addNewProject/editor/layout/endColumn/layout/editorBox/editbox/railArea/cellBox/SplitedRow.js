@@ -8,16 +8,15 @@ import { useSelection } from "../../../../../../../../../../../../../recoil/read
 export default function ({
   railId = "",
   parent = { frontId: " ", isSelected: false },
-  children,
+  child,
   setCell = () => {},
 }) {
-  console.log({ children });
   return (
     <main
       // onClick={handleSelectCell_Via_onClick}
       className="w-100 h-100 d-flex flex-column  "
     >
-      {children.structure.children?.map((child, index) => {
+      {child.children?.map((child, index) => {
         return (
           <div
             key={child + index}

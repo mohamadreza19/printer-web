@@ -12,6 +12,9 @@ export default class {
       frontId: shortid.generate(),
       productId: findedProduct.id,
       structure: {
+        isQrcode: false,
+        isBarcode: false,
+        isSelected: false,
         split: "none",
         content: {
           text: "",
@@ -26,11 +29,10 @@ export default class {
           },
         },
       },
-      isQrcode: false,
-      isBarcode: false,
-      width: findedProduct.width,
-      isSelected: false,
-      description: findedProduct.description.english,
+      product: {
+        width: findedProduct.width,
+        description: findedProduct.description.english,
+      },
     };
     copyCells.splice(destination.index, 0, newCell);
     const newRails = railsArrayPresent.map((rail) => {

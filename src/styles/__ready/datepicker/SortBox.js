@@ -2,11 +2,9 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 
 import persian_fa from "react-date-object/locales/persian_fa";
-import English_fa from "react-date-object/locales/gregorian_en";
+import gregorian_en from "react-date-object/locales/gregorian_en";
 //
 import "react-multi-date-picker/styles/colors/yellow.css";
-
-import { useCallback, useEffect, useState } from "react";
 
 import useDateObject from "../../../utility/useDateObject";
 import useCachedLanguage from "../../../utility/useCachedLanguage";

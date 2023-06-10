@@ -8,17 +8,30 @@ export function railController_(
   when_There_Isnt_Cell_CallBack = () => {}
 ) {
   if (rail.frontId == payload.railId) {
-    const newCells = rail.customLabels.map((item) => {
-      return cellSplitContoller_(
-        item,
-        payload,
-        setSelectedCellForReadStyle,
-        cellMutateCallBack,
-        when_There_Isnt_Cell_CallBack
-      );
-    });
+    const newCells = mapedCell(rail);
+
     return { ...rail, customLabels: newCells };
   } else {
-    return rail;
+    const newCells = mapedCell(rail);
+
+    return { ...rail, customLabels: newCells };
+  }
+  function mapedCell(rail) {
+    const newCells = rail.customLabels.map((item) => {
+      return {
+        ...item,
+        structure: cellSplitContoller_(
+          {
+            ...item.structure,
+            frontId: item.frontId,
+          },
+          payload,
+          setSelectedCellForReadStyle,
+          cellMutateCallBack,
+          when_There_Isnt_Cell_CallBack
+        ),
+      };
+    });
+    return newCells;
   }
 }

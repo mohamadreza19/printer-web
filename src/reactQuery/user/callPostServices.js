@@ -5,9 +5,20 @@ import { useRecoilState } from "recoil";
 import { isUserLogin } from "../../recoil/recoilStore";
 import { useNavigate } from "react-router-dom";
 
-import { projectsKey, setProjectsKey } from "../querykey/user_key";
+import {
+  add_Product_Bookmark_Mutation_key,
+  delete_bookmark_Product_key,
+  projectsKey,
+  setAdd_Product_Bookmark_Mutation_key,
+  setBookmark_Product_Delete_key,
+  setProjectsKey,
+} from "../querykey/user_key";
 import { useEffect } from "react";
 import useToastReducer from "../../recoil/reducer/useToastReducer";
+import {
+  admin_user_productList,
+  setAdmin_user_productList,
+} from "../querykey/common";
 
 export const UserLogin_Mutation = () => {
   const [_, setIsUserLogin] = useRecoilState(isUserLogin);
@@ -69,7 +80,6 @@ export const AddProject_Mutation = () => {
   }, [isLoading]);
 
   if (isSuccess) {
-    console.log("hiiiiiiiii");
     setLoading({
       isShow: false,
       message: "",
@@ -129,16 +139,18 @@ export const Add_Product_Bookmark_Mutation = () => {
   const { value: token } = useCachedToken();
 
   const setLoading = useToastReducer();
-
+  console.log(admin_user_productList);
   const result = useMutation({
-    mutationKey: "product-bookmark",
+    mutationKey: ["product-bookmark"],
     mutationFn: (option) => {
       return callPostServices.add_product_bookmark(token, option.id);
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries(projectsKey);
+      console.log({ admin_user_productList });
+      // queryClient.invalidateQueries(add_Product_Bookmark_Mutation_key);
       // projectsKey = Math.random() * 20;
-      setProjectsKey(Math.random() * 20);
+      // setAdmin_user_productList(Math.random() * 20);
+      // setBookmark_Product_Delete_key();
     },
   });
   const { isLoading, isSuccess, data } = result;

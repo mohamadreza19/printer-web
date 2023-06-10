@@ -43,6 +43,6 @@ export const EditProject_Mutation = () => {
     });
     setIsSucess_edit(true);
   }
-  console.log({ result });
+
   return result;
 };

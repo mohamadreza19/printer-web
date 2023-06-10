@@ -16,6 +16,7 @@ import { showHide_Btn } from "../../../../../../../../recoil/userEditorStore/sea
 
 import userEditor_DnD from "../../../../../../../../helper/userEditor_DnD";
 import { is_project_sucess_edit_store } from "../../../../../../../../recoil/store/user/project_store";
+import { PopUpInfo } from "../startColumn/PopUpInfo";
 
 export default function () {
   const cssClass = useDynamicCssClass();
@@ -34,6 +35,7 @@ export default function () {
       className={"w-100 h-100 bg_info editor-end-column-r position-relative  "}
     >
       <Header />
+      {/* <PopUpInfo /> */}
 
       <Grid
         container

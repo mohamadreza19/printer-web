@@ -12,6 +12,8 @@ import Header from "./Header";
 import { useRecoilState } from "recoil";
 import dateRangeSelectorStore from "../../../../../recoil/store/datepicker/dateRangeSelectorStore";
 import Company_And_PL_Statistics from "./Company_And_PL_Statistics";
+import { useLanguage } from "../../../../../recoil/readStore";
+
 const options = [
   { label: "سالیانه", value: "Year" },
   { label: "ماهیانه", value: "Month" },
@@ -29,7 +31,33 @@ const Divider = () => {
   );
 };
 export default function () {
-  const [interval, setInterval] = useState(options[options.length - 1].value);
+  const language = useLanguage();
+  function options_based_language() {
+    if (language === "fa") {
+      return [
+        { label: "سالیانه", value: "Year" },
+        { label: "ماهیانه", value: "Month" },
+        { label: "هفتگی", value: "Week" },
+      ];
+    }
+    if (language === "en") {
+      return [
+        { label: "yearly", value: "Year" },
+        { label: "monthly", value: "Month" },
+        { label: "weekly", value: "Week" },
+      ];
+    }
+    if (language === "tr") {
+      return [
+        { label: "yıllık", value: "Year" },
+        { label: "aylık", value: "Month" },
+        { label: "haftalık", value: "Week" },
+      ];
+    }
+  }
+  const [interval, setInterval] = useState(
+    options_based_language()[options_based_language().length - 1].value
+  );
   const [scale, setScale] = useState(1);
   const [ignoreInterval, setIgnoreInterval] = useState(false);
   const [selectedDate, setSelectedDate] = useRecoilState(
@@ -77,7 +105,7 @@ export default function () {
           <Header
             setInterval={setInterval}
             setSelectedDate={setSelectedDate}
-            options={options}
+            options={options_based_language()}
             currentValue={interval}
             disabled={selectedDate.length > 0}
           />

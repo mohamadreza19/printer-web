@@ -6,9 +6,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useRecoilState } from "recoil";
+import { isAllowShowProductsBookmark_store } from "../../../../../../../../../../recoil/store/user/isAllowShowProductsBookmark_store";
 
-export default function () {
+export default function ({ BookmarkedList }) {
   const cssClass = useDynamicCssClass();
+  const [isAllowShowProductsBookmark, setIsAllowShowProductsBookmark] =
+    useRecoilState(isAllowShowProductsBookmark_store);
+  function handleChangeIsAllowShowProductsBookmark() {
+    setIsAllowShowProductsBookmark((draft) => !draft);
+  }
   const favarites = [
     "ترمینال پیچی",
     "ترمینال پیچی",
@@ -34,11 +41,14 @@ export default function () {
         <StarOne />
       </span> */}
       <SwiperSlide className="editor-searchbox-star">
-        <span className={cssClass.me_2}>
-          <StarOne />
+        <span
+          className={cssClass.me_2}
+          onClick={handleChangeIsAllowShowProductsBookmark}
+        >
+          <StarOne isBookMark={true} />
         </span>
       </SwiperSlide>
-      {favarites.map((favarite, index) => (
+      {BookmarkedList.map((bookmarkedProduct, index) => (
         <SwiperSlide
           key={index}
           className={
@@ -47,7 +57,7 @@ export default function () {
           }
         >
           <Typography.H9_5 className="color_black-v2">
-            {favarite}
+            {bookmarkedProduct.name.persian}
           </Typography.H9_5>
         </SwiperSlide>
       ))}

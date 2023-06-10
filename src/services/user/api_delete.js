@@ -28,7 +28,7 @@ export default class {
 
     try {
       const res = await axios({
-        url: `${apiUrl}/api/label/${id}/bookmark`,
+        url: `${apiUrl}/label/${id}/bookmark`,
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ export default class {
 
     try {
       const res = await axios({
-        url: `${apiUrl}/api/product/${id}/bookmark`,
+        url: `${apiUrl}/product/${id}/bookmark`,
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

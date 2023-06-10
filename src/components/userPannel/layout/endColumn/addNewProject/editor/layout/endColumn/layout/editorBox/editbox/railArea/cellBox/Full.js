@@ -24,19 +24,18 @@ export default function ({
   railId = "",
   cell = {
     frontId: " ",
-    structure: {
-      values: "",
-      style: {
-        fontSize: "14",
-        angle: "14",
-        textAlign: "center",
-        fontStyle: "bold",
-      },
+
+    style: {
+      fontSize: "14",
+      angle: "14",
+      textAlign: "center",
+      fontStyle: "bold",
     },
     isBarcode: false,
     isQrcode: false,
     isSelected: false,
   },
+  // rootFrontId = "",
   setCell = () => {},
 }) {
   const isSelection = useSelection();
@@ -55,16 +54,19 @@ export default function ({
     useRecoilState(ColumnThree_fontSize);
   const [bacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
   const [qrWant, setQrWant] = useRecoilState(ColumnFive_qr);
+
   function handleSelectCell_Via_onClick() {
     if (!cell.parentId && !cell.isSelected) {
       const payload = {
         railId: railId,
         cellId: cell.frontId,
+        // cellId: rootFrontId,
       };
 
-      setCell(payload, "SELECT/PARENT");
+      setCell(payload, "SELECT");
     }
     if (!isSelection && !cell.isSelected) return;
+
     const payload = {
       railId: railId,
       cellId: cell.frontId,
@@ -304,11 +306,11 @@ export default function ({
       }}
     >
       <Editor_Cell_Input
-        value={cell.structure?.content.text}
+        value={cell.content.text}
         disabled={cell.isSelected}
         onChange={handleChangeValue}
         onBackspaceDown={handleDeleteContent}
-        style={cell.structure?.content.style}
+        style={cell.content.style}
         isBarcode={cell.isBarcode}
         isQrcode={cell.isQrcode}
         // font={font.font}

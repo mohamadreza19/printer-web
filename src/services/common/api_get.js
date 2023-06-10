@@ -21,11 +21,14 @@ export default class {
       });
     }
   }
-  static async admin_user_labelList(token = "") {
+  static async admin_user_labelList(token = "", pageParam, languageHeader) {
+    console.log({ languageHeader });
     try {
-      const res = await axios.get(`${apiUrl}/label`, {
+      const res = await axios.get(`${pageParam}`, {
         headers: {
           Authorization: `Bearer ${token}`,
+          language: languageHeader,
+          // language: "test",
         },
       });
 
@@ -39,11 +42,13 @@ export default class {
       });
     }
   }
-  static async admin_user_productList(token = "", url) {
+  static async admin_user_productList(token = "", url, language) {
+    console.log({ url });
     try {
       const res = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
+          language,
         },
       });
 

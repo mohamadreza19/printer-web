@@ -21,7 +21,10 @@ export default function ({
     height: 0,
     nameId: "",
     pictures: [],
+    bookmarked: false,
   },
+  handleAdd_Bookmark = () => {},
+  handleDeleteBookmark = () => {},
 }) {
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
@@ -55,7 +58,7 @@ export default function ({
     };
     imageResponse.mutate(option);
   }, []);
-  console.log(label);
+
   if (imageResponse.isSuccess)
     return (
       <div
@@ -88,7 +91,17 @@ export default function ({
         >
           <div className="w-100 d-flex align-item-center justify-content-between mt-2 px-3 ">
             <DynamicName />
-            <Icons.Star2 className="align-self-start cur-pointer" />
+            <span
+              onClick={() => {
+                handleAdd_Bookmark();
+                handleDeleteBookmark();
+              }}
+            >
+              <Icons.Star2
+                className="align-self-start cur-pointer"
+                isBookmarked={label.bookmarked}
+              />
+            </span>
           </div>
           <div className="w-100 d-flex align-item-center justify-content-between  px-2 pb-2">
             <Typography.Body2 className="font-400  font-English disabled_gray2 dir-ltr ms-2">

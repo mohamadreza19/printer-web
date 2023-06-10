@@ -3,17 +3,11 @@ import Full from "./Full";
 import SplitedColumn from "./SplitedColumn";
 import SplitedRow from "./SplitedRow";
 
-export default function ({
-  railId,
-  cellForCheck,
-  HandleChangeInputValue,
-  childrenHandleChangeInputValue,
-}) {
+export default function ({ railId, cellForCheck, rootFrontId }) {
   const setCell = useCellReducer();
-  if (cellForCheck.structure.split == "none") {
+  if (cellForCheck?.split == "none") {
     return (
       <Full
-        HandleChangeInputValue={HandleChangeInputValue}
         railId={railId}
         cell={cellForCheck}
         isSelected={cellForCheck.isSelected}
@@ -21,26 +15,25 @@ export default function ({
       />
     );
   }
-  if (cellForCheck.structure.split == "vertical") {
+  if (cellForCheck.split == "vertical") {
     return (
       <SplitedColumn
         setCell={setCell}
         parent={cellForCheck}
         railId={railId}
-        children={cellForCheck}
+        child={cellForCheck}
         isSelected={cellForCheck.isSelected}
       />
     );
   }
 
-  if (cellForCheck.structure.split == "horizontal") {
+  if (cellForCheck.split == "horizontal") {
     return (
       <SplitedRow
         setCell={setCell}
-        HandleChangeInputValue={HandleChangeInputValue}
         parent={cellForCheck}
         railId={railId}
-        children={cellForCheck}
+        child={cellForCheck}
         isSelected={cellForCheck.isSelected}
       />
     );

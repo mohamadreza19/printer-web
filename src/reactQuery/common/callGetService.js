@@ -8,7 +8,8 @@ import useToastReducer from "../../recoil/reducer/useToastReducer";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { product_column } from "../../recoil/userEditorStore/cellsStore";
-import { admin_user_image } from "../querykey/common";
+import { admin_user_image, admin_user_productList } from "../querykey/common";
+import { useLanguage } from "../../recoil/readStore";
 
 export const Admin_User_Image = (role = "admin") => {
   const adminToken = useAdmin_CachedToken();
@@ -58,9 +59,20 @@ export const Admin_User_LabelList_Call = (
 ) => {
   const { value: token } = useCachedToken();
   const { value: adminToken } = useAdmin_CachedToken();
+  const language = useLanguage();
 
   const setLoading = useToastReducer();
-
+  function setLanguageHeader_Based_cached_language(language) {
+    if (language == "fa") {
+      return "persian";
+    }
+    if (language == "en") {
+      return "english";
+    }
+    if (language == "tr") {
+      return "turkish";
+    }
+  }
   let initUrl = `${apiUrl}/label?`;
   if (search) initUrl = initUrl.concat(`search=${search}&`);
   if (startDate) initUrl = initUrl.concat(`startDate=${startDate}&`);
@@ -72,7 +84,8 @@ export const Admin_User_LabelList_Call = (
     queryFn: ({ pageParam = initUrl }) =>
       api_get.admin_user_labelList(
         role === "admin" ? adminToken : token,
-        pageParam
+        pageParam,
+        setLanguageHeader_Based_cached_language(language)
       ),
 
     getNextPageParam: (lastPage) => lastPage.links.next || undefined,
@@ -117,9 +130,21 @@ export const Admin_User_ProductList_Call = (
   endDate = null
 ) => {
   const { value: token } = useCachedToken();
-  const [product_column_state, setProduct_column] =
-    useRecoilState(product_column);
+
   const { value: adminToken } = useAdmin_CachedToken();
+
+  const language = useLanguage();
+  function setLanguageHeader_Based_cached_language(language) {
+    if (language == "fa") {
+      return "persian";
+    }
+    if (language == "en") {
+      return "english";
+    }
+    if (language == "tr") {
+      return "turkish";
+    }
+  }
 
   const setLoading = useToastReducer();
 
@@ -129,12 +154,19 @@ export const Admin_User_ProductList_Call = (
   if (endDate) initUrl = initUrl.concat(`endDate=${endDate}&`);
 
   const result = useInfiniteQuery({
-    queryKey: ["admin-user-productList", search, startDate, endDate],
+    queryKey: [
+      "admin-user-productList",
+      search,
+      startDate,
+      endDate,
+      admin_user_productList,
+    ],
 
     queryFn: ({ pageParam = initUrl }) =>
       api_get.admin_user_productList(
         role === "admin" ? adminToken : token,
-        pageParam
+        pageParam,
+        setLanguageHeader_Based_cached_language(language)
       ),
 
     getNextPageParam: (lastPage) => lastPage.links.next || undefined,
@@ -154,14 +186,6 @@ export const Admin_User_ProductList_Call = (
         isShow: false,
         message: "",
       }));
-      if (data) {
-        let modifiedData = [];
-        data.pages.forEach((page) =>
-          page.items.forEach((item) => modifiedData.push(item))
-        );
-
-        setProduct_column(modifiedData);
-      }
     }
     if (error) {
       setLoading(() => ({
@@ -170,8 +194,12 @@ export const Admin_User_ProductList_Call = (
       }));
     }
   }, [isSuccess, isLoading, error]);
-
-  if (product_column_state.length > 0) {
-    return { ...result, data: product_column_state };
+  let modifiedData = [];
+  if (result.isSuccess) {
+    data.pages.forEach((page) =>
+      page.items.forEach((item) => modifiedData.push(item))
+    );
   }
+  console.log({ modifiedData });
+  return { ...result, data: modifiedData };
 };

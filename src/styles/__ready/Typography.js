@@ -12,9 +12,10 @@ export default class {
       </Typography>
     );
   }
-  static H3({ children, className }) {
+  static H3({ children, className, language = "fa" }) {
+    const value = language === "fa" ? " " : "font-English";
     return (
-      <Typography className={" " + className} variant="h3">
+      <Typography className={" " + className + " " + value} variant="h3">
         {children}
       </Typography>
     );
@@ -33,16 +34,18 @@ export default class {
       </Typography>
     );
   }
-  static H5({ className, children }) {
+  static H5({ className, children, language = "fa" }) {
+    const value = language === "fa" ? " " : "font-English";
     return (
-      <Typography className={className} variant="h5">
+      <Typography className={className + " " + value} variant="h5">
         {children}
       </Typography>
     );
   }
   static H6({ children, className, language = "fa" }) {
+    const value = language === "fa" ? " " : "font-English";
     return (
-      <Typography className={className} variant="h6">
+      <Typography className={className + " " + value} variant="h6">
         {children}
       </Typography>
     );

@@ -1,4 +1,5 @@
 import {
+  useContent_Based_Language,
   useDynamicCssClass,
   useLanguage,
 } from "../../../../../../recoil/readStore";
@@ -26,7 +27,8 @@ export default function ({
 }) {
   const language = useLanguage();
   const cssClass = useDynamicCssClass();
-
+  const content =
+    useContent_Based_Language().AdminPannel.end_col.view_Print_Statistics.item;
   return (
     <div className="height-62 d-flex  align-items-center border border-r-20 px-4 my-2">
       <section className=" w-25 d-flex justify-content-start">
@@ -39,11 +41,16 @@ export default function ({
       </section>
       <section className=" w-25 ">
         <Typography.H9 className="font-400">
-          ایجاد توسط: {item.user.username}
+          {content.Created_by}: {item.user.username}
         </Typography.H9>
       </section>
       <section className="d-flex justify-content-center w-25">
-        <Typography.H9 className="font-400">آخرین فعالیت:</Typography.H9>
+        <Typography.H9 className="font-400">
+          {displayPriority === "product_label"
+            ? content.Last_print
+            : content.Last_activity}
+          :
+        </Typography.H9>
         <Typography.H9
           className={"font-400 " + cssClass.ms_1}
           language={language}
@@ -52,9 +59,9 @@ export default function ({
         </Typography.H9>
       </section>
       <section className="d-flex w-25 d-flex justify-content-end">
-        <Typography.H9 className="font-500">
+        <Typography.H9 className="font-500" language={language}>
           {item.label?.printCount || 0}
-          <span className={cssClass.ms_1}>چاپ</span>
+          <span className={cssClass.ms_1}>{content.print}</span>
         </Typography.H9>
         <Icons.Trade className={cssClass.ms_4} />
       </section>

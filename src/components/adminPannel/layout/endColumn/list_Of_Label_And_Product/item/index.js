@@ -8,6 +8,7 @@ import {
 import { Admin_User_Image } from "../../../../../../reactQuery/common/callGetService";
 
 import {
+  useContent_Based_Language,
   useDynamicCssClass,
   useLanguage,
 } from "../../../../../../recoil/readStore";
@@ -41,6 +42,9 @@ export default function ({
   const imageRes = Admin_User_Image("admin");
   const language = useLanguage();
   //
+  const content =
+    useContent_Based_Language().AdminPannel.end_col.label_Product_List.item;
+
   const setDeleteAlert = useDeleteAlert();
 
   useEffect(() => {
@@ -151,7 +155,7 @@ export default function ({
             >
               <Link to={item?.link}>
                 <Typography.H9_5 className="color-primary font-400">
-                  لینک محصول در سایت
+                  {content.colTwo.Product_link_on_the_site}
                 </Typography.H9_5>
               </Link>
             </span>
@@ -159,11 +163,14 @@ export default function ({
           <footer className="d-flex py-">
             <span>
               <Typography.H9_5 className="font-500 white-space-nowrap">
-                آخرین به روز رسانی
+                {content.colTwo.latestUpdate}
               </Typography.H9_5>
             </span>
             <span className={cssClass.ms_1}>
-              <Typography.H9_5 className="font-400 white-space-nowrap">
+              <Typography.H9_5
+                className="font-400 white-space-nowrap"
+                language={language}
+              >
                 {useFormetDate(item.updatedAt, language)}
               </Typography.H9_5>
             </span>

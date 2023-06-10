@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 import api_get from "../../services/user/api_get";
 import { useInfiniteQuery, useQuery } from "react-query";
-import { projectsKey } from "../querykey/user_key";
+import { projectsKey, user_project_findOne } from "../querykey/user_key";
 
 import { apiUrl } from "../../services/urlStore";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -113,23 +113,13 @@ export const UserProduct_Qury = () => {
   });
 };
 
-// export const UserLabels_Qury = () => {
-//   const { value: token } = useCachedToken();
-//   const a = useQuery({
-//     queryKey: ["label_list"],
-//     queryFn: () => user_callApi.label_list(token),
-//   });
-
-//   return a;
-// };
-
 export const UserProjectFindOne_Qury = () => {
   const setProjectState = useSetRecoilState(project_store);
   const setLoading = useToastReducer();
   const { value: token } = useCachedToken();
   const { projectId } = useParams();
   const result = useQuery({
-    queryKey: "project-findOne",
+    queryKey: ["project-findOne", user_project_findOne],
     queryFn: () => api_get.project_findOne(token, projectId),
   });
   const { data, isLoading, isSuccess, error } = result;

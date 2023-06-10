@@ -7,17 +7,16 @@ import { useSelection } from "../../../../../../../../../../../../../recoil/read
 
 export default function ({
   railId = "",
-  children,
+  child,
   parent = {
     frontId: " ",
     isSelected: false,
   },
   setCell = () => {},
 }) {
-  console.log({ children });
   return (
     <main className="w-100 h-100 d-flex ">
-      {children.structure.children.map((child, index) => {
+      {child.children.map((child, index) => {
         return (
           <div
             key={index}

@@ -11,46 +11,99 @@ import Labels from "./Labels";
 
 import { Admin_User_LabelList_Call } from "../../../../../reactQuery/common/callGetService";
 import { useState } from "react";
+import { Add_Label_Bookmark_Mutation } from "../../../../../reactQuery/user/callPostServices";
+import { Bookmark_Label_Delete } from "../../../../../reactQuery/user/callDeleteServices";
 
 export default function () {
-  const [search, setSearch] = useState();
+  const [labelList, setLabelList] = useState([]);
+  const [filteredLabelList, setFilteredLabelList] = useState([]);
+  const [isAllowShowBookmarkedLabel, setIsAllowShowBookmarkedLabel] =
+    useState(false);
+  const [search, setSearch] = useState("");
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
-  const setLoading = useToastReducer();
 
-  const { isLoading, data, isSuccess, error, hasNextPage, fetchNextPage } =
+  const { data, isSuccess, hasNextPage, fetchNextPage } =
     Admin_User_LabelList_Call("user", search);
 
-  useEffect(() => {
-    if (isLoading) {
-      setLoading({
-        isShow: true,
-        message: "",
-      });
-    } else {
-      setLoading({
-        isShow: false,
-        message: "",
-      });
-    }
-    if (error) {
-      setLoading({
-        isShow: true,
-        message: error,
-      });
-    }
-    if (isSuccess) {
-      // const option = {
-      //   fileId: data.pictures[0]?.id,
-      // };
-      // imageResponse.mutate(option);
-    }
-  }, [data, isSuccess, isLoading, error]);
+  const add_Label_Bookmark_ = Add_Label_Bookmark_Mutation();
+  const delete_Label_Bookmark_ = Bookmark_Label_Delete();
+  async function handleAdd_Bookmark(label) {
+    const option = {
+      id: label.id,
+    };
 
+    if (label.bookmarked === false) {
+      console.log({ label });
+      try {
+        await add_Label_Bookmark_.mutateAsync(option);
+
+        const newLabels = labelList.map((p) => {
+          const bookmarked_label_id = label.id;
+          if (p.id === bookmarked_label_id) {
+            return {
+              ...label,
+              bookmarked: true,
+            };
+          }
+          return p;
+        });
+
+        setLabelList(newLabels);
+      } catch (error) {}
+    }
+  }
+  async function handleDeleteBookmark(label) {
+    const option = {
+      id: label.id,
+    };
+
+    if (label.bookmarked === true) {
+      try {
+        await delete_Label_Bookmark_.mutateAsync(option);
+        const unBookmarked_label_id = label.id;
+
+        const newLabels = labelList.map((la) => {
+          if (la.id === unBookmarked_label_id) {
+            return {
+              ...label,
+              bookmarked: false,
+            };
+          }
+          return la;
+        });
+        setLabelList(newLabels);
+      } catch (error) {}
+    }
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setLabelList(data);
+    }
+  }, [isSuccess]);
+
+  function onlyShowBookmarkedLabelList() {
+    const newlabelList = labelList.filter((label) => {
+      return label.bookmarked !== false;
+    });
+    return newlabelList;
+  }
+  useEffect(() => {
+    if (isAllowShowBookmarkedLabel) {
+      const newLabels = onlyShowBookmarkedLabelList();
+      // setProduct_column_(newProducts);
+      setFilteredLabelList(newLabels);
+    } else {
+      setFilteredLabelList(labelList);
+    }
+  }, [isAllowShowBookmarkedLabel]);
   if (data)
     return (
       <div className="w-100 h-100 d-flex flex-column align-items-center">
         <Header
+          isAllowShowBookmarkedLabel={isAllowShowBookmarkedLabel}
+          setIsAllowShowBookmarkedLabel={setIsAllowShowBookmarkedLabel}
           setSearch={setSearch}
           content={{
             labelList: content.userPannel.start_col.row2.listOfLabels,
@@ -69,7 +122,13 @@ export default function () {
             pe_2: cssClass.pe_2,
           }}
         />
+
         <Labels
+          isAllowShowBookmarkedLabel={isAllowShowBookmarkedLabel}
+          filteredLabelList={filteredLabelList}
+          labelList={labelList}
+          handleAdd_Bookmark={handleAdd_Bookmark}
+          handleDeleteBookmark={handleDeleteBookmark}
           labels={data}
           hasNextPage={hasNextPage}
           fetchNextPage={fetchNextPage}

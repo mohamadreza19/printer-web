@@ -80,7 +80,7 @@ export const ColumnFour_undo = atom({
 });
 export const ColumnFour_justify_start = atom({
   key: "justify_start",
-  default: true,
+  default: "left",
 });
 // export const ColumnFour_justify_end = atom({
 //   key: "justify_end",

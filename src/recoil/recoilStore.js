@@ -259,9 +259,46 @@ export const content_Based_Language = selector({
                 },
                 continueButton: "continue",
               },
-              labelList: {
+
+              label_Product_List: {
                 selectedLabelsButton: "selected Labels",
                 searchPlaceHolder: "Search for a label or product name",
+                item: {
+                  colOne: {
+                    product: {
+                      width: "Product width",
+                      labelwidth: "Label width",
+                    },
+                    label: {
+                      labelWidth: "Label width",
+                      labelLength: "Label length",
+                    },
+                  },
+                  colTwo: {
+                    Product_link_on_the_site: "Product link on the site",
+                    latestUpdate: "latest update",
+                  },
+                },
+              },
+              view_Print_Statistics: {
+                header: {
+                  general_print_statistics: "General print statistics",
+                  Desired_time_scale: "scale time",
+                },
+                mainHeader: {
+                  print: "print",
+                  different_Companies: "Different companies",
+                  product_and_label: "Product and label",
+                },
+                Company_statistics: "Company statistics",
+                Statistics_of_products_and_labels:
+                  "Statistics of products and labels",
+                item: {
+                  Created_by: "Created by",
+                  Last_print: "Last print",
+                  Last_activity: "Last activity",
+                  print: "print",
+                },
               },
               listOfUserAndAdmin: {
                 header: {
@@ -275,16 +312,6 @@ export const content_Based_Language = selector({
                   creditExpiration: "Credit Expiration",
                   print: "print",
                 },
-              },
-              historyOfPrinting: {
-                calender: {
-                  from: "Sorting from date",
-                  to: "To date",
-                },
-                sortButton: "Sort it",
-                downloadExcel: "Download Excel",
-                reprint: "reprint",
-                print: "print",
               },
             },
           },
@@ -336,7 +363,7 @@ export const content_Based_Language = selector({
                 inputLabelTwo: "نام سازنده",
                 directionButton: {
                   rightToLeft: "چینش از راست به چپ",
-                  leftToRight: "چینش از چپبه راست",
+                  leftToRight: "چینش از چپ به راست",
                 },
                 continueButton: "ادامه",
               },
@@ -474,9 +501,44 @@ export const content_Based_Language = selector({
                 },
                 continueButton: "continue",
               },
-              labelList: {
+              label_Product_List: {
                 selectedLabelsButton: "selected Labels",
-                searchPlaceHolder: "Search for a label or product name",
+                searchPlaceHolder: "جست و جوی محصول یا لیبل ",
+                item: {
+                  colOne: {
+                    product: {
+                      width: "عرض محصول",
+                      labelwidth: "عرض برچسب",
+                    },
+                    label: {
+                      labelWidth: "طول لیبل",
+                      labelLength: "عرض لیبل",
+                    },
+                  },
+                  colTwo: {
+                    Product_link_on_the_site: "لینک محصول در سایت",
+                    latestUpdate: "آخرین به روز رسانی",
+                  },
+                },
+              },
+              view_Print_Statistics: {
+                header: {
+                  general_print_statistics: "آمار چاپ کلی",
+                  Desired_time_scale: "بازه زمانی دلخواه",
+                },
+                mainHeader: {
+                  print: "چاپ",
+                  different_Companies: "شرکت مختلف",
+                  product_and_label: "محصول و لیبل",
+                },
+                Company_statistics: "آمار شرکت ها",
+                Statistics_of_products_and_labels: "آمار محصولات و لیبل ها",
+                item: {
+                  Created_by: "ایجاد توسط",
+                  Last_print: "آخرین چاپ",
+                  Last_activity: "آخرین فعالیت",
+                  print: "چاپ",
+                },
               },
               listOfUserAndAdmin: {
                 header: {
@@ -490,16 +552,6 @@ export const content_Based_Language = selector({
                   creditExpiration: "انقضا اعتبار",
                   print: " چاپ",
                 },
-              },
-              historyOfPrinting: {
-                calender: {
-                  from: "Sorting from date",
-                  to: "To date",
-                },
-                sortButton: "Sort it",
-                downloadExcel: "Download Excel",
-                reprint: "reprint",
-                print: "print",
               },
             },
           },
@@ -687,9 +739,25 @@ export const content_Based_Language = selector({
                 },
                 continueButton: "continue",
               },
-              labelList: {
+              label_Product_List: {
                 selectedLabelsButton: "selected Labels",
-                searchPlaceHolder: "Search for a label or product name",
+                searchPlaceHolder: "Ürün veya etiket arayın",
+                item: {
+                  colOne: {
+                    product: {
+                      width: "ürün genişliği",
+                      labelwidth: "etiket genişliği",
+                    },
+                    label: {
+                      labelWidth: "etiket uzunluğu",
+                      labelLength: "etiket genişliği",
+                    },
+                  },
+                  colTwo: {
+                    Product_link_on_the_site: "Sitedeki ürün bağlantısı",
+                    latestUpdate: "son Güncelleme",
+                  },
+                },
               },
               listOfUserAndAdmin: {
                 header: {
@@ -704,15 +772,25 @@ export const content_Based_Language = selector({
                   print: "Yazdır",
                 },
               },
-              historyOfPrinting: {
-                calender: {
-                  from: "Sorting from date",
-                  to: "To date",
+              view_Print_Statistics: {
+                header: {
+                  general_print_statistics: "Genel baskı istatistikleri",
+                  Desired_time_scale: "İstenilen zaman ölçeği",
                 },
-                sortButton: "Sort it",
-                downloadExcel: "Download Excel",
-                reprint: "reprint",
-                print: "print",
+                mainHeader: {
+                  print: "Yazdır",
+                  different_Companies: "Farklı şirketler",
+                  product_and_label: "Ürün ve etiket",
+                },
+                Company_statistics: "şirket istatistikleri",
+                Statistics_of_products_and_labels:
+                  "Ürün ve etiket istatistikleri",
+                item: {
+                  Created_by: "Tarafından yaratıldı",
+                  Last_print: "Son baskı",
+                  Last_activity: "Son Aktivite",
+                  print: "Yazdır",
+                },
               },
             },
           },

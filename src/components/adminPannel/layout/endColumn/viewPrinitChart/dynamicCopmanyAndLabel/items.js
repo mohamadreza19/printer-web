@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import {
+  useContent_Based_Language,
   useDynamicCssClass,
   useLanguage,
 } from "../../../../../../recoil/readStore";
@@ -17,7 +18,7 @@ export default function ({
 }) {
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
-  useEffect(() => {}, []);
+
   function scrollToTop() {
     const infinite = document.getElementsByClassName(
       "infinite-scroll-component"

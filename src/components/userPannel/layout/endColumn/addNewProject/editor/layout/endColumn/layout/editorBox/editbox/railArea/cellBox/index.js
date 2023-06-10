@@ -17,8 +17,12 @@ import { useRef } from "react";
 
 export default function ({
   children,
-  description = "Miniator circle braker F21",
-  cell,
+  cell = {
+    product: {
+      description: "",
+      width: "",
+    },
+  },
   index,
   railId = "",
 }) {
@@ -28,7 +32,7 @@ export default function ({
       <>
         <div className="edit-cell-caption-border"></div>
         <div className="edit-cell-caption-text-box">
-          <p className="edit-cell-caption-text">{description}</p>
+          <p className="edit-cell-caption-text">{cell.product.description}</p>
         </div>
       </>
     );
@@ -39,7 +43,7 @@ export default function ({
     useRecoilState(ColumnFive_duplicate);
 
   useEffect(() => {
-    if (cell.isSelected) {
+    if (cell.structure.isSelected) {
       if (duplicateAction) {
         if (!cell.parentId) {
           const payload = {
@@ -76,23 +80,30 @@ export default function ({
             {!isViewMode ? (
               <div
                 style={{
-                  width: `${cell.width}px`,
-                  minWidth: `${cell.width}px`,
+                  width: `${cell.product.width}px`,
+                  minWidth: `${cell.product.width}px`,
                 }}
                 className="position-relative h-100"
               >
                 <Description />
-                <CellSplitController railId={railId} cellForCheck={cell} />
+                <CellSplitController
+                  railId={railId}
+                  cellForCheck={{ ...cell.structure, frontId: cell.frontId }}
+                  // rootFrontId={cell.frontId}
+                />
               </div>
             ) : (
               <InnerContainer
                 {...provided.draggableProps}
                 ref={provided.innerRef}
                 {...provided.dragHandleProps}
-                cellWidth={cell.width}
+                cellWidth={cell.product.width}
               >
                 <Description />
-                <CellSplitController cellForCheck={cell} />
+                <CellSplitController
+                  cellForCheck={{ ...cell.structure, frontId: cell.frontId }}
+                  // rootFrontId={cell.frontId}
+                />
               </InnerContainer>
             )}
           </>

@@ -157,6 +157,14 @@ a {
   /* padding-top: 0.65rem !important;
   padding-bottom: 0.65rem !important; */
 }
+.button_medium_ {
+  width: 128px !important;
+  height: 52px !important;
+  max-width: 128px !important ;
+  max-height: 52px !important;
+  /* padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important; */
+}
 .button_medium_v01 {
   width: 150px !important;
   height: 64px !important;
@@ -201,6 +209,7 @@ a {
   /* padding-top: 0.65rem !important;
   padding-bottom: 0.65rem !important; */
 }
+
 .editor-header-button_extra-small {
   width: 128px !important;
   height: 64px !important;
@@ -1242,4 +1251,33 @@ html[dir="ltr"] .add-new-rail-btn {
   height: 265.12px;
   border: 1px solid #cbcbcb;
   border-radius: 31px;
+}
+.anime-loading-spinner {
+  width: 20px;
+  height: 20px;
+  background-color: #f7f7f7;
+  border-radius: 45%;
+  animation-duration: 1.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-name: anime-loading-spinne-keyfram;
+}
+
+@keyframes anime-loading-spinne-keyfram {
+  0% {
+    background-color: #ffffff;
+    scale: 0.5;
+  }
+  23% {
+    background-color: #ffffff;
+    scale: 0.2;
+  }
+  50% {
+    background-color: #afacac;
+    scale: 1;
+  }
+  100% {
+    background-color: #5e5e5f;
+    scale: 1.2;
+  }
 }

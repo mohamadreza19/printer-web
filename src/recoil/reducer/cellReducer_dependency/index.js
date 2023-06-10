@@ -5,41 +5,39 @@ export function cellSplitContoller_(
   cellMutateCallBack = () => {},
   when_There_Isnt_Cell_CallBack = () => {}
 ) {
-  if (customLabels.structure.split == "none") {
-    return fullCellChecker(customLabels);
+  if (customLabels.split == "none") {
+    const a = fullCellChecker(customLabels);
+
+    return a;
   }
-  if (customLabels.structure.split == "vertical") {
+  if (customLabels.split == "vertical") {
     return verticalCellChecker(customLabels);
   }
-  if (customLabels.structure.split == "horizontal") {
+  if (customLabels.split == "horizontal") {
     return horizontalCellChecker(customLabels);
   }
   function fullCellChecker(cellForCheck) {
     if (payload.cellId == cellForCheck.frontId) {
+      console.log({ cellForCheck });
       const a = cellMutateCallBack(cellForCheck);
-
-      setSelectedCellForReadStyle(a.structure?.content.style || null);
+      setSelectedCellForReadStyle(a.content.style || null);
 
       return a;
     }
-    return when_There_Isnt_Cell_CallBack(cellForCheck);
+
+    const isnt = when_There_Isnt_Cell_CallBack(cellForCheck);
+
+    return isnt;
   }
   function verticalCellChecker(cellForCheck) {
-    const mapedChildren = cellForCheck.structure.children.map((child) => {
-      if (child.structure.split == "none") {
+    const mapedChildren = cellForCheck.children.map((child) => {
+      if (child.split == "none") {
         return fullCellChecker(child);
       }
-      if (child.structure.split == "vertical") {
-        // return {
-        //   child,
-        //   structure: {
-        //     ...child.structure,
-        //     children: verticalCellChecker(children),
-        //   },
-        // };
+      if (child.split == "vertical") {
         return verticalCellChecker(child);
       }
-      if (child.structure.split == "horizontal") {
+      if (child.split == "horizontal") {
         return horizontalCellChecker(child);
       }
       return child;
@@ -47,21 +45,18 @@ export function cellSplitContoller_(
 
     return {
       ...cellForCheck,
-      structure: {
-        ...cellForCheck.structure,
-        children: mapedChildren,
-      },
+      children: mapedChildren,
     };
   }
   function horizontalCellChecker(cellForCheck) {
-    const mapedChildren = cellForCheck.structure.children.map((child) => {
-      if (child.structure.split == "none") {
+    const mapedChildren = cellForCheck.children.map((child) => {
+      if (child.split == "none") {
         return fullCellChecker(child);
       }
-      if (child.structure.split == "vertical") {
+      if (child.split == "vertical") {
         return verticalCellChecker(child);
       }
-      if (child.structure.split == "horizontal") {
+      if (child.split == "horizontal") {
         return horizontalCellChecker(child);
       }
       return child;
@@ -69,10 +64,7 @@ export function cellSplitContoller_(
 
     return {
       ...cellForCheck,
-      structure: {
-        ...cellForCheck.structure,
-        children: mapedChildren,
-      },
+      children: mapedChildren,
     };
   }
 }
