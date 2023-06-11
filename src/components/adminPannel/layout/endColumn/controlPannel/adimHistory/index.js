@@ -4,10 +4,14 @@ import useDateObject from "../../../../../../utility/useDateObject";
 import HistoryHeader from "./HistoryHeader";
 import HistorySearchBox from "./HistorySearchBox";
 import Items from "./Items";
-import SortBox from "./SortBox";
+
 import { useQueryClient } from "react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { AdminPrints } from "../../../../../../reactQuery/admin/callGetService";
+import {
+  AdminPrints,
+  AdminPrints_Excel,
+} from "../../../../../../reactQuery/admin/callGetService";
+import SortBox from "../../../../../../styles/__ready/datepicker/SortBox";
 
 export default function () {
   const datePickred = useDateObject();
@@ -26,7 +30,7 @@ export default function () {
     endDate,
     "ASC"
   );
-
+  const excel_response = AdminPrints_Excel();
   function submitDataPickred() {
     const from = datePickred.server.from;
     console.log(from);
@@ -50,7 +54,22 @@ export default function () {
         </article>
 
         <div className="mb-3">
-          <SortBox submitDataPickred={submitDataPickred} />
+          <SortBox
+            submitDataPickred={submitDataPickred}
+            excelData={excel_response.data}
+            callGetExeclFile={() => {
+              excel_response.mutate({
+                page: 1,
+                limit: 10,
+                justProduct,
+                justLabel,
+                startDate,
+                endDate,
+                order: "ASC",
+              });
+            }}
+            fileNameForDonwloadedFile="prints"
+          />
         </div>
 
         <InfiniteScroll

@@ -7,7 +7,10 @@ import Items from "./Items";
 import SortBox from "../../../../../styles/__ready/datepicker/SortBox";
 import useDateObject from "../../../../../utility/useDateObject";
 
-import { UserProjects_Call } from "../../../../../reactQuery/user/callGetService";
+import {
+  UserProjects_Call,
+  UserProjects_Excel_Call,
+} from "../../../../../reactQuery/user/callGetService";
 export default function () {
   const datePickred = useDateObject();
   const [search, setSearch] = useState("");
@@ -22,7 +25,7 @@ export default function () {
     startDate,
     endDate
   );
-
+  const get_execlFile_mutate = UserProjects_Excel_Call();
   function submitDataPickred() {
     const from = datePickred.server.from;
     console.log(from);
@@ -37,7 +40,18 @@ export default function () {
       <div className="w-100">
         <Header setSearch={setSearch} />
         <article className="mt-4 pb-4 border-bottom">
-          <SortBox submitDataPickred={submitDataPickred} />
+          <SortBox
+            submitDataPickred={submitDataPickred}
+            callGetExeclFile={() =>
+              get_execlFile_mutate.mutate({
+                search,
+                startDate,
+                endDate,
+              })
+            }
+            excelData={get_execlFile_mutate.data}
+            fileNameForDonwloadedFile="projects"
+          />
         </article>
         {/* <CalendersBox /> */}
         <Items

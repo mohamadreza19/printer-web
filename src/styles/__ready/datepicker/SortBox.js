@@ -16,8 +16,15 @@ import {
   useContent_Based_Language,
   useDynamicCssClass,
 } from "../../../recoil/readStore";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function ({ submitDataPickred = () => {} }) {
+export default function ({
+  submitDataPickred = () => {},
+  callGetExeclFile = () => {},
+  excelData,
+  fileNameForDonwloadedFile = "",
+}) {
   const date = useDateObject();
 
   const content = useContent_Based_Language();
@@ -150,7 +157,24 @@ export default function ({ submitDataPickred = () => {} }) {
       </section>
     );
   };
-
+  function handleOnClickDownload_excel() {
+    callGetExeclFile();
+  }
+  useEffect(() => {
+    if (excelData) {
+      const link = document.createElement("a");
+      link.style.display = "none";
+      link.href = URL.createObjectURL(excelData);
+      link.download = fileNameForDonwloadedFile;
+      // It needs to be added to the DOM so it can be clicked
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        URL.revokeObjectURL(link.href);
+        link.parentNode.removeChild(link);
+      }, 0);
+    }
+  }, [excelData]);
   return (
     <div className=" d-flex justify-content-end px-4  ">
       <section
@@ -170,7 +194,11 @@ export default function ({ submitDataPickred = () => {} }) {
           {content.userPannel.end_col.historyOfPrinting.sortButton}
         </Typography.H9>
       </Buttons.Contained_Custom>
-      <Buttons.Outlined className="px-3 border-r-20   ">
+
+      <Buttons.Outlined
+        className="px-3 border-r-20   "
+        onClick={handleOnClickDownload_excel}
+      >
         <Typography.H9 className="font-400">
           {content.userPannel.end_col.historyOfPrinting.downloadExcel}
         </Typography.H9>

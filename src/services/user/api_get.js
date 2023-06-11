@@ -48,6 +48,32 @@ export default class {
       });
     }
   }
+  static async project_excel_list(token = "", url) {
+    if (!token) throw new Error("there isnt token");
+    // let url = `${apiUrl}/project/user?`;
+    // if (page) url = url.concat(`page=${page}&`);
+    // if (limit) url = url.concat(`limit=${page}&`);
+    // if (startDate) url = url.concat(`startDate=${startDate}&`);
+    // if (endDate) url = url.concat(`endDate=${endDate}&`);
+    try {
+      const res = await axios({
+        url: url,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
   static async product_list(token = "") {
     if (!token) throw new Error("there isnt token");
 

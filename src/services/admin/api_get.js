@@ -59,6 +59,25 @@ export default class {
       });
     }
   }
+  static async prints_excel(token = "", pageParam) {
+    try {
+      const res = await axios.get(pageParam, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      });
+      // // console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      // console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
   static async active_users(token = "") {
     try {
       const res = await axios.get(`${apiUrl}/user/stat/count`, {

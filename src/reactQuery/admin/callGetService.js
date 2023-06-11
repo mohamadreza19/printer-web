@@ -1,4 +1,9 @@
-import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
 import useCachedToken from "../../utility/useCachedToken";
 import useToastReducer from "../../recoil/reducer/useToastReducer";
@@ -11,6 +16,7 @@ import {
   setProduct_label_key,
 } from "../querykey/admin_key";
 import { useLanguage } from "../../recoil/readStore";
+import { apiUrl } from "../../services/urlStore";
 // export const Admin_Profile = ()
 export const Admin_Profile_Call = () => {
   const { value } = useAdmin_CachedToken();
@@ -266,6 +272,64 @@ export const AdminPrints = (
     });
   }
   return { ...result, data: modifedDate };
+};
+export const AdminPrints_Excel = () => {
+  const { value: token } = useAdmin_CachedToken();
+  const queryClient = useQueryClient();
+  const setLoading = useToastReducer();
+
+  const result = useMutation({
+    mutationKey: ["admin-print-excel"],
+    mutationFn: (option) => {
+      let url = "http://212.23.201.119:1235/api/print/export/excel?";
+      const { page, limit, justProduct, justLabel, startDate, endDate, order } =
+        option;
+      if (startDate && endDate) {
+        url = url
+          .concat(`startDate=${startDate}&`)
+          .concat(`endDate=${endDate}&`);
+      }
+      if (page) {
+        url = url.concat(`page=${page}&`);
+      }
+      if (order) {
+        url = url.concat(`order=${order}&`);
+      }
+      if (limit) {
+        url = url.concat(`limit=${limit}&`);
+      }
+      if (justProduct) {
+        url = url.concat(`justProduct=${justProduct}&`);
+      }
+      if (justLabel) {
+        url = url.concat(`justLabel=${justLabel}&`);
+      }
+      return api_get.prints_excel(token, url);
+    },
+  });
+  const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
 };
 
 export const AdminActive_users = () => {
@@ -580,6 +644,49 @@ export const Admin_Print_Info_Chart = (
   });
 
   const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
+};
+export const UserProjects_Excel_Call = () => {
+  const { value: token } = useCachedToken();
+  const setLoading = useToastReducer();
+  let initUrl = `${apiUrl}/project/excel?`;
+
+  const result = useMutation({
+    mutationKey: ["user-projects-excel"],
+    mutationFn: (option) => {
+      const { search = "", startDate = null, endDate = null } = option;
+
+      if (search) initUrl = initUrl.concat(`search=${search}&`);
+      if (startDate) initUrl = initUrl.concat(`startDate=${startDate}&`);
+      if (endDate) initUrl = initUrl.concat(`endDate=${endDate}&`);
+
+      return api_get.project_excel_list(token, initUrl);
+    },
+  });
+
+  const { isSuccess, isLoading, error, data } = result;
+
   useEffect(() => {
     if (isLoading) {
       setLoading(() => ({

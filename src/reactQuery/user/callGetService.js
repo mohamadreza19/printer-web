@@ -4,7 +4,7 @@ import useCachedToken from "../../utility/useCachedToken";
 import { useParams } from "react-router-dom";
 
 import api_get from "../../services/user/api_get";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import { projectsKey, user_project_findOne } from "../querykey/user_key";
 
 import { apiUrl } from "../../services/urlStore";
@@ -103,6 +103,49 @@ export const UserProjects_Call = (
   }
 
   return { ...result, data: modifiedData };
+};
+export const UserProjects_Excel_Call = () => {
+  const { value: token } = useCachedToken();
+  const setLoading = useToastReducer();
+  let initUrl = `${apiUrl}/project/excel?`;
+
+  const result = useMutation({
+    mutationKey: ["user-projects-excel"],
+    mutationFn: (option) => {
+      const { search = "", startDate = null, endDate = null } = option;
+
+      if (search) initUrl = initUrl.concat(`search=${search}&`);
+      if (startDate) initUrl = initUrl.concat(`startDate=${startDate}&`);
+      if (endDate) initUrl = initUrl.concat(`endDate=${endDate}&`);
+
+      return api_get.project_excel_list(token, initUrl);
+    },
+  });
+
+  const { isSuccess, isLoading, error, data } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
 };
 
 export const UserProduct_Qury = () => {
