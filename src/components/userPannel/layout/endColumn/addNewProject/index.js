@@ -45,6 +45,8 @@ export default function () {
           header: content.userPannel.end_col.addNewProject.header,
           inputLabelOne: content.userPannel.end_col.addNewProject.inputLabelOne,
           inputLabelTwo: content.userPannel.end_col.addNewProject.inputLabelTwo,
+          inputLabelThree:
+            content.userPannel.end_col.addNewProject.inputLabelThree,
           rightToLeft:
             content.userPannel.end_col.addNewProject.directionButton
               .rightToLeft,

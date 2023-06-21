@@ -109,6 +109,12 @@ export default class {
           }}
           id="serach-input"
           placeholder={placeholder}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "") {
+              onClickAndGetValeFn("");
+            }
+          }}
           // placeholder="جست و جو بر اساس نام پروژه"
           className={
             "w-100 text-filed-input-v2 placeholder-v1 " +

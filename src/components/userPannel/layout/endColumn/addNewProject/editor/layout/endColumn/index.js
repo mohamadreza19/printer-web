@@ -21,8 +21,6 @@ import { PopUpInfo } from "../startColumn/PopUpInfo";
 export default function () {
   const cssClass = useDynamicCssClass();
 
-  const [is_project_sucess_edit, SetIs_project_sucess_edit_store] =
-    useRecoilState(is_project_sucess_edit_store);
   const [railsArray, setRailsArray] = useRecoilState(rails);
 
   const products = useRecoilValue(product_column);

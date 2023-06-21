@@ -255,9 +255,10 @@ export const AdminAddExcelFile_Mutation = () => {
     mutationKey: "add-product",
     mutationFn: async (payload) => {
       const { file } = payload;
-      console.log(file.constructor === Blob);
+
       const formData = new FormData();
       formData.append("excel", file, file.name);
+
       return await axios.post(`${apiUrl}/file/upload-exel/admin`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,

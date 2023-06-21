@@ -2,7 +2,8 @@ import { useDynamicCssClass } from "../../../../../../../recoil/readStore";
 import Buttons from "../../../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../../styles/__ready/Typography";
-
+import use_PictureInput_Controller from "../../../../../../../helper/admin_add_product_label/control_product_dynamic_input/";
+import { useEffect } from "react";
 export default function ({
   info = {
     picture: "",
@@ -14,7 +15,18 @@ export default function ({
   },
 }) {
   const cssClass = useDynamicCssClass();
-  console.log(info);
+  const clearState = use_PictureInput_Controller(
+    null,
+    false,
+    false,
+    false,
+    true
+  );
+  useEffect(() => {
+    return () => {
+      clearState();
+    };
+  }, []);
   return (
     <div className="w-100">
       <section className="w-100 d-flex mt-4 justify-content-center flex-column align-item-center  mt-5 ">

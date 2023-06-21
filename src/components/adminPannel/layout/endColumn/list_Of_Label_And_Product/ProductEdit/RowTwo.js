@@ -27,8 +27,6 @@ export default function ({ res }) {
   } = useAdminAdd_Product("productName");
   useEffect(() => {
     if (res.isSuccess) {
-      console.log(res);
-
       let e = {
         target: {
           value: "",
@@ -76,7 +74,7 @@ export default function ({ res }) {
           >
             <TextFieldFUN_v5
               onChange={productHandler}
-              value={productValue}
+              value={productValue || ""}
               className="add-product-label-textFelid"
             />
             <Typography.H9 className="color_danger">

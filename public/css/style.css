@@ -210,6 +210,8 @@ a {
   padding-bottom: 0.65rem !important; */
 }
 
+.editor-header-over {
+}
 .editor-header-button_extra-small {
   width: 128px !important;
   height: 64px !important;
@@ -780,10 +782,34 @@ html[dir="ltr"] .editor-end-column-r {
   height: 38px;
   border-radius: 10px;
   background: #ececec;
+  position: relative;
+}
+.editor-small-info-cell-box {
+  left: 50px;
+  width: 120px;
+  height: 50px;
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  transition: hover 2s ease-in-out 1s;
+  background-color: #ececec;
+  opacity: 0.9;
+  border-radius: 10px;
+  z-index: 5;
+}
+.editor-small-cell-box:hover .editor-small-info-cell-box {
+  display: flex;
+}
+
+.cell-regular:hover .editor-small-info-cell-box {
+  display: flex;
 }
 .editor-angle-symbol {
   position: absolute;
   /* left: 10px; */
+  width: 25px;
+  height: 25px;
   bottom: 5px;
 }
 .editor-group-button-right-box {
@@ -824,7 +850,7 @@ html[dir="ltr"] .editor-end-column-r {
   background: #ececec;
   border-radius: 10px;
 }
-.editor-cell-divider {
+.editor-big-cell-box .editor-cell-divider {
   width: 0px;
   height: 80px;
   left: 1103.75px;
@@ -946,7 +972,8 @@ html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
 }
 .edit-rail {
   height: 53.14px;
-  width: 700px;
+  /* width: 700px; */
+  min-width: 100px;
   background: #cbcbcb;
 }
 .edit-rail-child-border {
@@ -974,6 +1001,7 @@ html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
 .edit-cell-caption-text {
   font-size: 12px;
   color: #cbcbcb;
+  word-break: break-word;
   max-width: 48px;
 }
 .scale-contoller-box {

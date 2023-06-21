@@ -12,19 +12,19 @@ export default function () {
       .header;
 
   return (
-    <div className={"w-100  px-4 "}>
-      <article className="d-flex  border-bottom-gray pb-2 d-flex justify-content-between">
+    <div className={"w-100  px-4  "}>
+      <article className="d-flex  border-bottom-gray pb-3 d-flex justify-content-between">
         <section className="d-flex align-item-center">
           <Icons.AddNewProject classNameForPath="fill_black" />
           <Typography.H8 className={"font-500 " + cssClass.ms_2}>
             {content.addNewProductAndLabel}
           </Typography.H8>
         </section>
-        <section className="d-flex align-item-center">
+        {/* <section className="d-flex align-item-center">
           <Buttons.Outlined className="button_extra-large_v1">
             <Typography.H8> {content.uploadSsExcelFile}</Typography.H8>
           </Buttons.Outlined>
-        </section>
+        </section> */}
       </article>
     </div>
   );

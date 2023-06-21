@@ -7,7 +7,7 @@ import Typography from "../../../../../styles/__ready/Typography";
 import { adminRole } from "../../../../../recoil/recoilStore";
 import { useNavigate } from "react-router-dom";
 
-export default function ({ headerContent }) {
+export default function ({ headerContent, setSearch = () => {} }) {
   const { header, goToAdminList, goToUserList, searchBoxPlaceHolder } =
     headerContent;
   const cssClass = useDynamicCssClass();
@@ -33,7 +33,10 @@ export default function ({ headerContent }) {
           ) : null}
         </section>
         <section className="search_box">
-          <Textfields.v2_SearchBox placeholder={searchBoxPlaceHolder} />
+          <Textfields.v2_SearchBox
+            placeholder={searchBoxPlaceHolder}
+            onClickAndGetValeFn={setSearch}
+          />
         </section>
       </article>
     </header>

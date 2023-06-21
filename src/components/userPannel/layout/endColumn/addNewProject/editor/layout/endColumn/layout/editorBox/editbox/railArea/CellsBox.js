@@ -4,14 +4,16 @@ import { ColumnFour_justify_start } from "../../../../../../../../../../../../re
 
 import { Container } from "./layout/CellsContainer";
 import { Droppable } from "react-beautiful-dnd";
+import { railsWidth_store } from "../../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 
-export default function ({ key, customLabels, railId }) {
+export default function ({ key, customLabels = [], railId }) {
   // const cells = useCells();
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
+  const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
   //
 
   return (
-    <div className="w-100">
+    <div className="w-100 ">
       <Droppable
         droppableId={railId}
         direction="horizontal"
@@ -20,8 +22,10 @@ export default function ({ key, customLabels, railId }) {
       >
         {(provided, snapshot) => (
           <Container
+            railsWidth={railsWidth}
             key={key}
-            className={`edit-rail d-flex ${
+            // defultWidth={}
+            className={`edit-rail d-flex  ${
               justify === "right"
                 ? "justify-content-end"
                 : "justify-content-start"

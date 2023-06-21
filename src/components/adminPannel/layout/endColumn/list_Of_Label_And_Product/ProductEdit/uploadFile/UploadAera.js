@@ -85,11 +85,14 @@ export default function ({ onLoadedMeta = null, res, imageForFirstShow }) {
     }
     return null;
   };
+
   const File = () => {
     return !meta.state.file ? (
       <div
         onClick={() => {
-          document.getElementById("imgupload").click();
+          const a = document.getElementById("imgupload");
+          a.click();
+          console.log(a);
         }}
         className="height-190 d-flex justify-content-center align-item-center flex-column   "
       >
@@ -99,6 +102,7 @@ export default function ({ onLoadedMeta = null, res, imageForFirstShow }) {
           id="imgupload"
           className="d-none"
           onChange={(e) => {
+            console.log("onChange");
             e.preventDefault();
 
             const fetchedFile = e.target.files[0];
@@ -112,6 +116,7 @@ export default function ({ onLoadedMeta = null, res, imageForFirstShow }) {
           }}
           accept=".jpg,.png,.jpeg"
         />
+
         <article className="d-flex mt-3 ">
           <Typography.H8>
             تصویر محصول را بارگذاری کنید یا در این مکان بیاندازید
@@ -155,7 +160,15 @@ export default function ({ onLoadedMeta = null, res, imageForFirstShow }) {
       previewUrl: preview,
     });
   }
-  if (imageForFirstShow.isSuccess)
+  useEffect(() => {
+    return () => {
+      // meta.handeler({
+      //   file: "",
+      //   previewUrl: "",
+      // });
+    };
+  }, []);
+  if (imageForFirstShow.isSuccess || true)
     return (
       <main className="w-100 px-4">
         <div
@@ -163,7 +176,60 @@ export default function ({ onLoadedMeta = null, res, imageForFirstShow }) {
           onDrop={handleDrop}
           className=" d-flex justify-content-center mt-5 flex-column align-items-center border-dashed-gray border-r-20 "
         >
-          <File />
+          {!meta.state.file ? (
+            <div
+              onClick={() => {
+                const a = document.getElementById("imgupload");
+                a.click();
+              }}
+              className="height-190 d-flex justify-content-center align-item-center flex-column   "
+            >
+              <IconBox />
+              <input
+                type="file"
+                id="imgupload"
+                className="d-none"
+                onChange={(e) => {
+                  console.log("onChange");
+                  e.preventDefault();
+
+                  const fetchedFile = e.target.files[0];
+
+                  const preview = URL.createObjectURL(fetchedFile);
+
+                  meta.handeler({
+                    file: fetchedFile,
+                    previewUrl: preview,
+                  });
+                }}
+                accept=".jpg,.png,.jpeg"
+              />
+
+              <article className="d-flex mt-3 ">
+                <Typography.H8>
+                  تصویر محصول را بارگذاری کنید یا در این مکان بیاندازید
+                </Typography.H8>
+              </article>
+            </div>
+          ) : (
+            <div className="w-100 height-190 d-flex justify-content-start align-item-center px-4 ">
+              <img
+                className="upload-file-area-preview  img-fill"
+                src={meta.state.previewUrl}
+              />
+              <ImageUploadedTickIcon />
+              <section className={"w-100 " + cssClass.ms_2}>
+                <span>
+                  <Typography.H7 language="en" className="font-400">
+                    {meta.state.file.name}
+                  </Typography.H7>
+                </span>
+                <Onloaded />
+                <ProgressBar />
+              </section>
+            </div>
+          )}
+
           <Typography.H10 className="color_danger">
             {meta.state.validateErr}
           </Typography.H10>

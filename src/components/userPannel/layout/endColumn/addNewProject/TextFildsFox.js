@@ -20,6 +20,7 @@ export default function ({
   content = {
     inputLabelOne: " ",
     inputLabelTwo: " ",
+    inputLabelThree: "",
     rightToLeft: " ",
     leftToRight: " ",
     continueButton: " ",
@@ -36,6 +37,10 @@ export default function ({
       errMsg: "",
     },
     projectName: {
+      value: "",
+      errMsg: "",
+    },
+    railWidth: {
       value: "",
       errMsg: "",
     },
@@ -70,19 +75,31 @@ export default function ({
       },
     }));
   };
+  const handleChangeRailWidth = (event) => {
+    const value = event.target.value;
+
+    setState((draft) => ({
+      ...draft,
+      railWidth: {
+        value,
+        errMsg: "",
+      },
+    }));
+  };
   async function submitForm() {
     const direction = isRightToleft ? "right" : "left";
     setJustify(direction);
     const body = {
       createdBy: state.createdBy.value,
       projectName: state.projectName.value,
+      railWidth: state.railWidth.value,
       direction,
     };
 
     try {
       await add_project_validation(body);
 
-      mutate(body);
+      mutate({ ...body, railWidth: +body.railWidth });
     } catch (error) {
       if (error.inner) {
         error.inner.map((err) => {
@@ -138,6 +155,22 @@ export default function ({
           />
           <span className="position-absolute color_danger">
             <Typography.H9>{state.createdBy.errMsg}</Typography.H9>
+          </span>
+        </section>
+      </article>
+      <article className={"mt-4 w-60 " + cssClass.ms_2}>
+        <Typography.H8 className={"mb-2 font-400 " + ms_2}>
+          {content.inputLabelThree}
+        </Typography.H8>
+
+        <section className="w-100 position-relative">
+          <TextFieldFUN_v5
+            ImputclassName={ms_2}
+            value={state.railWidth.value}
+            onChange={handleChangeRailWidth}
+          />
+          <span className="position-absolute color_danger">
+            <Typography.H9>{state.railWidth.errMsg}</Typography.H9>
           </span>
         </section>
       </article>

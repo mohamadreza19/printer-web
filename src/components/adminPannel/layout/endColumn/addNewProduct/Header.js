@@ -8,9 +8,11 @@ import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 import { ButtonSpinnerLoading } from "../../../../../styles/__ready/common/ButtonSpinnerLoading";
-import { Check, Close } from "@mui/icons-material";
+import { Check, Close, Error } from "@mui/icons-material";
 import { AdminAddExcelFile_Mutation } from "../../../../../reactQuery/admin/callPostService";
 export default function () {
+  const [file, setFile] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDisplay_short_success_message, setIsDisplay_short_success_message] =
     useState(false);
@@ -22,10 +24,16 @@ export default function () {
   function onClickExcelUpload_Button() {
     document.getElementById("upload-excel-file").click();
   }
+
   const mutate = AdminAddExcelFile_Mutation();
+
   useEffect(() => {
     if (mutate.isLoading) {
       setLoading(true);
+    }
+    if (mutate.error) {
+      setLoading(false);
+      setError(mutate.error?.response.data.message);
     }
     if (mutate.isSuccess) {
       setLoading(false);
@@ -35,6 +43,15 @@ export default function () {
       }, 4000);
     }
   }, [mutate.status]);
+  useEffect(() => {
+    if (file) {
+      const option = {
+        file,
+      };
+      mutate.mutate(option);
+      setFile("");
+    }
+  }, [file]);
   const ContolledUploadExelButton = () => {
     if (loading) {
       return (
@@ -47,6 +64,24 @@ export default function () {
             {mutate.onLoadedMeta?.percentage}%
           </Typography.H9>
           <ButtonSpinnerLoading />
+        </Buttons.Outlined>
+      );
+    }
+    if (error) {
+      return (
+        <Buttons.Outlined
+          className="button_extra-large_v1 justify-content-between"
+          onClick={() => setLoading(false)}
+        >
+          <span
+            onClick={() => {
+              setError("");
+            }}
+          >
+            <Close />
+          </span>
+          <Typography.H10 language={language}>{error}</Typography.H10>
+          {/* <Error /> */}
         </Buttons.Outlined>
       );
     }
@@ -77,10 +112,7 @@ export default function () {
     );
   };
   function onChangeInput(e) {
-    const option = {
-      file: e.target.files[0],
-    };
-    mutate.mutate(option);
+    setFile(e.target.files[0]);
   }
   return (
     <div className={"w-100  px-4 "}>

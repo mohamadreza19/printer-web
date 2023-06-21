@@ -7,13 +7,14 @@ import {
 } from "../../../../recoil/readStore/";
 import useCachedLanguage from "../../../../utility/useCachedLanguage";
 import { User_Profile_Call } from "../../../../reactQuery/user/callGetService";
-import useFormatData from "../../../../utility/useFormetDate";
+import formatData from "../../../../utility/useFormetDate";
+import { memo } from "react";
 // const user_profile_data = {
 //   companyName: "",
 //   email: "",
 //   expiresIn: "",
 // };
-export default function () {
+const RowOne = memo(function () {
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
   const { value } = useCachedLanguage();
@@ -41,7 +42,7 @@ export default function () {
               isFa={value == "fa"}
               className={"disabled_gray2 " + cssClass.ms_2}
             >
-              {useFormatData(
+              {formatData(
                 user_profile_info_response.data.expiresIn,
                 language,
                 false
@@ -51,4 +52,5 @@ export default function () {
         </section>
       </div>
     );
-}
+});
+export default RowOne;

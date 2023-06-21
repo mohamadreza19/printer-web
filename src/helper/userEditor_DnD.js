@@ -7,11 +7,13 @@ export default class {
     destination = { index: "" },
     railsArrayPresent
   ) {
+    console.log({ findedProduct });
     const copyCells = [...findedRail.customLabels];
     const newCell = {
-      frontId: shortid.generate(),
       productId: findedProduct.id,
+      frontId: shortid.generate(),
       structure: {
+        frontId: shortid.generate(),
         isQrcode: false,
         isBarcode: false,
         isSelected: false,
@@ -29,10 +31,11 @@ export default class {
           },
         },
       },
-      product: {
-        width: findedProduct.width,
-        description: findedProduct.description.english,
-      },
+      // product: {
+      //   width: findedProduct.width,
+      //   description: findedProduct.description.english,
+      // },
+      product: findedProduct,
     };
     copyCells.splice(destination.index, 0, newCell);
     const newRails = railsArrayPresent.map((rail) => {
@@ -51,7 +54,9 @@ export default class {
     railsArrayPresent = []
   ) {
     const copyCells = [...findedRail.customLabels];
-    const cellFinded = copyCells.find((cell) => cell.frontId === draggableId);
+    const cellFinded = copyCells.find(
+      (cell) => cell.structure.frontId === draggableId
+    );
     copyCells.splice(source.index, 1);
     copyCells.splice(destination.index, 0, cellFinded);
     const newRails = railsArrayPresent.map((rail) => {

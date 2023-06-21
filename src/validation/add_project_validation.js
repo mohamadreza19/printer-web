@@ -1,22 +1,28 @@
-import { object, string } from "yup";
+import { object, string, number } from "yup";
 
 export default function (
   body = {
-    createdBy: "string",
-    projectName: "string",
+    createdBy: "",
+    projectName: "",
+    railWidth: "",
   },
   language = "fa"
 ) {
+  console.log({ bodyInValidate: body });
   let messages = {
     createdBy: {
       required: "",
-
       minLength: "",
       maxLength: "",
     },
     projectName: {
       required: "",
-
+      minLength: "",
+      maxLength: "",
+    },
+    railWidth: {
+      required: "",
+      number: "",
       minLength: "",
       maxLength: "",
     },
@@ -31,6 +37,11 @@ export default function (
         required: "نام پروژه الزامی می باشد",
         minLength: "نام پروژه نباید کمتر از چهار رقم باشد",
       },
+      railWidth: {
+        required: "طول ریل الزامی میباشد الزامی می باشد",
+        number: "طول ریل باید عدد باشد",
+        minLength: "طول ریل نباید کمتر از چهار رقم باشد",
+      },
     };
   }
   if (language == "en") {
@@ -38,11 +49,17 @@ export default function (
   if (language == "tr") {
   }
 
-  let loginSchema = object().shape({
+  let Schema = object().shape({
     createdBy: string().min(4, messages.createdBy.minLength),
     projectName: string().min(4, messages.projectName.minLength),
+    railWidth: number()
+      .typeError(messages.railWidth.number)
+      .min(4, messages.railWidth.minLength),
   });
-  return loginSchema.validate(body, {
-    abortEarly: false,
-  });
+  return Schema.validate(
+    { ...body, railWidth: +body.railWidth },
+    {
+      abortEarly: false,
+    }
+  );
 }

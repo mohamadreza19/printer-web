@@ -21,7 +21,7 @@ export default function ({
           <div
             key={child + index}
             className={`w-100 h-50 d-flex justify-content-center align-items-center
-          ${index > 0 ? "splitedColumn-border-left" : " "}
+        
           `}
           >
             <CellSplitController cellForCheck={child} railId={railId} />

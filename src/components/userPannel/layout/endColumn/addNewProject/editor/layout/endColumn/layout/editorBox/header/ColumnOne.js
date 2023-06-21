@@ -26,12 +26,17 @@ export default function () {
       setSplitRow(true);
     }
     return (
-      <section
-        onClick={onClick}
-        className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
-      >
-        <SpliteRow />
-      </section>
+      <>
+        <section
+          onClick={onClick}
+          className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
+        >
+          <SpliteRow />
+          <div className="editor-small-info-cell-box">
+            <Typography.H9>جدا سازی سطر</Typography.H9>
+          </div>
+        </section>
+      </>
     );
   };
   const JoinRowBox = () => {
@@ -44,6 +49,9 @@ export default function () {
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <JoinRow />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>ادغام سطر</Typography.H9>
+        </div>
       </section>
     );
   };
@@ -57,6 +65,9 @@ export default function () {
         onClick={onClick}
       >
         <SpliteColumn />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>جدا سازی ستون</Typography.H9>
+        </div>
       </section>
     );
   };
@@ -70,6 +81,9 @@ export default function () {
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <JoinColumn />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>ادغام ستون</Typography.H9>
+        </div>
       </section>
     );
   };

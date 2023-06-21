@@ -46,7 +46,10 @@ export const selectedCellForReadStyle = atom({
     margin: 0,
   },
 });
-
+export const railsWidth_store = atom({
+  key: "railsWidth",
+  default: 0,
+});
 export const product_column = atom({
   key: "product_column",
   default: [

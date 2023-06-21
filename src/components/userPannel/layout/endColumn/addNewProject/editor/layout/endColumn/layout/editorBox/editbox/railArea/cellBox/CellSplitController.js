@@ -3,7 +3,7 @@ import Full from "./Full";
 import SplitedColumn from "./SplitedColumn";
 import SplitedRow from "./SplitedRow";
 
-export default function ({ railId, cellForCheck, rootFrontId }) {
+export default function ({ railId, cellForCheck }) {
   const setCell = useCellReducer();
   if (cellForCheck?.split == "none") {
     return (

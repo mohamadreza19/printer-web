@@ -27,9 +27,9 @@ import {
   AdminEditProduct_Mutation,
 } from "../../../../../../../reactQuery/admin/callPutService";
 import { useEffect } from "react";
+import { AdminAddImage_Mutation } from "../../../../../../../reactQuery/admin/callPostService";
 
 export default function ({ res }) {
-  console.log(res);
   const content =
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label;
   const cssClass = useDynamicCssClass();
@@ -42,6 +42,7 @@ export default function ({ res }) {
   const mutate = AdminEditProduct_Mutation();
 
   const editImagemutate = AdminEditImage_Mutation();
+  const AddImagemutate = AdminAddImage_Mutation();
   //
   const validateFn = validatePage2();
   async function submit() {
@@ -56,28 +57,46 @@ export default function ({ res }) {
 
   useEffect(() => {
     if (mutate.isSuccess) {
-      const perviusFileId = +res.data.pictures[0].id;
+      if (res.data.pictures.length > 0) {
+        const perviusFileId = +res.data.pictures[0].id;
 
-      //
-      const picture = meta.picture;
-      const payload = {
-        perviusFileId,
-        file: picture,
-      };
-      editImagemutate.mutate(payload);
+        //
+        const picture = meta.picture;
+        const payload = {
+          perviusFileId,
+          file: picture,
+        };
+        editImagemutate.mutate(payload);
+      } else {
+        const entityType = "product";
+        const entityId = +mutate.data.id;
+
+        //
+        const picture = meta.picture;
+        const payload = {
+          entityType,
+          entityId,
+          file: picture,
+        };
+        AddImagemutate.mutate(payload);
+      }
     }
   }, [mutate.data]);
-
+  const canShowSuccess =
+    Boolean(editImagemutate.isSuccess) || Boolean(AddImagemutate.isSuccess);
+  console.log({ meta });
   if (res.data)
     return (
       <div className="w-100 ">
         <Header />
-        {!editImagemutate.isSuccess ? (
+        {!canShowSuccess ? (
           <>
             <TextFieldsBox res={res} />
             <UploadAera
               imageForFirstShow={imageForFirstShow}
-              onLoadedMeta={editImagemutate.onLoadedMeta}
+              onLoadedMeta={
+                editImagemutate.onLoadedMeta || AddImagemutate.onLoadedMeta
+              }
               res={res}
             />
             <footer className=" d-flex justify-content-end mt-6 pb-5 ">
@@ -89,7 +108,7 @@ export default function ({ res }) {
         ) : (
           <SuccessBox
             info={{
-              picture: meta.picture.file || imageForFirstShow.data,
+              picture: meta.picture || imageForFirstShow.data,
               description: () => {
                 if (language == "fa") {
                   return mutate.data.description.persian;

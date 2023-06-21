@@ -12,11 +12,13 @@ export default function ({
     frontId: " ",
     isSelected: false,
   },
-  setCell = () => {},
 }) {
   return (
     <main className="w-100 h-100 d-flex ">
       {child.children.map((child, index) => {
+        const isLeftCell = index == 0;
+        const isRightCell = index == 1;
+
         return (
           <div
             key={index}
@@ -26,7 +28,12 @@ export default function ({
             className={`w-50 h-100 d-flex justify-content-center align-items-center
             `}
           >
-            <CellSplitController cellForCheck={child} railId={railId} />
+            <CellSplitController
+              cellForCheck={child}
+              railId={railId}
+              isLeftCell={isLeftCell}
+              isRightCell={isRightCell}
+            />
           </div>
         );
       })}

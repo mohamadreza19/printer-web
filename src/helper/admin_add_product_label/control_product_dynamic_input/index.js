@@ -17,7 +17,8 @@ export default function (
   inputNameForHandle = "",
   all = false,
   safeState = false,
-  allSetState = false
+  allSetState = false,
+  wantClearAll = false
 ) {
   const language = useLanguage();
   const [productName, setProductName] = useRecoilState(productName_store);
@@ -116,6 +117,7 @@ export default function (
         setAdditionalInfo,
         SetWidth,
         SetWidthOfPrintingArea,
+        SetPicture,
       },
     };
   }
@@ -170,6 +172,56 @@ export default function (
     return {
       state: picture,
       handeler: handleSetPicture,
+    };
+  }
+  if (wantClearAll) {
+    return function () {
+      setProductName({
+        english: {
+          isShow: false,
+          value: "",
+        },
+        persian: {
+          isShow: true,
+          value: "",
+        },
+        turkish: {
+          isShow: false,
+          value: "",
+        },
+        validateErr: "",
+      });
+      SetProductLink({
+        validateErr: "",
+        value: "",
+      });
+      setAdditionalInfo({
+        english: {
+          isShow: false,
+          value: "",
+        },
+        persian: {
+          isShow: true,
+          value: "",
+        },
+        turkish: {
+          isShow: false,
+          value: "",
+        },
+      });
+      SetWidth({
+        validateErr: "",
+        value: "",
+      });
+      SetWidthOfPrintingArea({
+        validateErr: "",
+        value: "",
+      });
+      SetPicture({
+        file: "",
+        previewUrl: "",
+        validateErr: "",
+      });
     };
   }
   return showproductAllLan();

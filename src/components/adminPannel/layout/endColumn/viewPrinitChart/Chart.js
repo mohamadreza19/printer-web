@@ -88,6 +88,7 @@ export default function ({
         return newState;
       });
   }
+  console.log({ data_acording_to_scale });
   const CustomizedAxisTick = (props) => {
     const { x, y, payload } = props;
 
@@ -138,6 +139,7 @@ export default function ({
                 // tick={{ fontSize: 10 }}
                 // tick={{ fontSize: 15 }}
                 // interval={0}
+                allowDecimals={false}
               />
 
               <YAxis
@@ -147,6 +149,7 @@ export default function ({
                 tickLine={false}
                 // markerHeight={10}
                 tickMargin={10}
+                allowDecimals={false}
               />
               <Tooltip
                 content={<CustomTooltip />}

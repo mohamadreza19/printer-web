@@ -11,6 +11,7 @@ import {
   ColumnFive_duplicate,
   ColumnFive_qr,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
+import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
 export default function () {
   const [deleteAction, setdeleteDeleteAction] =
@@ -29,6 +30,9 @@ export default function () {
         className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
       >
         <Delete />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>حذف کاستوم لیبل</Typography.H9>
+        </div>
       </section>
     );
   };
@@ -42,6 +46,9 @@ export default function () {
         className="editor-small-cell-box d-flex justify-content-center align-items-center"
       >
         <Duplicate />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>کپی</Typography.H9>
+        </div>
       </section>
     );
   };
@@ -55,6 +62,9 @@ export default function () {
         className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
       >
         <OneTwo />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>بارکد</Typography.H9>
+        </div>
       </section>
     );
   };
@@ -68,6 +78,9 @@ export default function () {
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <Barcode />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>qr کد</Typography.H9>
+        </div>
       </section>
     );
   };

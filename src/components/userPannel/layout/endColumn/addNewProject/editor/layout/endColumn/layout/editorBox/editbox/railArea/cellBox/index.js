@@ -18,21 +18,55 @@ import { useRef } from "react";
 export default function ({
   children,
   cell = {
+    structure: {
+      frontId: "",
+      isSelected: false,
+    },
     product: {
-      description: "",
+      description: {
+        english: "",
+        persian: "",
+        turkish: "",
+      },
+      name: {
+        english: "",
+        persian: "",
+        turkish: "",
+      },
       width: "",
+      widthOfPrintingArea: 0,
     },
   },
   index,
   railId = "",
 }) {
+  console.log({ cell });
   const setCell = useCellReducer();
   const Description = () => {
+    function substringText(text) {
+      if (text)
+        if (text.length > 21) {
+          let textNew = text.substring(0, 20);
+          textNew = textNew.concat("...");
+          return textNew;
+        } else {
+          let textNew = text.substring(0, 20);
+          return textNew;
+        }
+    }
     return (
       <>
-        <div className="edit-cell-caption-border"></div>
+        <div
+          style={{
+            width: `${cell.product.width}`,
+          }}
+          className=" edit-cell-caption-border"
+        ></div>
         <div className="edit-cell-caption-text-box">
-          <p className="edit-cell-caption-text">{cell.product.description}</p>
+          <p className="edit-cell-caption-text">
+            {/* {cell.product.description.english} */}
+            {substringText(cell.product.name.english)}
+          </p>
         </div>
       </>
     );
@@ -69,9 +103,9 @@ export default function ({
 
   return (
     <Draggable
-      draggableId={cell.frontId}
+      draggableId={cell.structure.frontId}
       index={index}
-      key={cell.frontId}
+      key={cell.structure.frontId}
       disableInteractiveElementBlocking={true}
     >
       {(provided, snapshot) => {
@@ -82,8 +116,9 @@ export default function ({
                 style={{
                   width: `${cell.product.width}px`,
                   minWidth: `${cell.product.width}px`,
+                  height: `${cell.product.widthOfPrintingArea}px`,
                 }}
-                className="position-relative h-100"
+                className="position-relative "
               >
                 <Description />
                 <CellSplitController
@@ -98,6 +133,7 @@ export default function ({
                 ref={provided.innerRef}
                 {...provided.dragHandleProps}
                 cellWidth={cell.product.width}
+                cellWidthOfPrintingArea={cell.product.widthOfPrintingArea}
               >
                 <Description />
                 <CellSplitController

@@ -164,32 +164,28 @@ export default function () {
         }
       }
       function railController(rail) {
-        if (rail.frontId == payload.railId) {
-          const newCells = rail.customLabels.map((item) => {
-            return {
-              ...item,
-              structure: cellSplitController(item.structure),
-            };
-          });
-          return { ...rail, customLabels: newCells };
-        } else {
-          return rail;
-        }
+        const newCells = rail.customLabels.map((item) => {
+          return {
+            ...item,
+            structure: cellSplitController(item.structure),
+          };
+        });
+        return { ...rail, customLabels: newCells };
       }
 
-      // const newRails = state.present.map((rail) => {
-      //   return railController(rail);
-      // });
-
       const newRails = state.present.map((rail) => {
-        return railController_(
-          rail,
-          payload,
-          setSelectedCellForReadStyle,
-          (cell) => {},
-          (cell) => ({ ...cell, isSelected: false })
-        );
+        return railController(rail);
       });
+
+      // const newRails = state.present.map((rail) => {
+      //   return railController_(
+      //     rail,
+      //     payload,
+      //     setSelectedCellForReadStyle,
+      //     (cell) => {},
+      //     (cell) => ({ ...cell, isSelected: false })
+      //   );
+      // });
       return setState((draft) => {
         return {
           ...draft,
@@ -219,80 +215,7 @@ export default function () {
       };
       return HistoryChanger(NewHistory);
     }
-    // if (action == cellAction.DELETECONTENT) {
-    //   function cellSplitController(cell) {
-    //     function fullCellChecker(cellForcheck) {
-    //       if (cellForcheck.frontId == payload.cellId) {
-    //         const copy = [...cellForcheck.contents];
-    //         copy.pop();
-    //         return { ...cellForcheck, contents: copy };
-    //       }
 
-    //       return cellForcheck;
-    //     }
-    //     function verticalCellChecker(cellForcheck) {
-    //       const newChilren = cellForcheck.structure.children.map((child) => {
-    //         if (child.structure.split == "none") {
-    //           return fullCellChecker(child);
-    //         }
-    //         if (child.structure.split == "vertical") {
-    //           return verticalCellChecker(child);
-    //         }
-    //         if (child.structure.split == "horizontal") {
-    //           return horizontalCellChecker(child);
-    //         }
-    //         return child;
-    //       });
-    //       return { ...cellForcheck, children: newChilren };
-    //     }
-    //     function horizontalCellChecker(cellForcheck) {
-    //       console.log(cellForcheck);
-    //       const newChilren = cellForcheck.structure.children.map((child) => {
-    //         if (child.structure.split == "none") {
-    //           return fullCellChecker(child);
-    //         }
-    //         if (child.structure.split == "vertical") {
-    //           return verticalCellChecker(child);
-    //         }
-    //         if (child.structure.split == "horizontal") {
-    //           return horizontalCellChecker(child);
-    //         }
-    //         return child;
-    //       });
-    //       return { ...cellForcheck, children: newChilren };
-    //     }
-
-    //     if (cell.structure.split == "none") {
-    //       return fullCellChecker(cell);
-    //     }
-    //     if (cell.structure.split == "vertical") {
-    //       return verticalCellChecker(cell);
-    //     }
-    //     if (cell.structure.split == "horizontal") {
-    //       return horizontalCellChecker(cell);
-    //     }
-    //     return cell;
-    //   }
-    //   const findedRail = present.find(
-    //     (rail) => rail.frontId === payload.railId
-    //   );
-
-    //   const newCells = findedRail.customLabels.map((item) => {
-    //     return cellSplitController(item);
-    //   });
-    //   const newRails = present.map((rail) => {
-    //     if (rail.frontId == payload.railId) {
-    //       return { ...rail, customLabels: newCells };
-    //     }
-    //     return rail;
-    //   });
-
-    //   const NewHistory = {
-    //     type: "SET_HISTORY",
-    //     value: newRails,
-    //   };
-    //   return HistoryChanger(NewHistory);
-    // }
     if (action == cellAction.SPLITCOLUMN) {
       //requirement
       //action
@@ -495,6 +418,7 @@ export default function () {
 
         return cellForSplit;
       }
+
       const findedRail = present.find(
         (rail) => rail.frontId === payload.railId
       );
@@ -1082,7 +1006,7 @@ export default function () {
       newCell = cellSplitController(newCell);
 
       const copyCells = [...findedRail.customLabels];
-      console.log({ newCell });
+
       copyCells.splice(findedCellIndex, 0, newCell);
 
       // const newRail = { ...findedRail, customLabels: copyCells };

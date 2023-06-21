@@ -11,6 +11,7 @@ import {
   Undo,
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
 import useCellReducer from "../../../../../../../../../../../recoil/reducer/useCellReducer";
+import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
 export default function () {
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
@@ -26,25 +27,37 @@ export default function () {
         setJustify("left");
       }
     }
-    console.log({ justify });
+
     return (
       <footer className="d-flex">
-        <section
-          onClick={() => onClick("right")}
-          className={`editor-small-cell-box me-2 d-flex justify-content-center align-items-center ${
-            justify == "right" && "opacity-4"
-          }`}
-        >
-          <RightToLeft />
-        </section>
-        <section
-          onClick={() => onClick("left")}
-          className={`editor-small-cell-box d-flex justify-content-center align-items-center ${
-            justify == "left" && "opacity-4"
-          }`}
-        >
-          <LeftToRight />
-        </section>
+        <article className="position-relative">
+          <section onClick={() => onClick("right")} className="cell-regular">
+            <div
+              className={`editor-small-cell-box me-2 d-flex justify-content-center align-items-center ${
+                justify == "right" && "opacity-4"
+              }`}
+            >
+              <RightToLeft />
+            </div>
+            <div className="editor-small-info-cell-box">
+              <Typography.H9>چینش راست به چپ</Typography.H9>
+            </div>
+          </section>
+        </article>
+        <article className="position-relative">
+          <section onClick={() => onClick("left")} className="cell-regular">
+            <div
+              className={`editor-small-cell-box d-flex justify-content-center align-items-center ${
+                justify == "left" && "opacity-4"
+              }`}
+            >
+              <LeftToRight />
+            </div>
+            <div className="editor-small-info-cell-box">
+              <Typography.H9>چینش چپ به راست</Typography.H9>
+            </div>
+          </section>
+        </article>
       </footer>
     );
   };
@@ -54,14 +67,20 @@ export default function () {
     }
 
     return (
-      <section
-        onClick={onClick}
-        className={`editor-small-cell-box me-2 d-flex justify-content-center align-items-center ${
-          useRedo ? "" : "opacity-4"
-        }`}
-      >
-        <Redo />
-      </section>
+      <article className="position-relative">
+        <section onClick={onClick} className="cell-regular">
+          <div
+            className={`editor-small-cell-box me-2 d-flex justify-content-center align-items-center ${
+              useRedo ? "" : "opacity-4"
+            }`}
+          >
+            <Redo />
+          </div>
+          <div className="editor-small-info-cell-box">
+            <Typography.H9>رفتن به جلو</Typography.H9>
+          </div>
+        </section>
+      </article>
     );
   };
   const UndoBox = () => {
@@ -69,14 +88,20 @@ export default function () {
       setCell(undefined, "UNDO");
     }
     return (
-      <section
-        onClick={onClick}
-        className={`editor-small-cell-box d-flex justify-content-center align-items-center ${
-          useUndo ? "" : "opacity-4"
-        }`}
-      >
-        <Undo />
-      </section>
+      <article className="position-relative">
+        <section onClick={onClick} className="cell-regular">
+          <div
+            className={`editor-small-cell-box d-flex justify-content-center align-items-center ${
+              useUndo ? "" : "opacity-4"
+            }`}
+          >
+            <Undo />
+          </div>
+          <div className="editor-small-info-cell-box">
+            <Typography.H9>بازگشت به قبل</Typography.H9>
+          </div>
+        </section>
+      </article>
     );
   };
   return (

@@ -122,6 +122,7 @@ export const content_Based_Language = selector({
                 header: "Please enter your project information",
                 inputLabelOne: "project name",
                 inputLabelTwo: "Name of the creator",
+                inputLabelThree: "Width of Rail",
                 directionButton: {
                   rightToLeft: "Sort from right to left",
                   leftToRight: "Sort from left to right",
@@ -361,6 +362,7 @@ export const content_Based_Language = selector({
                 header: "لطفا اطلاعات پروژه خود را وارد کنید",
                 inputLabelOne: " نام پروژه",
                 inputLabelTwo: "نام سازنده",
+                inputLabelThree: "عرض ریل",
                 directionButton: {
                   rightToLeft: "چینش از راست به چپ",
                   leftToRight: "چینش از چپ به راست",
@@ -602,6 +604,7 @@ export const content_Based_Language = selector({
                 header: "Lütfen proje bilgilerinizi giriniz",
                 inputLabelOne: "proje Adı",
                 inputLabelTwo: "yaratıcı adı",
+                inputLabelThree: "Ray Genişliği",
                 directionButton: {
                   rightToLeft: "Sağdan sola sırala",
                   leftToRight: "Soldan sağa sırala",

@@ -114,6 +114,9 @@ export default function () {
           <Typography.H8>{cellForReadStyle.fontFamily}</Typography.H8>
           <FontsMenu />
         </span>
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>ادغام ستون</Typography.H9>
+        </div>
       </section>
     );
   };

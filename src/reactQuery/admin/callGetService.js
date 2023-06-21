@@ -126,7 +126,7 @@ export const AdminUsers = (search, order = "ASC") => {
   initialUrl = initialUrl.concat(`order=${order}&`);
 
   const result = useInfiniteQuery({
-    queryKey: ["admin-users", admins_and_users_key],
+    queryKey: ["admin-users", admins_and_users_key, search],
 
     queryFn: ({ pageParam = initialUrl }) => api_get.users(token, pageParam),
 

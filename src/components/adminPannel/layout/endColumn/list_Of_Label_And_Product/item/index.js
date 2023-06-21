@@ -36,7 +36,7 @@ export default function ({
 }) {
   const cssClass = useDynamicCssClass();
   //
-  console.log({ item });
+
   const deleteProduct_mutate = AdminDelete_Product_Mutation();
   const deleteLabel_mutate = AdminDelete_Label_Mutation();
   const imageRes = Admin_User_Image("admin");
