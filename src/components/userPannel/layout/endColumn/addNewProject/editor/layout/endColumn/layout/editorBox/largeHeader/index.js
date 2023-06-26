@@ -1,33 +1,8 @@
-import { Grid } from "@mui/material";
-import { useDynamicCssClass } from "../../../../../../../../../../../recoil/readStore/index";
 import {
-  Angle,
-  Barcode,
-  CubeSpace,
-  Delete,
-  Down,
-  DropDown,
-  Duplicate,
-  JoinColumn,
-  JoinRow,
-  LeftToRight,
-  OneTwo,
-  Redo,
-  RightToLeft,
-  SpliteColumn,
-  SpliteRow,
-  Text,
-  TextBold,
-  TextCenter,
-  TextItalic,
-  TextLeft,
-  TextRight,
-  TextSize,
-  TextUnderLine,
-  Undo,
-  Up,
-} from "../../../../../../../../../../../styles/__ready/EditorIcons";
-import Typography from "../../../../../../../../../../../styles/__ready/Typography";
+  useContent_Based_Language,
+  useDynamicCssClass,
+} from "../../../../../../../../../../../recoil/readStore/index";
+
 import ColumnFive from "./ColumnFive";
 import ColumnFour from "./ColumnFour";
 import ColumnOne from "./ColumnOne";
@@ -36,6 +11,7 @@ import ColumnTwo from "./ColumnTwo";
 
 export default function () {
   const cssClass = useDynamicCssClass();
+  const content = useContent_Based_Language();
   const Divider = () => {
     return <div className="editor-cell-divider mx-0_8rem"></div>;
   };
@@ -49,13 +25,37 @@ export default function () {
         }}
         className="w-100 bg_gray2  border-r-20 d-flex align-items-center justify-content-center  "
       >
-        <ColumnOne />
+        <ColumnOne
+          mergeRowContent={
+            content.userPannel.editor.endColumn.editorHeader.mergeRow
+          }
+          rowSeparatorContent={
+            content.userPannel.editor.endColumn.editorHeader.rowSeparator
+          }
+          mergeColumnContent={
+            content.userPannel.editor.endColumn.editorHeader.mergeColumn
+          }
+          columnSeparatorContent={
+            content.userPannel.editor.endColumn.editorHeader.columnSeparator
+          }
+        />
         <Divider />
         <ColumnTwo />
         <ColumnThree />
         <ColumnFour />
         <Divider />
-        <ColumnFive />
+        <ColumnFive
+          deleteContent={
+            content.userPannel.editor.endColumn.editorHeader.delete
+          }
+          copyContent={content.userPannel.editor.endColumn.editorHeader.copy}
+          barcodeContent={
+            content.userPannel.editor.endColumn.editorHeader.barcode
+          }
+          qrcodeContent={
+            content.userPannel.editor.endColumn.editorHeader.QRCode
+          }
+        />
       </div>
     </div>
   );

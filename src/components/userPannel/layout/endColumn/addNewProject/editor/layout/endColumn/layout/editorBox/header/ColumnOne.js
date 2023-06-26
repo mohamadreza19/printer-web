@@ -15,7 +15,12 @@ import {
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
-export default function () {
+export default function ({
+  mergeRowContent,
+  rowSeparatorContent,
+  mergeColumnContent,
+  columnSeparatorContent,
+}) {
   const setCell = useCellReducer();
   const [splitColumn, setSplitColumn] = useRecoilState(ColumnOne_splitColumn);
   const [splitRow, setSplitRow] = useRecoilState(ColumnOne_splitRow);
@@ -33,7 +38,7 @@ export default function () {
         >
           <SpliteRow />
           <div className="editor-small-info-cell-box">
-            <Typography.H9>جدا سازی سطر</Typography.H9>
+            <Typography.H9>{rowSeparatorContent}</Typography.H9>
           </div>
         </section>
       </>
@@ -50,7 +55,7 @@ export default function () {
       >
         <JoinRow />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>ادغام سطر</Typography.H9>
+          <Typography.H9>{mergeRowContent}</Typography.H9>
         </div>
       </section>
     );
@@ -66,7 +71,7 @@ export default function () {
       >
         <SpliteColumn />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>جدا سازی ستون</Typography.H9>
+          <Typography.H9> {columnSeparatorContent}</Typography.H9>
         </div>
       </section>
     );
@@ -82,7 +87,7 @@ export default function () {
       >
         <JoinColumn />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>ادغام ستون</Typography.H9>
+          <Typography.H9>{mergeColumnContent}</Typography.H9>
         </div>
       </section>
     );

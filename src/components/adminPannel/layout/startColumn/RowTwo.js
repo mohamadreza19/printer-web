@@ -188,7 +188,7 @@ export default function () {
   };
 
   const Setting = () => {
-    const dynamicColor = pathname.includes("prining-history")
+    const dynamicColor = pathname.includes("setting")
       ? {
           bg: "bg_primary ",
           color: "color-white ",
@@ -200,19 +200,21 @@ export default function () {
           fill: "fill_secondray_v2",
         };
     return (
-      <Buttons.Contained_Custom
-        className={
-          "w-100 d-flex justify-content-start py-3  px-3 border-r-20 " +
-          dynamicColor.bg
-        }
-      >
-        <Icons.Setting classNameForPath={dynamicColor.fill} />
-        <Typography.H7
-          className={+dynamicColor.color + " font-200 " + cssClass.ms_2}
+      <Link to={"/admin/setting"}>
+        <Buttons.Contained_Custom
+          className={
+            "w-100 d-flex justify-content-start py-3  px-3 border-r-20 " +
+            dynamicColor.bg
+          }
         >
-          {buttonsText.settings}
-        </Typography.H7>
-      </Buttons.Contained_Custom>
+          <Icons.Setting classNameForPath={dynamicColor.fill} />
+          <Typography.H7
+            className={+dynamicColor.color + " font-200 " + cssClass.ms_2}
+          >
+            {buttonsText.settings}
+          </Typography.H7>
+        </Buttons.Contained_Custom>
+      </Link>
     );
   };
 

@@ -40,7 +40,6 @@ export default function ({
   index,
   railId = "",
 }) {
-  console.log({ cell });
   const setCell = useCellReducer();
   const Description = () => {
     function substringText(text) {
@@ -137,6 +136,7 @@ export default function ({
               >
                 <Description />
                 <CellSplitController
+                  railId={railId}
                   cellForCheck={{ ...cell.structure, frontId: cell.frontId }}
                   // rootFrontId={cell.frontId}
                 />

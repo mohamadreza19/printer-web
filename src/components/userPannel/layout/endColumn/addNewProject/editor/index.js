@@ -1,8 +1,7 @@
 import { Grid } from "@mui/material";
 import EndColumn from "./layout/endColumn";
 import StartColumn from "./layout/startColumn";
-import IconBox from "./layout/startColumn/IconBox";
-import SuccessBox from "../successBox";
+
 import { useEffect } from "react";
 import { setUser_project_findOne } from "../../../../../../reactQuery/querykey/user_key";
 

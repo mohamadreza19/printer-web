@@ -1,5 +1,8 @@
 import { Grid } from "@mui/material";
-import { useDynamicCssClass } from "../../../../../../../../../../../recoil/readStore/index";
+import {
+  useContent_Based_Language,
+  useDynamicCssClass,
+} from "../../../../../../../../../../../recoil/readStore/index";
 import {
   Angle,
   Barcode,
@@ -36,6 +39,8 @@ import ColumnTwo from "./ColumnTwo";
 
 export default function () {
   const cssClass = useDynamicCssClass();
+  const content = useContent_Based_Language();
+
   const Divider = () => {
     return <div className="editor-cell-divider mx-0_8rem"></div>;
   };
@@ -49,13 +54,28 @@ export default function () {
         }}
         className="w-100 bg_gray2  border-r-20 d-flex align-items-center  justify-content-center"
       >
-        <ColumnOne />
+        <ColumnOne
+          mergeRowContent={
+            content.userPannel.editor.endColumn.editorHeader.mergeRow
+          }
+          rowSeparatorContent={
+            content.userPannel.editor.endColumn.editorHeader.rowSeparator
+          }
+          mergeColumnContent={
+            content.userPannel.editor.endColumn.editorHeader.mergeColumn
+          }
+          columnSeparatorContent={
+            content.userPannel.editor.endColumn.editorHeader.columnSeparator
+          }
+        />
         <Divider />
         <ColumnTwo />
         <ColumnThree />
         <ColumnFour />
         <Divider />
-        <ColumnFive />
+        <ColumnFive
+          content={content.userPannel.editor.endColumn.editorHeader}
+        />
       </div>
     </div>
   );

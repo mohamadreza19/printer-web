@@ -16,10 +16,12 @@ import useHandleLanguage_Based_CachedLanguage from "./utility/useHandleLanguage_
 import { useLanguage } from "./recoil/readStore";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "./styles/__ready/Toasts";
+import useGeneralCallApi from "./utility/useGeneralCallApi";
 
 function App() {
   useHandleDirection_Based_Langiage();
   useHandleLanguage_Based_CachedLanguage();
+
   const queryClient = new QueryClient();
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackComponent}>

@@ -13,7 +13,12 @@ import {
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
-export default function () {
+export default function ({
+  deleteContent,
+  copyContent,
+  barcodeContent,
+  qrcodeContent,
+}) {
   const [deleteAction, setdeleteDeleteAction] =
     useRecoilState(ColumnFive_delete);
   const [duplicateAction, setDuplicateAction] =
@@ -81,7 +86,7 @@ export default function () {
           }}
           className="d-flex justify-content-end align-items-center"
         >
-          <Typography.H9_5>حذف</Typography.H9_5>
+          <Typography.H9_5>{deleteContent}</Typography.H9_5>
           <DeleteBox />
         </section>
         <section
@@ -90,7 +95,7 @@ export default function () {
           }}
           className="d-flex justify-content-end align-items-center"
         >
-          <Typography.H9_5 className="me-2">کپی </Typography.H9_5>
+          <Typography.H9_5 className="me-2">{copyContent}</Typography.H9_5>
           <DuplicateBox />
         </section>
       </header>
@@ -101,7 +106,7 @@ export default function () {
           }}
           className="d-flex justify-content-end align-items-center "
         >
-          <Typography.H9_5 className="me-2">شماره زن</Typography.H9_5>
+          <Typography.H9_5 className="me-2">{barcodeContent}</Typography.H9_5>
           <BarcodeBox />
         </section>
         <section
@@ -110,7 +115,7 @@ export default function () {
           }}
           className="d-flex justify-content-end align-items-center"
         >
-          <Typography.H9_5 className="me-2">افزودن بارکد/Qr</Typography.H9_5>
+          <Typography.H9_5 className="me-2">{qrcodeContent}</Typography.H9_5>
           <QrcodeBox />
         </section>
       </footer>

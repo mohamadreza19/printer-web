@@ -19,6 +19,9 @@ import {
 } from "../../../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import { useEffect } from "react";
 import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
+import { symbolUsed_store } from "../../../../../../../../../../../../../recoil/userEditorStore/showSymbol_store";
+import { Admin_User_Symbol } from "../../../../../../../../../../../../../reactQuery/common/callGetService";
+import styled from "styled-components";
 
 export default function ({
   railId = "",
@@ -34,12 +37,12 @@ export default function ({
     isBarcode: false,
     isQrcode: false,
     isSelected: false,
+    symbolId: null,
   },
   // rootFrontId = "",
   setCell = () => {},
 }) {
   const isSelection = useSelection();
-
   const [splitColumn, setSplitColumn] = useRecoilState(ColumnOne_splitColumn);
   const [splitRow, setSplitRow] = useRecoilState(ColumnOne_splitRow);
   const [joinColumn, setJoinColumn] = useRecoilState(ColumnOne_joinColumn);
@@ -54,6 +57,9 @@ export default function ({
     useRecoilState(ColumnThree_fontSize);
   const [bacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
   const [qrWant, setQrWant] = useRecoilState(ColumnFive_qr);
+  const [symbolUsed, setSymbolUsed] = useRecoilState(symbolUsed_store);
+
+  const symbolDetail = Admin_User_Symbol("user");
 
   function handleSelectCell_Via_onClick() {
     if (!cell.parentId && !cell.isSelected) {
@@ -91,6 +97,12 @@ export default function ({
     setCell(payload, "DELETECONTENT");
   }
 
+  useEffect(() => {
+    if ("symbolId" in cell) {
+      symbolDetail.mutate({ id: cell.symbolId });
+    }
+  }, [cell.symbolId]);
+  // console.log({ data: symbolDetail.data });
   useEffect(() => {
     if (cell.isSelected) {
       if (splitColumn) {
@@ -275,6 +287,18 @@ export default function ({
         setCell(payload, "QRCODE");
         setQrWant(false);
       }
+      if (symbolUsed.isUsed) {
+        const payload = {
+          railId: railId,
+          cellId: cell.frontId,
+          symbolId: symbolUsed.payload,
+        };
+        setCell(payload, "SETSYMBOL");
+        setSymbolUsed({
+          isUsed: false,
+          payload: "",
+        });
+      }
     }
   }, [
     splitColumn,
@@ -290,7 +314,9 @@ export default function ({
     cellPadding.isUsed,
     bacodeWant,
     qrWant,
+    symbolUsed.isUsed,
   ]);
+  // console.log({ symbolDetail });
 
   return (
     <main
@@ -305,16 +331,60 @@ export default function ({
         overflow: "hidden",
       }}
     >
-      <Editor_Cell_Input
-        value={cell.content.text}
-        disabled={cell.isSelected}
-        onChange={handleChangeValue}
-        onBackspaceDown={handleDeleteContent}
-        style={cell.content.style}
-        isBarcode={cell.isBarcode}
-        isQrcode={cell.isQrcode}
-        // font={font.font}
-      />
+      {"symbolId" in cell && symbolDetail.isSuccess ? (
+        <ImageContainer
+          src={URL.createObjectURL(symbolDetail.data)}
+          style={cell.content.style}
+        />
+      ) : (
+        <Editor_Cell_Input
+          value={cell.content.text}
+          disabled={cell.isSelected}
+          onChange={handleChangeValue}
+          onBackspaceDown={handleDeleteContent}
+          style={cell.content.style}
+          isBarcode={cell.isBarcode}
+          isQrcode={cell.isQrcode}
+          // font={font.font}
+        />
+      )}
     </main>
   );
 }
+
+const ImageContainer = ({
+  style = {
+    angle: 0,
+    fontFamily: "0",
+    fontSize: 0,
+    fontStyle: "regular",
+    margin: 0,
+    padding: 0,
+    textAlign: "",
+    textDirecton: "",
+  },
+  src,
+}) => {
+  console.log({ style });
+
+  return (
+    <Container
+      imageSize={style.fontSize}
+      angle={style.angle}
+      ImageDirecton={style.textAlign}
+    >
+      <img src={src} className="w-100 h-100" />
+    </Container>
+  );
+};
+// <img src={URL.createObjectURL(symbolDetail.data)} />
+const Container = styled.div`
+  width: ${({ imageSize }) => imageSize}px;
+  height: ${({ imageSize }) => imageSize}px;
+  rotate: ${({ angle }) => angle}deg;
+  margin: ${({ ImageDirecton }) => {
+    if (ImageDirecton === "right") return "0 0 0 auto";
+    if (ImageDirecton === "center") return "0 auto 0 auto";
+    if (ImageDirecton === "left") return "0 auto 0 0";
+  }};
+`;

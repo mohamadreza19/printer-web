@@ -59,6 +59,7 @@ export default class {
       });
     }
   }
+
   static async prints_excel(token = "", pageParam) {
     try {
       const res = await axios.get(pageParam, {

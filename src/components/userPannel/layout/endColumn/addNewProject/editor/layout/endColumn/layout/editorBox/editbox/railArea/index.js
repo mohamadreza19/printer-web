@@ -23,7 +23,7 @@ export default function ({
     );
   };
   const railsWidth = useRecoilValue(railsWidth_store);
-
+  console.log({ rail });
   return (
     <div
       className="w-100 d-flex align-items-end  mb-3 pt-3"

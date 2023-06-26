@@ -19,4 +19,5 @@ export default {
   QRCODE: "QRCODE",
   UNDO: "UNDO",
   REDO: "REDO",
+  SETSYMBOL: "SETSYMBOL",
 };

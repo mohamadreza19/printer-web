@@ -144,6 +144,29 @@ export const content_Based_Language = selector({
                 print: "print",
               },
             },
+            editor: {
+              startColumn: {},
+              endColumn: {
+                rootHeader: {
+                  addNewProject: "Add new project",
+                  editor: "editor",
+                  Output: "Output",
+                  print: "print",
+                  saveAndContinue: "Save and continue",
+                },
+                editorHeader: {
+                  rowSeparator: "row separator",
+                  mergeRow: "Merge row",
+                  columnSeparator: "col separator",
+                  mergeColumn: "Merge col",
+                  //
+                  delete: "Delete",
+                  barcode: "barcode",
+                  copy: "copy",
+                  QRCode: "QR code",
+                },
+              },
+            },
           },
           AdminPannel: {
             start_col: {
@@ -382,6 +405,29 @@ export const content_Based_Language = selector({
                 downloadExcel: "دریافت فایل اکسل",
                 reprint: "چاپ مجدد",
                 print: "چاپ",
+              },
+            },
+            editor: {
+              startColumn: {},
+              endColumn: {
+                rootHeader: {
+                  addNewProject: "افزودن پروژه جدید",
+                  editor: "editor",
+                  Output: "خروجی گرفتن",
+                  print: "چاپ",
+                  saveAndContinue: "ذخیره سازی و ادامه",
+                },
+                editorHeader: {
+                  rowSeparator: "جدا سازی سطر",
+                  mergeRow: "ادغام سطر",
+                  columnSeparator: "جدا سازی ستون",
+                  mergeColumn: "ادغام ستون",
+                  //
+                  delete: "حذف",
+                  barcode: "بارکد",
+                  copy: "کپی",
+                  QRCode: "qr کد",
+                },
               },
             },
           },
@@ -624,6 +670,29 @@ export const content_Based_Language = selector({
                 downloadExcel: "exceli indir",
                 reprint: "yeniden basmak",
                 print: "yeniden",
+              },
+            },
+            editor: {
+              startColumn: {},
+              endColumn: {
+                rootHeader: {
+                  addNewProject: "Yeni proje ekle",
+                  editor: "editör",
+                  Output: "Çıktı",
+                  print: "Yazdır",
+                  saveAndContinue: "Kaydet ve devam Et",
+                },
+                editorHeader: {
+                  rowSeparator: "satır ayırıcı",
+                  mergeRow: "Satırı birleştir",
+                  columnSeparator: "sütun ayırıcı",
+                  mergeColumn: "Birleştirme stu",
+                  //
+                  delete: "Silmek",
+                  barcode: "barkod",
+                  copy: "kopyalamak",
+                  QRCode: "QR kod",
+                },
               },
             },
           },

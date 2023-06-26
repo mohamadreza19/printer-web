@@ -21,6 +21,25 @@ export default class {
       });
     }
   }
+  static async admin_user_symbol(token = "", id = "") {
+    try {
+      const res = await axios.get(`${apiUrl}/symbol/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
   static async admin_user_labelList(token = "", pageParam, languageHeader) {
     console.log({ languageHeader });
     try {
@@ -57,6 +76,24 @@ export default class {
       });
     } catch (error) {
       console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async symbols(token = "", pageParam) {
+    try {
+      const res = await axios.get(`${apiUrl}/${pageParam}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      // console.log(error);
       return new Promise((_, reject) => {
         reject(error.message);
       });

@@ -1,4 +1,5 @@
 import {
+  useContent_Based_Language,
   useDynamicCssClass,
   useLanguage,
 } from "../../../../../../../../recoil/readStore";
@@ -19,6 +20,8 @@ export default function () {
 
   const beForward = language == "fa" ? true : false;
   const cssClass = useDynamicCssClass();
+  const content =
+    useContent_Based_Language().userPannel.editor.endColumn.rootHeader;
   const navigate = useNavigate();
 
   const profile_state = useRecoilValue(profile_store);
@@ -59,7 +62,7 @@ export default function () {
             pathClassName="fill_disabled"
             beForward={beForward}
           />
-          <Typography.H8 className="">افزودن پروژه جدید</Typography.H8>
+          <Typography.H8 className="">{content.addNewProject}</Typography.H8>
         </section>
         <section className="d-flex">
           <Icons.Back
@@ -79,18 +82,20 @@ export default function () {
             pathClassName="fill_disabled"
             beForward={beForward}
           />
-          <Typography.H8 className="">ادیتور</Typography.H8>
+          <Typography.H8 className="">{content.editor}</Typography.H8>
         </section>
       </article>
       <article className="d-flex">
         <Buttons.Outlined className="editor-header-button_extra-medium">
           <Icons.Editor_ExportFile size="large" />
-          <Typography.H7 className={cssClass.ms_1}>خروجی گرفتن</Typography.H7>
+          <Typography.H7 className={cssClass.ms_1}>
+            {content.Output}
+          </Typography.H7>
         </Buttons.Outlined>
         <Buttons.Contained className="editor-header-button_extra-small mx-3">
           <Icons.Editor_Print size="large" />
           <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-            چاپ
+            {content.print}
           </Typography.H7>
         </Buttons.Contained>
         <Buttons.Contained
@@ -99,7 +104,7 @@ export default function () {
         >
           <Icons.Editor_Save size="medium" />
           <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-            ذخیره سازی و ادامه
+            {content.saveAndContinue}
           </Typography.H7>
         </Buttons.Contained>
       </article>

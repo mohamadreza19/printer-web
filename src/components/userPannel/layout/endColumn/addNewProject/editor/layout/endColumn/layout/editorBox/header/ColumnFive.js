@@ -13,7 +13,7 @@ import {
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
-export default function () {
+export default function ({ content }) {
   const [deleteAction, setdeleteDeleteAction] =
     useRecoilState(ColumnFive_delete);
   const [duplicateAction, setDuplicateAction] =
@@ -31,7 +31,7 @@ export default function () {
       >
         <Delete />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>حذف کاستوم لیبل</Typography.H9>
+          <Typography.H9>{content.delete}</Typography.H9>
         </div>
       </section>
     );
@@ -47,7 +47,7 @@ export default function () {
       >
         <Duplicate />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>کپی</Typography.H9>
+          <Typography.H9>{content.copy}</Typography.H9>
         </div>
       </section>
     );
@@ -63,7 +63,7 @@ export default function () {
       >
         <OneTwo />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>بارکد</Typography.H9>
+          <Typography.H9>{content.barcode}</Typography.H9>
         </div>
       </section>
     );
@@ -79,7 +79,7 @@ export default function () {
       >
         <Barcode />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>qr کد</Typography.H9>
+          <Typography.H9>{content.QRCode}</Typography.H9>
         </div>
       </section>
     );

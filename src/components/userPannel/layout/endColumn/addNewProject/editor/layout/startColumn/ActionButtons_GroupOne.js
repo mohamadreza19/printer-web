@@ -1,5 +1,8 @@
+import { memo } from "react";
 import { useLanguage } from "../../../../../../../../recoil/readStore";
+import { useShowSymbolPopUp_reducer } from "../../../../../../../../recoil/userEditorStore/showSymbol_store";
 import Icons from "../../../../../../../../styles/__ready/Icons";
+import SymbolPopUp from "../symbolPopUp/SymbolPopUp";
 
 export default function ({
   selectedActionButton,
@@ -12,6 +15,10 @@ export default function ({
   useUseShape,
 }) {
   const language = useLanguage();
+  const { TOGGLE } = useShowSymbolPopUp_reducer();
+  function onClickShape() {
+    TOGGLE();
+  }
 
   const Select = ({ is }) => {
     let changedColor = {
@@ -94,23 +101,38 @@ export default function ({
       </section>
     );
   };
-  const Shape = ({ is }) => {
-    let changedColor = {
-      bg: " ",
-      iconFill: " ",
-    };
-    changedColor = is
-      ? (changedColor = {
-          bg: "editor-action-buttons-bg-primary",
-          iconFill: "fill_white",
-        })
-      : (changedColor = {
-          bg: "editor-action-buttons-bg-white",
-          iconFill: "fill_primary ",
-        });
-    return (
+
+  return (
+    <div className="w-100 d-flex flex-column align-items-center ">
+      <Select is={useSelection} />
+      <View is={useView} />
+      <Text is={useUseText} />
+      <Shape is={useUseShape} onClickShape={onClickShape} language={language} />
+    </div>
+  );
+}
+const Shape = ({ is, onClickShape, language }) => {
+  let changedColor = {
+    bg: " ",
+    iconFill: " ",
+  };
+  changedColor = is
+    ? (changedColor = {
+        bg: "editor-action-buttons-bg-primary",
+        iconFill: "fill_white",
+      })
+    : (changedColor = {
+        bg: "editor-action-buttons-bg-white",
+        iconFill: "fill_primary ",
+      });
+  return (
+    <div className="position-relative">
+      <SymbolPopUp />
       <section
-        onClick={() => handeler(actions.SHAPE)}
+        onClick={() => {
+          // handeler(actions.SHAPE);
+          onClickShape();
+        }}
         className={
           "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem position-relative " +
           changedColor.bg
@@ -127,15 +149,6 @@ export default function ({
           <Icons.Footer_Shape pathClassName={changedColor.iconFill} />
         </div>
       </section>
-    );
-  };
-
-  return (
-    <div className="w-100 d-flex flex-column align-items-center ">
-      <Select is={useSelection} />
-      <View is={useView} />
-      <Text is={useUseText} />
-      <Shape is={useUseShape} />
     </div>
   );
-}
+};

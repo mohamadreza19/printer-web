@@ -1,4 +1,9 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
 import { apiUrl } from "../../services/urlStore";
 
@@ -6,9 +11,12 @@ import api_get from "../../services/common/api_get";
 import useCachedToken from "../../utility/useCachedToken";
 import useToastReducer from "../../recoil/reducer/useToastReducer";
 import { useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { product_column } from "../../recoil/userEditorStore/cellsStore";
-import { admin_user_image, admin_user_productList } from "../querykey/common";
+
+import {
+  admin_user_image,
+  admin_user_productList,
+  admin_user_symbolList,
+} from "../querykey/common";
 import { useLanguage } from "../../recoil/readStore";
 
 export const Admin_User_Image = (role = "admin") => {
@@ -24,6 +32,45 @@ export const Admin_User_Image = (role = "admin") => {
       const currentToken =
         role === "admin" ? adminToken.value : userToken.value;
       return api_get.admin_user_image(currentToken, fileId);
+    },
+  });
+  const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+  // console.log(result);
+  return result;
+};
+export const Admin_User_Symbol = (role = "admin") => {
+  const adminToken = useAdmin_CachedToken();
+  const userToken = useCachedToken();
+  const queryClient = useQueryClient();
+  const setLoading = useToastReducer();
+  const result = useMutation({
+    mutationKey: ["Admin_User_Symbol", admin_user_symbolList],
+    mutationFn: (option) => {
+      const { id } = option;
+
+      const currentToken =
+        role === "admin" ? adminToken.value : userToken.value;
+      return api_get.admin_user_symbol(currentToken, id);
     },
   });
   const { isLoading, isSuccess, error } = result;
@@ -202,4 +249,42 @@ export const Admin_User_ProductList_Call = (
   }
   console.log({ modifiedData });
   return { ...result, data: modifiedData };
+};
+export const Admin_UserSymbols = (role = "admin") => {
+  const { value: token } = useAdmin_CachedToken();
+  const { value: userToken } = useCachedToken();
+  const queryClient = useQueryClient();
+  const setLoading = useToastReducer();
+  const chosenToken = role === "admin" ? token : userToken;
+
+  let queryParams = "symbol?";
+
+  const result = useQuery({
+    queryKey: ["admin-symbolList"],
+    queryFn: () => api_get.symbols(chosenToken, queryParams),
+  });
+
+  const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
 };

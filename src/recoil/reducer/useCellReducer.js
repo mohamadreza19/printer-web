@@ -12,6 +12,8 @@ import {
 import { useEffect } from "react";
 import { cellSplitContoller_ } from "./cellReducer_dependency";
 import { railController_ } from "./cellReducer_dependency/railContoller";
+import { memo } from "react";
+import { useMemo } from "react";
 
 export default function () {
   // const [state, setState] = useRecoilState(rails);
@@ -91,7 +93,7 @@ export default function () {
     },
     action
   ) {
-    if (!action) throw new Error("need action");
+    // if (!action) throw new Error("need action");
 
     if (action == selectionAction.SELECT) {
       //requirement
@@ -205,6 +207,25 @@ export default function () {
               ...cell.content,
               text: payload.content,
             },
+          }),
+          (cell) => cell
+        );
+      });
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newRails,
+      };
+      return HistoryChanger(NewHistory);
+    }
+    if (action == cellAction.SETSYMBOL) {
+      const newRails = state.present.map((rail) => {
+        return railController_(
+          rail,
+          payload,
+          setSelectedCellForReadStyle,
+          (cell) => ({
+            ...cell,
+            symbolId: payload.symbolId,
           }),
           (cell) => cell
         );

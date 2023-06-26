@@ -46,6 +46,9 @@ import AdminAuthentication from "../controller/AdminAuthentication";
 const ListOfProject = React.lazy(() =>
   import("../components/userPannel/layout/endColumn/listOfProject")
 );
+const Setting = React.lazy(() =>
+  import("../components/adminPannel/layout/endColumn/setting/Setting")
+);
 export const UserRoutePath = {
   Index: "/user",
   projectList: "/user/project-list",
@@ -134,6 +137,7 @@ export default function () {
           element={<AdminList_Of_Manager_Printer />}
         />
         <Route path="charts" element={<ViewPrinitChart />} />
+        <Route path="setting" element={<Setting />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

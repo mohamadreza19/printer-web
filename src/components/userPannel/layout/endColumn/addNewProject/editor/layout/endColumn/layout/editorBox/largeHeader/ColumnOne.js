@@ -15,8 +15,12 @@ import {
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
-export default function () {
-  const setCell = useCellReducer();
+export default function ({
+  mergeRowContent,
+  rowSeparatorContent,
+  mergeColumnContent,
+  columnSeparatorContent,
+}) {
   const [splitColumn, setSplitColumn] = useRecoilState(ColumnOne_splitColumn);
   const [splitRow, setSplitRow] = useRecoilState(ColumnOne_splitRow);
   const [joinRow, setJoinRow] = useRecoilState(ColumnOne_joinRow);
@@ -83,7 +87,9 @@ export default function () {
           }}
           className="d-flex justify-content-end align-items-center"
         >
-          <Typography.H9_5 className="me-2">جدا سازی سطر</Typography.H9_5>
+          <Typography.H9_5 className="me-2">
+            {rowSeparatorContent}
+          </Typography.H9_5>
           <SplitRowBox />
         </section>
         <section
@@ -92,7 +98,7 @@ export default function () {
           }}
           className="d-flex justify-content-end align-items-center"
         >
-          <Typography.H9_5 className="me-2">ادغام سطر</Typography.H9_5>
+          <Typography.H9_5 className="me-2">{mergeRowContent}</Typography.H9_5>
           <JoinRowBox />
         </section>
       </header>
@@ -103,7 +109,9 @@ export default function () {
           }}
           className="d-flex justify-content-end align-items-center"
         >
-          <Typography.H9_5 className="me-2">جدا سازی ستون</Typography.H9_5>
+          <Typography.H9_5 className="me-2">
+            {columnSeparatorContent}
+          </Typography.H9_5>
           <SplitColumnBox />
         </section>
         <section
@@ -112,7 +120,9 @@ export default function () {
           }}
           className="d-flex justify-content-end align-items-center"
         >
-          <Typography.H9_5 className="me-2">ادغام ستون</Typography.H9_5>
+          <Typography.H9_5 className="me-2">
+            {mergeColumnContent}
+          </Typography.H9_5>
           <JoinColumnBox />
         </section>
       </footer>
