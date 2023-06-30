@@ -49,6 +49,24 @@ export default class {
       });
     }
   }
+  static async add_image_to_local_prointer(file) {
+    try {
+      const res = await axios({
+        url: `http://localhost:8888`,
+        method: "POST",
+        data: file,
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
   static async add_label_bookmark(token = "", id = "") {
     if (!token) throw new Error("there isnt token");
 

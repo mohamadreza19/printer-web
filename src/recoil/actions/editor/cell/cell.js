@@ -20,4 +20,5 @@ export default {
   UNDO: "UNDO",
   REDO: "REDO",
   SETSYMBOL: "SETSYMBOL",
+  DELETESYMBOL: "DELETESYMBOL",
 };

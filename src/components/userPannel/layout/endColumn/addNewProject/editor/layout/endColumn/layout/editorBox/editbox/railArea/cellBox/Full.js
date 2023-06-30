@@ -1,5 +1,6 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Editor_Cell_Input } from "../../../../../../../../../../../../../styles/__ready/Textfields";
+import allowRemoveCustomLabelsBorderToScreen_store from "../../../../../../../../../../../../../recoil/userEditorStore/allowRemoveCustomLabelsBorderToScreen_store";
 import {
   ColumnFive_barcode,
   ColumnFive_delete,
@@ -58,6 +59,9 @@ export default function ({
   const [bacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
   const [qrWant, setQrWant] = useRecoilState(ColumnFive_qr);
   const [symbolUsed, setSymbolUsed] = useRecoilState(symbolUsed_store);
+  const allowRemoveCustomLabelsBorderToScreen = useRecoilValue(
+    allowRemoveCustomLabelsBorderToScreen_store
+  );
 
   const symbolDetail = Admin_User_Symbol("user");
 
@@ -80,7 +84,15 @@ export default function ({
 
     setCell(payload, "SELECT");
   }
-
+  function handleDeleteSymbol() {
+    if ("symbolId" in cell) {
+      const payload = {
+        railId: railId,
+        cellId: cell.frontId,
+      };
+      setCell(payload, "DELETESYMBOL");
+    }
+  }
   function handleChangeValue(value) {
     const payload = {
       railId: railId,
@@ -320,16 +332,26 @@ export default function ({
 
   return (
     <main
+      id="#full-cell"
+      onKeyDown={handleDeleteSymbol}
+      tabIndex="-1"
       onClick={handleSelectCell_Via_onClick}
       className="w-100 h-100 d-flex justify-structure-center align-item-center bg-white  "
-      style={{
-        border: cell.isSelected
-          ? "2px solid #F36523"
-          : cell.children
-          ? "1px solid blue"
-          : "1px solid black",
-        overflow: "hidden",
-      }}
+      style={
+        !allowRemoveCustomLabelsBorderToScreen
+          ? {
+              border: cell.isSelected
+                ? "2px solid #F36523"
+                : cell.children
+                ? "1px solid blue"
+                : "1px solid black",
+              overflow: "hidden",
+            }
+          : {
+              border: "none",
+              overflow: "hidden",
+            }
+      }
     >
       {"symbolId" in cell && symbolDetail.isSuccess ? (
         <ImageContainer
@@ -341,7 +363,6 @@ export default function ({
           value={cell.content.text}
           disabled={cell.isSelected}
           onChange={handleChangeValue}
-          onBackspaceDown={handleDeleteContent}
           style={cell.content.style}
           isBarcode={cell.isBarcode}
           isQrcode={cell.isQrcode}
@@ -365,8 +386,6 @@ const ImageContainer = ({
   },
   src,
 }) => {
-  console.log({ style });
-
   return (
     <Container
       imageSize={style.fontSize}

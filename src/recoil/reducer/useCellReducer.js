@@ -236,6 +236,28 @@ export default function () {
       };
       return HistoryChanger(NewHistory);
     }
+    if (action == cellAction.DELETESYMBOL) {
+      console.log("hiii");
+      const newRails = state.present.map((rail) => {
+        return railController_(
+          rail,
+          payload,
+          setSelectedCellForReadStyle,
+          (cell) => {
+            let newCell = { ...cell };
+
+            delete newCell.symbolId;
+            return newCell;
+          },
+          (cell) => cell
+        );
+      });
+      const NewHistory = {
+        type: "SET_HISTORY",
+        value: newRails,
+      };
+      return HistoryChanger(NewHistory);
+    }
 
     if (action == cellAction.SPLITCOLUMN) {
       //requirement

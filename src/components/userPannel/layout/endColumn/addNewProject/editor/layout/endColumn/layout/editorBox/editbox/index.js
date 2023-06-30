@@ -13,7 +13,7 @@ import {
 import { ColumnFour_justify_start } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import { addRail } from "../../../../../../../../../../../recoil/userEditorStore/railAriaButton";
 
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 
 import scaleStore from "../../../../../../../../../../../recoil/userEditorStore/scaleStore";
 import ScaleContainer from "./layout/ScaleContainer";

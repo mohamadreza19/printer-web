@@ -97,6 +97,60 @@ export const AddProject_Mutation = () => {
   }
   return result;
 };
+export const AddImage_ToPrint_Local_Mutation = () => {
+  const queryClient = useQueryClient();
+
+  const navigate = useNavigate();
+
+  const { value: token } = useCachedToken();
+
+  const setLoading = useToastReducer();
+
+  const result = useMutation({
+    mutationKey: "local-fileupload",
+
+    mutationFn: (body) => {
+      const file = body.file;
+      var blob = new Blob(["fileupload"], { type: "image/png" });
+      const fd = new FormData();
+      console.log({ file });
+      fd.append("fileupload", blob);
+      return callPostServices.add_image_to_local_prointer(fd);
+    },
+    onSuccess: (data) => {
+      // queryClient.invalidateQueries(projectsKey);
+      // projectsKey = Math.random() * 20;
+      // setProjectsKey(Math.random() * 20);
+    },
+  });
+  const { isLoading, isSuccess, data } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+  }, [isLoading]);
+
+  if (isSuccess) {
+    setLoading({
+      isShow: false,
+      message: "",
+    });
+    // data = {
+    //   createdAt: "2023-05-07T10:56:14.762Z",
+    //   createdBy: "dsfdsf",
+    //   id: 127,
+    //   numberOfRails: 1,
+    //   projectName: "dfsdf",
+    //   updatedAt: "2023-05-07T10:56:14.762Z",
+    //   userId: 1,
+    // }
+    navigate(`/user/add-project/editor/${data.id}`);
+  }
+  return result;
+};
 export const Add_Label_Bookmark_Mutation = () => {
   const queryClient = useQueryClient();
 

@@ -6,6 +6,8 @@ import {
   railsWidth_store,
 } from "../../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import Icons from "../../../../../../../../../../../../styles/__ready/Icons";
+import useScreenShot from "../../../../../../../../../../../../utility/useScreenShot";
+import { useRef } from "react";
 
 export default function ({
   rail = {
@@ -22,8 +24,9 @@ export default function ({
       </div>
     );
   };
+
   const railsWidth = useRecoilValue(railsWidth_store);
-  console.log({ rail });
+
   return (
     <div
       className="w-100 d-flex align-items-end  mb-3 pt-3"
