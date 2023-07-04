@@ -110,12 +110,11 @@ export const AddImage_ToPrint_Local_Mutation = () => {
     mutationKey: "local-fileupload",
 
     mutationFn: (body) => {
-      const file = body.file;
-      var blob = new Blob(["fileupload"], { type: "image/png" });
-      const fd = new FormData();
-      console.log({ file });
-      fd.append("fileupload", blob);
-      return callPostServices.add_image_to_local_prointer(fd);
+      let formedFile = new FormData();
+
+      formedFile.append("fileupload", body.file);
+
+      return callPostServices.add_image_to_local_prointer(formedFile);
     },
     onSuccess: (data) => {
       // queryClient.invalidateQueries(projectsKey);

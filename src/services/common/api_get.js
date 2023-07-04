@@ -27,7 +27,7 @@ export default class {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        responseType: "blob",
+        // responseType: "blob",
       });
 
       return new Promise((resolve, _) => {

@@ -1,4 +1,4 @@
-import { createRef, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { useScreenshot, createFileName } from "use-react-screenshot";
 
 import allowRemoveCustomLabelsBorderToScreen_store from "../recoil/userEditorStore/allowRemoveCustomLabelsBorderToScreen_store";
@@ -12,34 +12,54 @@ export default function (elementRef = "") {
     setAllowRemoveCustomLabelsBorderToScreen,
   ] = useRecoilState(allowRemoveCustomLabelsBorderToScreen_store);
   const uploadFile = AddImage_ToPrint_Local_Mutation();
+  useEffect(() => {}, [uploadFile]);
   async function downloadScreen() {
-    setAllowRemoveCustomLabelsBorderToScreen(true);
+    // setAllowRemoveCustomLabelsBorderToScreen(true);
 
     try {
-      const elementToSreenShot = document.querySelector("#test-screen");
+      if (!allowRemoveCustomLabelsBorderToScreen) {
+        const rootElement = document.querySelector("#test-screen");
 
-      const canvas = await html2canvas(elementToSreenShot, {
-        scale: 2,
-      });
+        // const childElement = document.querySelectorAll("#test-screen div main");
+        // childElement.forEach((element) => {
+        //   console.log(element.style);
+        //   element.style.border = "";
+        // });
+        // console.log(elementToSreenShot);
+        const canvas = await html2canvas(rootElement, {
+          allowTaint: true,
+          scale: 2,
+          height: 51,
+          // foreignObjectRendering: true,
+        });
 
-      const image = canvas.toDataURL("image/png", 1.0);
-      setImageSate(image);
+        const image = canvas.toDataURL("image/png", 1.0);
+        setImageSate(image);
 
-      const a = document.createElement("a");
-      console.log({ image });
-      a.href = image;
-      // a.onclick((e) => {
-      //   console.log({ e });
-      // });
+        const a = document.createElement("a");
 
-      a.addEventListener("", (e) => console.log(e));
+        const blobedImage = b64toBlob(image);
 
-      a.download = "img";
-      uploadFile.mutateAsync({ file: image });
-      // a.click();
-    } catch (error) {}
+        // uploadFile.mutateAsync({ file: blobedImage });
 
-    // setAllowRemoveCustomLabelsBorderToScreen(false);
+        a.href = image;
+        a.download = image;
+        a.click();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   return downloadScreen;
+}
+
+function b64toBlob(dataURI) {
+  var byteString = atob(dataURI.split(",")[1]);
+  var ab = new ArrayBuffer(byteString.length);
+  var ia = new Uint8Array(ab);
+
+  for (var i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ab], { type: "image/jpeg" });
 }

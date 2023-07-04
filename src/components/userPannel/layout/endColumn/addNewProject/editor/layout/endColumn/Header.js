@@ -14,6 +14,7 @@ import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/ca
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { showPutProjectResponse } from "../../../../../../../../recoil/store/user/showPutProjectResponse";
+import useScreenShot from "../../../../../../../../utility/useScreenShot";
 
 export default function () {
   const language = useLanguage();
@@ -32,6 +33,8 @@ export default function () {
   const mutate = EditProject_Mutation();
 
   const handle_bundled_project = useBundleProject();
+
+  const getImage = useScreenShot();
 
   function handleSubmitProject() {
     mutate.mutate({
@@ -92,7 +95,10 @@ export default function () {
             {content.Output}
           </Typography.H7>
         </Buttons.Outlined>
-        <Buttons.Contained className="editor-header-button_extra-small mx-3">
+        <Buttons.Contained
+          onClick={getImage}
+          className="editor-header-button_extra-small mx-3"
+        >
           <Icons.Editor_Print size="large" />
           <Typography.H7 className={cssClass.ms_1 + " font-300"}>
             {content.print}

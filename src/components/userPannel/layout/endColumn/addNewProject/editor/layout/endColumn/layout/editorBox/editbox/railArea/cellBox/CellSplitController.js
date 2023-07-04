@@ -1,13 +1,17 @@
+import { Admin_User_Symbol } from "../../../../../../../../../../../../../reactQuery/common/callGetService";
 import useCellReducer from "../../../../../../../../../../../../../recoil/reducer/useCellReducer";
 import Full from "./Full";
 import SplitedColumn from "./SplitedColumn";
 import SplitedRow from "./SplitedRow";
 
 export default function ({ railId, cellForCheck }) {
+  const symbolDetail = Admin_User_Symbol("user");
   const setCell = useCellReducer();
+
   if (cellForCheck?.split == "none") {
     return (
       <Full
+        symbolDetail={symbolDetail}
         railId={railId}
         cell={cellForCheck}
         isSelected={cellForCheck.isSelected}

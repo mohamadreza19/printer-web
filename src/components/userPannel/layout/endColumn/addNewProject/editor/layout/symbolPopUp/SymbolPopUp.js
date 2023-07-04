@@ -19,25 +19,26 @@ function SymbolPopUp() {
   const [symbolUsed, setSymbolUsed] = useRecoilState(symbolUsed_store);
 
   const language = useLanguage();
-  console.log(symbolList.data);
-  return symbolList.data ? (
-    <Container
-      className={`symbolContainer
+
+  if (symbolList.data && symbolList.data.length > 0)
+    return (
+      <Container
+        className={`symbolContainer
 
       `}
-      language={language}
-      showSymbol={showSymbol.isShow}
-    >
-      {symbolList.data.map((symbol) => (
-        <Symbol
-          key={symbol.id}
-          id={symbol.id}
-          setSymbolUsed={setSymbolUsed}
-          symbolDetail={symbolDetail}
-        />
-      ))}
-    </Container>
-  ) : null;
+        language={language}
+        showSymbol={showSymbol.isShow}
+      >
+        {symbolList.data.map((symbol) => (
+          <Symbol
+            key={symbol.id}
+            id={symbol.id}
+            setSymbolUsed={setSymbolUsed}
+            symbolDetail={symbolDetail}
+          />
+        ))}
+      </Container>
+    );
 }
 
 export default memo(SymbolPopUp);

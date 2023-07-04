@@ -14,7 +14,8 @@ export default function ({ key, customLabels = [], railId }) {
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
   const [isDragging, setIsDraggingOver] = useState(false);
   //
-  const getImage = useScreenShot();
+  // const getImage = useScreenShot();
+
   return (
     <Container
       id="cellsBox"
@@ -37,7 +38,7 @@ export default function ({ key, customLabels = [], railId }) {
           return (
             <div
               id="test-screen"
-              onClick={getImage}
+              // onClick={getImage}
               // railsWidth={railsWidth}
               key={key}
               // defultWidth={}

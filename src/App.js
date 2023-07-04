@@ -17,6 +17,7 @@ import { useLanguage } from "./recoil/readStore";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "./styles/__ready/Toasts";
 import useGeneralCallApi from "./utility/useGeneralCallApi";
+import { useTestCellReducer } from "./recoil/reducer/useCellReducer";
 
 function App() {
   useHandleDirection_Based_Langiage();

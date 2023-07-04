@@ -18,13 +18,14 @@ import {
   ColumnTwo_TextAlign,
   ColumnTwo_font,
 } from "../../../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 import { symbolUsed_store } from "../../../../../../../../../../../../../recoil/userEditorStore/showSymbol_store";
 import { Admin_User_Symbol } from "../../../../../../../../../../../../../reactQuery/common/callGetService";
 import styled from "styled-components";
 
 export default function ({
+  symbolDetail,
   railId = "",
   cell = {
     frontId: " ",
@@ -63,7 +64,7 @@ export default function ({
     allowRemoveCustomLabelsBorderToScreen_store
   );
 
-  const symbolDetail = Admin_User_Symbol("user");
+  // const symbolDetail = Admin_User_Symbol("user");
 
   function handleSelectCell_Via_onClick() {
     if (!cell.parentId && !cell.isSelected) {
@@ -108,7 +109,6 @@ export default function ({
     };
     setCell(payload, "DELETECONTENT");
   }
-
   useEffect(() => {
     if ("symbolId" in cell) {
       symbolDetail.mutate({ id: cell.symbolId });
@@ -328,7 +328,6 @@ export default function ({
     qrWant,
     symbolUsed.isUsed,
   ]);
-  // console.log({ symbolDetail });
 
   return (
     <main
@@ -355,8 +354,9 @@ export default function ({
     >
       {"symbolId" in cell && symbolDetail.isSuccess ? (
         <ImageContainer
-          src={URL.createObjectURL(symbolDetail.data)}
+          svgSrc={symbolDetail.data}
           style={cell.content.style}
+          cellSymbolId={cell.symbolId}
         />
       ) : (
         <Editor_Cell_Input
@@ -384,17 +384,37 @@ const ImageContainer = ({
     textAlign: "",
     textDirecton: "",
   },
-  src,
+  svgSrc,
+  cellSymbolId,
 }) => {
-  return (
-    <Container
-      imageSize={style.fontSize}
-      angle={style.angle}
-      ImageDirecton={style.textAlign}
-    >
-      <img src={src} className="w-100 h-100" />
-    </Container>
-  );
+  const ref = useRef(null);
+  useEffect(() => {
+    document.querySelector(`#cell-svg-container-${cellSymbolId}`).innerHTML =
+      svgSrc;
+
+    const svg = document.querySelector(
+      `#cell-svg-container-${cellSymbolId} svg`
+    );
+    const path = document.querySelector(
+      `#cell-svg-container-${cellSymbolId} svg path`
+    );
+    if (svg && path) {
+      svg.attributes.width.value = "48px";
+      svg.attributes.height.value = "48px";
+      svg.attributes.fill.value = "black";
+      path.attributes.fill.value = "black";
+    }
+  }, [svgSrc]);
+  if (svgSrc)
+    return (
+      <Container
+        ref={ref}
+        id={`cell-svg-container-${cellSymbolId}`}
+        imageSize={style.fontSize}
+        angle={style.angle}
+        ImageDirecton={style.textAlign}
+      ></Container>
+    );
 };
 // <img src={URL.createObjectURL(symbolDetail.data)} />
 const Container = styled.div`

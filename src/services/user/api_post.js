@@ -61,7 +61,7 @@ export default class {
         resolve(res.data);
       });
     } catch (error) {
-      console.log(error);
+      console.log({ printerCorse: error });
       return new Promise((_, reject) => {
         reject(error.message);
       });
