@@ -17,43 +17,41 @@ export default function ({ key, customLabels = [], railId }) {
   // const getImage = useScreenShot();
 
   return (
-    <div className="w-100">
-      <Droppable
-        droppableId={railId}
-        direction="horizontal"
+    <Droppable
+      droppableId={railId}
+      direction="horizontal"
 
-        // isCombineEnabled={true}
-      >
-        {(provided, snapshot) => {
-          setIsDraggingOver(snapshot.isDraggingOver);
-          return (
-            <Container
-              railsWidth={railsWidth}
-              isDragingOver={isDragging}
-              id="test-screen"
-              // onClick={getImage}
-              // railsWidth={railsWidth}
-              key={key}
-              // defultWidth={}
+      // isCombineEnabled={true}
+    >
+      {(provided, snapshot) => {
+        setIsDraggingOver(snapshot.isDraggingOver);
+        return (
+          <Container
+            railsWidth={railsWidth}
+            isDragingOver={isDragging}
+            id="test-screen"
+            // onClick={getImage}
+            // railsWidth={railsWidth}
+            key={key}
+            // defultWidth={}
 
-              className={` d-flex  ${
-                justify === "right"
-                  ? "justify-content-end"
-                  : "justify-content-start"
-              }`}
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {customLabels?.map((c, index) => {
-                return (
-                  <CellBox key={index} index={index} cell={c} railId={railId} />
-                );
-              })}
-              {provided.placeholder}
-            </Container>
-          );
-        }}
-      </Droppable>
-    </div>
+            className={` d-flex  ${
+              justify === "right"
+                ? "justify-content-end"
+                : "justify-content-start"
+            }`}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {customLabels?.map((c, index) => {
+              return (
+                <CellBox key={index} index={index} cell={c} railId={railId} />
+              );
+            })}
+            {provided.placeholder}
+          </Container>
+        );
+      }}
+    </Droppable>
   );
 }
