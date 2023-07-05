@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Editor_Cell_Input } from "../../../../../../../../../../../../../styles/__ready/Textfields";
-import allowRemoveCustomLabelsBorderToScreen_store from "../../../../../../../../../../../../../recoil/userEditorStore/allowRemoveCustomLabelsBorderToScreen_store";
+import allowReplaceInputToDiv_store from "../../../../../../../../../../../../../recoil/userEditorStore/allowReplaceInputToDiv_store";
 import {
   ColumnFive_barcode,
   ColumnFive_delete,
@@ -23,6 +23,7 @@ import { useSelection } from "../../../../../../../../../../../../../recoil/read
 import { symbolUsed_store } from "../../../../../../../../../../../../../recoil/userEditorStore/showSymbol_store";
 import { Admin_User_Symbol } from "../../../../../../../../../../../../../reactQuery/common/callGetService";
 import styled from "styled-components";
+import shortid from "shortid";
 
 export default function ({
   symbolDetail,
@@ -60,9 +61,7 @@ export default function ({
   const [bacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
   const [qrWant, setQrWant] = useRecoilState(ColumnFive_qr);
   const [symbolUsed, setSymbolUsed] = useRecoilState(symbolUsed_store);
-  const allowRemoveCustomLabelsBorderToScreen = useRecoilValue(
-    allowRemoveCustomLabelsBorderToScreen_store
-  );
+  const allowReplaceInputToDiv = useRecoilValue(allowReplaceInputToDiv_store);
 
   // const symbolDetail = Admin_User_Symbol("user");
 
@@ -328,29 +327,22 @@ export default function ({
     qrWant,
     symbolUsed.isUsed,
   ]);
-
+  console.log({ cell });
   return (
     <main
       id="#full-cell"
       onKeyDown={handleDeleteSymbol}
       tabIndex="-1"
       onClick={handleSelectCell_Via_onClick}
-      className="w-100 h-100 d-flex justify-structure-center align-item-center bg-white  "
-      style={
-        !allowRemoveCustomLabelsBorderToScreen
-          ? {
-              border: cell.isSelected
-                ? "2px solid #F36523"
-                : cell.children
-                ? "1px solid blue"
-                : "1px solid black",
-              overflow: "hidden",
-            }
-          : {
-              border: "none",
-              overflow: "hidden",
-            }
-      }
+      className="w-100 h-100  bg-white  "
+      style={{
+        border: cell.isSelected
+          ? "2px solid #F36523"
+          : cell.children
+          ? "1px solid blue"
+          : "1px solid black",
+        overflow: "hidden",
+      }}
     >
       {"symbolId" in cell && symbolDetail.isSuccess ? (
         <ImageContainer
@@ -360,6 +352,7 @@ export default function ({
         />
       ) : (
         <Editor_Cell_Input
+          allowReplaceInputToDiv={allowReplaceInputToDiv}
           value={cell.content.text}
           disabled={cell.isSelected}
           onChange={handleChangeValue}
@@ -387,16 +380,18 @@ const ImageContainer = ({
   svgSrc,
   cellSymbolId,
 }) => {
+  console.log({ svgSrc });
   const ref = useRef(null);
+  const generatedID = shortid.generate();
   useEffect(() => {
-    document.querySelector(`#cell-svg-container-${cellSymbolId}`).innerHTML =
+    document.querySelector(`#cell-svg-container-${generatedID}`).innerHTML =
       svgSrc;
 
     const svg = document.querySelector(
-      `#cell-svg-container-${cellSymbolId} svg`
+      `#cell-svg-container-${generatedID} svg`
     );
     const path = document.querySelector(
-      `#cell-svg-container-${cellSymbolId} svg path`
+      `#cell-svg-container-${generatedID} svg path`
     );
     if (svg && path) {
       svg.attributes.width.value = "48px";
@@ -409,7 +404,7 @@ const ImageContainer = ({
     return (
       <Container
         ref={ref}
-        id={`cell-svg-container-${cellSymbolId}`}
+        id={`cell-svg-container-${generatedID}`}
         imageSize={style.fontSize}
         angle={style.angle}
         ImageDirecton={style.textAlign}

@@ -3,6 +3,7 @@ import { useDynamicCssClass } from "../../../../../recoil/readStore";
 import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
+import useScreenShot from "../../../../../utility/useScreenShot";
 
 export default function ({
   project = {
@@ -13,12 +14,14 @@ export default function ({
   },
   showDeleteMassge = () => {},
 }) {
+  const getScreen = useScreenShot();
   const cssClass = useDynamicCssClass();
   const navigate = useNavigate();
   const ActionButton = () => {
     function navigateEditorById() {
       navigate(`/user/add-project/editor/${project.id}`);
     }
+
     return (
       <div className={"d-flex align-items-center cur-pointer "}>
         <div className="" onClick={showDeleteMassge}>

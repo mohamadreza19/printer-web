@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import shortid from "shortid";
 import Barcode from "react-barcode";
 import { QRCodeSVG } from "qrcode.react";
+import styled from "styled-components";
 export default class {
   static v1({ children = "", className = "" }) {
     return <TextField className={className} />;
@@ -443,6 +444,7 @@ export const TextFieldFUN_ClipBoardBadge = ({
   );
 };
 export const Editor_Cell_Input = ({
+  allowReplaceInputToDiv = false,
   value = " ",
   onChange = () => {},
   isSelected = false,
@@ -498,7 +500,7 @@ export const Editor_Cell_Input = ({
     <>
       {isBarcode || isQrcode ? (
         <BarcodeAndQrCodeController />
-      ) : (
+      ) : !allowReplaceInputToDiv ? (
         <input
           className="editor-cell-input"
           value={value || " "}
@@ -523,7 +525,59 @@ export const Editor_Cell_Input = ({
           }}
           id="text"
         />
+      ) : (
+        <RelacedToDiv style={style} value={value} />
       )}
     </>
   );
 };
+const RelacedToDiv = ({
+  style = {
+    fontFamily: "",
+    fontWeight: "",
+    fontStyle: "",
+    textAlign: "",
+    angle: "",
+    margin: "",
+    padding: "",
+  },
+  value = "",
+}) => {
+  function lookTextAlignToConvertFlex(textAlign) {
+    if (textAlign === "right") return "start";
+    if (textAlign === "center") return "center";
+    if (textAlign === "left") return "end";
+    return "center";
+  }
+  console.log({ style });
+  return (
+    <Div
+      style={
+        {
+          // justifyContent: lookTextAlignToConvertFlex(style.textAlign),
+        }
+      }
+      rootStyle={style}
+      justify={lookTextAlignToConvertFlex(style.textAlign)}
+    >
+      {value}
+    </Div>
+  );
+};
+const Div = styled.div`
+  width: 100% !important;
+  height: 100% !important;
+  display: flex;
+  justify-content: ${({ justify }) => justify};
+  align-items: center;
+  rotate: ${({ rootStyle }) => rootStyle.angle}deg;
+  font-family: ${({ rootStyle }) => rootStyle.fontFamily};
+  font-weight: ${({ rootStyle }) =>
+    rootStyle.fontWeight == "bold" ? 600 : 400};
+  font-size: ${({ rootStyle }) => rootStyle.fontSize};
+  font-style: ${({ rootStyle }) =>
+    rootStyle.fontStyle == "italic" ? "italic" : "normal"};
+  color: black;
+  padding: ${({ rootStyle }) => rootStyle.padding}px;
+  margin: ${({ rootStyle }) => rootStyle.padding}px 0;
+`;

@@ -42,6 +42,7 @@ export default function () {
       >
         <DragDropContext
           onDragEnd={(result) => {
+            console.log({ result });
             const { destination, source, draggableId } = result;
 
             const findedProduct = products.find(

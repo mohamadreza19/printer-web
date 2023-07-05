@@ -1,31 +1,39 @@
 import { createRef, useEffect, useState } from "react";
 import { useScreenshot, createFileName } from "use-react-screenshot";
 
-import allowRemoveCustomLabelsBorderToScreen_store from "../recoil/userEditorStore/allowRemoveCustomLabelsBorderToScreen_store";
+import allowRemoveCustomLabelsBorderToScreen_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
 import html2canvas from "html2canvas";
 import { useRecoilState } from "recoil";
 import { AddImage_ToPrint_Local_Mutation } from "../reactQuery/user/callPostServices";
+import allowReplaceInputToDiv_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
+import { useLocation } from "react-router-dom";
+import { rails, railsWidth_store } from "../recoil/userEditorStore/cellsStore";
 export default function (elementRef = "") {
   const [imageSate, setImageSate] = useState("");
-  const [
-    allowRemoveCustomLabelsBorderToScreen,
-    setAllowRemoveCustomLabelsBorderToScreen,
-  ] = useRecoilState(allowRemoveCustomLabelsBorderToScreen_store);
+
+  const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
+  console.log({ railsWidth });
+  const [allowReplaceInputToDiv, setAllowReplaceInputToDiv] = useRecoilState(
+    allowReplaceInputToDiv_store
+  );
+
   const uploadFile = AddImage_ToPrint_Local_Mutation();
-  useEffect(() => {}, [uploadFile]);
-  async function downloadScreen() {
-    // setAllowRemoveCustomLabelsBorderToScreen(true);
 
-    try {
-      if (!allowRemoveCustomLabelsBorderToScreen) {
-        const rootElement = document.querySelector("#test-screen");
+  function downloadScreen() {
+    setAllowReplaceInputToDiv(true);
 
-        // const childElement = document.querySelectorAll("#test-screen div main");
-        // childElement.forEach((element) => {
-        //   console.log(element.style);
-        //   element.style.border = "";
-        // });
-        // console.log(elementToSreenShot);
+    const rootElement = document.querySelector("#test-screen");
+
+    const rootElementChildren = document.querySelectorAll(
+      "#test-screen div main"
+    );
+
+    rootElementChildren.forEach((elemnet) => {
+      elemnet.style.border = "";
+    });
+
+    async function doScreen() {
+      try {
         const canvas = await html2canvas(rootElement, {
           allowTaint: true,
           scale: 2,
@@ -40,16 +48,23 @@ export default function (elementRef = "") {
 
         const blobedImage = b64toBlob(image);
 
-        // uploadFile.mutateAsync({ file: blobedImage });
+        uploadFile.mutateAsync({ file: blobedImage, width: railsWidth });
 
-        a.href = image;
-        a.download = image;
-        a.click();
+        rootElementChildren.forEach((elemnet) => {
+          elemnet.style.border = "1px solid black";
+        });
+        setAllowReplaceInputToDiv(false);
+        // a.href = image;
+        // a.download = image;
+        // a.click();
+      } catch (error) {
+        console.log({ error });
+        setAllowReplaceInputToDiv(false);
       }
-    } catch (error) {
-      console.log(error);
     }
+    setTimeout(doScreen, 200);
   }
+
   return downloadScreen;
 }
 

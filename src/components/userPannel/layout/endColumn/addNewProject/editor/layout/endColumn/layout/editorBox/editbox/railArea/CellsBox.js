@@ -17,26 +17,19 @@ export default function ({ key, customLabels = [], railId }) {
   // const getImage = useScreenShot();
 
   return (
-    <Container
-      id="cellsBox"
-      className="w-100 "
-      // style={{
-      //   height: `${railsWidth}px`,
-      // }}
-      railsWidth={railsWidth}
-      isDragingOver={isDragging}
-    >
+    <div className="w-100">
       <Droppable
         droppableId={railId}
         direction="horizontal"
-        isDragingOver
+
         // isCombineEnabled={true}
       >
         {(provided, snapshot) => {
-          let contaner = document.getElementById("cellsBox");
           setIsDraggingOver(snapshot.isDraggingOver);
           return (
-            <div
+            <Container
+              railsWidth={railsWidth}
+              isDragingOver={isDragging}
               id="test-screen"
               // onClick={getImage}
               // railsWidth={railsWidth}
@@ -57,10 +50,10 @@ export default function ({ key, customLabels = [], railId }) {
                 );
               })}
               {provided.placeholder}
-            </div>
+            </Container>
           );
         }}
       </Droppable>
-    </Container>
+    </div>
   );
 }

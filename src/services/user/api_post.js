@@ -49,12 +49,15 @@ export default class {
       });
     }
   }
-  static async add_image_to_local_prointer(file) {
+  static async add_image_to_local_prointer(file, width) {
     try {
       const res = await axios({
         url: `http://localhost:8888`,
         method: "POST",
-        data: file,
+        data: {
+          uploadfile: file,
+          width,
+        },
       });
 
       return new Promise((resolve, _) => {

@@ -1026,6 +1026,7 @@ html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
   width: 100%;
   height: 100%;
   text-align: center;
+  text-justify: center;
   border: none;
 }
 .add-new-rail-btn {

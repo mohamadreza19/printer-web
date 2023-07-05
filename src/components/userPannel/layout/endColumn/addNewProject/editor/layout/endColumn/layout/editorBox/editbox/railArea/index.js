@@ -1,6 +1,6 @@
 import CellsBox from "./CellsBox";
 import Title from "./Title";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   labelRail_column,
   railsWidth_store,
@@ -25,14 +25,12 @@ export default function ({
     );
   };
 
-  const railsWidth = useRecoilValue(railsWidth_store);
-
   return (
     <div
       className="w-100 d-flex align-items-end  mb-3 pt-3"
       style={
         {
-          // height: "152.09px",
+          // height: railsWidth + "px",
         }
       }
     >

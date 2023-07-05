@@ -111,10 +111,10 @@ export const AddImage_ToPrint_Local_Mutation = () => {
 
     mutationFn: (body) => {
       let formedFile = new FormData();
-
+      const width = body.width;
       formedFile.append("fileupload", body.file);
 
-      return callPostServices.add_image_to_local_prointer(formedFile);
+      return callPostServices.add_image_to_local_prointer(formedFile, width);
     },
     onSuccess: (data) => {
       // queryClient.invalidateQueries(projectsKey);
@@ -146,7 +146,6 @@ export const AddImage_ToPrint_Local_Mutation = () => {
     //   updatedAt: "2023-05-07T10:56:14.762Z",
     //   userId: 1,
     // }
-    navigate(`/user/add-project/editor/${data.id}`);
   }
   return result;
 };
