@@ -247,7 +247,7 @@ export const Admin_User_ProductList_Call = (
       page.items.forEach((item) => modifiedData.push(item))
     );
   }
-  console.log({ modifiedData });
+
   return { ...result, data: modifiedData };
 };
 export const Admin_UserSymbols = (role = "admin") => {

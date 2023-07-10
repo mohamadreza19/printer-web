@@ -223,3 +223,41 @@ export const Add_Product_Bookmark_Mutation = () => {
   }
   return result;
 };
+export const Add_Print = () => {
+  const queryClient = useQueryClient();
+
+  const { value: token } = useCachedToken();
+
+  const setLoading = useToastReducer();
+  console.log(admin_user_productList);
+  const result = useMutation({
+    mutationKey: ["add-print"],
+    mutationFn: (option) => {
+      return callPostServices.add_print(token, option.projectId);
+    },
+    onSuccess: (data) => {
+      console.log({ admin_user_productList });
+      // queryClient.invalidateQueries(add_Product_Bookmark_Mutation_key);
+      // projectsKey = Math.random() * 20;
+      // setAdmin_user_productList(Math.random() * 20);
+      // setBookmark_Product_Delete_key();
+    },
+  });
+  const { isLoading, isSuccess, data } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+  }, [isLoading]);
+
+  if (isSuccess) {
+    setLoading({
+      isShow: false,
+      message: "",
+    });
+  }
+  return result;
+};

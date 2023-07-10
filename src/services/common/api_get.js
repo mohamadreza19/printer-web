@@ -62,7 +62,6 @@ export default class {
     }
   }
   static async admin_user_productList(token = "", url, language) {
-    console.log({ url });
     try {
       const res = await axios.get(url, {
         headers: {

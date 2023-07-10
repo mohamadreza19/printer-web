@@ -327,7 +327,7 @@ export default function ({
     qrWant,
     symbolUsed.isUsed,
   ]);
-  console.log({ cell });
+
   return (
     <main
       id="#full-cell"
@@ -380,7 +380,6 @@ const ImageContainer = ({
   svgSrc,
   cellSymbolId,
 }) => {
-  console.log({ svgSrc });
   const ref = useRef(null);
   const generatedID = shortid.generate();
   useEffect(() => {
@@ -400,6 +399,7 @@ const ImageContainer = ({
       path.attributes.fill.value = "black";
     }
   }, [svgSrc]);
+
   if (svgSrc)
     return (
       <Container
@@ -407,18 +407,21 @@ const ImageContainer = ({
         id={`cell-svg-container-${generatedID}`}
         imageSize={style.fontSize}
         angle={style.angle}
-        ImageDirecton={style.textAlign}
+        justify={style.textAlign}
       ></Container>
     );
 };
 // <img src={URL.createObjectURL(symbolDetail.data)} />
 const Container = styled.div`
-  width: ${({ imageSize }) => imageSize}px;
-  height: ${({ imageSize }) => imageSize}px;
+  width: 100%;
+  height: 100%;
   rotate: ${({ angle }) => angle}deg;
-  margin: ${({ ImageDirecton }) => {
-    if (ImageDirecton === "right") return "0 0 0 auto";
-    if (ImageDirecton === "center") return "0 auto 0 auto";
-    if (ImageDirecton === "left") return "0 auto 0 0";
-  }};
+  display: flex;
+  justify-content: ${({ justify }) => textAlignToJustify(justify)};
 `;
+function textAlignToJustify(textAlign) {
+  if (textAlign === "right") return "end";
+  if (textAlign === "center") return "center";
+  if (textAlign === "left") return "start";
+  return "center";
+}

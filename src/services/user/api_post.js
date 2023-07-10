@@ -52,11 +52,11 @@ export default class {
   static async add_image_to_local_prointer(file, width) {
     try {
       const res = await axios({
-        url: `http://localhost:8888`,
+        url: `http://127.0.0.1:8888?width=${width}`,
         method: "POST",
-        data: {
-          uploadfile: file,
-          width,
+        data: file,
+        headers: {
+          "Access-Control-Request-Private-Network": "true",
         },
       });
 
@@ -98,6 +98,28 @@ export default class {
       const res = await axios({
         url: `${apiUrl}/product/${id}/bookmark`,
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async add_print(token = "", body) {
+    if (!token) throw new Error("there isnt token");
+
+    try {
+      const res = await axios({
+        url: `${apiUrl}/print`,
+        method: "POST",
+        data: body,
         headers: {
           Authorization: `Bearer ${token}`,
         },

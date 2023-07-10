@@ -4,21 +4,37 @@ import { useScreenshot, createFileName } from "use-react-screenshot";
 import allowRemoveCustomLabelsBorderToScreen_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
 import html2canvas from "html2canvas";
 import { useRecoilState } from "recoil";
-import { AddImage_ToPrint_Local_Mutation } from "../reactQuery/user/callPostServices";
+import {
+  AddImage_ToPrint_Local_Mutation,
+  Add_Print,
+} from "../reactQuery/user/callPostServices";
 import allowReplaceInputToDiv_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { rails, railsWidth_store } from "../recoil/userEditorStore/cellsStore";
-export default function (elementRef = "") {
-  const [imageSate, setImageSate] = useState("");
 
+export default function () {
+  const [searchParams, setSearchParams] = useSearchParams();
+  let { projectId } = useParams();
+  const [allowClosePage, setAllowClosePage] = useState(false);
+  const autoPrint = searchParams.get("autoPrint");
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
-  console.log({ railsWidth });
   const [allowReplaceInputToDiv, setAllowReplaceInputToDiv] = useRecoilState(
     allowReplaceInputToDiv_store
   );
 
   const uploadFile = AddImage_ToPrint_Local_Mutation();
+  const addPrint = Add_Print();
 
+  useEffect(() => {
+    if (autoPrint === "true" && document.readyState == "complete") {
+      // downloadScreen();
+      setTimeout(downloadScreen, 1000);
+    }
+    if (allowClosePage) {
+      setAllowClosePage(false);
+      window.close();
+    }
+  }, [autoPrint, document.readyState, allowClosePage]);
   function downloadScreen() {
     setAllowReplaceInputToDiv(true);
 
@@ -28,8 +44,8 @@ export default function (elementRef = "") {
       "#test-screen div main"
     );
 
-    rootElementChildren.forEach((elemnet) => {
-      elemnet.style.border = "";
+    doThingOnChild(rootElementChildren, (element) => {
+      element.style.border = "";
     });
 
     async function doScreen() {
@@ -37,31 +53,65 @@ export default function (elementRef = "") {
         const canvas = await html2canvas(rootElement, {
           allowTaint: true,
           scale: 2,
-          height: 51,
+          height: 50,
           // foreignObjectRendering: true,
         });
 
         const image = canvas.toDataURL("image/png", 1.0);
-        setImageSate(image);
-
-        const a = document.createElement("a");
 
         const blobedImage = b64toBlob(image);
 
-        uploadFile.mutateAsync({ file: blobedImage, width: railsWidth });
+        const form = document.createElement("form");
 
-        rootElementChildren.forEach((elemnet) => {
-          elemnet.style.border = "1px solid black";
+        const input = document.createElement("input");
+
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        // form.attributes.onsubmit.value = "return false";
+        form.method = "post";
+        form.enctype = "multipart/form-data";
+        form.action = `http://localhost:8888?width=${railsWidth}`;
+        form.target = "_blank";
+        input.type = "file";
+        input.name = "fileupload";
+
+        const dataTransfer = new DataTransfer();
+        const myFile = new File([blobedImage], "fileupload.png");
+        dataTransfer.items.add(myFile);
+        input.files = dataTransfer.files;
+
+        doThingOnChild(rootElementChildren, (element) => {
+          element.style.border = "1px solid black";
         });
         setAllowReplaceInputToDiv(false);
+        // const a = document.createElement("a");
         // a.href = image;
         // a.download = image;
         // a.click();
+        // window.open(
+        //   `chrome://flags/#block-insecure-private-network-request`,
+        //   "_blank"
+        // );
+        form.style.display = "none";
+        form.addEventListener(
+          "submit",
+          addPrint.mutate({
+            projectId,
+          })
+        );
+        form.submit();
+
+        // uploadFile.mutateAsync({ file: blobedImage, width: railsWidth });
+        form.addEventListener("submit", () => {
+          setAllowClosePage(true);
+        });
       } catch (error) {
         console.log({ error });
         setAllowReplaceInputToDiv(false);
       }
     }
+
     setTimeout(doScreen, 200);
   }
 
@@ -77,4 +127,9 @@ function b64toBlob(dataURI) {
     ia[i] = byteString.charCodeAt(i);
   }
   return new Blob([ab], { type: "image/jpeg" });
+}
+function doThingOnChild(children = [], callback = () => {}) {
+  children.forEach((element) => {
+    callback(element);
+  });
 }

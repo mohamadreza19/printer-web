@@ -23,6 +23,13 @@ export default function ({
   const content = useContent_Based_Language();
 
   const ActionButton = () => {
+    function openNewTabAndPrint() {
+      window.open(
+        `/user/add-project/editor/${project.id}?autoPrint=true`,
+        "_blank"
+      );
+      // getScreen();
+    }
     return (
       <div className={"d-flex align-items-center justify-content-end w-25"}>
         <Typography.Body2
@@ -33,7 +40,10 @@ export default function ({
           <span className={cssClass.me_1}>{project.printsCount || 0}</span>
           <span>{content.userPannel.end_col.historyOfPrinting.print}</span>
         </Typography.Body2>
-        <Buttons.Contained_Custom className="button_medium_ bg_primary ">
+        <Buttons.Contained_Custom
+          className="button_medium_ bg_primary "
+          onClick={openNewTabAndPrint}
+        >
           <Icons.Print />
           <Typography.H9 className={"font-400 " + cssClass.ms_1}>
             {content.userPannel.end_col.historyOfPrinting.reprint}

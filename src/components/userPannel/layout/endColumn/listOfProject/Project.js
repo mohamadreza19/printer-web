@@ -21,7 +21,13 @@ export default function ({
     function navigateEditorById() {
       navigate(`/user/add-project/editor/${project.id}`);
     }
-
+    function openNewTabAndPrint() {
+      window.open(
+        `/user/add-project/editor/${project.id}?autoPrint=true`,
+        "_blank"
+      );
+      // getScreen();
+    }
     return (
       <div className={"d-flex align-items-center cur-pointer "}>
         <div className="" onClick={showDeleteMassge}>
@@ -31,7 +37,10 @@ export default function ({
         <div className="mx-4" onClick={navigateEditorById}>
           <Icons.Edit />
         </div>
-        <Buttons.Contained_Custom className="bg_primary py-3 px-3  ">
+        <Buttons.Contained_Custom
+          className="bg_primary py-3 px-3"
+          onClick={openNewTabAndPrint}
+        >
           <Icons.Print />
         </Buttons.Contained_Custom>
       </div>
