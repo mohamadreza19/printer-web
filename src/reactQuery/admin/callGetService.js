@@ -119,7 +119,7 @@ export const AdminUsers = (search, order = "ASC") => {
   const { value: token } = useAdmin_CachedToken();
   const setLoading = useToastReducer();
   const queryClient = useQueryClient();
-  let initialUrl = "http://212.23.201.119:1235/api/user?";
+  let initialUrl = `${apiUrl}/api/user?`;
   if (search) {
     initialUrl = initialUrl.concat(`search=${search}&`);
   }
@@ -178,7 +178,7 @@ export const AdminPrints = (
   const { value: token } = useAdmin_CachedToken();
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
-  let url = "http://212.23.201.119:1235/api/print?";
+  let url = `${apiUrl}/api/print?`;
   if (startDate && endDate) {
     url = url.concat(`startDate=${startDate}&`).concat(`endDate=${endDate}&`);
   }
@@ -282,7 +282,7 @@ export const AdminPrints_Excel = () => {
   const result = useMutation({
     mutationKey: ["admin-print-excel"],
     mutationFn: (option) => {
-      let url = "http://212.23.201.119:1235/api/print/export/excel?";
+      let url = `${apiUrl}/api/print/export/excel?`;
       const { page, limit, justProduct, justLabel, startDate, endDate, order } =
         option;
       if (startDate && endDate) {
@@ -453,7 +453,7 @@ export const AdminProduct_Label = (
   const { productLableFilter, search, limit, page } = option;
   // console.table(page, limit, productLableFilter, search);
 
-  let initialUrl = `http://212.23.201.119:1235/api/product-label?productLableFilter=${productLableFilter}&page=1&limit=10&`;
+  let initialUrl = `${apiUrl}/api/product-label?productLableFilter=${productLableFilter}&page=1&limit=10&`;
 
   if (search) {
     initialUrl = initialUrl.concat(`search=${search}&`);
