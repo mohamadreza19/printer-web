@@ -54,6 +54,7 @@ export default function ({ content }) {
   };
   const BarcodeBox = () => {
     function onClick() {
+      setisQrWant(false);
       setIsBacodeWant(true);
     }
     return (
@@ -70,6 +71,7 @@ export default function ({ content }) {
   };
   const QrcodeBox = () => {
     function onClick() {
+      setIsBacodeWant(false);
       setisQrWant(true);
     }
     return (
