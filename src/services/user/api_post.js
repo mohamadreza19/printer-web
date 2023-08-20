@@ -10,10 +10,13 @@ export default class {
     try {
       const res = await axios.post(`${apiUrl}/user/login`, body);
       console.log(res);
+      console.log("test");
       return new Promise((resolve, _) => {
         resolve(res.data.accessToken);
       });
     } catch (error) {
+      console.log("errors");
+      console.log(error);
       return new Promise((_, reject) => {
         reject(error.message);
       });
