@@ -445,7 +445,7 @@ export const TextFieldFUN_ClipBoardBadge = ({
 };
 export const Editor_Cell_Input = ({
   allowReplaceInputToDiv = false,
-  value = " ",
+  value = "",
   onChange = () => {},
   isSelected = false,
   onClick = () => {},
@@ -496,14 +496,15 @@ export const Editor_Cell_Input = ({
       );
     }
   };
+
   return (
     <>
       {isBarcode || isQrcode ? (
         <BarcodeAndQrCodeController />
       ) : !allowReplaceInputToDiv ? (
         <input
-          className="editor-cell-input"
-          value={value || " "}
+          className="editor-cell-input position-absolute "
+          value={value || ""}
           style={{
             fontFamily: style.fontFamily,
             fontWeight: style.fontStyle == "bold" ? 600 : 400,

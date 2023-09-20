@@ -4,7 +4,9 @@ import Icons from "../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../styles/__ready/Typography";
 import use_PictureInput_Controller from "../../../../../../helper/admin_add_product_label/control_product_dynamic_input";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export default function ({
+  setIsSuccess,
   info = {
     picture: "",
     name: () => {},
@@ -22,6 +24,8 @@ export default function ({
     false,
     true
   );
+  const navigate = useNavigate();
+
   useEffect(() => {
     return () => {
       clearState();
@@ -86,7 +90,9 @@ export default function ({
           <Typography.H8>مشاهده محصولات</Typography.H8>
         </Buttons.Outlined>
         <Buttons.Contained className={"button_extra-large " + cssClass.ms_3}>
-          <Typography.H8>افزودن محصول جدید</Typography.H8>
+          <Typography.H8 onClick={() => setIsSuccess(false)}>
+            افزودن محصول جدید
+          </Typography.H8>
         </Buttons.Contained>
       </footer>
     </div>

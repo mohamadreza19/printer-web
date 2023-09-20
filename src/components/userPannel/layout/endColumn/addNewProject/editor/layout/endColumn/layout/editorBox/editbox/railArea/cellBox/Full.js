@@ -327,14 +327,14 @@ export default function ({
     qrWant,
     symbolUsed.isUsed,
   ]);
-
+  console.log({ cell });
   return (
     <main
       id="#full-cell"
       onKeyDown={handleDeleteSymbol}
       tabIndex="-1"
       onClick={handleSelectCell_Via_onClick}
-      className="w-100 h-100  bg-white  "
+      className="w-100 h-100  bg-white position-relative "
       style={{
         border: cell.isSelected
           ? "2px solid #F36523"

@@ -24,7 +24,7 @@ import TextFieldsBox from "./TextFieldsBox";
 import Buttons from "../../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../../styles/__ready/Icons";
 import SuccessBox from "./SuccessBox";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   AdminAddImage_Mutation,
   AdminAddProduct_Mutation,
@@ -37,6 +37,8 @@ export default function () {
   const language = useLanguage();
   //
   const meta = useAdd_product("none", false, true, false);
+
+  const [isSuccess, setIsSuccess] = useState(false);
 
   //
 
@@ -66,14 +68,18 @@ export default function () {
       AddImagemutate.mutate(payload);
     }
   }, [mutate.data]);
-
+  useEffect(() => {
+    if (AddImagemutate.isSuccess) {
+      setIsSuccess(true);
+    }
+  }, [AddImagemutate.isSuccess]);
   // console.log({ addImageData: AddImagemutate });
   console.log(AddImagemutate.onLoadedMeta);
-  const continue_ = false;
+
   return (
     <div className="w-100 ">
       <Header />
-      {!AddImagemutate.isSuccess ? (
+      {!isSuccess ? (
         <>
           <TextFieldsBox />
           <UploadAera onLoadedMeta={AddImagemutate.onLoadedMeta} />
@@ -85,6 +91,7 @@ export default function () {
         </>
       ) : (
         <SuccessBox
+          setIsSuccess={setIsSuccess}
           info={{
             picture: meta.picture,
             description: () => {

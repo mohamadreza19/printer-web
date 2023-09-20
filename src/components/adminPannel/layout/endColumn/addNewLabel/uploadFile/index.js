@@ -30,13 +30,14 @@ import {
   AdminAddLabel_Mutation,
 } from "../../../../../../reactQuery/admin/callPostService";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function () {
   const content =
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label;
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
+  const [isSuccess, setIsSuccess] = useState(false);
   //
 
   //
@@ -67,14 +68,17 @@ export default function () {
       AddImagemutate.mutate(payload);
     }
   }, [mutate.data]);
-
+  useEffect(() => {
+    if (AddImagemutate.isSuccess) {
+      setIsSuccess(true);
+    }
+  }, [AddImagemutate.isSuccess]);
   // console.log({ addImageData: AddImagemutate });
-  console.log(AddImagemutate.onLoadedMeta);
-  const continue_ = false;
+
   return (
     <div className="w-100 ">
       <Header />
-      {!AddImagemutate.isSuccess ? (
+      {!isSuccess ? (
         <>
           <TextFieldsBox />
           <UploadAera onLoadedMeta={AddImagemutate.onLoadedMeta} />
@@ -86,6 +90,7 @@ export default function () {
         </>
       ) : (
         <SuccessBox
+          setIsSuccess={setIsSuccess}
           info={{
             picture: meta.picture.file,
             width: mutate.data.width,

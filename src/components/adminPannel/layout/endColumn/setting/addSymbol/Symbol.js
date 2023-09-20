@@ -13,8 +13,9 @@ function Symbol({ id }) {
   function deleteSymbol() {
     delete_symbol.mutate({ id });
   }
-  return (
-    symbol.isSuccess && (
+  if (symbol.isSuccess) {
+    // parseSringSvgToDomSvg(id, symbol.data);
+    return (
       <div
         className="d-flex flex-column justify-content-center align-items-center mb-5"
         style={{
@@ -23,14 +24,18 @@ function Symbol({ id }) {
         }}
       >
         <article className="w-100 h-100 ">
-          <img className="w-100 h-100" src={URL.createObjectURL(symbol.data)} />
+          <img
+            className="w-100 h-100"
+            src={`data:image/svg+xml;base64,${btoa(symbol.data)}`}
+          />
+          {/* {symbol.data.replace('"', "")} */}
         </article>
         <article onClick={deleteSymbol}>
           <Icons.Trash />
         </article>
       </div>
-    )
-  );
+    );
+  }
 }
 
 export default Symbol;

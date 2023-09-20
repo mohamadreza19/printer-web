@@ -61,6 +61,7 @@ export default UploadSymbolArea;
 const FileInput = ({ setFile, file }) => {
   function onChange(e) {
     const fetchedFile = e.target.files[0];
+    console.log({ fetchedFile });
     const preview = URL.createObjectURL(fetchedFile);
     const size = fetchedFile.size;
 

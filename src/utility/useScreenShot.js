@@ -85,9 +85,9 @@ export default function () {
           element.style.border = "1px solid black";
         });
         setAllowReplaceInputToDiv(false);
-        // const a = document.createElement("a");
-        // a.href = image;
-        // a.download = image;
+        const a = document.createElement("a");
+        a.href = image;
+        a.download = image;
         // a.click();
         // window.open(
         //   `chrome://flags/#block-insecure-private-network-request`,
