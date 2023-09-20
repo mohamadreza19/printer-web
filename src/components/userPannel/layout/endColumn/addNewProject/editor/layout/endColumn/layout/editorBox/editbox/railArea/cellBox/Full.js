@@ -380,6 +380,7 @@ const ImageContainer = ({
   svgSrc,
   cellSymbolId,
 }) => {
+  console.log(style.fontSize);
   const ref = useRef(null);
   const generatedID = shortid.generate();
   useEffect(() => {
@@ -393,12 +394,12 @@ const ImageContainer = ({
       `#cell-svg-container-${generatedID} svg path`
     );
     if (svg && path) {
-      svg.attributes.width.value = "48px";
-      svg.attributes.height.value = "48px";
+      svg.attributes.width.value = style.fontSize;
+      svg.attributes.height.value = style.fontSize;
       svg.attributes.fill.value = "black";
       path.attributes.fill.value = "black";
     }
-  }, [svgSrc]);
+  }, [svgSrc, style.fontSize]);
 
   if (svgSrc)
     return (
@@ -418,6 +419,7 @@ const Container = styled.div`
   rotate: ${({ angle }) => angle}deg;
   display: flex;
   justify-content: ${({ justify }) => textAlignToJustify(justify)};
+  align-items: center;
 `;
 function textAlignToJustify(textAlign) {
   if (textAlign === "right") return "end";
