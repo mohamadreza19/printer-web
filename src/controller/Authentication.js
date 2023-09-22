@@ -7,6 +7,7 @@ export default function ({ children, replacePath = "/login" }) {
   const isLoggin = useIsUserLogin();
 
   if (isLoggin || userToken.value) {
+    console.log("hi");
     return children;
   } else {
     return <Navigate to={replacePath} replace />;

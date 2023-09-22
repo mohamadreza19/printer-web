@@ -4,7 +4,6 @@ import { ThemeProvider } from "@mui/material";
 
 import {
   ErrorFallbackComponent,
-  LtrTheme,
   MycacheProider,
   RtlTheme,
 } from "./styles/theme";
@@ -13,13 +12,14 @@ import useHandleDirection_Based_Langiage from "./utility/useHandleDirection_Base
 
 import Routes from "./routes/Routes";
 import useHandleLanguage_Based_CachedLanguage from "./utility/useHandleLanguage_Based_CachedLanguage";
-import { useLanguage } from "./recoil/readStore";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "./styles/__ready/Toasts";
-import useGeneralCallApi from "./utility/useGeneralCallApi";
-import { useTestCellReducer } from "./recoil/reducer/useCellReducer";
+
+import changeBaseUrlBasedHost from "./utility/changeBaseUrlBasedHost";
 
 function App() {
+  changeBaseUrlBasedHost();
   useHandleDirection_Based_Langiage();
   useHandleLanguage_Based_CachedLanguage();
 

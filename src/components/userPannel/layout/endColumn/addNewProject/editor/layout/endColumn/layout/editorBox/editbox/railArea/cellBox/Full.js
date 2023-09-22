@@ -327,7 +327,7 @@ export default function ({
     qrWant,
     symbolUsed.isUsed,
   ]);
-  console.log({ cell });
+
   return (
     <main
       id="#full-cell"
@@ -380,7 +380,6 @@ const ImageContainer = ({
   svgSrc,
   cellSymbolId,
 }) => {
-  console.log(style.fontSize);
   const ref = useRef(null);
   const generatedID = shortid.generate();
   useEffect(() => {

@@ -113,9 +113,9 @@ export default function ({
             {!isViewMode ? (
               <div
                 style={{
-                  width: `${cell.product.width}px`,
-                  minWidth: `${cell.product.width}px`,
-                  height: `${cell.product.widthOfPrintingArea}px`,
+                  width: `${cell.product.width}mm`,
+                  minWidth: `${cell.product.width}mm`,
+                  height: `${cell.product.widthOfPrintingArea}mm`,
                 }}
                 className="position-relative "
               >

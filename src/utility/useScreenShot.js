@@ -45,7 +45,7 @@ export default function () {
     );
 
     doThingOnChild(rootElementChildren, (element) => {
-      element.style.border = "";
+      // element.style.border = "";
     });
 
     async function doScreen() {
@@ -53,7 +53,8 @@ export default function () {
         const canvas = await html2canvas(rootElement, {
           allowTaint: true,
           scale: 2,
-          height: 50,
+
+          // height: 50,
           // foreignObjectRendering: true,
         });
 
