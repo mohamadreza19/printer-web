@@ -27,7 +27,7 @@ export default function ({
 
   return (
     <div
-      className="w-100 d-flex align-items-end  mb-3 pt-3"
+      className=" d-flex align-items-end  mb-3 pt-3"
       style={
         {
           // height: railsWidth + "px",

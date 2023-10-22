@@ -35,6 +35,7 @@ import AdminList_Of_User_Printer from "../components/adminPannel/layout/endColum
 import AdminList_Of_Manager from "../components/adminPannel/layout/endColumn/list_Of_Manager";
 import AdminList_Of_Manager_edit from "../components/adminPannel/layout/endColumn/list_Of_Manager/edit";
 import AdminList_Of_Manager_Printer from "../components/adminPannel/layout/endColumn/list_Of_Manager/printer";
+import AdminSetting from "../components/adminPannel/layout/endColumn/setting/Setting";
 //
 import AdminAddLabel from "../components/adminPannel/layout/endColumn/addNewLabel";
 
@@ -46,9 +47,9 @@ import AdminAuthentication from "../controller/AdminAuthentication";
 const ListOfProject = React.lazy(() =>
   import("../components/userPannel/layout/endColumn/listOfProject")
 );
-const Setting = React.lazy(() =>
-  import("../components/adminPannel/layout/endColumn/setting/Setting")
-);
+// const Setting = React.lazy(() =>
+//   import("../components/adminPannel/layout/endColumn/setting/Setting")
+// );
 export const UserRoutePath = {
   Index: "/user",
   projectList: "/user/project-list",
@@ -137,7 +138,7 @@ export default function () {
           element={<AdminList_Of_Manager_Printer />}
         />
         <Route path="charts" element={<ViewPrinitChart />} />
-        <Route path="setting" element={<Setting />} />
+        <Route path="setting" element={<AdminSetting />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

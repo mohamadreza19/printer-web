@@ -337,7 +337,7 @@ export default function ({
       className="w-100 h-100  bg-white position-relative "
       style={{
         border: cell.isSelected
-          ? "2px solid #F36523"
+          ? "1px solid #F36523"
           : cell.children
           ? "1px solid blue"
           : "1px solid black",

@@ -11,6 +11,7 @@ export default function () {
       className="w-100 d-flex justify-content-between align-item-center"
     >
       <ActionsButton />
+
       <Logo />
     </header>
   );

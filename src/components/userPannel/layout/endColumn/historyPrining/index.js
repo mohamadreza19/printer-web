@@ -28,9 +28,9 @@ export default function () {
   const get_execlFile_mutate = UserProjects_Excel_Call();
   function submitDataPickred() {
     const from = datePickred.server.from;
-    console.log(from);
+
     const to = datePickred.server.to;
-    console.log(to);
+
     setStartDate(from);
     setendDate(to);
   }

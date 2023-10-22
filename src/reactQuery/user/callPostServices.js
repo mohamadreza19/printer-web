@@ -229,14 +229,19 @@ export const Add_Print = () => {
   const { value: token } = useCachedToken();
 
   const setLoading = useToastReducer();
-  console.log(admin_user_productList);
+
   const result = useMutation({
     mutationKey: ["add-print"],
     mutationFn: (option) => {
-      return callPostServices.add_print(token, option.projectId);
+      const firstKey = Object.keys(option)[0];
+      const firstValue = option[firstKey];
+
+      const body = {
+        [firstKey]: firstValue,
+      };
+      return callPostServices.add_print(token, body);
     },
     onSuccess: (data) => {
-      console.log({ admin_user_productList });
       // queryClient.invalidateQueries(add_Product_Bookmark_Mutation_key);
       // projectsKey = Math.random() * 20;
       // setAdmin_user_productList(Math.random() * 20);

@@ -116,6 +116,7 @@ export default class {
     }
   }
   static async add_print(token = "", body) {
+    console.log("dadsad");
     if (!token) throw new Error("there isnt token");
 
     try {

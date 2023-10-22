@@ -139,8 +139,8 @@ export const UserProjects_Excel_Call = () => {
     }
     if (error) {
       setLoading(() => ({
-        isShow: true,
-        message: error,
+        isShow: false,
+        message: "error",
       }));
     }
   }, [isSuccess, isLoading, error]);

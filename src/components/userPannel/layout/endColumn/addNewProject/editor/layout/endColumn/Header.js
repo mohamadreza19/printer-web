@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { showPutProjectResponse } from "../../../../../../../../recoil/store/user/showPutProjectResponse";
 import useScreenShot from "../../../../../../../../utility/useScreenShot";
+import { FormatColorResetRounded } from "@mui/icons-material";
 
 export default function () {
   const language = useLanguage();
@@ -89,14 +90,17 @@ export default function () {
         </section>
       </article>
       <article className="d-flex">
-        <Buttons.Outlined className="editor-header-button_extra-medium">
+        <Buttons.Outlined
+          onClick={() => getImage("IMAGE")}
+          className="editor-header-button_extra-medium"
+        >
           <Icons.Editor_ExportFile size="large" />
           <Typography.H7 className={cssClass.ms_1}>
             {content.Output}
           </Typography.H7>
         </Buttons.Outlined>
         <Buttons.Contained
-          onClick={getImage}
+          onClick={() => getImage("PRODUCT")}
           className="editor-header-button_extra-small mx-3"
         >
           <Icons.Editor_Print size="large" />

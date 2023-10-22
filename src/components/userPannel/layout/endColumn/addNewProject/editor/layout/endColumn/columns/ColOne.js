@@ -61,7 +61,7 @@ export default function ({ column, isShow, setShow = () => {} }) {
       key={"10"}
       item
       lg={isShow ? 14 : 9}
-      className="h-100 position-relative "
+      className="w-100 h-100 position-relative "
     >
       <EditorBox />
       <ToggleShowButton />

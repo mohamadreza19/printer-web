@@ -15,7 +15,7 @@ export default function () {
     null,
     undefined,
     undefined,
-    "ASC"
+    "DESC"
   );
 
   if (data)

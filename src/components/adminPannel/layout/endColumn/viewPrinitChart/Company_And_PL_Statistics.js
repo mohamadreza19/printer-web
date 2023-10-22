@@ -5,7 +5,7 @@ import DynamicCopmanyAndLabel from "./dynamicCopmanyAndLabel";
 import { useContent_Based_Language } from "../../../../../recoil/readStore";
 
 export default function () {
-  const [order, setOrder] = useState("ASC");
+  const [order, setOrder] = useState("DESC");
   const [displayPriority, setDisplayPriority] = useState("companies");
   const { data, hasNextPage, fetchNextPage } = AdminPrints(
     1,

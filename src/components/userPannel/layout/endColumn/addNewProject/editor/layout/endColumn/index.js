@@ -33,7 +33,6 @@ export default function () {
       className={"w-100 h-100 bg_info editor-end-column-r position-relative  "}
     >
       <Header />
-      {/* <PopUpInfo /> */}
 
       <Grid
         container
@@ -42,7 +41,6 @@ export default function () {
       >
         <DragDropContext
           onDragEnd={(result) => {
-            console.log({ result });
             const { destination, source, draggableId } = result;
 
             const findedProduct = products.find(

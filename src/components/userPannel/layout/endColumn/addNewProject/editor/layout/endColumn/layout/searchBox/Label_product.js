@@ -30,6 +30,7 @@ const inital = {
   widthOfPrintingArea: "",
   pictures: [],
   bookmarked: false,
+  isDragDisabled: false,
 };
 
 export default function ({
@@ -38,6 +39,7 @@ export default function ({
   product = inital,
   myKey,
   index,
+  isDragDisabled = false,
 }) {
   const cssClass = useDynamicCssClass();
   const imageResonse = Admin_User_Image("user");
@@ -52,7 +54,12 @@ export default function ({
   }, []);
 
   return (
-    <Draggable key={myKey} draggableId={product.id.toString()} index={index}>
+    <Draggable
+      isDragDisabled={isDragDisabled}
+      key={myKey}
+      draggableId={product.id.toString()}
+      index={index}
+    >
       {(provided, snapshot) => {
         return (
           <DragibleContainerNeedStyled

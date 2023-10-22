@@ -232,6 +232,7 @@ export const content_Based_Language = selector({
                   row4: {
                     State: "State",
                     City: "City",
+                    credit: "credit to day",
                     CompanyAddress: "Company address",
                   },
                   row5: {
@@ -499,6 +500,8 @@ export const content_Based_Language = selector({
                   row4: {
                     State: "استان",
                     City: "شهر",
+                    credit: "اعتبار به روز",
+
                     CompanyAddress: "نشانی شرکت",
                   },
                   row5: {
@@ -760,6 +763,7 @@ export const content_Based_Language = selector({
                   row4: {
                     State: "durum",
                     City: "Şehir",
+                    credit: "günlük kredi",
                     CompanyAddress: "Şirket adresi",
                   },
                   row5: {

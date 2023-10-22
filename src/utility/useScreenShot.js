@@ -3,7 +3,7 @@ import { useScreenshot, createFileName } from "use-react-screenshot";
 
 import allowRemoveCustomLabelsBorderToScreen_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
 import html2canvas from "html2canvas";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   AddImage_ToPrint_Local_Mutation,
   Add_Print,
@@ -11,6 +11,7 @@ import {
 import allowReplaceInputToDiv_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { rails, railsWidth_store } from "../recoil/userEditorStore/cellsStore";
+//
 
 export default function () {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,99 +28,97 @@ export default function () {
 
   useEffect(() => {
     if (autoPrint === "true" && document.readyState == "complete") {
-      // downloadScreen();
-      setTimeout(downloadScreen, 1000);
+      screenShot();
+
+      setTimeout(screenShot, 1000);
     }
     if (allowClosePage) {
       setAllowClosePage(false);
       window.close();
     }
   }, [autoPrint, document.readyState, allowClosePage]);
-  function downloadScreen() {
-    setAllowReplaceInputToDiv(true);
+  return screenShot;
 
-    const rootElement = document.querySelector("#test-screen");
-
-    const rootElementChildren = document.querySelectorAll(
-      "#test-screen div main"
-    );
-
-    doThingOnChild(rootElementChildren, (element) => {
-      // element.style.border = "";
-    });
-
-    async function doScreen() {
-      try {
-        const canvas = await html2canvas(rootElement, {
-          allowTaint: true,
-          scale: 2,
-
-          // height: 50,
-          // foreignObjectRendering: true,
-        });
-
-        const image = canvas.toDataURL("image/png", 1.0);
-
-        const blobedImage = b64toBlob(image);
-
-        const form = document.createElement("form");
-
-        const input = document.createElement("input");
-
-        form.appendChild(input);
-
-        document.body.appendChild(form);
-        // form.attributes.onsubmit.value = "return false";
-        form.method = "post";
-        form.enctype = "multipart/form-data";
-        form.action = `http://localhost:8888?width=${railsWidth}`;
-        form.target = "_blank";
-        input.type = "file";
-        input.name = "fileupload";
-
-        const dataTransfer = new DataTransfer();
-        const myFile = new File([blobedImage], "fileupload.png");
-        dataTransfer.items.add(myFile);
-        input.files = dataTransfer.files;
-
-        doThingOnChild(rootElementChildren, (element) => {
-          element.style.border = "1px solid black";
-        });
-        setAllowReplaceInputToDiv(false);
-        const a = document.createElement("a");
-        a.href = image;
-        a.download = image;
-        // a.click();
-        // window.open(
-        //   `chrome://flags/#block-insecure-private-network-request`,
-        //   "_blank"
-        // );
-        form.style.display = "none";
-        form.addEventListener(
-          "submit",
-          addPrint.mutate({
-            projectId,
-          })
-        );
-        // d
-        form.submit();
-
-        // uploadFile.mutateAsync({ file: blobedImage, width: railsWidth });
-        form.addEventListener("submit", () => {
-          setAllowClosePage(true);
-        });
-      } catch (error) {
-        console.log({ error });
-        setAllowReplaceInputToDiv(false);
-      }
+  async function screenShot(
+    type = "PRODUCT",
+    labelOption = {
+      width: "",
+      labelImg: "",
     }
+    // product label // image
+  ) {
+    const PRODUCT = "PRODUCT";
+    const LABEL = "LABEL";
+    const IMAGE = "IMAGE";
 
-    setTimeout(doScreen, 200);
+    if (type === PRODUCT) {
+      const rootElement = document.querySelector("#test-screen");
+
+      const rootElementChildren = document.querySelectorAll(
+        "#test-screen div main"
+      );
+      doThingOnChild(rootElementChildren, (element) => {
+        element.style.borderWidth = "0";
+      });
+
+      const imgListener = new ImageListener({
+        element: rootElement,
+      });
+      const imgDataURL = await imgListener.getImageDataURLFromCanvas();
+
+      const blob = imgListener.getB64toBlob(imgDataURL);
+
+      const generatedForm = new FormCreator({
+        elemetWidth: railsWidth,
+        blobedFile: blob,
+      });
+
+      const form = generatedForm.imageInputFormGenerator();
+
+      form.submit();
+      doThingOnChild(rootElementChildren, (element) => {
+        element.style.borderWidth = "1px";
+      });
+    }
+    if (type === LABEL) {
+      const blob = labelOption.labelImg;
+      const width = labelOption.width;
+
+      // const imgListener = new ImageListener();
+      // const url = await imgListener.readAsDataURL(blob);
+      const handler = new FormCreator({
+        elemetWidth: width,
+        blobedFile: blob,
+      });
+      const form = handler.imageInputFormGenerator();
+
+      form.submit();
+    }
+    if (type === IMAGE) {
+      const rootElement = document.querySelector("#test-screen");
+
+      const rootElementChildren = document.querySelectorAll(
+        "#test-screen div main"
+      );
+      doThingOnChild(rootElementChildren, (element) => {
+        element.style.borderWidth = "0";
+      });
+
+      const imgListener = new ImageListener({
+        element: rootElement,
+      });
+      const imgDataURL = await imgListener.getImageDataURLFromCanvas();
+
+      const a_tag = new FormCreator().AtagdownloadLinkGenerator(imgDataURL);
+      a_tag.click();
+      doThingOnChild(rootElementChildren, (element) => {
+        element.style.borderWidth = "1px";
+      });
+    }
   }
-
-  return downloadScreen;
 }
 
+//////
 function b64toBlob(dataURI) {
   var byteString = atob(dataURI.split(",")[1]);
   var ab = new ArrayBuffer(byteString.length);
@@ -134,4 +133,77 @@ function doThingOnChild(children = [], callback = () => {}) {
   children.forEach((element) => {
     callback(element);
   });
+}
+
+const interfaceObj_ = {
+  element: HTMLElement,
+  ChildrenElement: HTMLCollection,
+  // image saveFunction //form_submit(form submitFunction)
+};
+
+class ImageListener {
+  constructor(option = interfaceObj_) {
+    this.element = option.element;
+  }
+  async getImageDataURLFromCanvas() {
+    const canvas = await html2canvas(this.element, {
+      allowTaint: true,
+      scale: 2,
+      // height: 50,
+      // foreignObjectRendering: true,
+    });
+
+    return canvas.toDataURL("image/png", 1.0);
+  }
+
+  getB64toBlob(imgDataURL) {
+    return b64toBlob(imgDataURL);
+  }
+  async readAsDataURL(blob) {
+    return new Promise((resolve, _) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => resolve(reader.result);
+    });
+  }
+}
+const formCreator_interfaceObj = {
+  elemetWidth: String,
+  blobedFile: Blob,
+};
+class FormCreator {
+  constructor(option = formCreator_interfaceObj) {
+    this.width = option.elemetWidth;
+    this.blob = option.blobedFile;
+  }
+  imageInputFormGenerator() {
+    const form = document.createElement("form");
+
+    const input = document.createElement("input");
+
+    form.appendChild(input);
+
+    document.body.appendChild(form);
+
+    form.method = "post";
+    form.enctype = "multipart/form-data";
+    form.action = `http://localhost:8888?width=${this.width}`;
+    form.target = "_blank";
+    input.type = "file";
+    input.name = "fileupload";
+
+    const dataTransfer = new DataTransfer();
+    const myFile = new File([this.blob], "fileupload.png");
+    dataTransfer.items.add(myFile);
+    input.files = dataTransfer.files;
+    form.style.display = "none";
+    return form;
+  }
+  AtagdownloadLinkGenerator(DataURL) {
+    console.log({ DataURL });
+    const a = document.createElement("a");
+    a.href = DataURL;
+    a.download = DataURL;
+    return a;
+  }
 }

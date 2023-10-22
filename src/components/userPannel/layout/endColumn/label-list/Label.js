@@ -23,6 +23,7 @@ export default function ({
     pictures: [],
     bookmarked: false,
   },
+  PrintLabel = () => {},
   handleAdd_Bookmark = () => {},
   handleDeleteBookmark = () => {},
 }) {
@@ -58,7 +59,17 @@ export default function ({
     };
     imageResponse.mutate(option);
   }, []);
+  function handlePrintLabel(labelObj, image) {
+    const id = labelObj.id;
+    const width = labelObj.width;
+    const labelImg = image;
 
+    PrintLabel("LABEL", {
+      id,
+      width,
+      labelImg,
+    });
+  }
   if (imageResponse.isSuccess)
     return (
       <div
@@ -116,7 +127,10 @@ export default function ({
               </span>
               <span>mn</span>
             </Typography.Body2>
-            <Buttons.Contained_Custom className="icon-small-box-padding border-r-circle bg_primary ">
+            <Buttons.Contained_Custom
+              className="icon-small-box-padding border-r-circle bg_primary "
+              onClick={() => handlePrintLabel(label, imageResponse.data)}
+            >
               <Icons.Print />
             </Buttons.Contained_Custom>
           </div>

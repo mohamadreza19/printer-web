@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import Label from "./Label";
 import InfiniteScroll from "react-infinite-scroll-component";
+import useScreenShot from "../../../../../utility/useScreenShot";
 
 export default function ({
   labels = [],
@@ -12,6 +13,8 @@ export default function ({
   filteredLabelList = [],
   labelList = [],
 }) {
+  const printLabel = useScreenShot();
+
   return (
     <InfiniteScroll
       dataLength={labels.length}
@@ -23,6 +26,7 @@ export default function ({
       {!isAllowShowBookmarkedLabel
         ? labelList.map((label, index) => (
             <Label
+              PrintLabel={printLabel}
               label={label}
               key={index}
               handleAdd_Bookmark={() => handleAdd_Bookmark(label)}
@@ -31,6 +35,7 @@ export default function ({
           ))
         : filteredLabelList.map((label, index) => (
             <Label
+              PrintLabel={printLabel}
               label={label}
               key={index}
               handleAdd_Bookmark={() => handleAdd_Bookmark(label)}

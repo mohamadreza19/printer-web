@@ -28,6 +28,7 @@ import moment from "moment";
 import "moment/locale/fa";
 import "moment/locale/tr";
 import { AdminAddUser_Mutation } from "../../../../../../reactQuery/admin/callPostService";
+import { useNavigate } from "react-router-dom";
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =
@@ -35,17 +36,15 @@ export default function () {
   const allContent = useContent_Based_Language();
   const state = useAdd_user_controller(true);
   const validate = add_user_validate();
-
+  const navigate = useNavigate();
   const { isSuccess, data, mutateAsync } = AdminAddUser_Mutation();
 
   const response = false;
   async function addUser() {
     try {
       await validate();
-      console.log(state);
-      await mutateAsync(state);
 
-      console.log("hhh");
+      await mutateAsync(state);
     } catch (error) {
       console.log(error);
     }
@@ -148,7 +147,10 @@ export default function () {
           </article>
         </section>
         <footer className="w-100 d-flex  justify-content-center mt-6 pb-4_2rem">
-          <Buttons.Outlined className="button_extra-large ">
+          <Buttons.Outlined
+            onClick={() => navigate("/admin/list-user")}
+            className="button_extra-large "
+          >
             <Typography.H7>
               {allContent.AdminPannel.end_col.controlPannel.row1.usersList}
             </Typography.H7>
@@ -210,7 +212,7 @@ export default function () {
           CompanyAddress={content.row4.CompanyAddress}
           margin={cssClass.ms_3}
         />
-        <Expirition margin={cssClass.ms_3} />
+        <Expirition credit={content.row4.credit} margin={cssClass.ms_3} />
         <AccessProductBox
           AccessToProducts={content.row5.AccessToProducts}
           accessProduct={state.productAccess}

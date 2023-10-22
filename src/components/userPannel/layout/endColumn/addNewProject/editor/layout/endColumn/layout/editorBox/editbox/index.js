@@ -100,10 +100,10 @@ export default function () {
   };
 
   return (
-    <div className=" bg-white scrollable-x-large position-relative disabled_gray2">
+    <div className="dir-ltr bg-white scrollable-x-large position-relative disabled_gray2">
       <ScaleContainer
         scale={scaleState_}
-        className={"w-100  dir-ltr pe-7rem pt-5   border-r-bottom-20"}
+        className={"dir-ltr pe-7rem pt-5   border-r-bottom-20"}
       >
         {railsState.present?.map((rail, index) => {
           return (

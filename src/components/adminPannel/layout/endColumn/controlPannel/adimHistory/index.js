@@ -28,14 +28,14 @@ export default function () {
     justLabel,
     startDate,
     endDate,
-    "ASC"
+    "DESC"
   );
   const excel_response = AdminPrints_Excel();
   function submitDataPickred() {
     const from = datePickred.server.from;
-    console.log(from);
+
     const to = datePickred.server.to;
-    console.log(to);
+
     setStartDate(from);
     setendDate(to);
   }

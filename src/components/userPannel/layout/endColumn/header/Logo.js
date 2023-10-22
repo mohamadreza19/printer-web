@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 import Icons from "../../../../../styles/__ready/Icons";
 
 export default function () {
   return (
-    <div>
-      <Icons.Raad />
+    <div className="c-pointer">
+      <Link to={"/user/project-list"}>
+        <Icons.Raad />
+      </Link>
     </div>
   );
 }

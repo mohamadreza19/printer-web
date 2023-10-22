@@ -106,7 +106,7 @@ export default function ({
     <div className="w-100 d-flex flex-column align-items-center ">
       <Select is={useSelection} />
       <View is={useView} />
-      <Text is={useUseText} />
+      {/* <Text is={useUseText} /> */}
       <Shape is={useUseShape} onClickShape={onClickShape} language={language} />
     </div>
   );

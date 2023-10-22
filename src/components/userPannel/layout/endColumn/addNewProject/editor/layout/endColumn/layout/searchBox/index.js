@@ -15,7 +15,9 @@ import { useEffect } from "react";
 import { Add_Product_Bookmark_Mutation } from "../../../../../../../../../../reactQuery/user/callPostServices";
 import { Bookmark_Product_Delete } from "../../../../../../../../../../reactQuery/user/callDeleteServices";
 import { isAllowShowProductsBookmark_store } from "../../../../../../../../../../recoil/store/user/isAllowShowProductsBookmark_store";
+
 import { useState } from "react";
+import { useView } from "../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 
 export default function () {
   const cssClass = useDynamicCssClass();
@@ -25,6 +27,7 @@ export default function () {
   const isAllowShowProductsBookmark = useRecoilValue(
     isAllowShowProductsBookmark_store
   );
+  const isDragDisabled = !useView();
 
   const response = Admin_User_ProductList_Call("user", search, null, null);
 
@@ -41,7 +44,6 @@ export default function () {
         await add_product_Bookmark_.mutateAsync(option);
         const findedProduct = product_column_.find((p) => p.id === product.id);
 
-        console.log({ findedProduct });
         const newProducts = product_column_.map((p) => {
           const bookmarked_product_id = product.id;
           if (p.id === bookmarked_product_id) {
@@ -52,7 +54,7 @@ export default function () {
           }
           return p;
         });
-        console.log({ newProducts });
+
         setProduct_column_(newProducts);
       } catch (error) {}
     }
@@ -130,6 +132,7 @@ export default function () {
                     ? product_column_.map((product, index) => {
                         return (
                           <Label_product
+                            isDragDisabled={isDragDisabled}
                             handleAdd_Bookmark={handleAdd_Bookmark}
                             handleDeleteBookmark={handleDeleteBookmark}
                             product={product}
