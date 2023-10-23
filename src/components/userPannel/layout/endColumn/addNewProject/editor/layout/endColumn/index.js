@@ -17,8 +17,9 @@ import { showHide_Btn } from "../../../../../../../../recoil/userEditorStore/sea
 import userEditor_DnD from "../../../../../../../../helper/userEditor_DnD";
 import { is_project_sucess_edit_store } from "../../../../../../../../recoil/store/user/project_store";
 import { PopUpInfo } from "../startColumn/PopUpInfo";
-
-export default function () {
+import React from "react";
+import { useState } from "react";
+export default React.memo(function () {
   const cssClass = useDynamicCssClass();
 
   const [railsArray, setRailsArray] = useRecoilState(rails);
@@ -82,4 +83,4 @@ export default function () {
       </Grid>
     </div>
   );
-}
+});

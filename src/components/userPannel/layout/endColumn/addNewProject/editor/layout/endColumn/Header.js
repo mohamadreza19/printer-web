@@ -12,13 +12,14 @@ import project_store from "../../../../../../../../recoil/store/user/project_sto
 import useBundleProject from "../../../../../../../../utility/useBundleProject";
 import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { showPutProjectResponse } from "../../../../../../../../recoil/store/user/showPutProjectResponse";
 import useScreenShot from "../../../../../../../../utility/useScreenShot";
 import { FormatColorResetRounded } from "@mui/icons-material";
 
 export default function () {
   const language = useLanguage();
+  const { projectId } = useParams();
 
   const beForward = language == "fa" ? true : false;
   const cssClass = useDynamicCssClass();
@@ -35,7 +36,7 @@ export default function () {
 
   const handle_bundled_project = useBundleProject();
 
-  const getImage = useScreenShot();
+  const autoPrint = useScreenShot();
 
   function handleSubmitProject() {
     mutate.mutate({
@@ -45,7 +46,6 @@ export default function () {
 
   useEffect(() => {
     if (mutate.isSuccess) {
-      console.log(mutate.data);
       setShowPutProjectResponse(mutate.data);
       navigate("/user/add-project");
     }
@@ -91,7 +91,7 @@ export default function () {
       </article>
       <article className="d-flex">
         <Buttons.Outlined
-          onClick={() => getImage("IMAGE")}
+          onClick={() => autoPrint("IMAGE")}
           className="editor-header-button_extra-medium"
         >
           <Icons.Editor_ExportFile size="large" />
@@ -100,7 +100,7 @@ export default function () {
           </Typography.H7>
         </Buttons.Outlined>
         <Buttons.Contained
-          onClick={() => getImage("PRODUCT")}
+          onClick={() => autoPrint("PRODUCT", projectId)}
           className="editor-header-button_extra-small mx-3"
         >
           <Icons.Editor_Print size="large" />

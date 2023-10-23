@@ -3,6 +3,7 @@ import EditorBox from "../layout/editorBox";
 import { Toggle_show_hide } from "../../../../../../../../../styles/__ready/EditorIcons";
 import Typography from "../../../../../../../../../styles/__ready/Typography";
 import { useLanguage } from "../../../../../../../../../recoil/readStore";
+import React from "react";
 
 export default function ({ column, isShow, setShow = () => {} }) {
   const lan = useLanguage();

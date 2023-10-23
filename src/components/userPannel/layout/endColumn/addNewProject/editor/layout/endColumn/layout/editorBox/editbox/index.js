@@ -22,6 +22,7 @@ import useToastReducer from "../../../../../../../../../../../recoil/reducer/use
 import useRailReducer from "../../../../../../../../../../../recoil/reducer/editor/useRailReducer";
 
 import { UserProjectFindOne_Qury } from "../../../../../../../../../../../reactQuery/user/callGetService";
+import { memo } from "react";
 
 //  data = {
 //   frontId: 112,
@@ -32,11 +33,12 @@ import { UserProjectFindOne_Qury } from "../../../../../../../../../../../reactQ
 //   userId: 1,
 // };
 
-export default function () {
+export default memo(function () {
   const { error, data, isLoading, isSuccess } = UserProjectFindOne_Qury();
 
   const setRail = useRailReducer();
   const [railsState, setRailsState] = useRecoilState(rails);
+
   const product = useRecoilValue(product_column);
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
@@ -47,7 +49,7 @@ export default function () {
   const [scaleState_, setScaleState] = useRecoilState(scaleStore);
   useEffect(() => {
     if (data) {
-      if (product.length > 0) {
+      if (product) {
         const rails = data.rails;
         const railWidth_data = data.railWidth;
 
@@ -68,7 +70,7 @@ export default function () {
         future: [],
       });
     };
-  }, [isSuccess, product.length]);
+  }, [isSuccess]);
   useEffect(() => {
     if (wantNewRail) {
       if (railsState.present.length < 1) {
@@ -118,4 +120,4 @@ export default function () {
       </ScaleContainer>
     </div>
   );
-}
+});

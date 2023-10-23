@@ -41,7 +41,7 @@ export default function ({
     }
     return "bg_primary_v1";
   }
-
+  // printCount(print);
   return (
     <div
       className={
@@ -75,7 +75,7 @@ export default function ({
           className={"d-flex justify-content-end " + cssClass.pe_5}
         >
           <PrintCount
-            printsCount={print.project?.printsCount}
+            printsCount={printCount(print)}
             text={content.AdminPannel.end_col.controlPannel.row3.print}
           />
         </Grid>
@@ -88,4 +88,18 @@ export default function ({
       </section>
     </div>
   );
+}
+function printCount(print) {
+  const label = print.label;
+  const project = print.project;
+  let printsCount = "";
+
+  if (label !== null) {
+    printsCount = label.printsCount || 0;
+  }
+  if (project !== null) {
+    printsCount = project.printsCount || 0;
+  }
+
+  return printsCount;
 }

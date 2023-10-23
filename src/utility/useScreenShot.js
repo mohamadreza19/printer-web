@@ -41,6 +41,7 @@ export default function () {
 
   async function screenShot(
     type = "PRODUCT",
+    id = "",
     labelOption = {
       width: "",
       labelImg: "",
@@ -75,12 +76,17 @@ export default function () {
 
       const form = generatedForm.imageInputFormGenerator();
 
+      addPrint.mutate({
+        projectId: Number(id),
+      });
+
       form.submit();
       doThingOnChild(rootElementChildren, (element) => {
         element.style.borderWidth = "1px";
       });
     }
     if (type === LABEL) {
+      console.log({ id });
       const blob = labelOption.labelImg;
       const width = labelOption.width;
 
@@ -91,7 +97,9 @@ export default function () {
         blobedFile: blob,
       });
       const form = handler.imageInputFormGenerator();
-
+      addPrint.mutate({
+        labelId: Number(id),
+      });
       form.submit();
     }
     if (type === IMAGE) {

@@ -7,6 +7,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { railsWidth_store } from "../../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import useScreenShot from "../../../../../../../../../../../../utility/useScreenShot";
 import { useState } from "react";
+import styled from "styled-components";
 
 export default function ({ key, customLabels = [], railId }) {
   // const cells = useCells();

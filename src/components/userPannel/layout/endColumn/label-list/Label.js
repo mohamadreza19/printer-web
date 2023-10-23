@@ -64,8 +64,7 @@ export default function ({
     const width = labelObj.width;
     const labelImg = image;
 
-    PrintLabel("LABEL", {
-      id,
+    PrintLabel("LABEL", id, {
       width,
       labelImg,
     });
