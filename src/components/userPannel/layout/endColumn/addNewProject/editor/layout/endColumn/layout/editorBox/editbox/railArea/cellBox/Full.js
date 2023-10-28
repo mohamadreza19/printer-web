@@ -334,7 +334,7 @@ export default function ({
       onKeyDown={handleDeleteSymbol}
       tabIndex="-1"
       onClick={handleSelectCell_Via_onClick}
-      className="w-100 h-100  bg-white position-relative "
+      className="w-100 h-100  bg-white position-relative d-flex justify-content-center align-content-center "
       style={{
         border: cell.isSelected
           ? "1px solid #F36523"
@@ -351,16 +351,18 @@ export default function ({
           cellSymbolId={cell.symbolId}
         />
       ) : (
-        <Editor_Cell_Input
-          allowReplaceInputToDiv={allowReplaceInputToDiv}
-          value={cell.content.text}
-          disabled={cell.isSelected}
-          onChange={handleChangeValue}
-          style={cell.content.style}
-          isBarcode={cell.isBarcode}
-          isQrcode={cell.isQrcode}
-          // font={font.font}
-        />
+        <>
+          <Editor_Cell_Input
+            allowReplaceInputToDiv={allowReplaceInputToDiv}
+            value={cell.content.text}
+            disabled={cell.isSelected}
+            onChange={handleChangeValue}
+            style={cell.content.style}
+            isBarcode={cell.isBarcode}
+            isQrcode={cell.isQrcode}
+            // font={font.font}
+          />
+        </>
       )}
     </main>
   );

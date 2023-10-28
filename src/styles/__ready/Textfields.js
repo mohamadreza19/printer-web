@@ -191,6 +191,7 @@ export const LoginPasswordTextField = ({
   Input_marginStart_based_Language = "ms-3",
   value = "",
   onChange = () => {},
+  onEnterKeyDown = () => {},
 }) => {
   function changeIcon() {
     const input = document.getElementById("password-v1");
@@ -226,6 +227,14 @@ export const LoginPasswordTextField = ({
           value={value}
           onChange={onChange}
           className={"text-filed-input-v2  " + Input_marginStart_based_Language}
+          onKeyDown={(e) => {
+            console.log({ e });
+            const key = e.key;
+
+            if (key === "Enter") {
+              onEnterKeyDown();
+            }
+          }}
         />
         <div
           onClick={changeIcon}

@@ -58,9 +58,9 @@ export default function () {
       const rootElementChildren = document.querySelectorAll(
         "#test-screen div main"
       );
-      doThingOnChild(rootElementChildren, (element) => {
-        element.style.borderWidth = "0";
-      });
+      // doThingOnChild(rootElementChildren, (element) => {
+      //   element.style.borderWidth = "0";
+      // });
 
       const imgListener = new ImageListener({
         element: rootElement,
@@ -108,9 +108,9 @@ export default function () {
       const rootElementChildren = document.querySelectorAll(
         "#test-screen div main"
       );
-      doThingOnChild(rootElementChildren, (element) => {
-        element.style.borderWidth = "0";
-      });
+      // doThingOnChild(rootElementChildren, (element) => {
+      //   element.style.borderWidth = "0";
+      // });
 
       const imgListener = new ImageListener({
         element: rootElement,
@@ -157,6 +157,7 @@ class ImageListener {
     const canvas = await html2canvas(this.element, {
       allowTaint: true,
       scale: 2,
+
       // height: 50,
       // foreignObjectRendering: true,
     });
