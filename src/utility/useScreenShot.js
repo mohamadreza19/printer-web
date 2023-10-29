@@ -81,9 +81,9 @@ export default function () {
       });
 
       form.submit();
-      doThingOnChild(rootElementChildren, (element) => {
-        element.style.borderWidth = "1px";
-      });
+      // doThingOnChild(rootElementChildren, (element) => {
+      //   element.style.borderWidth = "1px";
+      // });
     }
     if (type === LABEL) {
       console.log({ id });
@@ -119,9 +119,9 @@ export default function () {
 
       const a_tag = new FormCreator().AtagdownloadLinkGenerator(imgDataURL);
       a_tag.click();
-      doThingOnChild(rootElementChildren, (element) => {
-        element.style.borderWidth = "1px";
-      });
+      // doThingOnChild(rootElementChildren, (element) => {
+      //   element.style.borderWidth = "1px";
+      // });
     }
   }
 }

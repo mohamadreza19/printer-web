@@ -35,13 +35,8 @@ export default function ({
       }
     >
       <article className="d-flex align-items-center position-relative">
-        {/* <TrashBox /> */}
         <Title children={"ریل اول"} />
-        <CellsBox
-          //  customLabels={rail.customLabels} railId={rail.frontId}
-          customLabels={rail.customLabels}
-          railId={rail.frontId}
-        />
+        <CellsBox customLabels={rail.customLabels} railId={rail.frontId} />
       </article>
     </div>
   );

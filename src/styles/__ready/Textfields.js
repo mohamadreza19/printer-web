@@ -119,6 +119,9 @@ export default class {
           }}
           onChange={(e) => {
             const value = e.target.value;
+            setTimeout(() => {
+              onClickAndGetValeFn(value);
+            }, 500);
             if (value === "") {
               onClickAndGetValeFn("");
             }
@@ -228,7 +231,6 @@ export const LoginPasswordTextField = ({
           onChange={onChange}
           className={"text-filed-input-v2  " + Input_marginStart_based_Language}
           onKeyDown={(e) => {
-            console.log({ e });
             const key = e.key;
 
             if (key === "Enter") {
