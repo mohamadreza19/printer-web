@@ -195,6 +195,25 @@ export default function () {
         };
       });
     }
+    if (action == cellAction.REVERSE) {
+      try {
+        const newRails = state.present.map((rail) => {
+          if ("customLabels" in rail) {
+            const reversedCustomLabels = [...rail.customLabels].reverse();
+            return { ...rail, customLabels: reversedCustomLabels };
+          }
+          return rail;
+        });
+
+        const NewHistory = {
+          type: "SET_HISTORY",
+          value: newRails,
+        };
+        return HistoryChanger(NewHistory);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     if (action == cellAction.NEWSETCONTENT) {
       const newRails = state.present.map((rail) => {
         return railController_(

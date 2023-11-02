@@ -25,6 +25,7 @@ import AdminAddProduct from "../components/adminPannel/layout/endColumn/addNewPr
 import AdminAddProduct_UploadFile from "../components/adminPannel/layout/endColumn/addNewProduct/uploadFile";
 
 import AdminList_Of_Label_And_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product";
+import AdminAddLabelBeta from "../components/adminPannel/layout/endColumn/addNewLabelBeta";
 import Admin_Edit_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/ProductEdit";
 import Admin_Edit_Label from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/LabelEdit";
 
@@ -96,6 +97,10 @@ export default function () {
         path="user/add-project/editor/:projectId"
         element={<AddNewProject_Editor />}
       />
+      {/* <Route
+        path="admin/add-label-beta/editor/:projectId"
+        element={<AddNewProject_Editor />}
+      /> */}
       <Route
         path="/admin"
         element={
@@ -116,6 +121,8 @@ export default function () {
           path="add-product/upload-flie"
           element={<AdminAddProduct_UploadFile />}
         />
+        <Route path="add-project" element={<AddNewProject />} />
+        <Route path="add-label-beta" element={<AdminAddLabelBeta />} />
         <Route path="add-label" element={<AdminAddLabel />} />
         <Route path="add-label/edit/:labelid" element={<Admin_Edit_Label />} />
         <Route

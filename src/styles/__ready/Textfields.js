@@ -498,9 +498,11 @@ export const Editor_Cell_Input = ({
   },
   isBarcode = false,
   isQrcode = false,
+  // parentWidth = 0,
+  // parentHeight = 0,
 }) => {
   const isViewMode = useRecoilValue(isView);
-
+  const ref = useRef(null);
   const barCodeRef = useRef(null);
   const qrcodeRef = useRef(null);
   useEffect(() => {
@@ -508,7 +510,19 @@ export const Editor_Cell_Input = ({
       barCodeRef.current.renderElementRef.current.style.rotate = `${style.angle}deg`;
       barCodeRef.current.renderElementRef.current.style.padding = `${style.padding}px`;
     }
-  }, [style.angle, style.padding]);
+    // if (parentWidth || parentHeight) {
+    //   if (ref.current) {
+    //     const input = ref.current;
+
+    //     input.style.width = parentWidth + "px";
+    //     input.style.height = parentHeight + "px";
+    //   }
+    // }
+  }, [
+    style.angle,
+    style.padding,
+    // parentWidth, parentHeight
+  ]);
   const BarcodeAndQrCodeController = () => {
     if (isBarcode) {
       return (
@@ -544,7 +558,8 @@ export const Editor_Cell_Input = ({
         <BarcodeAndQrCodeController />
       ) : !allowReplaceInputToDiv ? (
         <input
-          className="editor-cell-input position-absolute "
+          ref={ref}
+          className="editor-cell-input  "
           value={value || ""}
           style={{
             fontFamily: style.fontFamily,
@@ -555,7 +570,7 @@ export const Editor_Cell_Input = ({
               style.fontStyle == "underline" ? "underline" : "none",
             textAlign: style.textAlign,
             rotate: `${style.angle}deg`,
-            margin: `${style.margin}px 0`,
+            margin: `${style.margin}px `,
             padding: `${style.padding}px`,
           }}
           disabled={isViewMode || isSelected}

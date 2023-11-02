@@ -86,7 +86,6 @@ export default function () {
       // });
     }
     if (type === LABEL) {
-      console.log({ id });
       const blob = labelOption.labelImg;
       const width = labelOption.width;
 
