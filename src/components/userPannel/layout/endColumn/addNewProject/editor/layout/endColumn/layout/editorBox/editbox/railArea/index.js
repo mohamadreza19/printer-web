@@ -10,6 +10,7 @@ import useScreenShot from "../../../../../../../../../../../../utility/useScreen
 import { useRef } from "react";
 
 export default function ({
+  index = 0,
   rail = {
     frontId: "",
     // customLabels: [],
@@ -27,7 +28,7 @@ export default function ({
 
   return (
     <div
-      className=" d-flex align-items-end  mb-3 pt-3"
+      className=" d-flex align-items-end rail  "
       style={
         {
           // height: railsWidth + "px",
@@ -36,8 +37,9 @@ export default function ({
     >
       <article className="d-flex align-items-center position-relative">
         {/* <TrashBox /> */}
-        <Title children={"ریل اول"} />
+        {/* <Title children={"ریل " + (Number(index) + 1)} /> */}
         <CellsBox
+          isFirstRail={index === 0}
           //  customLabels={rail.customLabels} railId={rail.frontId}
           customLabels={rail.customLabels}
           railId={rail.frontId}

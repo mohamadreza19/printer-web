@@ -55,6 +55,7 @@ function setFindOne_based_editor_access(editorAccess) {
 }
 export default memo(function () {
   const [editor_access, _] = useLocalStorage("editor_access");
+  const [railsArr, setRailsArr] = useState([]);
 
   const { error, data, isLoading, isSuccess } =
     setFindOne_based_editor_access(editor_access);
@@ -71,17 +72,35 @@ export default memo(function () {
 
   const [scaleState_, setScaleState] = useRecoilState(scaleStore);
   useEffect(() => {
+    let numberOfRails = "";
+    let railsArrLength = 0;
+    let myRails = [];
+    let firstRailToCopy = {};
     if (data) {
-      console.log({ editor_access });
       if (product) {
-        const rails = data.rails;
+        numberOfRails = data.numberOfRails;
+        railsArrLength = data.rails.length;
+        firstRailToCopy = { ...data.rails[0] };
+
         const railWidth_data = data.railWidth;
 
+        if (numberOfRails !== railsArrLength) {
+          delete firstRailToCopy["id"];
+
+          for (let i = 0; i < numberOfRails; i++) {
+            myRails.push({ ...firstRailToCopy, frontId: "id-test" + i });
+          }
+        } else {
+          myRails = data.rails;
+        }
+
         setRailsWidth(railWidth_data);
+        setRailsArr(myRails);
         setRailsState((draft) => ({
           ...draft,
-          present: rails,
+          present: myRails,
         }));
+        // setRail({}, "ADDRAIL");
         const direction = data.direction;
         setJustify(direction);
       }
@@ -128,10 +147,21 @@ export default memo(function () {
   return (
     <div className="dir-ltr bg-white scrollable-x-large position-relative disabled_gray2">
       <ScaleContainer
+        id="rails-box"
         scale={scaleState_}
-        className={"dir-ltr pe-7rem pt-5   border-r-bottom-20"}
+        className={"dir-ltr rails-box-pt   border-r-bottom-20"}
       >
         {railsState.present?.map((rail, index) => {
+          return (
+            <RailArea
+              key={index}
+              index={index}
+              rail={rail}
+              deleteRail={() => setRail({ railId: rail.frontId }, "DELETERAIL")}
+            />
+          );
+        })}
+        {/* {railsState.present?.map((rail, index) => {
           return (
             <RailArea
               key={index}
@@ -139,7 +169,7 @@ export default memo(function () {
               deleteRail={() => setRail({ railId: rail.frontId }, "DELETERAIL")}
             />
           );
-        })}
+        })} */}
         <AddNewRailButton />
       </ScaleContainer>
     </div>

@@ -488,7 +488,7 @@ export const Editor_Cell_Input = ({
   allowReplaceInputToDiv = false,
   value = "",
   onChange = () => {},
-  isSelected = false,
+  isSelection = false,
   onClick = () => {},
   style = {
     fontFamily: "",
@@ -557,31 +557,59 @@ export const Editor_Cell_Input = ({
       {isBarcode || isQrcode ? (
         <BarcodeAndQrCodeController />
       ) : !allowReplaceInputToDiv ? (
-        <input
-          ref={ref}
-          className="editor-cell-input  "
-          value={value || ""}
-          style={{
-            fontFamily: style.fontFamily,
-            fontWeight: style.fontStyle == "bold" ? 600 : 400,
-            fontSize: style.fontSize,
-            fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
-            textDecoration:
-              style.fontStyle == "underline" ? "underline" : "none",
-            textAlign: style.textAlign,
-            rotate: `${style.angle}deg`,
-            margin: `${style.margin}px `,
-            padding: `${style.padding}px`,
-          }}
-          disabled={isViewMode || isSelected}
-          onClick={() => {
-            onClick();
-          }}
-          onChange={(e) => {
-            onChange(e.target.value);
-          }}
-          id="text"
-        />
+        <>
+          {!isSelection ? (
+            <div
+              ref={ref}
+              className="d-flex align-items-center w-100 h-100   editor-cell-input  "
+              style={{
+                color: "black",
+                fontFamily: style.fontFamily,
+                fontWeight: style.fontStyle == "bold" ? 600 : 400,
+                fontSize: style.fontSize,
+                fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
+                textDecoration:
+                  style.fontStyle == "underline" ? "underline" : "none",
+                textAlign: style.textAlign,
+                rotate: `${style.angle}deg`,
+                margin: `${style.margin}px `,
+                padding: `${style.padding}px`,
+              }}
+            >
+              <div
+                style={{ textAlign: style.textAlign, paddingTop: "2px" }}
+                className="w-100"
+              >
+                {value}
+              </div>
+            </div>
+          ) : (
+            <input
+              ref={ref}
+              className="editor-cell-input  "
+              value={value || ""}
+              style={{
+                fontFamily: style.fontFamily,
+                fontWeight: style.fontStyle == "bold" ? 600 : 400,
+                fontSize: style.fontSize,
+                fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
+                textDecoration:
+                  style.fontStyle == "underline" ? "underline" : "none",
+                textAlign: style.textAlign,
+                rotate: `${style.angle}deg`,
+                margin: `${style.margin}px `,
+                padding: `${style.padding}px`,
+              }}
+              onClick={() => {
+                onClick();
+              }}
+              onChange={(e) => {
+                onChange(e.target.value);
+              }}
+              id="text"
+            />
+          )}
+        </>
       ) : (
         <RelacedToDiv style={style} value={value} />
       )}

@@ -119,7 +119,7 @@ export default function ({
                 }}
                 className="position-relative "
               >
-                <Description />
+                {/* <Description /> */}
                 <CellSplitController
                   railId={railId}
                   cellForCheck={{ ...cell.structure, frontId: cell.frontId }}
@@ -134,7 +134,7 @@ export default function ({
                 cellWidth={cell.product.width}
                 cellWidthOfPrintingArea={cell.product.widthOfPrintingArea}
               >
-                <Description />
+                {/* <Description /> */}
                 <CellSplitController
                   railId={railId}
                   cellForCheck={{ ...cell.structure, frontId: cell.frontId }}

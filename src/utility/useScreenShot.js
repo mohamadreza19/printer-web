@@ -11,10 +11,12 @@ import {
 import allowReplaceInputToDiv_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { rails, railsWidth_store } from "../recoil/userEditorStore/cellsStore";
+import useSelectionReducer from "../recoil/reducer/editor/actionButtons/useSelectionReducer";
 //
 
 export default function () {
   const [searchParams, setSearchParams] = useSearchParams();
+  const handleOnclickSelectionButton = useSelectionReducer();
   let { projectId } = useParams();
   const [allowClosePage, setAllowClosePage] = useState(false);
   const autoPrint = searchParams.get("autoPrint");
@@ -53,37 +55,41 @@ export default function () {
     const IMAGE = "IMAGE";
 
     if (type === PRODUCT) {
-      const rootElement = document.querySelector("#test-screen");
+      handleOnclickSelectionButton("VIEW");
+      setTimeout(async () => {
+        const rootElement = document.querySelector("#rails-box");
+        const clonedRootElement = rootElement.cloneNode(true);
 
-      const rootElementChildren = document.querySelectorAll(
-        "#test-screen div main"
-      );
-      // doThingOnChild(rootElementChildren, (element) => {
-      //   element.style.borderWidth = "0";
-      // });
+        clonedRootElement.classList.remove("rails-box-pt");
 
-      const imgListener = new ImageListener({
-        element: rootElement,
-      });
-      const imgDataURL = await imgListener.getImageDataURLFromCanvas();
+        document.body.appendChild(clonedRootElement);
+        clonedRootElement.childNodes.forEach((child) => {
+          child.style.border = "none";
+        });
 
-      const blob = imgListener.getB64toBlob(imgDataURL);
+        const imgListener = new ImageListener({
+          element: clonedRootElement,
+        });
+        const imgDataURL = await imgListener.getImageDataURLFromCanvas();
 
-      const generatedForm = new FormCreator({
-        elemetWidth: railsWidth,
-        blobedFile: blob,
-      });
+        const blob = imgListener.getB64toBlob(imgDataURL);
 
-      const form = generatedForm.imageInputFormGenerator();
+        const generatedForm = new FormCreator({
+          elemetWidth: railsWidth,
+          blobedFile: blob,
+        });
+        const form = generatedForm.imageInputFormGenerator();
 
-      addPrint.mutate({
-        projectId: Number(id),
-      });
+        addPrint.mutate({
+          projectId: Number(id),
+        });
 
-      form.submit();
-      // doThingOnChild(rootElementChildren, (element) => {
-      //   element.style.borderWidth = "1px";
-      // });
+        form.submit();
+
+        setTimeout(() => {
+          document.body.removeChild(clonedRootElement);
+        }, 10000);
+      }, 3000);
     }
     if (type === LABEL) {
       const blob = labelOption.labelImg;
@@ -102,25 +108,33 @@ export default function () {
       form.submit();
     }
     if (type === IMAGE) {
-      const rootElement = document.querySelector("#test-screen");
+      handleOnclickSelectionButton("VIEW");
+      setTimeout(async () => {
+        const rootElement = document.querySelector("#rails-box");
+        const clonedRootElement = rootElement.cloneNode(true);
 
-      const rootElementChildren = document.querySelectorAll(
-        "#test-screen div main"
-      );
-      // doThingOnChild(rootElementChildren, (element) => {
-      //   element.style.borderWidth = "0";
-      // });
+        clonedRootElement.classList.remove("rails-box-pt");
 
-      const imgListener = new ImageListener({
-        element: rootElement,
-      });
-      const imgDataURL = await imgListener.getImageDataURLFromCanvas();
+        document.body.appendChild(clonedRootElement);
+        clonedRootElement.childNodes.forEach((child) => {
+          child.style.border = "none";
+        });
+        const rootElementChildren = document.querySelectorAll(
+          "#test-screen div main"
+        );
 
-      const a_tag = new FormCreator().AtagdownloadLinkGenerator(imgDataURL);
-      a_tag.click();
-      // doThingOnChild(rootElementChildren, (element) => {
-      //   element.style.borderWidth = "1px";
-      // });
+        const imgListener = new ImageListener({
+          element: clonedRootElement,
+        });
+        const imgDataURL = await imgListener.getImageDataURLFromCanvas();
+
+        const a_tag = new FormCreator().AtagdownloadLinkGenerator(imgDataURL);
+        a_tag.click();
+
+        setTimeout(() => {
+          document.body.removeChild(clonedRootElement);
+        }, 10000);
+      }, 3000);
     }
   }
 }

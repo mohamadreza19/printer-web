@@ -46,6 +46,7 @@ export default React.memo(function () {
             const findedProduct = products.find(
               (product) => product.id == draggableId
             );
+
             const findedRail = railsArray.present.find(
               (rail) => rail.frontId == destination.droppableId
             );

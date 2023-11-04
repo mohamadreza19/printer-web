@@ -8,12 +8,19 @@ import { railsWidth_store } from "../../../../../../../../../../../../recoil/use
 import useScreenShot from "../../../../../../../../../../../../utility/useScreenShot";
 import { useState } from "react";
 import styled from "styled-components";
+import { useEffect } from "react";
 
-export default function ({ key, customLabels = [], railId }) {
+export default function ({
+  key,
+  customLabels = [],
+  railId,
+  isFirstRail = false,
+}) {
   // const cells = useCells();
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
   const [isDragging, setIsDraggingOver] = useState(false);
+
   //
 
   // const getImage = useScreenShot();
@@ -24,10 +31,13 @@ export default function ({ key, customLabels = [], railId }) {
   //     return [...customLabels].reverse();
   //   }
   // }
+
+  useEffect(() => {}, []);
+
   return (
     <Droppable
       droppableId={railId}
-      direction="horizontal"
+      direction={"horizontal"}
 
       // isCombineEnabled={true}
     >
@@ -38,16 +48,8 @@ export default function ({ key, customLabels = [], railId }) {
             railsWidth={railsWidth}
             isDragingOver={isDragging}
             id="test-screen"
-            // onClick={getImage}
-            // railsWidth={railsWidth}
             key={key}
-            // defultWidth={}
             justify={justify}
-            // className={`   ${
-            //   justify === "right"
-            //     ? "justify-content-end"
-            //     : "justify-content-start"
-            // }`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >

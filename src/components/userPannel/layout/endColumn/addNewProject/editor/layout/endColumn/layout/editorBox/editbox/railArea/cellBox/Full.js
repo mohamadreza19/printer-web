@@ -46,6 +46,7 @@ export default function ({
   setCell = () => {},
 }) {
   const isSelection = useSelection();
+
   const [splitColumn, setSplitColumn] = useRecoilState(ColumnOne_splitColumn);
   const [splitRow, setSplitRow] = useRecoilState(ColumnOne_splitRow);
   const [joinColumn, setJoinColumn] = useRecoilState(ColumnOne_joinColumn);
@@ -390,6 +391,7 @@ export default function ({
             style={cell.content.style}
             isBarcode={cell.isBarcode}
             isQrcode={cell.isQrcode}
+            isSelection={isSelection}
             // parentWidth={parentSize.width}
             // parentHeight={parentSize.height}
             // font={font.font}

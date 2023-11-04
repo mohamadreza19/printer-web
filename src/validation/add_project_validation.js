@@ -26,6 +26,7 @@ export default function (
       minLength: "",
       maxLength: "",
     },
+    numberOfRail: {},
   };
   if (language == "fa") {
     messages = {

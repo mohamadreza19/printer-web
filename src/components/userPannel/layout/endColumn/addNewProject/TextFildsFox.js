@@ -44,6 +44,10 @@ export default function ({
       value: "",
       errMsg: "",
     },
+    numberOfRail: {
+      value: "1",
+      errMsg: "",
+    },
   });
 
   const [isRightToleft, setIsRightToleft] = useState(true);
@@ -76,7 +80,7 @@ export default function ({
     }));
   };
   const handleChangeRailWidth = (event) => {
-    const value = event.target.value;
+    const value = event.target.value.replace(/\D/g, "");
 
     setState((draft) => ({
       ...draft,
@@ -86,6 +90,26 @@ export default function ({
       },
     }));
   };
+  const handleChangeNumberOfRail = (event) => {
+    const value = event.target.value.replace(/\D/g, "");
+
+    if (!value) {
+      setState((draft) => ({
+        ...draft,
+        numberOfRail: {
+          value: 1,
+          errMsg: "",
+        },
+      }));
+    } else
+      setState((draft) => ({
+        ...draft,
+        numberOfRail: {
+          value,
+          errMsg: "",
+        },
+      }));
+  };
   async function submitForm() {
     const direction = isRightToleft ? "right" : "left";
     setJustify(direction);
@@ -94,6 +118,7 @@ export default function ({
       projectName: state.projectName.value,
       railWidth: state.railWidth.value,
       direction,
+      numberOfRails: Number(state.numberOfRail.value),
     };
 
     try {
@@ -171,6 +196,24 @@ export default function ({
           />
           <span className="position-absolute color_danger">
             <Typography.H9>{state.railWidth.errMsg}</Typography.H9>
+          </span>
+        </section>
+      </article>
+
+      <article className={"mt-4 w-60 " + cssClass.ms_2}>
+        <Typography.H8 className={"mb-2 font-400 " + ms_2}>
+          {/* {content.inputLabelThree} */}
+          {"تعداد ریل"}
+        </Typography.H8>
+
+        <section className="w-100 position-relative">
+          <TextFieldFUN_v5
+            ImputclassName={ms_2}
+            value={state.numberOfRail.value}
+            onChange={handleChangeNumberOfRail}
+          />
+          <span className="position-absolute color_danger">
+            {/* <Typography.H9>{state.railWidth.errMsg}</Typography.H9> */}
           </span>
         </section>
       </article>

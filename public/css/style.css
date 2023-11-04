@@ -740,6 +740,7 @@ line {
 .scrollable-x-large {
   /* position: relative; */
   min-height: 500px;
+  max-height: 500px;
   /* height: 71vh; */
   /* height: 100%; */
   overflow-x: scroll;
@@ -1005,6 +1006,9 @@ html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
   min-width: 100px;
   background: #cbcbcb;
 }
+.rail {
+  border-bottom: 2px solid white;
+}
 .edit-rail-child-border {
   border: 1px solid #454545;
   background: #ffffff;
@@ -1081,6 +1085,10 @@ html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
   align-items: center;
   justify-content: center;
   left: -54px;
+}
+.rails-box-pt {
+  padding-top: 7rem;
+  padding-left: 2rem;
 }
 html[dir="ltr"] .add-new-rail-btn {
 }
@@ -1341,4 +1349,7 @@ html[dir="ltr"] .add-new-rail-btn {
     background-color: #5e5e5f;
     scale: 1.2;
   }
+}
+.right-_15 {
+  right: -15px;
 }
