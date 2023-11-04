@@ -18,7 +18,6 @@ export function cellSplitContoller_(
   }
   function fullCellChecker(cellForCheck) {
     if (payload.cellId == cellForCheck.frontId) {
-      console.log({ cellForCheck });
       const a = cellMutateCallBack(cellForCheck);
       setSelectedCellForReadStyle(a.content.style || null);
 

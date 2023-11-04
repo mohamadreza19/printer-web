@@ -18,6 +18,10 @@ import {
   admin_user_symbolList,
 } from "../querykey/common";
 import { useLanguage } from "../../recoil/readStore";
+import { useSetRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
+import project_store from "../../recoil/store/user/project_store";
+import { user_project_findOne } from "../querykey/user_key";
 
 export const Admin_User_Image = (role = "admin") => {
   const adminToken = useAdmin_CachedToken();
@@ -130,6 +134,84 @@ export const Admin_User_LabelList_Call = (
 
     queryFn: ({ pageParam = initUrl }) =>
       api_get.admin_user_labelList(
+        role === "admin" ? adminToken : token,
+        pageParam,
+        setLanguageHeader_Based_cached_language(language)
+      ),
+
+    getNextPageParam: (lastPage) => lastPage.links.next || undefined,
+  });
+
+  const { isSuccess, isLoading, error, data } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  let modifiedData = [];
+  if (data) {
+    data.pages.forEach((page) =>
+      page.items.forEach((item) => modifiedData.push(item))
+    );
+  }
+
+  return { ...result, data: modifiedData };
+};
+export const Project_template_List_Call = (
+  role = "admin",
+  search = "",
+  startDate = null,
+  endDate = null
+) => {
+  const { value: token } = useCachedToken();
+  const { value: adminToken } = useAdmin_CachedToken();
+  const language = useLanguage();
+
+  const setLoading = useToastReducer();
+  function setLanguageHeader_Based_cached_language(language) {
+    if (language == "fa") {
+      return "persian";
+    }
+    if (language == "en") {
+      return "english";
+    }
+    if (language == "tr") {
+      return "turkish";
+    }
+  }
+  let initUrl = `${apiUrl}/project-templates?`;
+  if (search) initUrl = initUrl.concat(`search=${search}&`);
+  if (startDate) initUrl = initUrl.concat(`startDate=${startDate}&`);
+  if (endDate) initUrl = initUrl.concat(`endDate=${endDate}&`);
+
+  const result = useInfiniteQuery({
+    queryKey: [
+      "project-templates",
+      admin_user_productList,
+      search,
+      startDate,
+      endDate,
+    ],
+
+    queryFn: ({ pageParam = initUrl }) =>
+      api_get.project_templates(
         role === "admin" ? adminToken : token,
         pageParam,
         setLanguageHeader_Based_cached_language(language)
@@ -285,6 +367,58 @@ export const Admin_UserSymbols = (role = "admin") => {
       }));
     }
   }, [isSuccess, isLoading, error]);
+
+  return result;
+};
+export const Project_templateFindOne_Qury = (role = "admin") => {
+  //admin/user
+  const setProjectState = useSetRecoilState(project_store);
+  const setLoading = useToastReducer();
+  const { value: token } = useCachedToken();
+  const { value: Admintoken } = useAdmin_CachedToken();
+  const { projectId } = useParams();
+  const result = useQuery({
+    queryKey: ["project-templates", user_project_findOne],
+    queryFn: () =>
+      api_get.project_template_findOne(
+        role === "admin" ? Admintoken : token,
+        projectId
+      ),
+  });
+  const { data, isLoading, isSuccess, error } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+    if (isSuccess) {
+      setLoading({
+        isShow: false,
+        message: "",
+      });
+      if (data) {
+        let copy = { ...data };
+
+        delete copy.userId;
+        delete copy.id;
+        delete copy.createdBy;
+        delete copy.createdAt;
+        delete copy.updatedAt;
+        delete copy.deleteDate;
+
+        setProjectState(copy);
+      }
+    }
+    if (error) {
+      setLoading({
+        isShow: true,
+        message: error.message,
+      });
+    }
+  }, [isSuccess, error]);
 
   return result;
 };

@@ -12,10 +12,16 @@ import add_project_validation from "../../../../../validation/add_project_valida
 import RowTwo from "../addNewLabel/RowTwo";
 
 import { useNavigate } from "react-router-dom";
-import { useDynamicCssClass } from "../../../../../recoil/readStore";
+import {
+  useContent_Based_Language,
+  useDynamicCssClass,
+} from "../../../../../recoil/readStore";
 import { AddProject_Mutation } from "../../../../../reactQuery/user/callPostServices";
 import { ColumnFour_justify_start } from "../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import { useRecoilState } from "recoil";
+import { useGetAdminProfile } from "../../../../../recoil/store/admin/profile";
+import { useEffect } from "react";
+import { AdminAddProject_TemplatesMutation } from "../../../../../reactQuery/admin/callPostService";
 
 export default function ({
   ms_2 = " ",
@@ -30,9 +36,14 @@ export default function ({
   },
   isFa = false,
 }) {
+  const content_ =
+    useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label
+      .rowOne;
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const navigate = useNavigate();
-  const { isSuccess, isLoading, mutate, error, data } = AddProject_Mutation();
+  const adminProfileObj = useGetAdminProfile();
+  const { isSuccess, isLoading, mutate, error, data } =
+    AdminAddProject_TemplatesMutation();
   const cssClass = useDynamicCssClass();
   const [state, setState] = useState({
     createdBy: {
@@ -46,6 +57,11 @@ export default function ({
     railWidth: {
       value: "",
       errMsg: "",
+    },
+    name: {
+      english: "",
+      persian: "",
+      turkish: "",
     },
   });
 
@@ -66,7 +82,6 @@ export default function ({
       },
     }));
   };
-
   const handleChangeCreatedBy = (event) => {
     const value = event.target.value;
 
@@ -89,20 +104,49 @@ export default function ({
       },
     }));
   };
+  const setName = (nameObj) => {
+    setState((draft) => ({
+      ...draft,
+      name: nameObj,
+      projectName: {
+        value: nameObj.english,
+        errMsg: "",
+      },
+    }));
+  };
+  function handle_OnChange_SelectBox(e) {
+    // console.log(e.target.value);
+    navigate("/admin/" + e.target.value, {
+      replace: true,
+    });
+  }
+  useEffect(() => {
+    if (adminProfileObj) {
+      setState((draft) => ({
+        ...draft,
+        createdBy: {
+          value: adminProfileObj.username,
+          errMsg: "",
+        },
+      }));
+    }
+  }, [adminProfileObj]);
   async function submitForm() {
     const direction = isRightToleft ? "right" : "left";
     setJustify(direction);
+
     const body = {
-      // createdBy: state.createdBy.value,
-      // projectName: state.projectName.value,
-      railWidth: state.railWidth.value,
+      createdBy: state.createdBy.value,
+      projectName: state.projectName.value,
+      railWidth: Number(state.railWidth.value),
       direction,
+      name: state.name,
     };
 
     try {
       await add_project_validation(body);
 
-      mutate({ ...body, railWidth: +body.railWidth });
+      mutate(body);
     } catch (error) {
       if (error.inner) {
         error.inner.map((err) => {
@@ -121,19 +165,37 @@ export default function ({
     }
   }
 
-  if (isSuccess) {
-    navigate(`/user/add-project/editor/${data.id}`);
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(`/editor/${data.id}`);
+    }
+  }, [isSuccess]);
+
   return (
     <div className={`w-100 mt-7 px-5 ${cssClass.ms_3}`}>
-      <header className="px-3">
+      {/* <header className="px-3">
         <Typography.H7 className="font-500">{content.header}</Typography.H7>
-      </header>
+      </header> */}
+      <article className={"mt-3 " + cssClass.ms_3}>
+        <select
+          name="cars"
+          id="cars"
+          className="select-extra-large"
+          onChange={handle_OnChange_SelectBox}
+        >
+          <option value="add-label-beta">
+            <Typography.H8>{content_.addNewLabel}</Typography.H8>
+          </option>
+          <option value="add-product">
+            <Typography.H8>{content_.addNewProduct}</Typography.H8>
+          </option>
+        </select>
+      </article>
       <article
         style={{ marginBottom: "160px" }}
         className={"mt-4 w-60 " + cssClass.ms_2}
       >
-        <RowTwo />
+        <RowTwo setName={setName} />
       </article>
 
       <article className={"mt-4 w-60 " + cssClass.ms_2}>

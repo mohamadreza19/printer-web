@@ -4,12 +4,15 @@ import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
 import useAdd_user_controller from "../../helper/admin_add_user/controlInputs";
 import useAdd_product from "../../helper/admin_add_product_label/control_product_dynamic_input";
 import use_label from "../../helper/admin_add_product_label/control_label_dynamic_input";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import api_put from "../../services/admin/api_put";
 import { apiUrl } from "../../services/urlStore";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { is_project_sucess_edit_store } from "../../recoil/store/user/project_store";
+import { useResetRecoilState } from "recoil";
 export const AdminEditUser_Mutation = () => {
   const { value: token } = useAdmin_CachedToken();
   const setLoading = useToastReducer();
@@ -195,4 +198,43 @@ export const AdminEditImage_Mutation = () => {
   });
 
   return { ...result, onLoadedMeta };
+};
+export const EditTemplate_project_Mutation = () => {
+  const queryClient = useQueryClient();
+
+  const navigate = useNavigate();
+
+  const { value: token } = useAdmin_CachedToken();
+  const setIsSucess_edit = useResetRecoilState(is_project_sucess_edit_store);
+  const setLoading = useToastReducer();
+  const { projectId } = useParams();
+  const result = useMutation({
+    mutationKey: "project-template-put",
+    mutationFn: (option) =>
+      api_put.edit_project_templateById(token, option.body, projectId),
+
+    onSuccess: (data) => {
+      //   queryClient.invalidateQueries(projectsKey);
+      // projectsKey = Math.random() * 20;
+    },
+  });
+  const { isLoading, isSuccess, data } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading({
+        isShow: true,
+        message: "",
+      });
+    }
+  }, [isLoading]);
+
+  if (isSuccess) {
+    setLoading({
+      isShow: false,
+      message: "",
+    });
+    setIsSucess_edit(true);
+  }
+
+  return result;
 };

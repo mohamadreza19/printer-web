@@ -19,13 +19,10 @@ export default function ({
   const navigate = useNavigate();
   const ActionButton = () => {
     function navigateEditorById() {
-      navigate(`/user/add-project/editor/${project.id}`);
+      navigate(`/editor/${project.id}`);
     }
     function openNewTabAndPrint() {
-      window.open(
-        `/user/add-project/editor/${project.id}?autoPrint=true`,
-        "_blank"
-      );
+      window.open(`/editor/${project.id}?autoPrint=true`, "_blank");
       // getScreen();
     }
     return (

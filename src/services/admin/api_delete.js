@@ -35,6 +35,23 @@ export default class {
       });
     }
   }
+  static async delete_project_template(token = "", id) {
+    try {
+      const res = await axios.delete(`${apiUrl}/project-templates/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.response.data);
+      });
+    }
+  }
   static async delete_user(token = "", id) {
     try {
       const res = await axios.delete(`${apiUrl}/user/${id}`, {

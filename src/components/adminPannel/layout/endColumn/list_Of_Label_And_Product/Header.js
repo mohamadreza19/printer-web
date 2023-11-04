@@ -18,21 +18,21 @@ export default function ({ setSearch, setCurrentList, currentList }) {
   function options_based_language() {
     if (language === "fa") {
       return [
-        { label: "همه موارد", value: "All" },
+        // { label: "همه موارد", value: "All" },
         { label: "لیبل ها", value: "Label" },
         { label: "محصولات", value: "Product" },
       ];
     }
     if (language === "en") {
       return [
-        { label: "All", value: "All" },
+        // { label: "All", value: "All" },
         { label: "Label", value: "Label" },
         { label: "Product", value: "Product" },
       ];
     }
     if (language === "tr") {
       return [
-        { label: "Tüm", value: "All" },
+        // { label: "Tüm", value: "All" },
         { label: "Label", value: "Label" },
         { label: "Ürün", value: "Product" },
       ];

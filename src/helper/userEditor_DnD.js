@@ -7,13 +7,13 @@ export default class {
     destination = { index: "" },
     railsArrayPresent
   ) {
-    console.log({ findedProduct });
     const copyCells = [...findedRail.customLabels];
+    const frontId = shortid.generate();
     const newCell = {
       productId: findedProduct.id,
-      frontId: shortid.generate(),
+      frontId: frontId,
       structure: {
-        frontId: shortid.generate(),
+        frontId: frontId,
         isQrcode: false,
         isBarcode: false,
         isSelected: false,

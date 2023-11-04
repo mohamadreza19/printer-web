@@ -93,10 +93,11 @@ export default function () {
         <Route path="print-history" element={<HistoryPrining />} />
       </Route>
       {/* editor */}
-      <Route
-        path="user/add-project/editor/:projectId"
+      <Route path="editor/:projectId" element={<AddNewProject_Editor />} />
+      {/* <Route
+        path="admin/label/editor/:labelId"
         element={<AddNewProject_Editor />}
-      />
+      /> */}
       {/* <Route
         path="admin/add-label-beta/editor/:projectId"
         element={<AddNewProject_Editor />}

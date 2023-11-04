@@ -24,7 +24,7 @@ export default function () {
       rails: rails_state.present,
       direction: justify,
     };
-    console.log({ bundled_project });
+
     return bundled_project;
   }
 

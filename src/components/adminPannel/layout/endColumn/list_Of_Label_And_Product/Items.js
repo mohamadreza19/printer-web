@@ -3,12 +3,12 @@ import Item from "./item";
 
 export default function ({ items = [], currentList = "" }) {
   const naviage = useNavigate();
-  function navigate_edit_product_label(type, id) {
-    if (type === "product") {
+  function navigate_edit_product_label(id) {
+    if (currentList === "Product") {
       naviage(`/admin/add-product/edit/${id}`);
     }
-    if (type === "label") {
-      naviage(`/admin/add-label/edit/${id}`);
+    if (currentList === "Label") {
+      naviage(`/editor/${id}`);
     }
   }
   return (
@@ -20,7 +20,7 @@ export default function ({ items = [], currentList = "" }) {
             item={item}
             currentList={currentList}
             navigate_edit_product_label={() =>
-              navigate_edit_product_label(item.type, item.id)
+              navigate_edit_product_label(item.id)
             }
           />
         );

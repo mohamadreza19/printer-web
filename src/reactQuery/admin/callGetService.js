@@ -505,38 +505,37 @@ export const AdminProduct_Label = (
 
   let arr = [];
   if (result.isSuccess) {
-    if (productLableFilter === "All") {
-      result.data.pages.map((page) => {
-        page.prodcuts.items.forEach((product) => {
-          arr.push({ ...product, type: "product" });
-        });
-
-        page.labels.items.forEach((label) => {
-          arr.push({ ...label, type: "label" });
-        });
-      });
-      return { ...result, data: arr };
-    }
-    if (productLableFilter === "Product") {
-      result.data.pages.map((page) => {
-        page.prodcuts.items.forEach((product) => {
-          arr.push({ ...product, type: "product" });
-        });
-      });
-
-      return { ...result, data: arr };
-    }
-    if (productLableFilter === "Label") {
-      result.data.pages.map((page) => {
-        page.labels.items.forEach((label) => {
-          arr.push({ ...label, type: "label" });
-        });
-      });
-      return { ...result, data: arr };
-    }
+    // if (productLableFilter === "All") {
+    //   result.data.pages.map((page) => {
+    //     page.prodcuts.items.forEach((product) => {
+    //       arr.push({ ...product, type: "product" });
+    //     });
+    //     page.labels.items.forEach((label) => {
+    //       arr.push({ ...label, type: "label" });
+    //     });
+    //   });
+    //   return { ...result, data: arr };
+    // }
+    // if (productLableFilter === "Product") {
+    //   result.data.pages.map((page) => {
+    //     page.prodcuts.items.forEach((product) => {
+    //       arr.push({ ...product, type: "product" });
+    //     });
+    //   });
+    //   return { ...result, data: arr };
+    // }
+    // if (productLableFilter === "Label") {
+    //   result.data.pages.map((page) => {
+    //     page.labels.items.forEach((label) => {
+    //       arr.push({ ...label, type: "label" });
+    //     });
+    //   });
+    //   return { ...result, data: arr };
+    // }
   }
 
-  return { ...result, data: arr };
+  return result;
+  // return { ...result, data: arr };
 };
 
 export const AdminLabel_findOne = (id = "") => {
@@ -625,7 +624,6 @@ export const Admin_Print_Info_Chart = (
 
   const setLoading = useToastReducer();
 
-  console.log(scale);
   const result = useQuery({
     queryKey: [
       "print_info_chart",

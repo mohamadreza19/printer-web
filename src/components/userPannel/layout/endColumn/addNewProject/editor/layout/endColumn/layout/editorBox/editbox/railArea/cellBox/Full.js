@@ -348,7 +348,7 @@ export default function ({
       switch (type) {
         case WIDTH:
           const width = parent.getBoundingClientRect().width;
-          console.log({ width });
+
           return width;
         case HEIGHT:
           const height = parent.getBoundingClientRect().height;

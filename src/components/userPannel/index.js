@@ -3,7 +3,23 @@ import EndColumn from "./layout/endColumn";
 // import StartColumn from "./layout/startColumn";
 import StartColumn from "./layout/startColumn/index";
 import { Outlet } from "react-router-dom";
+import { User_Profile_Call } from "../../reactQuery/user/callGetService";
+import { useEffect } from "react";
+import { useSetAdminProfile } from "../../recoil/store/admin/profile";
+import useLocalStorage from "react-use-localstorage";
 export default function () {
+  const user_profile = User_Profile_Call();
+  const [editor_access, setEditor_access] = useLocalStorage("editor_access");
+  const setProfile = useSetAdminProfile();
+  useEffect(() => {
+    if (user_profile.isSuccess) {
+      if (!("role" in user_profile.data)) {
+        setEditor_access("project/edit");
+      }
+      setProfile(user_profile.data);
+    }
+  }, [user_profile.isSuccess]);
+
   return (
     <Grid
       container

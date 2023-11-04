@@ -9,7 +9,10 @@ import Header from "./Header";
 
 import Labels from "./Labels";
 
-import { Admin_User_LabelList_Call } from "../../../../../reactQuery/common/callGetService";
+import {
+  Admin_User_LabelList_Call,
+  Project_template_List_Call,
+} from "../../../../../reactQuery/common/callGetService";
 import { useState } from "react";
 import { Add_Label_Bookmark_Mutation } from "../../../../../reactQuery/user/callPostServices";
 import { Bookmark_Label_Delete } from "../../../../../reactQuery/user/callDeleteServices";
@@ -24,7 +27,7 @@ export default function () {
   const cssClass = useDynamicCssClass();
 
   const { data, isSuccess, hasNextPage, fetchNextPage } =
-    Admin_User_LabelList_Call("user", search);
+    Project_template_List_Call("admin", search);
 
   const add_Label_Bookmark_ = Add_Label_Bookmark_Mutation();
   const delete_Label_Bookmark_ = Bookmark_Label_Delete();
@@ -34,7 +37,6 @@ export default function () {
     };
 
     if (label.bookmarked === false) {
-      console.log({ label });
       try {
         await add_Label_Bookmark_.mutateAsync(option);
 

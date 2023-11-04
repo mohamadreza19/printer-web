@@ -15,10 +15,9 @@ import ColTwo from "./columns/ColTwo";
 import { showHide_Btn } from "../../../../../../../../recoil/userEditorStore/searchboxStore";
 
 import userEditor_DnD from "../../../../../../../../helper/userEditor_DnD";
-import { is_project_sucess_edit_store } from "../../../../../../../../recoil/store/user/project_store";
-import { PopUpInfo } from "../startColumn/PopUpInfo";
+
 import React from "react";
-import { useState } from "react";
+
 export default React.memo(function () {
   const cssClass = useDynamicCssClass();
 

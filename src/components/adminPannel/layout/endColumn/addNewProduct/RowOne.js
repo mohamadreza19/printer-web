@@ -28,7 +28,7 @@ export default function () {
         <option value="add-product">
           <Typography.H8>{content.addNewProduct}</Typography.H8>
         </option>
-        <option value="add-label">
+        <option value="add-label-beta">
           <Typography.H9>{content.addNewLabel}</Typography.H9>
         </option>
       </select>

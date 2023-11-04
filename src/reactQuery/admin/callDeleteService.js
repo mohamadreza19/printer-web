@@ -118,6 +118,56 @@ export const AdminDelete_Label_Mutation = () => {
 
   return { ...result };
 };
+export const AdminDelete_Project_template_Mutation = () => {
+  const { value: token } = useAdmin_CachedToken();
+  const queryClient = useQueryClient();
+  const setDeleteAlert = useDeleteAlert();
+  const setLoading = useToastReducer();
+  const result = useMutation({
+    mutationKey: "admin-delete-project-teplate",
+    mutationFn: (option) =>
+      api_delete.delete_project_template(token, option.id),
+    onSuccess: () => {
+      console.log({ product_label_key });
+      queryClient.invalidateQueries(product_label_key);
+      setProduct_label_key(Math.random() * 100);
+      setAdmin_user_image(Math.random() * 100);
+    },
+  });
+
+  const { isSuccess, isLoading, error } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+
+      setDeleteAlert({
+        isShow: false,
+        message: "",
+        deleteFn: () => {},
+      });
+    }
+    if (error) {
+      console.log(error);
+
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return { ...result };
+};
 export const AdminDelete_User_Mutation = () => {
   const { value: token } = useAdmin_CachedToken();
   const queryClient = useQueryClient();

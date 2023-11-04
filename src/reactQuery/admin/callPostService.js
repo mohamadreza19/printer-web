@@ -195,6 +195,41 @@ export const AdminAddLabel_Mutation = () => {
   }, [isSuccess, isLoading, error]);
   return { ...result };
 };
+export const AdminAddProject_TemplatesMutation = () => {
+  const { value: token } = useAdmin_CachedToken();
+  const setLoading = useToastReducer();
+
+  const result = useMutation({
+    mutationKey: "add_project_templates",
+    mutationFn: (body) => api_post.add_project_templates(token, body),
+  });
+
+  const { isSuccess, isLoading, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      // setLoading(() => ({
+      //   isShow: true,
+      //   message: "",
+      // }));
+    }
+    if (isSuccess) {
+      // setLoading(() => ({
+      //   isShow: false,
+      //   message: "",
+      // }));
+    }
+    if (error) {
+      console.log(error);
+
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
+};
 
 export const AdminAddImage_Mutation = () => {
   const { value: token } = useAdmin_CachedToken();

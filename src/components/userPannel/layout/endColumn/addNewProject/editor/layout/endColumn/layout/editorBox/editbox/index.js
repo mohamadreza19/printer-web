@@ -23,6 +23,11 @@ import useRailReducer from "../../../../../../../../../../../recoil/reducer/edit
 
 import { UserProjectFindOne_Qury } from "../../../../../../../../../../../reactQuery/user/callGetService";
 import { memo } from "react";
+import useLocalStorage from "react-use-localstorage";
+import {
+  CommonProject_templateFindOne_Qury,
+  Project_templateFindOne_Qury,
+} from "../../../../../../../../../../../reactQuery/common/callGetService";
 
 //  data = {
 //   frontId: 112,
@@ -32,9 +37,27 @@ import { memo } from "react";
 //   projectName: "werewr",
 //   userId: 1,
 // };
+function setFindOne_based_editor_access(editorAccess) {
+  const PROJECT_EDIT = "project/edit";
+  const PROJECT_TEMPLATES_EDIT = "project-templates/edit";
+  // CommonProject_templateFindOne_Qury
 
+  switch (editorAccess) {
+    case PROJECT_EDIT:
+      return UserProjectFindOne_Qury();
+    case PROJECT_TEMPLATES_EDIT:
+      return Project_templateFindOne_Qury("admin");
+      break;
+
+    default:
+      break;
+  }
+}
 export default memo(function () {
-  const { error, data, isLoading, isSuccess } = UserProjectFindOne_Qury();
+  const [editor_access, _] = useLocalStorage("editor_access");
+
+  const { error, data, isLoading, isSuccess } =
+    setFindOne_based_editor_access(editor_access);
 
   const setRail = useRailReducer();
   const [railsState, setRailsState] = useRecoilState(rails);
@@ -49,6 +72,7 @@ export default memo(function () {
   const [scaleState_, setScaleState] = useRecoilState(scaleStore);
   useEffect(() => {
     if (data) {
+      console.log({ editor_access });
       if (product) {
         const rails = data.rails;
         const railWidth_data = data.railWidth;

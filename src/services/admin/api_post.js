@@ -70,4 +70,24 @@ export default class {
       });
     }
   }
+  static async add_project_templates(token = "", body) {
+    try {
+      const res = await axios.post(`${apiUrl}/project-templates`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        console.log("test");
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.response.data);
+      });
+    }
+  }
 }

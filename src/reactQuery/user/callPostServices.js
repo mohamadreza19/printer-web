@@ -191,7 +191,7 @@ export const Add_Product_Bookmark_Mutation = () => {
   const { value: token } = useCachedToken();
 
   const setLoading = useToastReducer();
-  console.log(admin_user_productList);
+
   const result = useMutation({
     mutationKey: ["product-bookmark"],
     mutationFn: (option) => {

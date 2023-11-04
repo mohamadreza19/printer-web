@@ -41,7 +41,26 @@ export default class {
     }
   }
   static async admin_user_labelList(token = "", pageParam, languageHeader) {
-    console.log({ languageHeader });
+    try {
+      const res = await axios.get(`${pageParam}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          language: languageHeader,
+          // language: "test",
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async project_templates(token = "", pageParam, languageHeader) {
     try {
       const res = await axios.get(`${pageParam}`, {
         headers: {
@@ -93,6 +112,27 @@ export default class {
       });
     } catch (error) {
       // console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async project_template_findOne(token = "", projectId = "") {
+    if (!token) throw new Error("there isnt token");
+
+    try {
+      const res = await axios({
+        url: `${apiUrl}/project-templates/${projectId}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
       return new Promise((_, reject) => {
         reject(error.message);
       });

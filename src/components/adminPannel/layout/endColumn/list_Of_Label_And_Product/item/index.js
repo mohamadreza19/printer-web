@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import {
   AdminDelete_Product_Mutation,
   AdminDelete_Label_Mutation,
+  AdminDelete_Project_template_Mutation,
 } from "../../../../../../reactQuery/admin/callDeleteService";
 
 import { Admin_User_Image } from "../../../../../../reactQuery/common/callGetService";
@@ -32,13 +33,15 @@ export default function ({
     link: "",
     updatedAt: "",
   },
+  currentList = "",
+
   navigate_edit_product_label = () => {},
 }) {
   const cssClass = useDynamicCssClass();
   //
 
   const deleteProduct_mutate = AdminDelete_Product_Mutation();
-  const deleteLabel_mutate = AdminDelete_Label_Mutation();
+  const deleteLabel_mutate = AdminDelete_Project_template_Mutation();
   const imageRes = Admin_User_Image("admin");
   const language = useLanguage();
   //
@@ -48,12 +51,13 @@ export default function ({
   const setDeleteAlert = useDeleteAlert();
 
   useEffect(() => {
-    if (item.pictures[0]?.id) {
-      const option = {
-        fileId: item.pictures[0]?.id,
-      };
-      imageRes.mutate(option);
-    }
+    if (currentList === "Product")
+      if (item.pictures[0]?.id) {
+        const option = {
+          fileId: item.pictures[0]?.id,
+        };
+        imageRes.mutate(option);
+      }
   }, []);
 
   function delete_product() {
@@ -80,6 +84,17 @@ export default function ({
   }
   function nameController() {
     if (language === "fa") {
+      return item.name.persian || item.name.english;
+    }
+    if (language === "en") {
+      return item.name.english;
+    }
+    if (language === "tr") {
+      return item.name.turkish || item.name.english;
+    }
+  }
+  function lanelNameController() {
+    if (language === "fa") {
       return item.name.persian;
     }
     if (language === "en") {
@@ -89,9 +104,21 @@ export default function ({
       return item.name.turkish;
     }
   }
+  function avatarControler() {
+    switch (currentList) {
+      case "Product":
+        return imageRes.data && URL.createObjectURL(imageRes.data);
+      case "Label":
+        return "/image/image-placeholder.png";
+
+      default:
+        break;
+    }
+  }
   // function go_edit_product() {}
   // function go_edit_label() {}
   // if (imageRes.data)
+
   return (
     <div className="w-100 border border-r-25 p-2 d-flex justify-content-between my-2">
       <article className="d-flex">
@@ -105,7 +132,7 @@ export default function ({
           >
             <img
               className="w-100 h-100 img-fill border-r-20"
-              src={imageRes.data && URL.createObjectURL(imageRes.data)}
+              src={avatarControler()}
             />
           </section>
           <section
@@ -125,18 +152,25 @@ export default function ({
               </span>
               <span>
                 <Typography.H9_5 className={"font-400 " + cssClass.ms_1}>
-                  {item.creator}
+                  {currentList === "Product" ? item.creator : item.createdBy}
                 </Typography.H9_5>
               </span>
             </footer>
           </section>
         </div>
         {item.type === "label" ? (
-          <LabelColumnTwo height={item.height} width={item.width} />
+          <LabelColumnTwo
+            height={currentList === "Product" ? item.height : item.railWidth}
+            width={currentList === "Product" ? item.width : item.railWidth}
+          />
         ) : (
           <ProductColumnTwo
             width={item.width}
-            widthOfPrintingArea={item.widthOfPrintingArea}
+            widthOfPrintingArea={
+              currentList === "Product"
+                ? item.widthOfPrintingArea
+                : item.railWidth
+            }
           />
         )}
       </article>
@@ -179,24 +213,22 @@ export default function ({
         <div>
           <section className={"d-flex " + cssClass.pe_2}>
             <span
+              className="cur-pointer"
               onClick={() => {
-                console.log("on click");
-                if (item.type === "product") {
-                  console.log("product");
+                if (currentList === "Product") {
                   delete_product();
                 }
-                if (item.type === "label") {
-                  console.log("is label");
+                if (currentList === "Label") {
                   delete_Label();
                 }
               }}
             >
               <Icons.Trash />
             </span>
-            <span className="mx-2">
+            <span className="mx-2 cur-pointer">
               <Icons.Trade />
             </span>
-            <span onClick={navigate_edit_product_label}>
+            <span className="cur-pointer" onClick={navigate_edit_product_label}>
               <Icons.Edit />
             </span>
           </section>

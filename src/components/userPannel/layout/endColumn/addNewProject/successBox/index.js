@@ -21,7 +21,6 @@ export default function ({
   const cssClass = useDynamicCssClass();
 
   function getDirectionText_Based_laguage(language) {
-    console.log(language);
     let string = "";
     if (language == "fa") {
       if ("right") string = " راست به چپ";

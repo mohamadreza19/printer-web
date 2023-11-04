@@ -42,7 +42,8 @@ export default function () {
   }, [isUndoPossible, isRedoPossible]);
 
   const HistoryChanger = (newState) => {
-    const { type = "", value = "" } = newState;
+    const { type = "", value = {} } = newState;
+
     if (type === "SET_HISTORY") {
       setState(() => {
         return {
@@ -71,6 +72,14 @@ export default function () {
         };
       });
     }
+    if (type === "PRESENT") {
+      setState((draft) => {
+        return {
+          ...draft,
+          present: value,
+        };
+      });
+    }
   };
 
   function setCell(
@@ -96,9 +105,18 @@ export default function () {
     // if (!action) throw new Error("need action");
 
     if (action == selectionAction.SELECT) {
+      // const railController = new RailController({
+      //   railsArr: state.present,
+      //   railId: payload.railId,
+      //   cellId: payload.cellId,
+      //   actionOnCustomLabel: action,
+      //   payload: {} || "",
+      //   historyChanger: HistoryChanger,
+      // });
       //requirement
       // payload.frontId
-
+      // railController.type = "EDIT_UNSAVE";
+      // return railController.save();
       const newRails = state.present.map((rail) => {
         return railController_(
           rail,
@@ -109,7 +127,10 @@ export default function () {
           (cell) => ({ ...cell, isSelected: false })
         );
       });
-
+      HistoryChanger({
+        type: "PRESENT",
+        value: newRails,
+      });
       return setState((draft) => {
         return {
           ...draft,
@@ -1158,4 +1179,210 @@ export default function () {
   }
 
   return setCell;
+}
+class CellController {
+  #payload = "";
+  #cellId = "";
+  #_cellAction = "";
+  #structure = {
+    split: "", //none/vertical/horizontal
+  };
+  operator = () => {};
+  constructor(
+    option = {
+      payload: "",
+      action: "",
+      cellId: "",
+    }
+  ) {
+    this.#cellId = option.cellId;
+    this.#_cellAction = option.action;
+    this.#payload = option.payload;
+  }
+  lookStructure(structure) {
+    this.selectOperator_basedAction();
+
+    const a = this.controlSplit(structure);
+
+    return a;
+  }
+  select_cell(structure, is = false) {
+    if (is) {
+      return { ...structure, isSelected: true };
+    } else {
+      return { ...structure, isSelected: false };
+    }
+  }
+  controlSplit(structure) {
+    switch (structure.split) {
+      case "none":
+        return this.noneCheck(structure);
+
+      case "vertical":
+        const a = this.verticalCheck(structure);
+
+      case "horizontal":
+        return this.horizontalCheck(structure);
+    }
+  }
+  noneCheck(structure) {
+    if (structure.frontId === this.#cellId) {
+      return this.operator(structure, true);
+    }
+    return this.operator(structure, false);
+  }
+
+  horizontalCheck(structure) {
+    const mapedChildren = structure.children.map((child) => {
+      switch (child.split) {
+        case "none":
+          return this.noneCheck(child);
+        case "horizontal":
+          return this.horizontalCheck(child);
+        case "vertical":
+          return this.verticalCheck(child);
+      }
+    });
+
+    return {
+      ...structure,
+      children: mapedChildren,
+    };
+  }
+  verticalCheck(structure) {
+    const mapedChildren = structure.children.map((child) => {
+      switch (child.split) {
+        case "none":
+          return this.noneCheck(child);
+        case "vertical":
+          return this.verticalCheck(child);
+        case "horizontal":
+          return this.horizontalCheck(child);
+      }
+    });
+
+    return {
+      ...structure,
+      children: mapedChildren,
+    };
+  }
+
+  selectOperator_basedAction() {
+    switch (this.#_cellAction) {
+      case "SELECT":
+        this.operator = this.select_cell;
+        break;
+
+      default:
+        break;
+    }
+  }
+}
+class CustomLabelController extends CellController {
+  #_customLabels = [];
+
+  constructor(
+    option = {
+      cellId: "",
+      action: "",
+      // customLabels: [],
+    }
+  ) {
+    super({
+      cellId: option.cellId,
+      payload: option.payload,
+      action: option.action,
+    });
+    // this.#_customLabels = option.customLabels;
+    this.action = option.action;
+  }
+  setCustomLabels(customLabels = []) {
+    this.#_customLabels = customLabels;
+  }
+  #mapCustomLabel() {
+    this.#_customLabels = this.#_customLabels.map((customlabel) => {
+      return {
+        ...customlabel,
+        structure: this.lookStructure(customlabel.structure),
+      };
+    });
+  }
+  getMutatedCustomLabel() {
+    this.#mapCustomLabel();
+
+    return this.#_customLabels;
+  }
+}
+
+class RailController extends CustomLabelController {
+  #_type = "EDIT"; // EDIT/ADD/EDIT_UNSAVE
+  railsArr = [];
+  #railForMutate = { customLabels: [] }; // only in edit mode
+  historyChanger = () => {};
+
+  constructor(
+    option = {
+      railsArr: [],
+      historyChanger: () => {},
+      railId: "",
+      cellId: "",
+      actionOnCustomLabel: "",
+    }
+  ) {
+    super({
+      cellId: option.cellId,
+      // customLabels,
+      action: option.actionOnCustomLabel,
+    });
+    this.railsArr = option.railsArr;
+    this.setRailByIdForMutate(option.railId);
+    this.historyChanger = option.historyChanger;
+  }
+  setRailByIdForMutate(railId = "") {
+    if (railId) {
+      const railForMutate = this.railsArr.find((rail) => {
+        if (rail.frontId === railId) {
+          return rail;
+        }
+      });
+
+      this.#railForMutate = railForMutate;
+    } else console.log("railId is undefined");
+  }
+
+  putting_CustomLabels_In_Rail_And_Rail_in_Rails() {
+    this.setCustomLabels(this.#railForMutate.customLabels);
+    const newCustomLabel = this.getMutatedCustomLabel();
+
+    this.#railForMutate = {
+      ...this.#railForMutate,
+      customLabels: newCustomLabel,
+    };
+
+    this.railsArr = this.railsArr.map((rail) =>
+      rail.frontId === this.#railForMutate.frontId ? this.#railForMutate : rail
+    );
+  }
+
+  save() {
+    switch (this.#_type) {
+      case "EDIT_UNSAVE":
+        this.putting_CustomLabels_In_Rail_And_Rail_in_Rails();
+
+        this.historyChanger({
+          type: "PRESENT",
+          value: this.railsArr,
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+  get type() {
+    return this.#_type;
+  }
+  set type(type = "") {
+    this.#_type = type;
+  }
 }

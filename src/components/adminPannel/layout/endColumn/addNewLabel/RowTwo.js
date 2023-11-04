@@ -5,11 +5,21 @@ import {
 } from "../../../../../recoil/readStore";
 import { TextFieldFUN_v5 } from "../../../../../styles/__ready/Textfields";
 import useAdmin_Add_Label from "../../../../../helper/admin_add_product_label/control_label_dynamic_input";
+import { useEffect } from "react";
 
-export default function ({ param }) {
+export default function ({ setName = () => {} }) {
   const cssClass = useDynamicCssClass();
   //
   const { labelName } = useAdmin_Add_Label();
+  labelName.showState();
+
+  useEffect(() => {
+    setName(labelName.showState());
+  }, [
+    labelName.showState().english,
+    labelName.showState().persian,
+    labelName.showState().turkish,
+  ]);
   const {
     labelValue = " ",
     labelHandler = () => {},
