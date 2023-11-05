@@ -9,6 +9,7 @@ import useScreenShot from "../../../../../../../../../../../../utility/useScreen
 import { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
+import { useGetLabel } from "../../../../../../../../../../../../recoil/store/label";
 
 export default function ({
   key,
@@ -20,6 +21,7 @@ export default function ({
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
   const [isDragging, setIsDraggingOver] = useState(false);
+  const label_project_template = useGetLabel();
 
   //
 
@@ -45,7 +47,9 @@ export default function ({
         setIsDraggingOver(snapshot.isDraggingOver);
         return (
           <Container
-            railsWidth={railsWidth}
+            railsWidth={
+              label_project_template ? label_project_template.width : railsWidth
+            }
             isDragingOver={isDragging}
             id="test-screen"
             key={key}

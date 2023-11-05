@@ -8,6 +8,7 @@ import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 import { useNavigate } from "react-router-dom";
+import useLocalStorage from "react-use-localstorage";
 
 //need edit image url
 export default function ({
@@ -28,7 +29,7 @@ export default function ({
   handleAdd_Bookmark = () => {},
   handleDeleteBookmark = () => {},
 }) {
-  console.log({ label });
+  const [editor_access, setEditor_access] = useLocalStorage("editor_access");
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
   const imageResponse = Admin_User_Image("user");
@@ -63,6 +64,7 @@ export default function ({
   //   imageResponse.mutate(option);
   // }, []);
   function handlePrintLabel(labelObj, image) {
+    setEditor_access("project-templates/edit");
     const id = labelObj.id;
     const width = labelObj.width;
     const labelImg = image;

@@ -17,10 +17,9 @@ export default function () {
         setEditor_access("project-templates/edit");
       }
       setAdminProfile(res.data);
-      console.log(res.data);
     }
   }, [res.isSuccess]);
-  console.log({ editor_access });
+
   return (
     <Grid
       container

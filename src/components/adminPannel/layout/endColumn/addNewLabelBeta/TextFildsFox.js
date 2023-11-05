@@ -21,7 +21,11 @@ import { ColumnFour_justify_start } from "../../../../../recoil/userEditorStore/
 import { useRecoilState } from "recoil";
 import { useGetAdminProfile } from "../../../../../recoil/store/admin/profile";
 import { useEffect } from "react";
-import { AdminAddProject_TemplatesMutation } from "../../../../../reactQuery/admin/callPostService";
+import {
+  AdminAddLabel_Mutation,
+  AdminAddProject_TemplatesMutation,
+} from "../../../../../reactQuery/admin/callPostService";
+import { EditTemplate_project_Mutation } from "../../../../../reactQuery/admin/callPutService";
 
 export default function ({
   ms_2 = " ",
@@ -42,6 +46,8 @@ export default function ({
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const navigate = useNavigate();
   const adminProfileObj = useGetAdminProfile();
+  const addlabel = AdminAddLabel_Mutation();
+
   const { isSuccess, isLoading, mutate, error, data } =
     AdminAddProject_TemplatesMutation();
   const cssClass = useDynamicCssClass();
@@ -58,12 +64,18 @@ export default function ({
       value: "",
       errMsg: "",
     },
+    Labelheight: {
+      value: "",
+      errMsg: "",
+    },
     name: {
       english: "",
       persian: "",
       turkish: "",
     },
   });
+
+  const [projectTemplateRespinse, setProjectTemplateRespinse] = useState({});
 
   const [isRightToleft, setIsRightToleft] = useState(true);
 
@@ -94,11 +106,22 @@ export default function ({
     }));
   };
   const handleChangeRailWidth = (event) => {
-    const value = event.target.value;
+    const value = event.target.value.replace(/\D/g, "");
 
     setState((draft) => ({
       ...draft,
       railWidth: {
+        value,
+        errMsg: "",
+      },
+    }));
+  };
+  const handleChangeLabelWidth = (event) => {
+    const value = event.target.value.replace(/\D/g, "");
+
+    setState((draft) => ({
+      ...draft,
+      Labelheight: {
         value,
         errMsg: "",
       },
@@ -131,7 +154,8 @@ export default function ({
       }));
     }
   }, [adminProfileObj]);
-  async function submitForm() {
+
+  async function addLabel() {
     const direction = isRightToleft ? "right" : "left";
     setJustify(direction);
 
@@ -141,6 +165,42 @@ export default function ({
       railWidth: Number(state.railWidth.value),
       direction,
       name: state.name,
+    };
+
+    try {
+      return addlabel.mutate({
+        ...body,
+        width: Number(state.railWidth.value),
+        height: Number(state.Labelheight.value),
+      });
+    } catch (error) {
+      if (error.inner) {
+        error.inner.map((err) => {
+          const path = err.path;
+          const errMsg = err.message;
+
+          setState((draft) => ({
+            ...draft,
+            [path]: {
+              ...[path],
+              errMsg,
+            },
+          }));
+        });
+      }
+    }
+  }
+  async function addProject_template(labelId) {
+    const direction = isRightToleft ? "right" : "left";
+    setJustify(direction);
+
+    const body = {
+      createdBy: state.createdBy.value,
+      projectName: state.projectName.value,
+      railWidth: Number(state.railWidth.value),
+      direction,
+      name: state.name,
+      labelId,
     };
 
     try {
@@ -164,10 +224,72 @@ export default function ({
       }
     }
   }
+  function put_projectTemplate() {
+    const CustomLabel = {
+      createdAt: "2023-11-05T05:59:23.450Z",
+      updatedAt: "2023-11-05T05:59:23.450Z",
 
+      frontId: "3-IP-IkJb",
+      structure: {
+        split: "none",
+        content: {
+          text: "",
+          style: {
+            createdAt: "2023-11-05T05:59:23.428Z",
+            updatedAt: "2023-11-05T05:59:23.428Z",
+            fontFamily: "Arial",
+            fontStyle: "regular",
+            fontSize: 14,
+            angle: 0,
+            textAlign: "none",
+            textDirecton: "right",
+            padding: 0,
+            margin: 0,
+          },
+        },
+        frontId: "3-IP-IkJb",
+        isQrcode: false,
+        isBarcode: false,
+        isSelected: false,
+      },
+      product: {
+        id: 10,
+        createdAt: "2023-09-20T09:08:33.615Z",
+        updatedAt: "2023-09-20T09:08:33.615Z",
+        link: "https://web.telegram.org",
+        width: 22,
+        widthOfPrintingArea: 22,
+        name: {
+          id: 19,
+          createdAt: "2023-09-20T09:08:33.608Z",
+          updatedAt: "2023-09-20T09:08:33.608Z",
+          english: "test22",
+          persian: "test22",
+          turkish: "test22",
+        },
+        admin: {
+          id: 1,
+          createdAt: "2023-08-19T09:48:27.498Z",
+          updatedAt: "2023-08-19T09:48:27.498Z",
+          username: "raad",
+          firstName: "raad",
+          lastName: "super admin",
+          role: "superAdmin",
+          deleteDate: null,
+        },
+      },
+      productId: 10,
+    };
+  }
+  useEffect(() => {
+    if (addlabel.isSuccess) {
+      const { id: labelId } = addlabel.data;
+      addProject_template(labelId);
+    }
+  }, [addlabel.isSuccess]);
   useEffect(() => {
     if (isSuccess) {
-      navigate(`/editor/${data.id}`);
+      navigate(`/admin/list-labels-products`);
     }
   }, [isSuccess]);
 
@@ -200,7 +322,8 @@ export default function ({
 
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
-          {content.inputLabelThree}
+          {/* {content.inputLabelThree} */}
+          عرض لیبل mm
         </Typography.H8>
 
         <section className="w-100 position-relative">
@@ -208,6 +331,22 @@ export default function ({
             ImputclassName={ms_2}
             value={state.railWidth.value}
             onChange={handleChangeRailWidth}
+          />
+          <span className="position-absolute color_danger">
+            <Typography.H9>{state.railWidth.errMsg}</Typography.H9>
+          </span>
+        </section>
+      </article>
+      <article className={"mt-4 w-60 " + cssClass.ms_2}>
+        <Typography.H8 className={"mb-2 font-400 " + ms_2}>
+          طول لیبل mm
+        </Typography.H8>
+
+        <section className="w-100 position-relative">
+          <TextFieldFUN_v5
+            ImputclassName={ms_2}
+            value={state.Labelheight.value}
+            onChange={handleChangeLabelWidth}
           />
           <span className="position-absolute color_danger">
             <Typography.H9>{state.railWidth.errMsg}</Typography.H9>
@@ -255,7 +394,7 @@ export default function ({
           <Grid item lg={3} md={5} sm={10} xs={10}>
             <Buttons.Contained
               className="w-100 button_large "
-              onClick={submitForm}
+              onClick={addLabel}
             >
               <Typography.H6 className=" font-200 ">
                 {content.continueButton}

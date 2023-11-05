@@ -43,7 +43,7 @@ export const User_Profile_Call = () => {
     if (error) {
       setLoading({
         isShow: true,
-        message: error.message,
+        message: error.message || "Error",
       });
     }
   }, [isSuccess, error]);
@@ -65,7 +65,7 @@ export const UserProjects_Call = (
   if (search) initUrl = initUrl.concat(`search=${search}&`);
   if (startDate) initUrl = initUrl.concat(`startDate=${startDate}&`);
   if (endDate) initUrl = initUrl.concat(`endDate=${endDate}&`);
-  console.log(initUrl);
+
   const result = useInfiniteQuery({
     queryKey: ["user-projects", search, projectsKey, startDate, endDate],
     queryFn: ({ pageParam = initUrl }) =>

@@ -165,10 +165,10 @@ export const AdminAddLabel_Mutation = () => {
   const meta = use_label();
   const modifedDate = { ...meta.safeState };
 
-  delete modifedDate.picture;
+  // delete modifedDate.picture;
   const result = useMutation({
     mutationKey: "add-product",
-    mutationFn: (body) => api_post.add_label(token, modifedDate),
+    mutationFn: (body) => api_post.add_label(token, body),
   });
   const { isSuccess, isLoading, error } = result;
   useEffect(() => {

@@ -14,9 +14,9 @@ export default function () {
   const [editor_access, setEditor_access] = useLocalStorage("editor_access");
   useEffect(() => {
     if (user_profile.isSuccess) {
-      if (!("role" in user_profile.data)) {
-        setEditor_access("project/edit");
-      }
+      // if (!("role" in user_profile.data)) {
+      //   setEditor_access("project/edit");
+      // }
       setProfile(user_profile.data);
     }
   }, [user_profile.isSuccess]);

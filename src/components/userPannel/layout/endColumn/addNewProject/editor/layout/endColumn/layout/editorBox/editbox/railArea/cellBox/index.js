@@ -14,6 +14,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { isView } from "../../../../../../../../../../../../../recoil/userEditorStore/selectionButtonsStore/actionButton";
 import InnerContainer from "./layout/InnerContainer";
 import { useRef } from "react";
+import { useGetLabel } from "../../../../../../../../../../../../../recoil/store/label";
 
 export default function ({
   children,
@@ -41,6 +42,8 @@ export default function ({
   railId = "",
 }) {
   const setCell = useCellReducer();
+  const label_project_template = useGetLabel();
+
   const Description = () => {
     function substringText(text) {
       if (text)
@@ -99,7 +102,21 @@ export default function ({
       }
     }
   }, [deleteAction, duplicateAction]);
+  function get_Dimensions_based_label_project_template_exist() {
+    let dimensions = {
+      width: "",
+      height: "",
+    };
 
+    if (label_project_template.width && label_project_template.height) {
+      dimensions.width = label_project_template.height;
+      dimensions.height = label_project_template.width;
+    } else {
+      dimensions.width = cell.product.width;
+      dimensions.height = cell.product.widthOfPrintingArea;
+    }
+    return dimensions;
+  }
   return (
     <Draggable
       draggableId={cell.structure.frontId}
@@ -113,9 +130,15 @@ export default function ({
             {!isViewMode ? (
               <div
                 style={{
-                  width: `${cell.product.width}mm`,
-                  minWidth: `${cell.product.width}mm`,
-                  height: `${cell.product.widthOfPrintingArea}mm`,
+                  width: `${
+                    get_Dimensions_based_label_project_template_exist().width
+                  }mm`,
+                  minWidth: `${
+                    get_Dimensions_based_label_project_template_exist().width
+                  }mm`,
+                  height: `${
+                    get_Dimensions_based_label_project_template_exist().height
+                  }mm`,
                 }}
                 className="position-relative "
               >
@@ -131,8 +154,12 @@ export default function ({
                 {...provided.draggableProps}
                 ref={provided.innerRef}
                 {...provided.dragHandleProps}
-                cellWidth={cell.product.width}
-                cellWidthOfPrintingArea={cell.product.widthOfPrintingArea}
+                cellWidth={
+                  get_Dimensions_based_label_project_template_exist().width
+                }
+                cellWidthOfPrintingArea={
+                  get_Dimensions_based_label_project_template_exist().height
+                }
               >
                 {/* <Description /> */}
                 <CellSplitController

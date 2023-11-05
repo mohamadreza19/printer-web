@@ -4,6 +4,7 @@ import Buttons from "../../../../../styles/__ready/Buttons";
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 import useScreenShot from "../../../../../utility/useScreenShot";
+import useLocalStorage from "react-use-localstorage";
 
 export default function ({
   project = {
@@ -14,14 +15,17 @@ export default function ({
   },
   showDeleteMassge = () => {},
 }) {
+  const [editor_access, setEditor_access] = useLocalStorage("editor_access");
   const getScreen = useScreenShot();
   const cssClass = useDynamicCssClass();
   const navigate = useNavigate();
   const ActionButton = () => {
     function navigateEditorById() {
+      setEditor_access("project/edit");
       navigate(`/editor/${project.id}`);
     }
     function openNewTabAndPrint() {
+      setEditor_access("project/edit");
       window.open(`/editor/${project.id}?autoPrint=true`, "_blank");
       // getScreen();
     }
