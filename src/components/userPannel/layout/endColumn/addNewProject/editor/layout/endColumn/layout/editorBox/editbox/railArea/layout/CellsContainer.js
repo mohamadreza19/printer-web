@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: ${(props) => (props.isDragingOver ? "#F36523" : "#CBCBCB")};
-  height: ${(prop) => prop.railsWidth}mm;
+  height: ${(prop) => {
+    console.log(prop.railsWidth);
+    return prop.railsWidth;
+  }}mm;
 
   min-width: 10px;
   display: flex;

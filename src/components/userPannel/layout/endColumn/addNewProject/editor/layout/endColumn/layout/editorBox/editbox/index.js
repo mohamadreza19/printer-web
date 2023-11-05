@@ -103,7 +103,7 @@ export default memo(function () {
                   structure: {
                     split: "none",
                     content: {
-                      text: "test",
+                      text: "",
                       style: {
                         id: 11,
                         createdAt: "2023-09-20T09:25:29.459Z",
@@ -155,7 +155,11 @@ export default memo(function () {
             },
           ];
 
-          if (data.rails[0].customLabels.length == 0) {
+          if (
+            data.rails.length == 0 ||
+            data.rails[0].customLabels.length == 0
+          ) {
+            console.log("data.rails[0]?.customLabels.length == 0");
             myRails = Rail_temp;
           } else {
             myRails = data.rails;

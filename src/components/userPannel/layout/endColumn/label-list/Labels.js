@@ -14,7 +14,7 @@ export default function ({
   labelList = [],
 }) {
   const printLabel = useScreenShot();
-  console.log({ labelList });
+
   return (
     <InfiniteScroll
       dataLength={labels.length}

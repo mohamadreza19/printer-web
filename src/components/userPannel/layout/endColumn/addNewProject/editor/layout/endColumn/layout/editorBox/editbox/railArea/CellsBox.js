@@ -10,6 +10,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useGetLabel } from "../../../../../../../../../../../../recoil/store/label";
+import useLocalStorage from "react-use-localstorage";
 
 export default function ({
   key,
@@ -18,23 +19,18 @@ export default function ({
   isFirstRail = false,
 }) {
   // const cells = useCells();
+  const [editor_access, _] = useLocalStorage("editor_access");
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
   const [isDragging, setIsDraggingOver] = useState(false);
   const label_project_template = useGetLabel();
 
-  //
-
-  // const getImage = useScreenShot();
-  // function changeCustomLabelsDirection(direction) {
-  //   if (direction === "right") {
-  //     return customLabels;
-  //   } else {
-  //     return [...customLabels].reverse();
-  //   }
-  // }
-
-  useEffect(() => {}, []);
+  function get_railsWidth_based_editor_access() {
+    if (editor_access === "project/edit") {
+      return railsWidth;
+    }
+    return label_project_template.width;
+  }
 
   return (
     <Droppable
@@ -47,9 +43,7 @@ export default function ({
         setIsDraggingOver(snapshot.isDraggingOver);
         return (
           <Container
-            railsWidth={
-              label_project_template ? label_project_template.width : railsWidth
-            }
+            railsWidth={get_railsWidth_based_editor_access()}
             isDragingOver={isDragging}
             id="test-screen"
             key={key}
