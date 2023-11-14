@@ -65,7 +65,7 @@ export const ToastContainer = ({ children }) => {
         <div className="toast-box">
           <article className="d-flex flex-column align-items-center">
             <section className="color-white mb-3 toast-message-box">
-              <Typography.H4>{toast?.message.toString()}</Typography.H4>
+              {/* <Typography.H4>{toast?.message.toString() || ""}</Typography.H4> */}
             </section>
             <div className="small-toast-box">
               <section className="anime-small-child"></section>

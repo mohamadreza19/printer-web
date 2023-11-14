@@ -422,17 +422,12 @@ const ImageContainer = ({
     document.querySelector(`#cell-svg-container-${generatedID}`).innerHTML =
       svgSrc;
 
-    const svg = document.querySelector(
+    const svgContainer = document.querySelector(
       `#cell-svg-container-${generatedID} svg`
     );
-    const path = document.querySelector(
-      `#cell-svg-container-${generatedID} svg path`
-    );
-    if (svg && path) {
-      svg.attributes.width.value = style.fontSize;
-      svg.attributes.height.value = style.fontSize;
-      svg.attributes.fill.value = "black";
-      path.attributes.fill.value = "black";
+    if (svgContainer) {
+      svgContainer.setAttribute("width", `${style.fontSize}px`);
+      svgContainer.setAttribute("height", `${style.fontSize}px`);
     }
   }, [svgSrc, style.fontSize]);
 

@@ -15,25 +15,25 @@ function Symbol({ id, setSymbolUsed }) {
     if (symbolDetail.isSuccess)
       document.getElementById(`svgHolder-${id}`).innerHTML = symbolDetail.data;
 
-    const svg = document.querySelector(`#svgHolder-${id} svg`);
-    const path = document.querySelector(`#svgHolder-${id} svg path`);
+    const svgContainer = document.querySelector(`#svgHolder-${id} svg`);
 
-    if (svg && path) {
-      svg.attributes.width.value = "48px";
-      svg.attributes.height.value = "48px";
-      svg.attributes.fill.value = "black";
-      path.attributes.fill.value = "black";
+    if (svgContainer) {
+      svgContainer.setAttribute("width", "48px");
+      svgContainer.setAttribute("height", "48px");
     }
   }, [symbolDetail.data]);
 
   if (symbolDetail.isSuccess)
     return (
       <div
+        className="mx-1 "
         id={`svgHolder-${id}`}
         onClick={onclick}
         style={{
           width: "48px",
           height: "48px",
+          border: "1px solid rgb(203 203 203 / 51%)",
+          borderRadius: "10px",
         }}
       >
         {/* <img

@@ -117,6 +117,7 @@ export default function ({
     }
     return dimensions;
   }
+
   return (
     <Draggable
       draggableId={cell.structure.frontId}

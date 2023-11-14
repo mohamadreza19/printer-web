@@ -13,9 +13,6 @@ export default function () {
   const setProfile = useSetAdminProfile();
   useEffect(() => {
     if (user_profile.isSuccess) {
-      if (!("role" in user_profile.data)) {
-        setEditor_access("project/edit");
-      }
       setProfile(user_profile.data);
     }
   }, [user_profile.isSuccess]);

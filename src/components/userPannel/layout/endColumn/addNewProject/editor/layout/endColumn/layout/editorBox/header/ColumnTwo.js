@@ -198,7 +198,6 @@ export default function () {
           };
         }
         if (cellForReadStyle.fontStyle == "italic") {
-          console.log("isbold");
           return {
             chosenStyle: "regular",
             isUsed: true,

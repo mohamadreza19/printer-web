@@ -48,10 +48,6 @@ function setFindOne_based_editor_access(editorAccess) {
       return UserProjectFindOne_Qury();
     case PROJECT_TEMPLATES_EDIT:
       return Project_templateFindOne_Qury("admin");
-      break;
-
-    default:
-      break;
   }
 }
 export default memo(function () {

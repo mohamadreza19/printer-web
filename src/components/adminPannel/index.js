@@ -13,9 +13,6 @@ export default function () {
   const [editor_access, setEditor_access] = useLocalStorage("editor_access");
   useEffect(() => {
     if (res.isSuccess) {
-      if ("role" in res.data) {
-        setEditor_access("project-templates/edit");
-      }
       setAdminProfile(res.data);
     }
   }, [res.isSuccess]);
