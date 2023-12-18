@@ -155,7 +155,6 @@ export default memo(function () {
             data.rails.length == 0 ||
             data.rails[0].customLabels.length == 0
           ) {
-            console.log("data.rails[0]?.customLabels.length == 0");
             myRails = Rail_temp;
           } else {
             myRails = data.rails;
