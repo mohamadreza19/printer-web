@@ -10,7 +10,7 @@ import Typography from "../../../../../styles/__ready/Typography";
 
 import DropDown from "../../../../../styles/__ready/common/User_DropDown";
 
-export default function ({ setSearch, setCurrentList, currentList }) {
+export default function ({ search, setSearch, setCurrentList, currentList }) {
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
   const language = useLanguage();
@@ -56,6 +56,7 @@ export default function ({ setSearch, setCurrentList, currentList }) {
         />
         <section className={"search_box " + cssClass.ms_2}>
           <Textfields.v2_SearchBox
+            value={search}
             placeholder={
               content.AdminPannel.end_col.label_Product_List.searchPlaceHolder
             }

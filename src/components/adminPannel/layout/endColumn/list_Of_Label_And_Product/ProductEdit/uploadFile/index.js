@@ -84,7 +84,7 @@ export default function ({ res }) {
   }, [mutate.data]);
   const canShowSuccess =
     Boolean(editImagemutate.isSuccess) || Boolean(AddImagemutate.isSuccess);
-  console.log({ meta });
+
   if (res.data)
     return (
       <div className="w-100 ">

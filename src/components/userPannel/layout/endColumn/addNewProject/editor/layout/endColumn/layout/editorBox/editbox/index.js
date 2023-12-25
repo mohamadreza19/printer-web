@@ -29,6 +29,8 @@ import {
   Project_templateFindOne_Qury,
 } from "../../../../../../../../../../../reactQuery/common/callGetService";
 import { useSetLabel } from "../../../../../../../../../../../recoil/store/label";
+import { useDispatch } from "react-redux";
+import { fetch } from "../../../../../../../../../../../redux/project/projectTemplateSlice";
 
 //  data = {
 //   frontId: 112,
@@ -50,6 +52,7 @@ function setFindOne_based_editor_access(editorAccess) {
       return Project_templateFindOne_Qury("admin");
   }
 }
+
 export default memo(function () {
   const [editor_access, _] = useLocalStorage("editor_access");
   const setLabel = useSetLabel();

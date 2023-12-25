@@ -5,6 +5,7 @@ import {
 import { TextFieldFUN_v5_Big } from "../../../../../styles/__ready/Textfields";
 import Typography from "../../../../../styles/__ready/Typography";
 import useAdminAdd_Product from "../../../../../helper/admin_add_product_label/control_product_dynamic_input";
+import { useEffect } from "react";
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =
@@ -16,6 +17,22 @@ export default function () {
     handleSetLanguage_Of__AdditionalInfo_Header_Card,
     AdditionalInfo_headerCardCurrentBackground,
   } = useAdminAdd_Product("additionalInfo");
+
+  useEffect(() => {
+    return () => {
+      const e = {
+        target: {
+          value: " ",
+        },
+      };
+      handleSetLanguage_Of__AdditionalInfo_Header_Card("fa");
+      additionalInfoHandeler(e);
+      handleSetLanguage_Of__AdditionalInfo_Header_Card("en");
+      additionalInfoHandeler(e);
+      handleSetLanguage_Of__AdditionalInfo_Header_Card("tr");
+      additionalInfoHandeler(e);
+    };
+  }, []);
   return (
     <>
       <div className={"position-relative " + cssClass.ms_3}>

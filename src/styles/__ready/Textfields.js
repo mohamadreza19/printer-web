@@ -11,6 +11,7 @@ import shortid from "shortid";
 import Barcode from "react-barcode";
 import { QRCodeSVG } from "qrcode.react";
 import styled from "styled-components";
+import useLocalStorage from "react-use-localstorage";
 export default class {
   static v1({ children = "", className = "" }) {
     return <TextField className={className} />;
@@ -91,6 +92,7 @@ export default class {
     Input_marginStart_based_Language = "ms-3",
     placeholder = "",
     iconMarginStart = " ",
+
     onClickAndGetValeFn = () => {},
   }) {
     return (
@@ -108,6 +110,7 @@ export default class {
             position: "relative",
             top: "-0.1rem",
           }}
+          value={localStorage.getItem("search")}
           id="serach-input"
           placeholder={placeholder}
           onKeyDown={(event) => {
@@ -120,6 +123,8 @@ export default class {
           onChange={(e) => {
             const value = e.target.value;
             setTimeout(() => {
+              localStorage.setItem("sreach", value);
+
               onClickAndGetValeFn(value);
             }, 500);
             if (value === "") {

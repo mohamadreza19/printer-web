@@ -6,6 +6,17 @@ import Header from "./Header";
 import Items from "./Items";
 import { Project_template_List_Call } from "../../../../../reactQuery/common/callGetService";
 import { RedoRounded } from "@mui/icons-material";
+import {
+  useContent_Based_Language,
+  useDynamicCssClass,
+  useLanguage,
+} from "../../../../../recoil/readStore";
+import Textfields from "../../../../../styles/__ready/Textfields";
+import { useInfiniteQuery } from "react-query";
+import api_get from "../../../../../services/admin/api_get";
+import { product_label_key } from "../../../../../reactQuery/querykey/admin_key";
+import { apiUrl } from "../../../../../services/urlStore";
+import useAdmin_CachedToken from "../../../../../utility/useAdmin_CachedToken";
 
 export default function () {
   const [currentListValues, setCurrentValues] = useState(null);
@@ -15,6 +26,9 @@ export default function () {
   const [limit, setLimit] = useState(10);
 
   const project_template = Project_template_List_Call("admin", "", null, null);
+
+  const cssClass = useDynamicCssClass();
+  const content = useContent_Based_Language();
 
   const product = AdminProduct_Label({
     // productLableFilter: currentList,
@@ -34,7 +48,7 @@ export default function () {
             arr.push(itemTwo);
           });
         });
-        console.log({ arr });
+
         return arr;
       case "Label":
         let arr_ = [];
@@ -45,14 +59,15 @@ export default function () {
     }
   }
 
-  if (project_template.isSuccess && product.isSuccess)
-    return (
-      <div className="w-100">
-        <Header
-          setCurrentList={setCurrentList}
-          currentList={currentList}
-          setSearch={setSearch}
-        />
+  return (
+    <div className="w-100">
+      <Header
+        setCurrentList={setCurrentList}
+        currentList={currentList}
+        setSearch={setSearch}
+        search={search}
+      />
+      {project_template.isSuccess && product.isSuccess ? (
         <InfiniteScroll
           className="w-100 px-4"
           pullDownToRefreshThreshold={300}
@@ -73,6 +88,7 @@ export default function () {
         >
           <Items items={get_MapedPage()} currentList={currentList} />
         </InfiniteScroll>
-      </div>
-    );
+      ) : null}
+    </div>
+  );
 }

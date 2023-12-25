@@ -42,6 +42,24 @@ export default function ({ res }) {
     }
   }, [res.isSuccess]);
 
+  useEffect(() => {
+    return () => {
+      console.log("before destroy");
+      const e = {
+        target: {
+          value: " ",
+        },
+      };
+      handleSetLanguage_Of_ProductName_Header_Card("fa");
+      productHandler(e);
+
+      handleSetLanguage_Of_ProductName_Header_Card("en");
+      productHandler(e);
+
+      handleSetLanguage_Of_ProductName_Header_Card("tr");
+      productHandler(e);
+    };
+  }, []);
   if (res.isSuccess)
     return (
       <>

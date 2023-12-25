@@ -5,6 +5,7 @@ import {
 } from "../../../../../recoil/readStore";
 import { TextFieldFUN_v5 } from "../../../../../styles/__ready/Textfields";
 import useAdminAdd_Product from "../../../../../helper/admin_add_product_label/control_product_dynamic_input";
+import { useEffect } from "react";
 
 export default function () {
   const cssClass = useDynamicCssClass();
@@ -14,6 +15,9 @@ export default function () {
       .rowTwo;
   //
   const {
+    handleSetPersian,
+    handleSetEnglish,
+    handleSetTurkish,
     handleSetLanguage_Of_ProductName_Header_Card,
     productHandler,
     productValue,
@@ -21,6 +25,33 @@ export default function () {
     headerCardCurrentBackground,
   } = useAdminAdd_Product("productName");
 
+  useEffect(() => {
+    const e = {
+      target: {
+        value: " ",
+      },
+    };
+    handleSetPersian(e);
+    handleSetEnglish(e);
+    handleSetTurkish(e);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      const e = {
+        target: {
+          value: " ",
+        },
+      };
+      handleSetLanguage_Of_ProductName_Header_Card("fa");
+      productHandler(e);
+      handleSetLanguage_Of_ProductName_Header_Card("en");
+      productHandler(e);
+      handleSetLanguage_Of_ProductName_Header_Card("tr");
+      productHandler(e);
+    };
+  }, []);
+  console.log({ productValue });
   return (
     <>
       <div className={"position-relative  " + cssClass.ms_3}>

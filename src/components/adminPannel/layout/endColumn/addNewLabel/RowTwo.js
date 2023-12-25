@@ -13,14 +13,20 @@ export default function ({ setName = () => {} }) {
   const { labelName } = useAdmin_Add_Label();
   labelName.showState();
 
-  useEffect(() => {
-    setName(labelName.showState());
-  }, [
-    labelName.showState().english,
-    labelName.showState().persian,
-    labelName.showState().turkish,
-  ]);
+  useEffect(
+    () => {
+      setName(labelName.showState());
+    },
+    [
+      // labelName.showState().english,
+      // labelName.showState().persian,
+      // labelName.showState().turkish,
+    ]
+  );
   const {
+    handleSetEnglish,
+    handleSetPersian,
+    handleSetTurkish,
     labelValue = " ",
     labelHandler = () => {},
     handleSetLanguage_Of_LabelName_Header_Card,
@@ -30,6 +36,20 @@ export default function ({ setName = () => {} }) {
       turkish: " ",
     },
   } = labelName;
+
+  useEffect(() => {
+    return () => {
+      const e = {
+        target: {
+          value: " ",
+        },
+      };
+
+      handleSetEnglish(e);
+      handleSetPersian(e);
+      handleSetTurkish(e);
+    };
+  }, []);
   //
   return (
     <>

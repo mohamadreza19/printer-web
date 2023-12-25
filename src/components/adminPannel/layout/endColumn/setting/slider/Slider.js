@@ -1,8 +1,9 @@
+import React from "react";
 import Typography from "../../../../../../styles/__ready/Typography";
-import SymbolList from "./SymbolList";
-import UploadSymbolArea from "./UploadSymbolArea";
+import SlidesList from "./SlidesList";
+import UploadImageArea from "./UploadImageArea";
 
-function AddSymbol() {
+function AddSlider() {
   return (
     <div
       className="w-100 d-flex flex-column justify-content-between pb-6"
@@ -15,14 +16,14 @@ function AddSymbol() {
       }}
     >
       <header className="w-100 px-5 mt-3 mb-5">
-        <Typography.H5 className="font-500">لیست سیمبل ها</Typography.H5>
-        <SymbolList />
+        <Typography.H5 className="font-500">لیست عکس های اسلایدر</Typography.H5>
+        <SlidesList />
       </header>
       <main className=" d-flex  flex-column justify-content-center align-items-center">
-        <UploadSymbolArea />
+        <UploadImageArea />
       </main>
     </div>
   );
 }
 
-export default AddSymbol;
+export default AddSlider;

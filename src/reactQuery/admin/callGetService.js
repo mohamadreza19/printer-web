@@ -437,6 +437,21 @@ export const AdminProduct_Label_Count = () => {
 
   return result;
 };
+export async function AdminProduct_Label_v2(
+  option = { productLableFilter: "", search: "", limit: "", page: "" }
+) {
+  let initialUrl = `${apiUrl}/product-label?productLableFilter=${option.productLableFilter}&page=1&limit=10&`;
+  const token = localStorage.getItem("admin-t");
+  const language = localStorage.getItem("language");
+  let lan = "persian";
+  if (language === "fa") lan = "persian";
+  if (language === "en") lan = "english";
+  if (language === "tr") lan = "turkish";
+
+  if (option.search) {
+    initialUrl = initialUrl.concat(`search=${option.search}&`);
+  }
+}
 
 export const AdminProduct_Label = (
   option = { productLableFilter: "", search: "", limit: "", page: "" }

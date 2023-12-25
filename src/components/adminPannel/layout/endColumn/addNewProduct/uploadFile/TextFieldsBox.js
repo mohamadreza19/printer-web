@@ -3,10 +3,21 @@ import Typography from "../../../../../../styles/__ready/Typography";
 //
 import { useDynamicCssClass } from "../../../../../../recoil/readStore";
 import useController from "../../../../../../helper/admin_add_product_label/control_product_dynamic_input/index";
+import { useEffect } from "react";
 export default function () {
   const cssClass = useDynamicCssClass();
   const meta = useController("widths");
-
+  useEffect(() => {
+    return () => {
+      const e = {
+        target: {
+          value: null,
+        },
+      };
+      meta.handler.handleonChangeWidth(e);
+      meta.handler.handleonChangWidthOfPrintingArea(e);
+    };
+  }, []);
   return (
     <main className="w-100 h-100 px-4 pt-2">
       <article className="mt-9 d-flex ">

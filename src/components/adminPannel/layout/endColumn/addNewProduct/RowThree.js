@@ -5,6 +5,7 @@ import {
 } from "../../../../../recoil/readStore";
 import Typography from "../../../../../styles/__ready/Typography";
 import useAdminAdd_Product from "../../../../../helper/admin_add_product_label/control_product_dynamic_input";
+import { useEffect } from "react";
 //this component havent value and onChange
 export default function () {
   const cssClass = useDynamicCssClass();
@@ -13,6 +14,17 @@ export default function () {
       .rowThree;
   const { productLinkValue, handeler, validateErr } =
     useAdminAdd_Product("productLink");
+
+  useEffect(() => {
+    return () => {
+      const e = {
+        target: {
+          value: " ",
+        },
+      };
+      handeler(e);
+    };
+  }, []);
 
   return (
     <div className="mt-4_5 ">

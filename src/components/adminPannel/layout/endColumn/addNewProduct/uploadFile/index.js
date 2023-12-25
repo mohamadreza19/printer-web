@@ -74,8 +74,9 @@ export default function () {
     }
   }, [AddImagemutate.isSuccess]);
   // console.log({ addImageData: AddImagemutate });
-  console.log(AddImagemutate.onLoadedMeta);
-
+  useEffect(() => {
+    return () => {};
+  }, []);
   return (
     <div className="w-100 ">
       <Header />

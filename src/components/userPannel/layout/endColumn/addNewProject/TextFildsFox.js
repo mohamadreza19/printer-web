@@ -144,7 +144,7 @@ export default function ({
   }
 
   if (isSuccess) {
-    navigate(`/user/add-project/editor/${data.id}`);
+    navigate(`/editor/${data.id}`);
   }
   return (
     <div className={`w-100 mt-7 px-5 ${cssClass.ms_3}`}>

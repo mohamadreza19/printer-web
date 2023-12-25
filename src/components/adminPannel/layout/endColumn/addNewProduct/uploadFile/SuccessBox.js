@@ -86,7 +86,12 @@ export default function ({
         </div>
       </section>
       <footer className="w-100 d-flex justify-content-end mt-10 px-4 pb-4">
-        <Buttons.Outlined className="button_extra-large">
+        <Buttons.Outlined
+          onClick={() => {
+            navigate("/admin/list-labels-products");
+          }}
+          className="button_extra-large"
+        >
           <Typography.H8>مشاهده محصولات</Typography.H8>
         </Buttons.Outlined>
         <Buttons.Contained className={"button_extra-large " + cssClass.ms_3}>

@@ -293,6 +293,33 @@ export default function ({
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    return () => {
+      setState({
+        createdBy: {
+          value: "",
+          errMsg: "",
+        },
+        projectName: {
+          value: "",
+          errMsg: "",
+        },
+        railWidth: {
+          value: "",
+          errMsg: "",
+        },
+        Labelheight: {
+          value: "",
+          errMsg: "",
+        },
+        name: {
+          english: "",
+          persian: "",
+          turkish: "",
+        },
+      });
+    };
+  }, []);
   return (
     <div className={`w-100 mt-7 px-5 ${cssClass.ms_3}`}>
       {/* <header className="px-3">

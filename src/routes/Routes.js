@@ -36,7 +36,10 @@ import AdminList_Of_User_Printer from "../components/adminPannel/layout/endColum
 import AdminList_Of_Manager from "../components/adminPannel/layout/endColumn/list_Of_Manager";
 import AdminList_Of_Manager_edit from "../components/adminPannel/layout/endColumn/list_Of_Manager/edit";
 import AdminList_Of_Manager_Printer from "../components/adminPannel/layout/endColumn/list_Of_Manager/printer";
-import AdminSetting from "../components/adminPannel/layout/endColumn/setting/Setting";
+
+import AddSymbol from "../components/adminPannel/layout/endColumn/setting/addSymbol/addSymbol";
+import SliderSetting from "../components/adminPannel/layout/endColumn/setting/slider/Slider";
+
 //
 import AdminAddLabel from "../components/adminPannel/layout/endColumn/addNewLabel";
 
@@ -45,6 +48,7 @@ import { Suspense } from "react";
 import ViewPrinitChart from "../components/adminPannel/layout/endColumn/viewPrinitChart";
 import Loading from "../styles/__ready/Loading";
 import AdminAuthentication from "../controller/AdminAuthentication";
+
 const ListOfProject = React.lazy(() =>
   import("../components/userPannel/layout/endColumn/listOfProject")
 );
@@ -146,7 +150,9 @@ export default function () {
           element={<AdminList_Of_Manager_Printer />}
         />
         <Route path="charts" element={<ViewPrinitChart />} />
-        <Route path="setting" element={<AdminSetting />} />
+        <Route path="setting/symbols" element={<AddSymbol />} />
+        {/* <Route path="setting/symbols" element={<div>hi symbols</div>} /> */}
+        <Route path="setting/slider" element={<SliderSetting />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

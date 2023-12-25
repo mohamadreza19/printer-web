@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import {
   admin_user_symbolList,
   setAdmin_user_image,
+  setAdmin_user_slider,
   setAdmin_user_symbolList,
 } from "../querykey/common";
 export const AdminDelete_Product_Mutation = () => {
@@ -262,6 +263,53 @@ export const AdminDelete_Symbol_Mutation = () => {
 
   return result;
 };
+export const AdminDelete_ImageSlide_Mutation = () => {
+  const { value: token } = useAdmin_CachedToken();
+  const queryClient = useQueryClient();
+  const setDeleteAlert = useDeleteAlert();
+  const setLoading = useToastReducer();
+  const result = useMutation({
+    mutationKey: "admin-delete-lsymbol",
+    mutationFn: (option) => api_delete.delete_Slide(token, option.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(admin_user_symbolList);
+      setAdmin_user_symbolList(Math.random() * 10);
+    },
+  });
+
+  const { isSuccess, isLoading, error } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+
+      setDeleteAlert({
+        isShow: false,
+        message: "",
+        deleteFn: () => {},
+      });
+    }
+    if (error) {
+      console.log(error);
+
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
+};
 export const Super_AdminDelete_Admin_Mutation = () => {
   const { value: token } = useAdmin_CachedToken();
   const queryClient = useQueryClient();
@@ -272,7 +320,7 @@ export const Super_AdminDelete_Admin_Mutation = () => {
     mutationFn: (option) => api_delete.delete_admin(token, option.id),
     onSuccess: () => {
       queryClient.invalidateQueries(adminsList_key);
-      setAdminsList_key(Math.random() * 10);
+      setAdmin_user_slider(Math.random() * 10);
     },
   });
 

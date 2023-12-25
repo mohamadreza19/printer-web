@@ -3,22 +3,15 @@ import { Autoplay, Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useLanguage } from "../../../../recoil/readStore";
-import { Button } from "@mui/material";
+
 import RightArrow from "./RightArrow";
 import LeftArrow from "./LeftArrow";
-export default function () {
-  const ads = {
-    items: [
-      "/image/login_slider/image_14.png",
-      "/image/login_slider/image_14.png",
-      "/image/login_slider/image_13.png",
-      "/image/login_slider/image_14.png",
-      "/image/login_slider/image_14.png",
-      "/image/login_slider/image_13.png",
-    ],
-  };
+import { Admin_User_ImageSlide } from "../../../../reactQuery/common/callGetService";
+import { useEffect } from "react";
+export default function ({ data }) {
+  const slide = Admin_User_ImageSlide();
 
   const language = useLanguage();
 
@@ -51,27 +44,16 @@ export default function () {
         style={{
           //   direction: language === "fa" ? "rtl" : "ltr",
           direction: "ltr",
-
           zIndex: 1,
         }}
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
         }}
       >
-        {ads.items.map((item, index) => {
+        {data.map((item, index) => {
           return (
-            <SwiperSlide
-              style={{
-                width: "260px",
-                maxWidth: "260px",
-                maxHeight: "260px",
-                height: "260px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-              key={index}
-            >
-              <img className="w-100 h-100" src={item} />
+            <SwiperSlide key={index}>
+              <ImageSlide id={item.id} />
             </SwiperSlide>
           );
         })}
@@ -79,3 +61,26 @@ export default function () {
     </div>
   );
 }
+
+const ImageSlide = ({ id }) => {
+  const slide = Admin_User_ImageSlide();
+
+  useEffect(() => {
+    slide.mutate({ id });
+  }, []);
+  if (slide.isSuccess)
+    return (
+      <img
+        style={{
+          borderRadius: "20px",
+          boxShadow: "0px 30px 25px -20px rgba(0, 0, 0, 0.60)",
+          minHeight: "240px",
+          minWidth: "240px",
+          maxWidth: "240px",
+          maxHeight: "240px",
+        }}
+        className="w-100 h-100"
+        src={URL.createObjectURL(slide.data)}
+      />
+    );
+};

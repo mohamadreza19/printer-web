@@ -5,7 +5,10 @@ import Label_product from "./Label_product";
 
 import Search from "./Search";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { product_column } from "../../../../../../../../../../recoil/userEditorStore/cellsStore";
+import {
+  product_column,
+  rails,
+} from "../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import {
   Admin_User_Image,
   Admin_User_ProductList_Call,
@@ -18,19 +21,23 @@ import { isAllowShowProductsBookmark_store } from "../../../../../../../../../..
 
 import { useState } from "react";
 import { useView } from "../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
+import userEditor_DnD from "../../../../../../../../../../helper/userEditor_DnD";
 
 export default function () {
   const cssClass = useDynamicCssClass();
   const [product_column_, setProduct_column_] = useRecoilState(product_column);
+  const [railsObj, setRailsObj] = useRecoilState(rails);
+  const railsLength = railsObj.present.length;
   const [filteredProduct_column_, setFilteredProduct_column_] = useState([]);
   const [search, setSearch] = useState("");
   const isAllowShowProductsBookmark = useRecoilValue(
     isAllowShowProductsBookmark_store
   );
+
   const isDragDisabled = !useView();
 
   const response = Admin_User_ProductList_Call("user", search, null, null);
-
+  //
   // const image_mutate = Admin_User_Image("user");
   const add_product_Bookmark_ = Add_Product_Bookmark_Mutation();
   const delete_product_Bookmark_ = Bookmark_Product_Delete();
@@ -82,6 +89,21 @@ export default function () {
       } catch (error) {}
     }
   }
+  function handleAddCustomLabelWithPlusButton(
+    product,
+    option = {
+      numberOfCopy: 0,
+      selectedRail: 0,
+    }
+  ) {
+    const newPresentRails = userEditor_DnD.create_rail_with_customLabel(
+      product,
+      railsObj.present,
+      option
+    );
+
+    setRailsObj((draft) => ({ ...draft, present: newPresentRails }));
+  }
 
   function onlyShowBookmarkedProduct() {
     const newProducts = product_column_.filter((product) => {
@@ -132,6 +154,10 @@ export default function () {
                     ? product_column_.map((product, index) => {
                         return (
                           <Label_product
+                            railsLength={railsLength}
+                            handleAddCustomLabelWithPlusButton={
+                              handleAddCustomLabelWithPlusButton
+                            }
                             isDragDisabled={isDragDisabled}
                             handleAdd_Bookmark={handleAdd_Bookmark}
                             handleDeleteBookmark={handleDeleteBookmark}
@@ -144,6 +170,10 @@ export default function () {
                     : filteredProduct_column_.map((product, index) => {
                         return (
                           <Label_product
+                            railsLength={railsLength}
+                            handleAddCustomLabelWithPlusButton={
+                              handleAddCustomLabelWithPlusButton
+                            }
                             handleAdd_Bookmark={handleAdd_Bookmark}
                             handleDeleteBookmark={handleDeleteBookmark}
                             product={product}

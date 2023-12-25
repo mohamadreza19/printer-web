@@ -40,6 +40,23 @@ export default class {
       });
     }
   }
+
+  static async admin_user_image_slide(id = "") {
+    try {
+      const res = await axios.get(`${apiUrl}/slider/${id}`, {
+        responseType: "blob",
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
   static async admin_user_labelList(token = "", pageParam, languageHeader) {
     try {
       const res = await axios.get(`${pageParam}`, {
@@ -106,6 +123,20 @@ export default class {
           Authorization: `Bearer ${token}`,
         },
       });
+      // console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      // console.log(error);
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
+  static async sliders(pageParam) {
+    try {
+      const res = await axios.get(`${apiUrl}/${pageParam}`, {});
       // console.log(res);
       return new Promise((resolve, _) => {
         resolve(res.data);

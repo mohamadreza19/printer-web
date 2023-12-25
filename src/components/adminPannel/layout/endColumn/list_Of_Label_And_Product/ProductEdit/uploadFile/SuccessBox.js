@@ -4,6 +4,7 @@ import Icons from "../../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../../styles/__ready/Typography";
 import use_PictureInput_Controller from "../../../../../../../helper/admin_add_product_label/control_product_dynamic_input/";
 import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 export default function ({
   info = {
     picture: "",
@@ -14,6 +15,8 @@ export default function ({
     isLink: false,
   },
 }) {
+  const navigate = useNavigate();
+
   const cssClass = useDynamicCssClass();
   const clearState = use_PictureInput_Controller(
     null,
@@ -82,10 +85,20 @@ export default function ({
         </div>
       </section>
       <footer className="w-100 d-flex justify-content-end mt-10 px-4 pb-4">
-        <Buttons.Outlined className="button_extra-large">
+        <Buttons.Outlined
+          onClick={() => {
+            navigate("/admin/list-labels-products");
+          }}
+          className="button_extra-large"
+        >
           <Typography.H8>مشاهده محصولات</Typography.H8>
         </Buttons.Outlined>
-        <Buttons.Contained className={"button_extra-large " + cssClass.ms_3}>
+        <Buttons.Contained
+          onClick={() => {
+            navigate("/admin/add-product");
+          }}
+          className={"button_extra-large " + cssClass.ms_3}
+        >
           <Typography.H8>افزودن محصول جدید</Typography.H8>
         </Buttons.Contained>
       </footer>

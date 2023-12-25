@@ -101,6 +101,43 @@ export const Admin_User_Symbol = (role = "admin") => {
   // console.log(result);
   return result;
 };
+export const Admin_User_ImageSlide = () => {
+  const adminToken = useAdmin_CachedToken();
+  const userToken = useCachedToken();
+  const queryClient = useQueryClient();
+  const setLoading = useToastReducer();
+  const result = useMutation({
+    mutationKey: ["Admin_User_Symbol", admin_user_symbolList],
+    mutationFn: (option) => {
+      const { id } = option;
+
+      return api_get.admin_user_image_slide(id);
+    },
+  });
+  const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+  // console.log(result);
+  return result;
+};
 
 export const Admin_User_LabelList_Call = (
   role = "admin",
@@ -344,6 +381,43 @@ export const Admin_UserSymbols = (role = "admin") => {
   const result = useQuery({
     queryKey: ["admin-symbolList"],
     queryFn: () => api_get.symbols(chosenToken, queryParams),
+  });
+
+  const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
+};
+export const Admin_UserSlider = () => {
+  const { value: token } = useAdmin_CachedToken();
+  const { value: userToken } = useCachedToken();
+  const queryClient = useQueryClient();
+  const setLoading = useToastReducer();
+
+  let queryParams = "slider?";
+
+  const result = useQuery({
+    queryKey: ["admin-slider"],
+    queryFn: () => api_get.sliders(queryParams),
   });
 
   const { isLoading, isSuccess, error } = result;

@@ -340,6 +340,62 @@ export const AdminAddSymbol_Mutation = () => {
 
   return { ...result, onLoadedMeta };
 };
+export const AdminAddImageSlide_Mutation = () => {
+  const { value: token } = useAdmin_CachedToken();
+  const setLoading = useToastReducer();
+  const queryClient = useQueryClient();
+  const [onLoadedMeta, setOnLoadedMeta] = useState(null);
+
+  const result = useMutation({
+    mutationKey: "AdminAddImageSlide_Mutation",
+    mutationFn: async (payload) => {
+      const { file } = payload;
+
+      const formData = new FormData();
+      formData.append("picture", file, file.name);
+      return await axios.post(`${apiUrl}/slider`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+
+        // onUploadProgress: (progressEvent) => {
+        //   // console.log(progressEvent);
+        //   const { loaded, total } = progressEvent;
+        //   // console.log({ loaded, total });
+        //   const percentage = Math.floor((loaded / total) * 100);
+        //   // console.log(percentage);
+        //   const progressBar = document.getElementById("file-progress");
+        //   const loadedTo_mg = document.getElementById("file-progress-loaded");
+        //   const totalTo_mg = document.getElementById("file-progress-total");
+
+        //   const loaded_mb = Number(loaded / Math.pow(1024, 2)).toFixed(2);
+        //   const total_mb = Number(total / Math.pow(1024, 2)).toFixed(2);
+        //   console.log({ loaded_mb });
+        //   let uploadMeta = {
+        //     loaded_mb: loaded_mb,
+        //     total_mb: total_mb,
+        //     percentage: percentage,
+        //   };
+
+        //   setOnLoadedMeta(uploadMeta);
+        //   loadedTo_mg.innerText = `${loaded_mb}/`;
+        //   totalTo_mg.innerText = `${total_mb}`;
+        //   console.log({ loaded_mb, total_mb });
+
+        //   progressBar.value = percentage;
+        // },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(admin_user_symbolList);
+      setAdmin_user_symbolList(Math.random() * 100);
+    },
+  });
+
+  return { ...result, onLoadedMeta };
+};
 export const AdminAddExcelFile_Mutation = () => {
   const { value: token } = useAdmin_CachedToken();
   const setLoading = useToastReducer();

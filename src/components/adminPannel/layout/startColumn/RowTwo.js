@@ -7,6 +7,7 @@ import {
 } from "../../../../recoil/readStore";
 import { Link, useLocation } from "react-router-dom";
 import { AdminRoutePath, UserRoutePath } from "../../../../routes/Routes";
+import styled from "styled-components";
 export default function () {
   const { pathname } = useLocation();
 
@@ -77,7 +78,7 @@ export default function () {
             fill: "fill_secondray_v2",
           };
     return (
-      <Link to={"/admin/add-product"}>
+      <Link onClick={() => {}} to={"/admin/add-product"}>
         <Buttons.Contained_Custom
           className={
             "w-100 d-flex justify-content-start py-3  border-r-20  px-3 mb-3 " +
@@ -199,8 +200,12 @@ export default function () {
           color: "color_secondray_v2",
           fill: "fill_secondray_v2",
         };
+    const symbols_selected = pathname.includes("symbols")
+      ? "text-underline"
+      : "";
+    const slider_selected = pathname.includes("slider") ? "text-underline" : "";
     return (
-      <Link to={"/admin/setting"}>
+      <Link className="positon-relative" to={"/admin/setting/symbols"}>
         <Buttons.Contained_Custom
           className={
             "w-100 d-flex justify-content-start py-3  px-3 border-r-20 " +
@@ -213,6 +218,14 @@ export default function () {
           >
             {buttonsText.settings}
           </Typography.H7>
+          <SubButtonsBox className={cssClass.ms_2}>
+            <Link className={symbols_selected} to={"/admin/setting/symbols"}>
+              سیمبل
+            </Link>
+            <Link className={slider_selected} to={"/admin/setting/slider"}>
+              اسلایدر
+            </Link>
+          </SubButtonsBox>
         </Buttons.Contained_Custom>
       </Link>
     );
@@ -230,3 +243,8 @@ export default function () {
     </div>
   );
 }
+
+const SubButtonsBox = styled.div`
+  display: flex;
+  column-gap: 20px;
+`;

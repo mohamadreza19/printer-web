@@ -42,6 +42,21 @@ export default function ({ res }) {
       // handeler(e);
     }
   }, [res.isSuccess]);
+  useEffect(() => {
+    return () => {
+      const e = {
+        target: {
+          value: " ",
+        },
+      };
+      handleSetLanguage_Of__AdditionalInfo_Header_Card("fa");
+      additionalInfoHandeler(e);
+      handleSetLanguage_Of__AdditionalInfo_Header_Card("en");
+      additionalInfoHandeler(e);
+      handleSetLanguage_Of__AdditionalInfo_Header_Card("tr");
+      additionalInfoHandeler(e);
+    };
+  }, []);
   return (
     <>
       <div className={"position-relative " + cssClass.ms_3}>

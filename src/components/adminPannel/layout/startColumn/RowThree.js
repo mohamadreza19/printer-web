@@ -11,7 +11,11 @@ export default function ({ singOut }) {
   const logOut = useLogOut();
   return (
     <div
-      className={"px-3  w-100 mt-4 d-flex cur-pointer"}
+      style={{
+        marginTop: "114.21px",
+        maxHeight: "87vh",
+      }}
+      className={"px-3  w-100  d-flex cur-pointer"}
       // className={"px-3  w-100  d-flex cur-pointer"}
       onClick={() => logOut("admin")}
     >

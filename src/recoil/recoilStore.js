@@ -165,6 +165,9 @@ export const content_Based_Language = selector({
                   copy: "copy",
                   QRCode: "QR code",
                 },
+                productsBox: {
+                  selectedRail: "Selected rail",
+                },
               },
             },
           },
@@ -428,6 +431,9 @@ export const content_Based_Language = selector({
                   barcode: "بارکد",
                   copy: "کپی",
                   QRCode: "qr کد",
+                },
+                productsBox: {
+                  selectedRail: "ریل انتخاب شده",
                 },
               },
             },
@@ -695,6 +701,9 @@ export const content_Based_Language = selector({
                   barcode: "barkod",
                   copy: "kopyalamak",
                   QRCode: "QR kod",
+                },
+                productsBox: {
+                  selectedRail: "Seçilen ray",
                 },
               },
             },

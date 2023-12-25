@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-import { useDynamicCssClass } from "../../../../../../../../../../recoil/readStore";
+import {
+  useContent_Based_Language,
+  useDynamicCssClass,
+} from "../../../../../../../../../../recoil/readStore";
 import {
   Down,
   PlusPeoduct_Labels,
@@ -10,8 +13,11 @@ import Typography from "../../../../../../../../../../styles/__ready/Typography"
 import { Draggable } from "react-beautiful-dnd";
 
 import DragibleContainerNeedStyled from "./layout/DragibleContainerNeedStyled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Admin_User_Image } from "../../../../../../../../../../reactQuery/common/callGetService";
+import userEditor_DnD from "../../../../../../../../../../helper/userEditor_DnD";
+import styled from "styled-components";
+import { useRecoilValue } from "recoil";
 
 const inital = {
   id: " ",
@@ -40,9 +46,46 @@ export default function ({
   myKey,
   index,
   isDragDisabled = false,
+  handleAddCustomLabelWithPlusButton = () => {},
+  railsLength = 0,
 }) {
+  const contnet =
+    useContent_Based_Language().userPannel.editor.endColumn.productsBox;
+
   const cssClass = useDynamicCssClass();
   const imageResonse = Admin_User_Image("user");
+  const [copyNumber, setCopyNumber] = useState(1);
+  const [selectedRail, setSelectedRail] = useState(0);
+
+  function incresment_copyNumber() {
+    setCopyNumber(copyNumber + 1);
+  }
+  function decrement_copyNumber() {
+    if (copyNumber > 1) {
+      setCopyNumber(copyNumber - 1);
+    }
+  }
+  function handle_click_plus_btn() {
+    const option = {
+      numberOfCopy: Number(copyNumber),
+      selectedRail: Number(selectedRail),
+    };
+    handleAddCustomLabelWithPlusButton(product, option);
+  }
+  function handle_on_change_number_of_rail(e) {
+    const value = e.target.value;
+
+    setSelectedRail(value);
+  }
+
+  const RenderedSelectNumberOfRail = () => {
+    let options = [];
+    for (let i = 0; i < railsLength; i++) {
+      options.push(<option value={i}>{i + 1}</option>);
+    }
+
+    return options;
+  };
 
   useEffect(() => {
     if (product?.pictures?.length > 0) {
@@ -95,22 +138,49 @@ export default function ({
                 </footer>
               </div>
               <div
-                className={"d-flex align-items-center   mt-3 " + cssClass.ps_4}
+                className={
+                  "d-flex align-items-center  bg-white   mt-3 " + cssClass.ps_4
+                }
               >
-                <header className="product-label-plus-box  d-flex align-item-center justify-content-end ">
-                  <header className="product-label-icon-plus-box d-flex justify-content-center align-items-center">
-                    <PlusPeoduct_Labels />
+                <ActionBtnBox>
+                  <SelectNumberOfRailBox className="d-flex ">
+                    <Typography.H10 className="flex flex-column ">
+                      <select
+                        className="w-100"
+                        onChange={handle_on_change_number_of_rail}
+                      >
+                        <RenderedSelectNumberOfRail />
+                      </select>
+                      {contnet.selectedRail}
+                    </Typography.H10>
+                  </SelectNumberOfRailBox>
+                  <header className="product-label-plus-box  d-flex align-item-center justify-content-end ">
+                    <header
+                      onClick={handle_click_plus_btn}
+                      className="c-pointer product-label-icon-plus-box d-flex justify-content-center align-items-center"
+                    >
+                      <PlusPeoduct_Labels />
+                    </header>
+                    <Typography.H8 className={cssClass.me_3}>
+                      {copyNumber}
+                    </Typography.H8>
+                    <footer className={"d-flex flex-column " + cssClass.me_1}>
+                      <span
+                        onClick={incresment_copyNumber}
+                        className="c-pointer d-flex justify-content-center align-item-center mb-1"
+                      >
+                        <Up className_for_path={"fill_secondray_v2 "} />
+                      </span>
+                      <span
+                        onClick={decrement_copyNumber}
+                        className="c-pointer d-flex justify-content-center align-item-center "
+                      >
+                        <Down className_for_path={"fill_secondray_v2"} />
+                      </span>
+                    </footer>
                   </header>
-                  <Typography.H8 className={cssClass.me_3}>1</Typography.H8>
-                  <footer className={"d-flex flex-column " + cssClass.me_1}>
-                    <span className="d-flex justify-content-center align-item-center mb-1">
-                      <Up className_for_path={"fill_secondray_v2 "} />
-                    </span>
-                    <span className="d-flex justify-content-center align-item-center ">
-                      <Down className_for_path={"fill_secondray_v2"} />
-                    </span>
-                  </footer>
-                </header>
+                </ActionBtnBox>
+
                 <footer className="w-100 d-flex align-items-center justify-content-between  ">
                   <span
                     className={
@@ -118,8 +188,6 @@ export default function ({
                       cssClass.ms_2
                     }
                     onClick={() => {
-                      console.log({ imCliced: product });
-
                       handleAdd_Bookmark(product);
                       handleDeleteBookmark(product);
                     }}
@@ -146,3 +214,28 @@ export default function ({
     </Draggable>
   );
 }
+
+const ActionBtnBox = styled.div`
+  z-index: 10;
+  background-color: white;
+  position: relative;
+`;
+const SelectNumberOfRailBox = styled.div`
+  text-align: center;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #cbcbcb;
+  position: absolute;
+  top: -21px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  min-height: 99px;
+  visibility: hidden;
+  transition: visibility 0.2s;
+
+  ${ActionBtnBox}:hover & {
+    visibility: visible;
+  }
+`;

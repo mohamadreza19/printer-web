@@ -52,7 +52,7 @@ export default React.memo(function () {
             );
 
             if (findedRail && findedProduct) {
-              const newRails = userEditor_DnD.createCellFrom_Drag_Product(
+              const newRails = userEditor_DnD.create_customLabel(
                 findedRail,
                 findedProduct,
                 destination,

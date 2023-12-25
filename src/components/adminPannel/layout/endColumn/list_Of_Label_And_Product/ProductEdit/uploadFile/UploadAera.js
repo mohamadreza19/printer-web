@@ -214,6 +214,12 @@ export default function ({ onLoadedMeta = null, res, imageForFirstShow }) {
           ) : (
             <div className="w-100 height-190 d-flex justify-content-start align-item-center px-4 ">
               <img
+                onClick={(e) => {
+                  meta.handeler({
+                    file: "",
+                    previewUrl: "",
+                  });
+                }}
                 className="upload-file-area-preview  img-fill"
                 src={meta.state.previewUrl}
               />

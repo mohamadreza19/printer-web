@@ -88,7 +88,6 @@ export default function (
   }
 
   function handleSetPersian(e) {
-    console.log(e);
     setProductName((draft) => ({
       ...draft,
       persian: {

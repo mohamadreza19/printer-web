@@ -974,7 +974,11 @@ html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
   min-height: 36px;
   border: 1px solid #cbcbcb;
   border-radius: 12px;
+  z-index: 10;
+  background-color: white;
+  position: relative;
 }
+
 .product-label-icon-plus-box {
   width: 36px;
   height: 36px;
@@ -1352,4 +1356,7 @@ html[dir="ltr"] .add-new-rail-btn {
 }
 .right-_15 {
   right: -15px;
+}
+.text-underline {
+  text-decoration: underline !important;
 }

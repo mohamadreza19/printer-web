@@ -30,6 +30,16 @@ export default function ({ res }) {
       handeler(e);
     }
   }, [res.isSuccess]);
+  useEffect(() => {
+    return () => {
+      const e = {
+        target: {
+          value: " ",
+        },
+      };
+      handeler(e);
+    };
+  }, []);
   if (res.isSuccess)
     return (
       <div className="mt-4_5 ">

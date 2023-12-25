@@ -17,9 +17,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "./styles/__ready/Toasts";
 
 import changeBaseUrlBasedHost from "./utility/changeBaseUrlBasedHost";
-import { Admin_Profile_Call } from "./reactQuery/admin/callGetService";
-import { useEffect } from "react";
-import { useSetAdminProfile } from "./recoil/store/admin/profile";
+
+import Providers from "./redux/Providers";
 
 function App() {
   changeBaseUrlBasedHost();

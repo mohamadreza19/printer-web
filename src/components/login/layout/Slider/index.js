@@ -1,11 +1,23 @@
 import FooterSlider from "./FooterSlider";
 import RootImage from "./RootImage";
+import { Admin_UserSlider } from "../../../../reactQuery/common/callGetService";
 
 export default function () {
-  return (
-    <div className="w-100 h-100  d-flex flex-column justify-content-center align-items-center ">
-      <RootImage />
-      <FooterSlider />
-    </div>
-  );
+  const { isSuccess, data } = Admin_UserSlider();
+  if (isSuccess) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          paddingTop: "48px",
+          flexDirection: "column",
+          rowGap: "50px",
+        }}
+        className="w-100 h-100 "
+      >
+        {data.length > 0 ? <RootImage id={data[0].id} /> : null}
+        {data.length > 0 ? <FooterSlider data={data} /> : null}
+      </div>
+    );
+  }
 }

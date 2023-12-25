@@ -99,6 +99,7 @@ export default function ({ error = "", handleLogin = () => {} }) {
           content={content.login.textFeilds.password}
           className="mt-3"
           Input_marginStart_based_Language={cssClass.ms_3}
+          onEnterKeyDown={submit}
         />
         <Typography.H9 className=" mt-3 color_danger">
           {state.password.errMsg}

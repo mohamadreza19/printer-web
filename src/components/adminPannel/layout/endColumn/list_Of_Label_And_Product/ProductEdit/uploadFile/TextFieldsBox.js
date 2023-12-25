@@ -21,6 +21,18 @@ export default function ({ res }) {
     meta.handler.handleonChangWidthOfPrintingArea(e);
   }, []);
 
+  useEffect(() => {
+    return () => {
+      const e = {
+        target: {
+          value: null,
+        },
+      };
+      meta.handler.handleonChangeWidth(e);
+      meta.handler.handleonChangWidthOfPrintingArea(e);
+    };
+  }, []);
+
   return (
     <main className="w-100 h-100 px-4 pt-2">
       <article className="mt-9 d-flex ">
