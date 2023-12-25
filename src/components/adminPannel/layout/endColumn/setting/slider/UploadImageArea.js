@@ -49,7 +49,7 @@ function UploadImageArea() {
       <FileInput setFile={setFile} file={file} />
       <footer>
         <Typography.H7 className="font-300 disabled_gray2">
-          آپلود فایل SVG حداکثر حجم 1 مگابایت
+          حداکثر حجم 1 مگابایت
         </Typography.H7>
       </footer>
     </div>

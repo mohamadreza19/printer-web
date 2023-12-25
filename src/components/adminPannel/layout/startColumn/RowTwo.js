@@ -218,14 +218,16 @@ export default function () {
           >
             {buttonsText.settings}
           </Typography.H7>
-          <SubButtonsBox className={cssClass.ms_2}>
-            <Link className={symbols_selected} to={"/admin/setting/symbols"}>
-              سیمبل
-            </Link>
-            <Link className={slider_selected} to={"/admin/setting/slider"}>
-              اسلایدر
-            </Link>
-          </SubButtonsBox>
+          {pathname.includes("setting") && (
+            <SubButtonsBox className={cssClass.ms_2}>
+              <Link className={symbols_selected} to={"/admin/setting/symbols"}>
+                سیمبل
+              </Link>
+              <Link className={slider_selected} to={"/admin/setting/slider"}>
+                اسلایدر
+              </Link>
+            </SubButtonsBox>
+          )}
         </Buttons.Contained_Custom>
       </Link>
     );

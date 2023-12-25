@@ -12,17 +12,14 @@ export default function ({ setName = () => {} }) {
   //
   const { labelName } = useAdmin_Add_Label();
   labelName.showState();
-
-  useEffect(
-    () => {
-      setName(labelName.showState());
-    },
-    [
-      // labelName.showState().english,
-      // labelName.showState().persian,
-      // labelName.showState().turkish,
-    ]
-  );
+  console.log(labelName.showState());
+  useEffect(() => {
+    setName(labelName.showState());
+  }, [
+    labelName.showState().english,
+    labelName.showState().persian,
+    labelName.showState().turkish,
+  ]);
   const {
     handleSetEnglish,
     handleSetPersian,

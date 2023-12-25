@@ -73,15 +73,20 @@ export default function ({
     handleAddCustomLabelWithPlusButton(product, option);
   }
   function handle_on_change_number_of_rail(e) {
-    const value = e.target.value;
+    const valueNum = Number(e.target.value);
 
-    setSelectedRail(value);
+    setSelectedRail(valueNum);
   }
 
   const RenderedSelectNumberOfRail = () => {
     let options = [];
+
     for (let i = 0; i < railsLength; i++) {
-      options.push(<option value={i}>{i + 1}</option>);
+      options.push(
+        <option key={i} value={i}>
+          {i + 1}
+        </option>
+      );
     }
 
     return options;
