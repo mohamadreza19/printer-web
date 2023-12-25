@@ -9,10 +9,13 @@ import Icons from "../../../../../../styles/__ready/Icons";
 function Slide({ id }) {
   const slide = Admin_User_ImageSlide("admin");
   const delete_slide = AdminDelete_ImageSlide_Mutation();
-
+  useEffect(() => {
+    slide.mutate({ id });
+  }, []);
   function deleteSymbol() {
     delete_slide.mutate({ id });
   }
+
   if (slide.isSuccess) {
     return (
       <div className="d-flex flex-column justify-content-center align-items-center mb-5">
