@@ -72,8 +72,8 @@ export default function ({
     };
     handleAddCustomLabelWithPlusButton(product, option);
   }
-  function handle_on_change_number_of_rail(e) {
-    const valueNum = Number(e.target.value);
+  function handle_on_change_number_of_rail(value) {
+    const valueNum = Number(value);
 
     setSelectedRail(valueNum);
   }
@@ -81,15 +81,42 @@ export default function ({
   const RenderedSelectNumberOfRail = () => {
     let options = [];
 
+    options.push(
+      <div
+        style={{
+          width: "100%",
+        }}
+        className="cur-pointer"
+      >
+        {contnet.selectedRail}
+      </div>
+    );
     for (let i = 0; i < railsLength; i++) {
       options.push(
-        <option key={i} value={i}>
+        <div
+          style={{
+            width: "100%",
+            height: "36px",
+            // border: "1px solid black",
+            backgroundColor: i === selectedRail ? "#CBCBCB" : "white",
+          }}
+          className="cur-pointer"
+          key={i}
+          onClick={() => {
+            handle_on_change_number_of_rail(i);
+          }}
+        >
           {i + 1}
-        </option>
+        </div>
       );
     }
 
-    return options;
+    return (
+      <>
+        {/* {selectedRail} */}
+        {options}
+      </>
+    );
   };
 
   useEffect(() => {
@@ -150,13 +177,7 @@ export default function ({
                 <ActionBtnBox>
                   <SelectNumberOfRailBox className="d-flex ">
                     <Typography.H10 className="flex flex-column ">
-                      <select
-                        className="w-100"
-                        onChange={handle_on_change_number_of_rail}
-                      >
-                        <RenderedSelectNumberOfRail />
-                      </select>
-                      {contnet.selectedRail}
+                      <RenderedSelectNumberOfRail />
                     </Typography.H10>
                   </SelectNumberOfRailBox>
                   <header className="product-label-plus-box  d-flex align-item-center justify-content-end ">
@@ -166,9 +187,17 @@ export default function ({
                     >
                       <PlusPeoduct_Labels />
                     </header>
-                    <Typography.H8 className={cssClass.me_3}>
-                      {copyNumber}
-                    </Typography.H8>
+                    <section
+                      style={{
+                        width: "20px",
+                        maxWidth: "20px",
+                        textAlign: "center",
+                      }}
+                      className={cssClass.pe_3}
+                    >
+                      <Typography.H8>{copyNumber}</Typography.H8>
+                    </section>
+
                     <footer className={"d-flex flex-column " + cssClass.me_1}>
                       <span
                         onClick={incresment_copyNumber}
@@ -231,12 +260,15 @@ const SelectNumberOfRailBox = styled.div`
   background-color: white;
   border: 1px solid #cbcbcb;
   position: absolute;
-  top: -21px;
+  top: -19px;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  min-height: 99px;
+  // border-bottom-right-radius: 20px;
+  // border-bottom-left-radius: 20px;
+  height: 60px;
+  max-height: 60px;
+  overflow-y: scroll;
+  // min-height: 99px;
   visibility: hidden;
   transition: visibility 0.2s;
 
