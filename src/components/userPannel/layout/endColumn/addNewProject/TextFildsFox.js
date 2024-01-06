@@ -36,6 +36,10 @@ export default function ({
       value: "",
       errMsg: "",
     },
+    projectBase: {
+      value: "product", // custom
+      errMsg: "",
+    },
     projectName: {
       value: "",
       errMsg: "",
@@ -56,6 +60,17 @@ export default function ({
     setIsRightToleft(!isRightToleft);
   };
 
+  const handleChangeProjectBase = (event) => {
+    const value = event.target.value;
+
+    setState((draft) => ({
+      ...draft,
+      projectBase: {
+        value,
+        errMsg: "",
+      },
+    }));
+  };
   const handleChangeProductName = (event) => {
     const value = event.target.value;
 
@@ -115,6 +130,7 @@ export default function ({
     setJustify(direction);
     const body = {
       createdBy: state.createdBy.value,
+      base: state.projectBase.value,
       projectName: state.projectName.value,
       railWidth: state.railWidth.value,
       direction,
@@ -166,7 +182,49 @@ export default function ({
           </span>
         </section>
       </article>
-
+      <article className={"mt-4 w-60 " + cssClass.ms_2}>
+        <Typography.H8 className={"mb-2 font-400 " + ms_2}>
+          {"نوع پروژه"}
+        </Typography.H8>
+        <section
+          style={{
+            columnGap: "15px",
+          }}
+          className="w-100 position-relative d-flex"
+        >
+          <section
+            style={{
+              display: "flex",
+              columnGap: "5px",
+            }}
+          >
+            <label>Product Base</label>
+            <input
+              onChange={handleChangeProjectBase}
+              name="base"
+              type="radio"
+              value={"PRODUCT"}
+            />
+          </section>
+          <section
+            style={{
+              display: "flex",
+              columnGap: "5px",
+            }}
+          >
+            <label>Custom Base </label>
+            <input
+              onChange={handleChangeProjectBase}
+              name="base"
+              type="radio"
+              value={"CUSTOM"}
+            />
+          </section>
+          <span className="position-absolute color_danger">
+            <Typography.H9>{state.projectName.errMsg}</Typography.H9>
+          </span>
+        </section>
+      </article>
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {content.inputLabelTwo}
@@ -199,7 +257,6 @@ export default function ({
           </span>
         </section>
       </article>
-
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {/* {content.inputLabelThree} */}
@@ -252,7 +309,6 @@ export default function ({
           </Typography.H8>
         </section>
       </article>
-
       <article className="w-100 mt-5   pb-4 ">
         <Grid container className={"d-flex justify-content-end "}>
           <Grid item lg={3} md={5} sm={10} xs={10}>

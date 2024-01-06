@@ -577,7 +577,7 @@ export const Editor_Cell_Input = ({
                   style.fontStyle == "underline" ? "underline" : "none",
                 textAlign: style.textAlign,
                 rotate: `${style.angle}deg`,
-                margin: `${style.margin}px `,
+                // margin: `${style.margin}px `,
                 padding: `${style.padding}px`,
               }}
             >
@@ -602,7 +602,7 @@ export const Editor_Cell_Input = ({
                   style.fontStyle == "underline" ? "underline" : "none",
                 textAlign: style.textAlign,
                 rotate: `${style.angle}deg`,
-                margin: `${style.margin}px `,
+                // margin: `${style.margin}px `,
                 padding: `${style.padding}px`,
               }}
               onClick={() => {

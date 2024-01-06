@@ -24,6 +24,7 @@ import { symbolUsed_store } from "../../../../../../../../../../../../../recoil/
 import { Admin_User_Symbol } from "../../../../../../../../../../../../../reactQuery/common/callGetService";
 import styled from "styled-components";
 import shortid from "shortid";
+import { useBorderToProntValue } from "../../../../../../../../../../../../../recoil/userEditorStore/bordersToPrint";
 
 export default function ({
   symbolDetail,
@@ -63,6 +64,8 @@ export default function ({
   const [qrWant, setQrWant] = useRecoilState(ColumnFive_qr);
   const [symbolUsed, setSymbolUsed] = useRecoilState(symbolUsed_store);
   const allowReplaceInputToDiv = useRecoilValue(allowReplaceInputToDiv_store);
+  const borderToPront = useBorderToProntValue();
+  console.log({ borderToPront });
   //
   const ref = useRef(null);
   const [parentSize, setParentSize] = useState({
@@ -357,6 +360,9 @@ export default function ({
       }
     }
   }
+  function CellStyle() {
+    return cell.content.style;
+  }
 
   return (
     <main
@@ -367,11 +373,29 @@ export default function ({
       onClick={handleSelectCell_Via_onClick}
       className="w-100 h-100  bg-white position-relative d-flex justify-content-center align-content-center "
       style={{
-        border: cell.isSelected
-          ? "1px solid #F36523"
-          : cell.children
-          ? "1px solid blue"
-          : "1px solid black",
+        borderColor: cell.isSelected ? "#F36523" : "black",
+        // borderWidth: "1px",
+        borderStyle: "solid",
+        borderLeft:
+          borderToPront === "VERTICAL" || borderToPront === "ALL"
+            ? "1px solid black"
+            : "none",
+
+        borderRight:
+          borderToPront === "VERTICAL" || borderToPront === "ALL"
+            ? "1px solid black"
+            : "none",
+        borderTop:
+          borderToPront === "HORIZONTAL" || borderToPront === "ALL"
+            ? "1px solid black"
+            : "none",
+        borderBottom:
+          borderToPront === "HORIZONTAL" || borderToPront === "ALL"
+            ? "1px solid black"
+            : "none",
+        margin: "0",
+        marginLeft: CellStyle().margin,
+        marginRight: CellStyle().margin,
         overflow: "hidden",
       }}
     >

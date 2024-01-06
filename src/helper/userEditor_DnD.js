@@ -44,6 +44,102 @@ export default class {
     });
     return newRails;
   }
+  static create_customProduct(
+    stateObj = {
+      state: { present: [] },
+      setState: () => {},
+    },
+    option = {
+      width: 0,
+      height: 0,
+      repeatNumber: 1,
+      railToMove: 0,
+    }
+  ) {
+    const newCell = {
+      // frontId: null, need generate
+      width: option.width,
+      height: option.height,
+      structure: {
+        // frontId: null, need generate
+        isQrcode: false,
+        isBarcode: false,
+        isSelected: false,
+        split: "none",
+        content: {
+          text: "",
+          style: {
+            fontFamily: "Arial",
+            fontSize: "14",
+            angle: "0",
+            textAlign: "none",
+            fontStyle: "regular",
+            margin: 0,
+            padding: 0,
+          },
+        },
+      },
+    };
+    const newPresentState = stateObj.state.present.map((rail, index) => {
+      if (option.railToMove === index) {
+        const mapedCustomLabels = add_item_to_array_with_repeatNumber(
+          rail.customLabels,
+          {
+            width: option.width,
+            height: option.height,
+            repeatNumber: option.repeatNumber,
+          }
+        );
+        return {
+          ...rail,
+          customLabels: mapedCustomLabels,
+        };
+      }
+      return rail;
+    });
+    stateObj.setState((draft) => ({ ...draft, present: newPresentState }));
+    function add_item_to_array_with_repeatNumber(
+      array,
+      option = {
+        width: 0,
+        height: 0,
+        repeatNumber: 1,
+      }
+    ) {
+      const newArray = [...array];
+
+      for (let index = 0; index < option.repeatNumber; index++) {
+        const id = shortid.generate();
+        const newCell = {
+          frontId: id,
+          width: option.width,
+          height: option.height,
+          structure: {
+            frontId: id,
+            isQrcode: false,
+            isBarcode: false,
+            isSelected: false,
+            split: "none",
+            content: {
+              text: "",
+              style: {
+                fontFamily: "Arial",
+                fontSize: "14",
+                angle: "0",
+                textAlign: "none",
+                fontStyle: "regular",
+                margin: 0,
+                padding: 0,
+              },
+            },
+          },
+        };
+
+        newArray.push(newCell);
+      }
+      return newArray;
+    }
+  }
   static create_rail_with_customLabel(
     product,
     railArr = [],

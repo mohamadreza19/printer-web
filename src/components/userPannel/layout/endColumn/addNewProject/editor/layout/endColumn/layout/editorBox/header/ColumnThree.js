@@ -44,6 +44,7 @@ export default function () {
         });
       }
     }
+
     return (
       <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
         <TextSize />

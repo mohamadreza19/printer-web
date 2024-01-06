@@ -31,6 +31,8 @@ import {
 import { useSetLabel } from "../../../../../../../../../../../recoil/store/label";
 import { useDispatch } from "react-redux";
 import { fetch } from "../../../../../../../../../../../redux/project/projectTemplateSlice";
+import { useSetBorderToProntState } from "../../../../../../../../../../../recoil/userEditorStore/bordersToPrint";
+import { useSetProject_baseState } from "../../../../../../../../../../../recoil/userEditorStore/project_base";
 
 //  data = {
 //   frontId: 112,
@@ -57,7 +59,8 @@ export default memo(function () {
   const [editor_access, _] = useLocalStorage("editor_access");
   const setLabel = useSetLabel();
   const [railsArr, setRailsArr] = useState([]);
-
+  const setBordersToPrint = useSetBorderToProntState();
+  const setProject_base = useSetProject_baseState();
   const { error, data, isLoading, isSuccess } =
     setFindOne_based_editor_access(editor_access);
 
@@ -78,127 +81,135 @@ export default memo(function () {
     let myRails = [];
     let firstRailToCopy = {};
     let railWidth_data = 0;
-    if (data) {
-      if (product) {
-        if (editor_access === PROJECT_TEMPLATES_EDIT) {
-          railWidth_data = data.label.width;
-          setLabel({
-            width: data.label.width,
-            height: data.label.height,
-          });
-          const Rail_temp = [
-            {
-              id: 13,
+    if (isSuccess) {
+      if ("bordersToPrint" in data) {
+        setBordersToPrint(data.bordersToPrint);
+      }
+      if ("base" in data) {
+        setProject_base(data.base);
+      }
+      if (data) {
+        if (product) {
+          if (editor_access === PROJECT_TEMPLATES_EDIT) {
+            railWidth_data = data.label.width;
+            setLabel({
+              width: data.label.width,
+              height: data.label.height,
+            });
+            const Rail_temp = [
+              {
+                id: 13,
 
-              // projectId: 13,
-              frontId: "GvSSDkAcT",
-              customLabels: [
-                {
-                  id: 11,
-                  // createdAt: "2023-09-20T09:25:29.488Z",
-                  // updatedAt: "2023-09-20T09:25:29.488Z",
-                  // railId: 13,
-                  frontId: "y0GhF0XpL",
-                  structure: {
-                    split: "none",
-                    content: {
-                      text: "",
-                      style: {
-                        id: 11,
-                        createdAt: "2023-09-20T09:25:29.459Z",
-                        updatedAt: "2023-09-20T09:25:29.459Z",
-                        fontFamily: "Arial",
-                        fontStyle: "regular",
-                        fontSize: 14,
-                        angle: 0,
-                        textAlign: "none",
-                        textDirecton: "right",
-                        padding: 0,
-                        margin: 0,
+                // projectId: 13,
+                frontId: "GvSSDkAcT",
+                customLabels: [
+                  {
+                    id: 11,
+                    // createdAt: "2023-09-20T09:25:29.488Z",
+                    // updatedAt: "2023-09-20T09:25:29.488Z",
+                    // railId: 13,
+                    frontId: "y0GhF0XpL",
+                    structure: {
+                      split: "none",
+                      content: {
+                        text: "",
+                        style: {
+                          id: 11,
+                          createdAt: "2023-09-20T09:25:29.459Z",
+                          updatedAt: "2023-09-20T09:25:29.459Z",
+                          fontFamily: "Arial",
+                          fontStyle: "regular",
+                          fontSize: 14,
+                          angle: 0,
+                          textAlign: "none",
+                          textDirecton: "right",
+                          padding: 0,
+                          margin: 0,
+                        },
+                      },
+                      frontId: "y0GhF0XpL",
+                      isQrcode: false,
+                      isBarcode: false,
+                      isSelected: true,
+                    },
+                    product: {
+                      id: 10,
+                      createdAt: "2023-09-20T09:08:33.615Z",
+                      updatedAt: "2023-09-20T09:08:33.615Z",
+                      link: "https://web.telegram.org",
+                      width: 22,
+                      widthOfPrintingArea: 22,
+                      name: {
+                        id: 19,
+                        createdAt: "2023-09-20T09:08:33.608Z",
+                        updatedAt: "2023-09-20T09:08:33.608Z",
+                        english: "test22",
+                        persian: "test22",
+                        turkish: "test22",
+                      },
+                      admin: {
+                        id: 1,
+                        createdAt: "2023-08-19T09:48:27.498Z",
+                        updatedAt: "2023-08-19T09:48:27.498Z",
+                        username: "raad",
+                        firstName: "raad",
+                        lastName: "super admin",
+                        role: "superAdmin",
+                        deleteDate: null,
                       },
                     },
-                    frontId: "y0GhF0XpL",
-                    isQrcode: false,
-                    isBarcode: false,
-                    isSelected: true,
+                    productId: 10,
                   },
-                  product: {
-                    id: 10,
-                    createdAt: "2023-09-20T09:08:33.615Z",
-                    updatedAt: "2023-09-20T09:08:33.615Z",
-                    link: "https://web.telegram.org",
-                    width: 22,
-                    widthOfPrintingArea: 22,
-                    name: {
-                      id: 19,
-                      createdAt: "2023-09-20T09:08:33.608Z",
-                      updatedAt: "2023-09-20T09:08:33.608Z",
-                      english: "test22",
-                      persian: "test22",
-                      turkish: "test22",
-                    },
-                    admin: {
-                      id: 1,
-                      createdAt: "2023-08-19T09:48:27.498Z",
-                      updatedAt: "2023-08-19T09:48:27.498Z",
-                      username: "raad",
-                      firstName: "raad",
-                      lastName: "super admin",
-                      role: "superAdmin",
-                      deleteDate: null,
-                    },
-                  },
-                  productId: 10,
-                },
-              ],
-            },
-          ];
+                ],
+              },
+            ];
 
-          if (
-            data.rails.length == 0 ||
-            data.rails[0].customLabels.length == 0
-          ) {
-            myRails = Rail_temp;
-          } else {
-            myRails = data.rails;
-          }
-        } else {
-          numberOfRails = data.numberOfRails;
-          railsArrLength = data.rails.length;
-          firstRailToCopy = { ...data.rails[0] };
-
-          railWidth_data = data.railWidth;
-
-          if (numberOfRails !== railsArrLength) {
-            delete firstRailToCopy["id"];
-
-            for (let i = 0; i < numberOfRails; i++) {
-              myRails.push({ ...firstRailToCopy, frontId: "id-test" + i });
+            if (
+              data.rails.length == 0 ||
+              data.rails[0].customLabels.length == 0
+            ) {
+              myRails = Rail_temp;
+            } else {
+              myRails = data.rails;
             }
           } else {
-            myRails = data.rails;
+            numberOfRails = data.numberOfRails;
+            railsArrLength = data.rails.length;
+            firstRailToCopy = { ...data.rails[0] };
+
+            railWidth_data = data.railWidth;
+
+            if (numberOfRails !== railsArrLength) {
+              delete firstRailToCopy["id"];
+
+              for (let i = 0; i < numberOfRails; i++) {
+                myRails.push({ ...firstRailToCopy, frontId: "id-test" + i });
+              }
+            } else {
+              myRails = data.rails;
+            }
           }
+
+          setRailsWidth(railWidth_data);
+          setRailsArr(myRails);
+          setRailsState((draft) => ({
+            ...draft,
+            present: myRails,
+          }));
+          // setRail({}, "ADDRAIL");
+          const direction = data.direction;
+          setJustify(direction);
         }
-
-        setRailsWidth(railWidth_data);
-        setRailsArr(myRails);
-        setRailsState((draft) => ({
-          ...draft,
-          present: myRails,
-        }));
-        // setRail({}, "ADDRAIL");
-        const direction = data.direction;
-        setJustify(direction);
       }
-    }
 
-    return () => {
-      setRailsState({
-        past: [],
-        present: [],
-        future: [],
-      });
-    };
+      return () => {
+        setRailsState({
+          past: [],
+          present: [],
+          future: [],
+        });
+      };
+    }
   }, [isSuccess]);
   useEffect(() => {
     if (wantNewRail) {

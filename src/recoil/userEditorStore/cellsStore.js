@@ -38,6 +38,7 @@ export const rails = atom({
     future: [],
   },
 });
+
 export const selectedCellForReadStyle = atom({
   key: "selectedRootCell",
   default: {

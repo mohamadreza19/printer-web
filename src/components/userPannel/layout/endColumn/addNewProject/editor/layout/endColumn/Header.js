@@ -13,13 +13,14 @@ import profile_store, {
 import project_store from "../../../../../../../../recoil/store/user/project_store";
 import useBundleProject from "../../../../../../../../utility/useBundleProject";
 import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { showPutProjectResponse } from "../../../../../../../../recoil/store/user/showPutProjectResponse";
 import useScreenShot from "../../../../../../../../utility/useScreenShot";
 import { FormatColorResetRounded } from "@mui/icons-material";
 import useLocalStorage from "react-use-localstorage";
 import { EditTemplate_project_Mutation } from "../../../../../../../../reactQuery/admin/callPutService";
+import { useSetBorderToProntState } from "../../../../../../../../recoil/userEditorStore/bordersToPrint";
 
 const PROJECT_EDIT = "project/edit";
 const PROJECT_TEMPLATES_EDIT = "project-templates/edit";
@@ -37,6 +38,7 @@ export default function () {
 
   const profile_state = useRecoilValue(profile_store);
   const project_state = useRecoilValue(project_store);
+  const setBordersToPrint = useSetBorderToProntState(); //NONE, ALL, HORIZONTAL, VERTICAL
 
   const setShowPutProjectResponse = useSetRecoilState(showPutProjectResponse);
 
@@ -47,10 +49,51 @@ export default function () {
 
   const autoPrint = useScreenShot();
 
+  function handleSetBordersToPrint(e) {
+    const checkbox_horizontal = document.getElementById("checkbox-horizontal");
+
+    const checkbox_vertical = document.getElementById("checkbox-vertical");
+
+    if (e.target.checked) {
+      if (
+        checkbox_horizontal.isEqualNode(e.target) &&
+        checkbox_vertical.checked === false
+      ) {
+        setBordersToPrint("HORIZONTAL");
+      }
+      if (
+        checkbox_vertical.isEqualNode(e.target) &&
+        checkbox_horizontal.checked === false
+      ) {
+        setBordersToPrint("VERTICAL");
+      }
+      if (checkbox_vertical.checked && checkbox_horizontal.checked) {
+        setBordersToPrint("ALL");
+      }
+    } else {
+      if (
+        checkbox_horizontal.isEqualNode(e.target) &&
+        checkbox_vertical.checked === true
+      ) {
+        setBordersToPrint("VERTICAL");
+      }
+      if (
+        checkbox_vertical.isEqualNode(e.target) &&
+        checkbox_horizontal.checked === true
+      ) {
+        setBordersToPrint("HORIZONTAL");
+      }
+      if (!checkbox_vertical.checked && !checkbox_horizontal.checked) {
+        setBordersToPrint("NONE");
+      }
+    }
+  }
+
   function handleSubmitProject() {
     switch (editor_access) {
       case PROJECT_EDIT:
         // return console.log(handle_bundled_project());
+
         project_mutate.mutate({
           body: handle_bundled_project(),
         });
@@ -68,13 +111,6 @@ export default function () {
     //   body: handle_bundled_project(),
     // });
   }
-
-  // useEffect(() => {
-  //   if (mutate.isSuccess) {
-  //     setShowPutProjectResponse(mutate.data);
-  //     navigate("/user/add-project");
-  //   }
-  // }, [mutate.isSuccess]);
 
   if (project_mutate.isSuccess || project_template_mutate.isSuccess) {
     if (editor_access === PROJECT_EDIT) {
@@ -125,33 +161,64 @@ export default function () {
         </section>
       </article>
       <article className="d-flex">
-        <Buttons.Outlined
-          onClick={() => autoPrint("IMAGE")}
-          className="editor-header-button_extra-medium"
+        <main
+          style={{
+            columnGap: "15px",
+          }}
+          className="mx-3 d-flex align-items-center"
         >
-          <Icons.Editor_ExportFile size="large" />
-          <Typography.H7 className={cssClass.ms_1}>
-            {content.Output}
-          </Typography.H7>
-        </Buttons.Outlined>
-        <Buttons.Contained
-          onClick={() => autoPrint("PRODUCT", projectId)}
-          className="editor-header-button_extra-small mx-3"
-        >
-          <Icons.Editor_Print size="large" />
-          <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-            {content.print}
-          </Typography.H7>
-        </Buttons.Contained>
-        <Buttons.Contained
-          className="editor-header-button_extra-large"
-          onClick={handleSubmitProject}
-        >
-          <Icons.Editor_Save size="medium" />
-          <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-            {content.saveAndContinue}
-          </Typography.H7>
-        </Buttons.Contained>
+          <div class="form-check">
+            <input
+              onChange={handleSetBordersToPrint}
+              class="form-check-input"
+              type="checkbox"
+              id="checkbox-vertical"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              <Typography.H8>چاپ خطوط عمودی</Typography.H8>
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              onChange={handleSetBordersToPrint}
+              class="form-check-input"
+              type="checkbox"
+              id="checkbox-horizontal"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              <Typography.H8>چاپ خطوط افقی</Typography.H8>
+            </label>
+          </div>
+        </main>
+        <div className="d-flex">
+          <Buttons.Outlined
+            onClick={() => autoPrint("IMAGE")}
+            className="editor-header-button_extra-medium"
+          >
+            <Icons.Editor_ExportFile size="large" />
+            <Typography.H7 className={cssClass.ms_1}>
+              {content.Output}
+            </Typography.H7>
+          </Buttons.Outlined>
+          <Buttons.Contained
+            onClick={() => autoPrint("PRODUCT", projectId)}
+            className="editor-header-button_extra-small mx-3"
+          >
+            <Icons.Editor_Print size="large" />
+            <Typography.H7 className={cssClass.ms_1 + " font-300"}>
+              {content.print}
+            </Typography.H7>
+          </Buttons.Contained>
+          <Buttons.Contained
+            className="editor-header-button_extra-large"
+            onClick={handleSubmitProject}
+          >
+            <Icons.Editor_Save size="medium" />
+            <Typography.H7 className={cssClass.ms_1 + " font-300"}>
+              {content.saveAndContinue}
+            </Typography.H7>
+          </Buttons.Contained>
+        </div>
       </article>
     </header>
   );

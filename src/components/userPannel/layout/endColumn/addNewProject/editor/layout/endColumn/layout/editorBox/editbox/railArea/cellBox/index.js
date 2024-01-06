@@ -15,6 +15,7 @@ import { isView } from "../../../../../../../../../../../../../recoil/userEditor
 import InnerContainer from "./layout/InnerContainer";
 import { useRef } from "react";
 import { useGetLabel } from "../../../../../../../../../../../../../recoil/store/label";
+import { useProject_baseValue } from "../../../../../../../../../../../../../recoil/userEditorStore/project_base";
 
 export default function ({
   children,
@@ -75,6 +76,9 @@ export default function ({
   };
   const [deleteAction, setdeleteAction] = useRecoilState(ColumnFive_delete);
   const isViewMode = useRecoilValue(isView);
+  const projectBase = useProject_baseValue();
+  console.log({ projectBase });
+  console.log({ cell });
   const [duplicateAction, setDuplicateAction] =
     useRecoilState(ColumnFive_duplicate);
 
@@ -107,6 +111,11 @@ export default function ({
       width: "",
       height: "",
     };
+    if (projectBase === "CUSTOM") {
+      dimensions.width = cell.height;
+      dimensions.height = cell.height;
+      return dimensions;
+    }
 
     if (label_project_template.width && label_project_template.height) {
       dimensions.width = label_project_template.height;

@@ -104,6 +104,7 @@ export default function () {
     },
     action
   ) {
+    PayloadCenter.setSelectedStyle = setSelectedCellForReadStyle;
     PayloadCenter.railId = payload.railId;
     PayloadCenter.parentId = payload.parentId;
     PayloadCenter.cellId = payload.cellId;
@@ -959,7 +960,6 @@ export default function () {
     // }
     if (action === cellAction.DUPLICATECELL) {
       function cellSplitController(cell) {
-        console.log({ cell });
         function fullCellChecker(cellForCheck) {
           const commonId = shortid.generate();
           return {
@@ -1135,6 +1135,7 @@ class PayloadCenter {
   _action = "";
   _content = "";
   _cunstomLabelStructureObj = {};
+  _setSelectedCellForReadStyle = () => {};
 
   static set railId(id = "") {
     this._railId = id;
@@ -1156,6 +1157,9 @@ class PayloadCenter {
   }
   static set cunstomLabelStructure(structureObj = {}) {
     this._cunstomLabelStructureObj = structureObj;
+  }
+  static set setSelectedStyle(setSelectedCellStyle = () => {}) {
+    this._setSelectedCellForReadStyle = setSelectedCellStyle;
   }
   // static get railId() {
   //   return this._railId;
@@ -1366,8 +1370,9 @@ class CellTool {
   get CHANGEFONTSIZE() {
     const structure = this.#structure;
     let fontSizeValue;
-    let cellFontSize = structure.content.style.fontSize;
 
+    let cellFontSize = structure.content.style.fontSize;
+    console.log(this.#structure);
     switch (PayloadCenter._cunstomLabelStructureObj) {
       case "increment":
         fontSizeValue = Number(cellFontSize) + 1;
@@ -1414,7 +1419,7 @@ class CellTool {
           ...structure.content,
           style: {
             ...structure.content.style,
-            fontSize: fontAngleValue,
+            angle: fontAngleValue,
           },
         },
       },
@@ -1561,6 +1566,9 @@ class Structure {
 
     if (PayloadCenter._parentId) {
       if (structure.parentId === PayloadCenter._parentId) {
+        const style = _target.content.style;
+
+        PayloadCenter._setSelectedCellForReadStyle(style);
         return _target;
       } else {
         return _else;
@@ -1569,6 +1577,9 @@ class Structure {
 
     if (PayloadCenter._cellId) {
       if (structure.frontId === PayloadCenter._cellId) {
+        const style = _target.content.style;
+
+        PayloadCenter._setSelectedCellForReadStyle(style);
         return _target;
       }
       return _else;

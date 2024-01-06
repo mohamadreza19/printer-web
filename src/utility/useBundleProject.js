@@ -4,11 +4,13 @@ import { rails } from "../recoil/userEditorStore/cellsStore";
 import { EditProject_Mutation } from "../reactQuery/user/callPutServices";
 import { ColumnFour_justify_start } from "../recoil/userEditorStore/EditorHeaderActionButton";
 import useSelectionReducer from "../recoil/reducer/editor/actionButtons/useSelectionReducer";
+import { useBorderToProntValue } from "../recoil/userEditorStore/bordersToPrint";
 
 export default function () {
   const [project_state, setProject_state] = useRecoilState(project_store);
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [rails_state, setRails_state] = useRecoilState(rails);
+  const bordersToPrint = useBorderToProntValue();
 
   //   const mutate = EditProject_Mutation();
   function handlePutProject() {
@@ -20,6 +22,7 @@ export default function () {
 
     const bundled_project = {
       ...project_state,
+      bordersToPrint: bordersToPrint,
       // rails: rail_with_modifid_idString_to_number,
       rails: rails_state.present,
       direction: justify,
