@@ -27,7 +27,7 @@ export default function () {
   const cssClass = useDynamicCssClass();
 
   const { data, isSuccess, hasNextPage, fetchNextPage } =
-    Project_template_List_Call("admin", search);
+    Project_template_List_Call("user", search);
 
   const add_Label_Bookmark_ = Add_Label_Bookmark_Mutation();
   const delete_Label_Bookmark_ = Bookmark_Label_Delete();
