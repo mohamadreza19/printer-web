@@ -1,9 +1,16 @@
 import { Button } from "@mui/material";
 
 export default class {
-  static Contained({ children, onClick = () => {}, className, form }) {
+  static Contained({
+    children,
+    onClick = () => {},
+    className,
+    form,
+    disabled = false,
+  }) {
     return (
       <button
+        disabled={disabled}
         form={form}
         onClick={onClick}
         variant="contained"
@@ -31,9 +38,15 @@ export default class {
       </Button>
     );
   }
-  static Outlined({ children, onClick = () => {}, className }) {
+  static Outlined({
+    children,
+    onClick = () => {},
+    className,
+    disabled = false,
+  }) {
     return (
       <Button
+        disabled={disabled}
         onClick={onClick}
         variant="outlined"
         className={"color-primary  px-3 border-r-20  py-0_8rm " + className}

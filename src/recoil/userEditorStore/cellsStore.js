@@ -51,6 +51,11 @@ export const railsWidth_store = atom({
   key: "railsWidth",
   default: 0,
 });
+export const railsLength_store = atom({
+  key: "railsLength",
+  default: null,
+});
+
 export const product_column = atom({
   key: "product_column",
   default: [

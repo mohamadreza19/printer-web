@@ -37,7 +37,7 @@ import ColumnOne from "./ColumnOne";
 import ColumnThree from "./ColumnThree";
 import ColumnTwo from "./ColumnTwo";
 
-export default function () {
+export default function ({ poject_base }) {
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
 
@@ -55,6 +55,7 @@ export default function () {
         className="w-100 bg_gray2  border-r-20 d-flex align-items-center  justify-content-center"
       >
         <ColumnOne
+          poject_base={poject_base}
           mergeRowContent={
             content.userPannel.editor.endColumn.editorHeader.mergeRow
           }

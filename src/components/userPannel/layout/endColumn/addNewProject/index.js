@@ -37,7 +37,6 @@ export default function () {
         ms_2={cssClass.ms_2}
         addNewProject={content.userPannel.start_col.row2.addNewProject}
       />
-
       <TextFildsFox
         ms_2={cssClass.ms_2}
         me_1={cssClass.me_2}

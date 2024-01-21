@@ -64,7 +64,7 @@ export default function ({
   //   imageResponse.mutate(option);
   // }, []);
   function handlePrintLabel(labelObj, image) {
-    setEditor_access("project-templates/edit");
+    setEditor_access("project-templates/user_edit");
     const id = labelObj.id;
     const width = labelObj.width;
     const labelImg = image;

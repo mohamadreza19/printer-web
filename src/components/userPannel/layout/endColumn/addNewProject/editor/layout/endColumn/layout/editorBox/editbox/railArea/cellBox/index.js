@@ -77,8 +77,7 @@ export default function ({
   const [deleteAction, setdeleteAction] = useRecoilState(ColumnFive_delete);
   const isViewMode = useRecoilValue(isView);
   const projectBase = useProject_baseValue();
-  console.log({ projectBase });
-  console.log({ cell });
+
   const [duplicateAction, setDuplicateAction] =
     useRecoilState(ColumnFive_duplicate);
 

@@ -8,6 +8,7 @@ import {
 import Icons from "../../../../../../../../../../../../styles/__ready/Icons";
 import useScreenShot from "../../../../../../../../../../../../utility/useScreenShot";
 import { useRef } from "react";
+import styled from "styled-components";
 
 export default function ({
   index = 0,
@@ -16,6 +17,7 @@ export default function ({
     // customLabels: [],
     customLabels: [],
   },
+  isLastRail = false,
   deleteRail = () => {},
 }) {
   const TrashBox = () => {
@@ -28,14 +30,14 @@ export default function ({
 
   return (
     <div
-      className=" d-flex align-items-end rail  "
+      className=" d-flex align-items-end rail position-relative "
       style={
         {
           // height: railsWidth + "px",
         }
       }
     >
-      <article className="d-flex align-items-center position-relative">
+      <article className="d-flex align-items-center ">
         {/* <TrashBox /> */}
         {/* <Title children={"ریل " + (Number(index) + 1)} /> */}
         <CellsBox
@@ -45,6 +47,16 @@ export default function ({
           railId={rail.frontId}
         />
       </article>
+      {isLastRail ? null : <Divider className="dashed-divider" />}
     </div>
   );
 }
+const Divider = styled.div`
+  height: 1.5px;
+  // background-color: red;
+  // display: ${(prop) => (prop.isLastRail ? "none" : "block")};
+  width: 80vw;
+  position: absolute;
+  top: 99%;
+  border: 1.5px dashed black;
+`;

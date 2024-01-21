@@ -36,6 +36,12 @@ html:dir(rtl) .eye-password {
 button {
   border: none;
 }
+button:disabled {
+  opacity: 0.4;
+}
+input:disabled {
+  opacity: 0.7;
+}
 
 * {
   box-sizing: border-box;
@@ -101,7 +107,9 @@ input::-ms-clear {
   /* border: 0; */
   outline: 0;
 }
-
+.text-nowrap {
+  text-wrap: nowrap;
+}
 .next-button {
   width: 30px;
   height: 30px;
@@ -245,6 +253,7 @@ input::-ms-clear {
   height: 64px !important;
   max-width: 128px !important ;
   max-height: 64px !important;
+  z-index: 999;
   /* padding-top: 0.65rem !important;
   padding-bottom: 0.65rem !important; */
 }

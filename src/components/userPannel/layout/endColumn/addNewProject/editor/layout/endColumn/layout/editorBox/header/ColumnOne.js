@@ -16,6 +16,7 @@ import {
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 
 export default function ({
+  poject_base,
   mergeRowContent,
   rowSeparatorContent,
   mergeColumnContent,
@@ -60,13 +61,17 @@ export default function ({
       </section>
     );
   };
+
   const SplitColumnBox = () => {
     function onClick() {
       setSplitColumn(true);
     }
     return (
       <section
-        className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
+        style={{
+          display: poject_base === "PRODUCT" ? "none" : "flex",
+        }}
+        className="editor-small-cell-box me-2  justify-content-center align-items-center"
         onClick={onClick}
       >
         <SpliteColumn />
@@ -82,8 +87,11 @@ export default function ({
     }
     return (
       <section
+        style={{
+          display: poject_base === "PRODUCT" ? "none" : "flex",
+        }}
         onClick={onClick}
-        className="editor-small-cell-box  d-flex justify-content-center align-items-center"
+        className="editor-small-cell-box  justify-content-center align-items-center"
       >
         <JoinColumn />
         <div className="editor-small-info-cell-box">

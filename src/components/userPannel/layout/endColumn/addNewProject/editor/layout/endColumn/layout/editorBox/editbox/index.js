@@ -8,6 +8,7 @@ import RailArea from "./railArea";
 import {
   product_column,
   rails,
+  railsLength_store,
   railsWidth_store,
 } from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import { ColumnFour_justify_start } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
@@ -44,12 +45,16 @@ import { useSetProject_baseState } from "../../../../../../../../../../../recoil
 // };
 const PROJECT_EDIT = "project/edit";
 const PROJECT_TEMPLATES_EDIT = "project-templates/edit";
+const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
 function setFindOne_based_editor_access(editorAccess) {
   // CommonProject_templateFindOne_Qury
 
   switch (editorAccess) {
     case PROJECT_EDIT:
       return UserProjectFindOne_Qury();
+
+    case PROJECT_TEMPLATES_USER_EDIT:
+      return Project_templateFindOne_Qury();
     case PROJECT_TEMPLATES_EDIT:
       return Project_templateFindOne_Qury("admin");
   }
@@ -70,6 +75,7 @@ export default memo(function () {
   const product = useRecoilValue(product_column);
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
+  const [railsLength, setRailsLength] = useRecoilState(railsLength_store);
 
   const [wantNewRail, SetwantNewRail] = useRecoilState(addRail);
   const setLoading = useToastReducer();
@@ -81,7 +87,10 @@ export default memo(function () {
     let myRails = [];
     let firstRailToCopy = {};
     let railWidth_data = 0;
+    let railLength_data = 0;
+
     if (isSuccess) {
+      setRailsLength(data.raillength);
       if ("bordersToPrint" in data) {
         setBordersToPrint(data.bordersToPrint);
       }
@@ -90,7 +99,10 @@ export default memo(function () {
       }
       if (data) {
         if (product) {
-          if (editor_access === PROJECT_TEMPLATES_EDIT) {
+          if (
+            editor_access === PROJECT_TEMPLATES_EDIT ||
+            editor_access === PROJECT_TEMPLATES_USER_EDIT
+          ) {
             railWidth_data = data.label.width;
             setLabel({
               width: data.label.width,
@@ -240,7 +252,11 @@ export default memo(function () {
       );
     } else return null;
   };
-
+  const check_divider_show = (index) => {
+    const railLenth = railsState.present.length;
+    if (index === railLenth - 1 && railLenth) {
+    }
+  };
   return (
     <div className="dir-ltr bg-white scrollable-x-large position-relative disabled_gray2">
       <ScaleContainer
@@ -253,6 +269,7 @@ export default memo(function () {
             <RailArea
               key={index}
               index={index}
+              isLastRail={index === railsState.present.length - 1}
               rail={rail}
               deleteRail={() => setRail({ railId: rail.frontId }, "DELETERAIL")}
             />

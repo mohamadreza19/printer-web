@@ -37,7 +37,11 @@ export default function ({
       errMsg: "",
     },
     projectBase: {
-      value: "product", // custom
+      value: "PRODUCT", // PRODUCT | CUSTOM
+      errMsg: "",
+    },
+    stripOrLabel: {
+      value: "STRIP", // STRIP | LABEL
       errMsg: "",
     },
     projectName: {
@@ -45,6 +49,10 @@ export default function ({
       errMsg: "",
     },
     railWidth: {
+      value: "",
+      errMsg: "",
+    },
+    railLength: {
       value: "",
       errMsg: "",
     },
@@ -71,6 +79,18 @@ export default function ({
       },
     }));
   };
+  const handleChangeStripOrLabel = (event) => {
+    const value = event.target.value;
+    console.log({ value });
+    setState((draft) => ({
+      ...draft,
+      stripOrLabel: {
+        value,
+        errMsg: "",
+      },
+    }));
+  };
+
   const handleChangeProductName = (event) => {
     const value = event.target.value;
 
@@ -105,6 +125,17 @@ export default function ({
       },
     }));
   };
+  const handleChangeRailLength = (event) => {
+    const value = event.target.value.replace(/\D/g, "");
+
+    setState((draft) => ({
+      ...draft,
+      railLength: {
+        value,
+        errMsg: "",
+      },
+    }));
+  };
   const handleChangeNumberOfRail = (event) => {
     const value = event.target.value.replace(/\D/g, "");
 
@@ -128,19 +159,25 @@ export default function ({
   async function submitForm() {
     const direction = isRightToleft ? "right" : "left";
     setJustify(direction);
-    const body = {
+    let body = {
       createdBy: state.createdBy.value,
       base: state.projectBase.value,
       projectName: state.projectName.value,
-      railWidth: state.railWidth.value,
+      railWidth: Number(state.railWidth.value),
+      raillength: Number(state.railLength.value),
+      stripOrLabel: state.stripOrLabel.value,
       direction,
       numberOfRails: Number(state.numberOfRail.value),
     };
 
+    if (state.stripOrLabel.value === "STRIP") {
+      delete body.raillength;
+    }
+
     try {
       await add_project_validation(body);
 
-      mutate({ ...body, railWidth: +body.railWidth });
+      mutate(body);
     } catch (error) {
       if (error.inner) {
         error.inner.map((err) => {
@@ -167,6 +204,7 @@ export default function ({
       <header className="px-3">
         <Typography.H7 className="font-500">{content.header}</Typography.H7>
       </header>
+      {/* name */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {content.inputLabelOne}
@@ -182,6 +220,7 @@ export default function ({
           </span>
         </section>
       </article>
+      {/* project base */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {"نوع پروژه"}
@@ -204,6 +243,7 @@ export default function ({
               name="base"
               type="radio"
               value={"PRODUCT"}
+              checked={state.projectBase.value === "PRODUCT"}
             />
           </section>
           <section
@@ -218,13 +258,61 @@ export default function ({
               name="base"
               type="radio"
               value={"CUSTOM"}
+              checked={state.projectBase.value === "CUSTOM"}
             />
           </section>
           <span className="position-absolute color_danger">
-            <Typography.H9>{state.projectName.errMsg}</Typography.H9>
+            {/* <Typography.H9>{state.projectName.errMsg}</Typography.H9> */}
           </span>
         </section>
       </article>
+      {/* stripOrLabel */}
+      <article className={"mt-4 w-60 " + cssClass.ms_2}>
+        <Typography.H8 className={"mb-2 font-400 " + ms_2}>
+          استریپ یا لیبل
+        </Typography.H8>
+        <section
+          style={{
+            columnGap: "15px",
+          }}
+          className="w-100 position-relative d-flex"
+        >
+          <section
+            style={{
+              display: "flex",
+              columnGap: "5px",
+            }}
+          >
+            <label>Strip</label>
+            <input
+              onChange={handleChangeStripOrLabel}
+              name="stripOrLabel"
+              type="radio"
+              value={"STRIP"}
+              checked={state.stripOrLabel.value === "STRIP"}
+            />
+          </section>
+          <section
+            style={{
+              display: "flex",
+              columnGap: "5px",
+            }}
+          >
+            <label>Label </label>
+            <input
+              onChange={handleChangeStripOrLabel}
+              name="stripOrLabel"
+              type="radio"
+              value={"LABEL"}
+              checked={state.stripOrLabel.value === "LABEL"}
+            />
+          </section>
+          <span className="position-absolute color_danger">
+            {/* <Typography.H9>{state.projectName.errMsg}</Typography.H9> */}
+          </span>
+        </section>
+      </article>
+      {/* CreatedBy */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {content.inputLabelTwo}
@@ -241,6 +329,7 @@ export default function ({
           </span>
         </section>
       </article>
+      {/* railWidth */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {content.inputLabelThree}
@@ -257,6 +346,29 @@ export default function ({
           </span>
         </section>
       </article>
+      {/* raillength */}
+      <article
+        style={{
+          display: state.stripOrLabel.value === "LABEL" ? "block" : "none",
+        }}
+        className={"mt-4 w-60 " + cssClass.ms_2}
+      >
+        <Typography.H8 className={"mb-2 font-400 " + ms_2}>
+          طول ریل
+        </Typography.H8>
+
+        <section className="w-100 position-relative">
+          <TextFieldFUN_v5
+            ImputclassName={ms_2}
+            value={state.railLength.value}
+            onChange={handleChangeRailLength}
+          />
+          <span className="position-absolute color_danger">
+            <Typography.H9>{state.railWidth.errMsg}</Typography.H9>
+          </span>
+        </section>
+      </article>
+      {/* NumberOfRail */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {/* {content.inputLabelThree} */}
@@ -274,7 +386,7 @@ export default function ({
           </span>
         </section>
       </article>
-
+      {/* direction */}
       <article className="d-flex align-item-center mt-7">
         <div
           style={{

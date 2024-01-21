@@ -44,6 +44,7 @@ export default function () {
   async function screenShot(
     type = "PRODUCT",
     id = "",
+    printRepetition = 1,
     labelOption = {
       width: "",
       labelImg: "",
@@ -54,6 +55,7 @@ export default function () {
     const LABEL = "LABEL";
     const IMAGE = "IMAGE";
 
+    handleShow_dashed_divider(false);
     if (type === PRODUCT) {
       handleOnclickSelectionButton("VIEW");
       setTimeout(async () => {
@@ -77,7 +79,9 @@ export default function () {
         const generatedForm = new FormCreator({
           elemetWidth: railsWidth,
           blobedFile: blob,
+          printRepetition,
         });
+
         const form = generatedForm.imageInputFormGenerator();
 
         addPrint.mutate({
@@ -88,6 +92,7 @@ export default function () {
 
         setTimeout(() => {
           document.body.removeChild(clonedRootElement);
+          handleShow_dashed_divider(true);
         }, 10000);
       }, 3000);
     }
@@ -133,6 +138,7 @@ export default function () {
 
         setTimeout(() => {
           document.body.removeChild(clonedRootElement);
+          handleShow_dashed_divider(true);
         }, 10000);
       }, 3000);
     }
@@ -170,12 +176,11 @@ class ImageListener {
     const canvas = await html2canvas(this.element, {
       allowTaint: true,
       scale: 2,
-
-      // height: 50,
-      // foreignObjectRendering: true,
     });
 
-    return canvas.toDataURL("image/png", 1.0);
+    const url = canvas.toDataURL("image/png", 1.0);
+
+    return url;
   }
 
   getB64toBlob(imgDataURL) {
@@ -192,16 +197,19 @@ class ImageListener {
 const formCreator_interfaceObj = {
   elemetWidth: String,
   blobedFile: Blob,
+  printRepetition: Number,
 };
 class FormCreator {
   constructor(option = formCreator_interfaceObj) {
     this.width = option.elemetWidth;
     this.blob = option.blobedFile;
+    this.printRepetition = option.printRepetition;
   }
   imageInputFormGenerator() {
     const form = document.createElement("form");
 
     const input = document.createElement("input");
+    const input2 = document.createElement("input");
 
     form.appendChild(input);
 
@@ -209,9 +217,11 @@ class FormCreator {
 
     form.method = "post";
     form.enctype = "multipart/form-data";
-    form.action = `http://localhost:8888?width=${this.width}`;
+    form.action = `http://localhost:8888?width=${this.width}&quantity=${this.printRepetition} `;
     form.target = "_blank";
     input.type = "file";
+    input2.value = "test";
+    input2.name = "test";
     input.name = "fileupload";
 
     const dataTransfer = new DataTransfer();
@@ -222,10 +232,35 @@ class FormCreator {
     return form;
   }
   AtagdownloadLinkGenerator(DataURL) {
-    console.log({ DataURL });
+    // console.log({ DataURL });
     const a = document.createElement("a");
     a.href = DataURL;
     a.download = DataURL;
     return a;
   }
+}
+
+function handleShow_dashed_divider(show = false) {
+  const dashed_dividers = document.getElementsByClassName("dashed-divider");
+
+  // switch (show) {
+  //   case true:
+  //     dashed_dividers;
+  //     break;
+
+  //   default:
+  //     break;
+  // }
+
+  // function maped(array = []) {
+  for (let i = 0; i < dashed_dividers.length; i++) {
+    if (show) {
+      dashed_dividers[i].classList.remove("d-none");
+      dashed_dividers[i].classList.add("d-block");
+    } else {
+      dashed_dividers[i].classList.remove("d-block");
+      dashed_dividers[i].classList.add("d-none");
+    }
+  }
+  // }
 }

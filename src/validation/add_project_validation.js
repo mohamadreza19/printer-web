@@ -8,7 +8,7 @@ export default function (
   },
   language = "fa"
 ) {
-  console.log({ bodyInValidate: body });
+  // console.log({ bodyInValidate: body });
   let messages = {
     createdBy: {
       required: "",
@@ -21,6 +21,12 @@ export default function (
       maxLength: "",
     },
     railWidth: {
+      required: "",
+      number: "",
+      minLength: "",
+      maxLength: "",
+    },
+    railLength: {
       required: "",
       number: "",
       minLength: "",
@@ -39,9 +45,14 @@ export default function (
         minLength: "نام پروژه نباید کمتر از چهار رقم باشد",
       },
       railWidth: {
-        required: "طول ریل الزامی میباشد الزامی می باشد",
+        required: "عرص ریل الزامی می باشد",
+        number: "عرص ریل باید عدد باشد",
+        minLength: "عرص ریل نباید کمتر از چهار رقم باشد",
+      },
+      railLength: {
+        required: "عرض ریل الزامی می باشد",
         number: "طول ریل باید عدد باشد",
-        minLength: "طول ریل نباید کمتر از چهار رقم باشد",
+        minLength: "عرض ریل نباید کمتر از چهار رقم باشد",
       },
     };
   }
@@ -56,6 +67,9 @@ export default function (
     railWidth: number()
       .typeError(messages.railWidth.number)
       .min(4, messages.railWidth.minLength),
+    railLength: number()
+      .typeError(messages.railLength.number)
+      .min(4, messages.railLength.minLength),
   });
   return Schema.validate(
     { ...body, railWidth: +body.railWidth },

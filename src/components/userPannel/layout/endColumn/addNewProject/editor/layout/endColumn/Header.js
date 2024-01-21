@@ -21,11 +21,16 @@ import { FormatColorResetRounded } from "@mui/icons-material";
 import useLocalStorage from "react-use-localstorage";
 import { EditTemplate_project_Mutation } from "../../../../../../../../reactQuery/admin/callPutService";
 import { useSetBorderToProntState } from "../../../../../../../../recoil/userEditorStore/bordersToPrint";
+import { useProject_baseValue } from "../../../../../../../../recoil/userEditorStore/project_base";
+import styled from "styled-components";
 
 const PROJECT_EDIT = "project/edit";
+const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
 const PROJECT_TEMPLATES_EDIT = "project-templates/edit";
 
 export default function () {
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [printRepetition, setRrintRepetition] = useState(1);
   const [editor_access, _] = useLocalStorage("editor_access");
   const language = useLanguage();
   const { projectId } = useParams();
@@ -38,6 +43,9 @@ export default function () {
 
   const profile_state = useRecoilValue(profile_store);
   const project_state = useRecoilValue(project_store);
+
+  const poject_base = useProject_baseValue(); // CUSTOM | PRODUCT
+
   const setBordersToPrint = useSetBorderToProntState(); //NONE, ALL, HORIZONTAL, VERTICAL
 
   const setShowPutProjectResponse = useSetRecoilState(showPutProjectResponse);
@@ -98,6 +106,13 @@ export default function () {
           body: handle_bundled_project(),
         });
         break;
+      case PROJECT_TEMPLATES_USER_EDIT:
+        // return console.log(handle_bundled_project());
+
+        project_mutate.mutate({
+          body: handle_bundled_project(),
+        });
+        break;
       case PROJECT_TEMPLATES_EDIT:
         project_template_mutate.mutate({
           body: handle_bundled_project(),
@@ -111,9 +126,34 @@ export default function () {
     //   body: handle_bundled_project(),
     // });
   }
+  function handleOpenPopUp() {
+    setOpenPopUp(true);
+  }
+
+  function handleClosePopUp() {
+    setOpenPopUp(false);
+  }
+  function handleChangePrintRepetition(event) {
+    const value = Number(event.target.value);
+    if (value >= 1) {
+      setRrintRepetition(value);
+    }
+  }
+  function print() {
+    autoPrint("PRODUCT", projectId, printRepetition);
+  }
+  function singlePrint() {
+    autoPrint("PRODUCT", projectId, 1);
+  }
+  function sreenShot() {
+    autoPrint("IMAGE");
+  }
 
   if (project_mutate.isSuccess || project_template_mutate.isSuccess) {
-    if (editor_access === PROJECT_EDIT) {
+    if (
+      editor_access === PROJECT_EDIT ||
+      editor_access === PROJECT_TEMPLATES_USER_EDIT
+    ) {
       setShowPutProjectResponse(project_mutate.data);
       navigate("/user/add-project");
     }
@@ -190,9 +230,9 @@ export default function () {
             </label>
           </div>
         </main>
-        <div className="d-flex">
+        <div className="d-flex ">
           <Buttons.Outlined
-            onClick={() => autoPrint("IMAGE")}
+            onClick={sreenShot}
             className="editor-header-button_extra-medium"
           >
             <Icons.Editor_ExportFile size="large" />
@@ -201,14 +241,64 @@ export default function () {
             </Typography.H7>
           </Buttons.Outlined>
           <Buttons.Contained
-            onClick={() => autoPrint("PRODUCT", projectId)}
-            className="editor-header-button_extra-small mx-3"
+            disabled={openPopUp}
+            onClick={poject_base === "CUSTOM" ? handleOpenPopUp : singlePrint}
+            className="editor-header-button_extra-small mx-3 
+              position-relative
+            "
           >
             <Icons.Editor_Print size="large" />
             <Typography.H7 className={cssClass.ms_1 + " font-300"}>
               {content.print}
             </Typography.H7>
           </Buttons.Contained>
+          <PopUpBox openPopUp={openPopUp}>
+            <header className="d-flex pos">
+              <span onClick={handleClosePopUp} className="cur-pointer">
+                X
+              </span>
+              <div
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  top: "18px",
+                }}
+              >
+                <Typography.H9 className="text-nowrap ">
+                  تعداد چاپ
+                </Typography.H9>
+              </div>
+            </header>
+            <main
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                rowGap: "10px",
+                alignItems: "center",
+              }}
+            >
+              <PopUpInput
+                disabled={poject_base === "PRODUCT" ? true : false}
+                onChange={handleChangePrintRepetition}
+                type="number"
+                value={printRepetition}
+              />
+              <Buttons.Contained
+                onClick={print}
+                className="editor-header-button_extra-small 
+
+              position-relative
+            "
+              >
+                <Icons.Editor_Print size="large" />
+                <Typography.H7 className={cssClass.ms_1 + " font-300"}>
+                  {content.print}
+                </Typography.H7>
+              </Buttons.Contained>
+            </main>
+          </PopUpBox>
+
           <Buttons.Contained
             className="editor-header-button_extra-large"
             onClick={handleSubmitProject}
@@ -223,3 +313,31 @@ export default function () {
     </header>
   );
 }
+
+const PopUpBox = styled.div`
+  padding: 5px 10px;
+  width: 150px;
+  min-height: 120px;
+  border: 1px solid #cbcbcb;
+  position: absolute;
+  top: 19%;
+  left: 19%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 99;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  //
+  visibility: ${({ openPopUp }) => (openPopUp ? "visible" : "hidden")};
+`;
+const PopUpInput = styled.input`
+  border-radius: 10px;
+  border-width: 1px;
+  height: 30px;
+  padding: 5px;
+  width: 80px;
+  text-align: center;
+`;

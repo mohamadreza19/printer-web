@@ -1566,9 +1566,11 @@ class Structure {
 
     if (PayloadCenter._parentId) {
       if (structure.parentId === PayloadCenter._parentId) {
-        const style = _target.content.style;
+        if (PayloadCenter._action !== "DELETECELL") {
+          const style = _target.content.style;
 
-        PayloadCenter._setSelectedCellForReadStyle(style);
+          PayloadCenter._setSelectedCellForReadStyle(style);
+        }
         return _target;
       } else {
         return _else;
@@ -1577,9 +1579,12 @@ class Structure {
 
     if (PayloadCenter._cellId) {
       if (structure.frontId === PayloadCenter._cellId) {
-        const style = _target.content.style;
+        if (PayloadCenter._action !== "DELETECELL") {
+          const style = _target.content.style;
 
-        PayloadCenter._setSelectedCellForReadStyle(style);
+          PayloadCenter._setSelectedCellForReadStyle(style);
+        }
+
         return _target;
       }
       return _else;

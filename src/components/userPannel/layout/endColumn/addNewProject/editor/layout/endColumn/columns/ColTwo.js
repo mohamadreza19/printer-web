@@ -43,5 +43,8 @@ const Controller = ({ base = "" }) => {
       return <SearchBox />;
     case "CUSTOM":
       return <CreateCustom />;
+
+    default:
+      return <SearchBox />;
   }
 };

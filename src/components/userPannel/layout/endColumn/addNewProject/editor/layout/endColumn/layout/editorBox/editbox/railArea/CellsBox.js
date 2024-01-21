@@ -4,7 +4,10 @@ import { ColumnFour_justify_start } from "../../../../../../../../../../../../re
 
 import { Container } from "./layout/CellsContainer";
 import { Droppable } from "react-beautiful-dnd";
-import { railsWidth_store } from "../../../../../../../../../../../../recoil/userEditorStore/cellsStore";
+import {
+  railsLength_store,
+  railsWidth_store,
+} from "../../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import useScreenShot from "../../../../../../../../../../../../utility/useScreenShot";
 import { useState } from "react";
 import styled from "styled-components";
@@ -22,12 +25,19 @@ export default function ({
   const [editor_access, _] = useLocalStorage("editor_access");
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
+  const [railsLength, setRailsLength] = useRecoilState(railsLength_store);
   const [isDragging, setIsDraggingOver] = useState(false);
   const label_project_template = useGetLabel();
 
   function get_railsWidth_based_editor_access() {
     if (editor_access === "project/edit") {
       return railsWidth;
+    }
+    return label_project_template.width;
+  }
+  function get_railsLegth_based_editor_access() {
+    if (editor_access === "project/edit") {
+      return railsLength;
     }
     return label_project_template.width;
   }
@@ -44,6 +54,7 @@ export default function ({
         return (
           <Container
             railsWidth={get_railsWidth_based_editor_access()}
+            railsLength={get_railsLegth_based_editor_access()}
             isDragingOver={isDragging}
             id="test-screen"
             key={key}
