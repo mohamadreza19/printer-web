@@ -1566,7 +1566,12 @@ class Structure {
 
     if (PayloadCenter._parentId) {
       if (structure.parentId === PayloadCenter._parentId) {
-        if (PayloadCenter._action !== "DELETECELL") {
+        if (
+          PayloadCenter._action !== "DELETECELL" &&
+          PayloadCenter._action !== "JOINCOLUMN" &&
+          PayloadCenter._action !== "JOINROW"
+        ) {
+          console.log({ _target });
           const style = _target.content.style;
 
           PayloadCenter._setSelectedCellForReadStyle(style);
@@ -1579,7 +1584,11 @@ class Structure {
 
     if (PayloadCenter._cellId) {
       if (structure.frontId === PayloadCenter._cellId) {
-        if (PayloadCenter._action !== "DELETECELL") {
+        if (
+          PayloadCenter._action !== "DELETECELL" &&
+          PayloadCenter._action !== "JOINCOLUMN" &&
+          PayloadCenter._action !== "JOINROW"
+        ) {
           const style = _target.content.style;
 
           PayloadCenter._setSelectedCellForReadStyle(style);
