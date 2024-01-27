@@ -5,12 +5,7 @@ import CellSplitController from "./CellSplitController";
 import { useEffect } from "react";
 import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 
-export default function ({
-  railId = "",
-  parent = { frontId: " ", isSelected: false },
-  child,
-  setCell = () => {},
-}) {
+export default function ({ railId = "", child }) {
   return (
     <main
       // onClick={handleSelectCell_Via_onClick}

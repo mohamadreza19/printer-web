@@ -12,9 +12,12 @@ import allowReplaceInputToDiv_store from "../recoil/userEditorStore/allowReplace
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { rails, railsWidth_store } from "../recoil/userEditorStore/cellsStore";
 import useSelectionReducer from "../recoil/reducer/editor/actionButtons/useSelectionReducer";
+import { useDispatch } from "react-redux";
+import { changeType } from "../redux/project/border_slice";
 //
 
 export default function () {
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const handleOnclickSelectionButton = useSelectionReducer();
   let { projectId } = useParams();
@@ -55,8 +58,8 @@ export default function () {
     const LABEL = "LABEL";
     const IMAGE = "IMAGE";
 
-    handleShow_dashed_divider(false);
     if (type === PRODUCT) {
+      dispatch(changeType("use"));
       handleOnclickSelectionButton("VIEW");
       setTimeout(async () => {
         const rootElement = document.querySelector("#rails-box");
@@ -89,7 +92,7 @@ export default function () {
         });
 
         form.submit();
-
+        dispatch(changeType("none"));
         setTimeout(() => {
           document.body.removeChild(clonedRootElement);
           handleShow_dashed_divider(true);
@@ -113,6 +116,7 @@ export default function () {
       form.submit();
     }
     if (type === IMAGE) {
+      dispatch(changeType("use"));
       handleOnclickSelectionButton("VIEW");
       setTimeout(async () => {
         const rootElement = document.querySelector("#rails-box");
@@ -135,7 +139,7 @@ export default function () {
 
         const a_tag = new FormCreator().AtagdownloadLinkGenerator(imgDataURL);
         a_tag.click();
-
+        dispatch(changeType("none"));
         setTimeout(() => {
           document.body.removeChild(clonedRootElement);
           handleShow_dashed_divider(true);

@@ -10,243 +10,297 @@ import {
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 import {
+  useSet_dynamicNumber,
   ColumnThree_angle,
   ColumnThree_fontSize,
   ColumnThree_margin,
   ColumnThree_padding,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
-import { selectedCellForReadStyle } from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
+import {
+  selectedCellForReadStyle,
+  useSetCell_editEvent,
+} from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
+import useSelectedCell, {
+  getSelectedCellSyle,
+} from "../../../../../../../../../../../redux/project/selectedCell";
 
 export default function () {
-  const cssClass = useDynamicCssClass();
-  const [fontSizeAction, setFontSizeAction] =
-    useRecoilState(ColumnThree_fontSize);
-  const [fontAngle, setFontAngle] = useRecoilState(ColumnThree_angle);
-  const [cellMargin, setCellMargin] = useRecoilState(ColumnThree_margin);
-  const [cellPadding, setCellPadding] = useRecoilState(ColumnThree_padding);
-  const cellForReadStyle = useRecoilValue(selectedCellForReadStyle);
+  const dispatch = useDispatch();
+
+  const Cell = useSelectedCell("get");
+  const selectedCellStyle = getSelectedCellSyle();
+
   const _interval_Margin_Ref = useRef(null);
   const _interval_Padding_Ref = useRef(null);
   const _interval_Angle_Ref = useRef(null);
-  const TextChangeSizeBox = () => {
-    function onClick(action) {
-      if (action == "increment") {
-        setFontSizeAction({
-          chosenAction: "increment",
-          isUsed: true,
-        });
-      }
-      if (action == "decrement") {
-        setFontSizeAction({
-          chosenAction: "decrement",
-          isUsed: true,
-        });
-      }
-    }
+  const _interval_TextSize_Ref = useRef(null);
+  function onClick(type = "") {
+    dispatch(
+      addEditEvent({
+        type: type,
+        itemId: Cell.frontId,
+      })
+    );
+  }
+  function onChange(event, type = "") {
+    const value = Number(event.target.value);
+    dispatch(
+      addEditEvent({
+        type: type,
+        itemId: Cell.frontId,
+        value: value,
+      })
+    );
+  }
 
-    return (
-      <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
-        <TextSize />
-        <Typography.H9 className={" ms-2 "} language="en">
-          {cellForReadStyle.fontSize}
-        </Typography.H9>
-        <div className="d-flex flex-column  justify-content-center ">
-          <span
-            className="d-flex justify-content-center"
-            onClick={() => onClick("increment")}
-          >
-            <Up />
-          </span>
-          <span
-            className="d-flex justify-content-center"
-            onClick={() => onClick("decrement")}
-          >
-            <Down />
-          </span>
-        </div>
-      </section>
-    );
-  };
-  const ChangeMarginBox = () => {
-    function onClick(action) {
-      if (action == "increment") {
-        setCellMargin({
-          chosenAction: "increment",
-          isUsed: true,
-        });
-      }
-      if (action == "decrement") {
-        setCellMargin({
-          chosenAction: "decrement",
-          isUsed: true,
-        });
-      }
-    }
-    return (
-      <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
-        <CubeSpace />
-        <Typography.H9 className={" ms-2 "} language="en">
-          {cellForReadStyle.margin || 0}
-        </Typography.H9>
-        <div className="d-flex flex-column  justify-content-center ">
-          <span
-            className="d-flex justify-content-center"
-            onClick={() => onClick("increment")}
-            onMouseDown={() => {
-              _interval_Margin_Ref.current = setInterval(() => {
-                onClick("increment");
-              }, 100);
-            }}
-            onMouseUp={() => {
-              clearInterval(_interval_Margin_Ref.current);
-            }}
-          >
-            <Up />
-          </span>
-          <span
-            className="d-flex justify-content-center"
-            onClick={() => onClick("decrement")}
-            onMouseDown={() => {
-              _interval_Margin_Ref.current = setInterval(() => {
-                onClick("decrement");
-                console.log("sel");
-              }, 100);
-            }}
-            onMouseUp={() => {
-              clearInterval(_interval_Margin_Ref.current);
-            }}
-          >
-            <Down />
-          </span>
-        </div>
-      </section>
-    );
-  };
-  const TextAngleBox = () => {
-    function onClick(action) {
-      if (action == "increment") {
-        setFontAngle({
-          chosenAction: "increment",
-          isUsed: true,
-        });
-      }
-      if (action == "decrement") {
-        setFontAngle({
-          chosenAction: "decrement",
-          isUsed: true,
-        });
-      }
-    }
-    return (
-      <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
-        <Angle />
-        <main className="position-relative">
-          <Typography.H9 className={" ms-2  "} language="en">
-            {cellForReadStyle.angle || 0}
-          </Typography.H9>
-          <span className="editor-angle-symbol">°</span>
-        </main>
-        <div className="d-flex flex-column  justify-content-center ">
-          <span
-            className="d-flex justify-content-center"
-            onClick={() => onClick("increment")}
-            onMouseDown={() => {
-              _interval_Angle_Ref.current = setInterval(() => {
-                onClick("increment");
-                console.log("sel");
-              }, 100);
-            }}
-            onMouseUp={() => {
-              clearInterval(_interval_Angle_Ref.current);
-            }}
-          >
-            <Up />
-          </span>
-          <span
-            className="d-flex justify-content-center"
-            onClick={() => onClick("decrement")}
-            onMouseDown={() => {
-              _interval_Angle_Ref.current = setInterval(() => {
-                onClick("decrement");
-                console.log("sel");
-              }, 100);
-            }}
-            onMouseUp={() => {
-              clearInterval(_interval_Angle_Ref.current);
-            }}
-          >
-            <Down />
-          </span>
-        </div>
-      </section>
-    );
-  };
-  const ChangePaddingBox = () => {
-    function onClick(action) {
-      if (action == "increment") {
-        setCellPadding({
-          chosenAction: "increment",
-          isUsed: true,
-        });
-      }
-      if (action == "decrement") {
-        setCellPadding({
-          chosenAction: "decrement",
-          isUsed: true,
-        });
-      }
-    }
-    return (
-      <section className="editor-medium-cell-box px-2  d-flex align-items-center justify-content-between ">
-        <Text />
-        <Typography.H9 className={" ms-2 "} language="en">
-          {cellForReadStyle.padding || 0}
-        </Typography.H9>
-        <div className="d-flex flex-column  justify-content-center ">
-          <span
-            className="d-flex justify-content-center"
-            onClick={() => onClick("increment")}
-            onMouseDown={() => {
-              _interval_Padding_Ref.current = setInterval(() => {
-                onClick("increment");
-              }, 100);
-            }}
-            onMouseUp={() => {
-              clearInterval(_interval_Padding_Ref.current);
-            }}
-          >
-            <Up />
-          </span>
-          <span
-            className="d-flex justify-content-center"
-            onClick={() => onClick("decrement")}
-            onMouseDown={() => {
-              _interval_Padding_Ref.current = setInterval(() => {
-                onClick("decrement");
-                console.log("sel");
-              }, 100);
-            }}
-            onMouseUp={() => {
-              clearInterval(_interval_Padding_Ref.current);
-            }}
-          >
-            <Down />
-          </span>
-        </div>
-      </section>
-    );
-  };
   return (
     <article className="mx-2 ">
       <header className="d-flex mb-2 ">
-        <TextChangeSizeBox />
-        <ChangeMarginBox />
+        <TextChangeSizeBox
+          _interval_TextSize_Ref={_interval_TextSize_Ref}
+          onChange={onChange}
+          onClick={onClick}
+          value={selectedCellStyle.fontSize}
+        />
+        <ChangeMarginBox
+          _interval_Margin_Ref={_interval_Margin_Ref}
+          onChange={onChange}
+          onClick={onClick}
+          value={selectedCellStyle.margin}
+        />
       </header>
       <footer className="d-flex ">
-        <TextAngleBox />
-        <ChangePaddingBox />
+        <TextAngleBox
+          _interval_Angle_Ref={_interval_Angle_Ref}
+          onChange={onChange}
+          onClick={onClick}
+          value={selectedCellStyle.angle}
+        />
+        <ChangePaddingBox
+          _interval_Padding_Ref={_interval_Padding_Ref}
+          onChange={onChange}
+          onClick={onClick}
+          value={selectedCellStyle.padding}
+        />
       </footer>
     </article>
   );
 }
+const TextAngleBox = ({
+  _interval_Angle_Ref,
+  onChange = () => {},
+  onClick = () => {},
+  value = 0,
+}) => {
+  return (
+    <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
+      <Angle />
+
+      <main className="position-relative">
+        <span className="editor-angle-symbol">°</span>
+        <input
+          onChange={(event) => onChange(event, "ANGLE")}
+          type="number"
+          className="custom-input-editor "
+          value={value}
+        />
+      </main>
+      <div className="d-flex flex-column  justify-content-center ">
+        <span
+          className="d-flex justify-content-center"
+          onClick={() => onClick("ANGLE/INCREMENT")}
+          onMouseDown={() => {
+            _interval_Angle_Ref.current = setInterval(() => {
+              onClick("ANGLE/INCREMENT");
+            }, 100);
+          }}
+          onMouseUp={() => {
+            clearInterval(_interval_Angle_Ref.current);
+          }}
+        >
+          <Up />
+        </span>
+        <span
+          className="d-flex justify-content-center"
+          onClick={() => onClick("ANGLE/DECREMENT")}
+          onMouseDown={() => {
+            _interval_Angle_Ref.current = setInterval(() => {
+              onClick("ANGLE/DECREMENT");
+            }, 100);
+          }}
+          onMouseUp={() => {
+            clearInterval(_interval_Angle_Ref.current);
+          }}
+        >
+          <Down />
+        </span>
+      </div>
+      <div className="editor-small-info-cell-box ">
+        <Typography.H9>زاویه</Typography.H9>
+      </div>
+    </section>
+  );
+};
+const TextChangeSizeBox = ({
+  _interval_TextSize_Ref,
+  onChange = () => {},
+  onClick = () => {},
+  value = 0,
+}) => {
+  return (
+    <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
+      <TextSize />
+      <input
+        onChange={(event) => onChange(event, "TEXTSIZE")}
+        type="number"
+        className="custom-input-editor "
+        value={value}
+      />
+      {/* <Typography.H9 className={" ms-2 "} language="en">
+        {cellForReadStyle.fontSize}
+      </Typography.H9> */}
+      <div className="d-flex flex-column  justify-content-center ">
+        <span
+          onMouseDown={() => {
+            _interval_TextSize_Ref.current = setInterval(() => {
+              onClick("TEXTSIZE/INCREMENT");
+            }, 100);
+          }}
+          onMouseUp={() => {
+            clearInterval(_interval_TextSize_Ref.current);
+          }}
+          className="d-flex justify-content-center"
+          onClick={() => onClick("TEXTSIZE/INCREMENT")}
+        >
+          <Up />
+        </span>
+        <span
+          onMouseDown={() => {
+            _interval_TextSize_Ref.current = setInterval(() => {
+              onClick("TEXTSIZE/DECREMENT");
+            }, 100);
+          }}
+          onMouseUp={() => {
+            clearInterval(_interval_TextSize_Ref.current);
+          }}
+          className="d-flex justify-content-center"
+          onClick={() => onClick("TEXTSIZE/DECREMENT")}
+        >
+          <Down />
+        </span>
+      </div>
+      <div className="editor-small-info-cell-box ">
+        <Typography.H9>اندازه متن</Typography.H9>
+      </div>
+    </section>
+  );
+};
+const ChangeMarginBox = ({
+  _interval_Margin_Ref,
+  onChange = () => {},
+  onClick = () => {},
+  value = 0,
+}) => {
+  return (
+    <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
+      <CubeSpace />
+      <input
+        onChange={(event) => onChange(event, "MARGIN")}
+        type="number"
+        className="custom-input-editor "
+        value={value}
+      />
+
+      <div className="d-flex flex-column  justify-content-center ">
+        <span
+          className="d-flex justify-content-center"
+          onClick={() => onClick("MARGIN/INCREMENT")}
+          onMouseDown={() => {
+            _interval_Margin_Ref.current = setInterval(() => {
+              onClick("MARGIN/INCREMENT");
+            }, 100);
+          }}
+          onMouseUp={() => {
+            clearInterval(_interval_Margin_Ref.current);
+          }}
+        >
+          <Up />
+        </span>
+        <span
+          className="d-flex justify-content-center"
+          onClick={() => onClick("MARGIN/DECREMENT")}
+          onMouseDown={() => {
+            _interval_Margin_Ref.current = setInterval(() => {
+              onClick("MARGIN/DECREMENT");
+            }, 100);
+          }}
+          onMouseUp={() => {
+            clearInterval(_interval_Margin_Ref.current);
+          }}
+        >
+          <Down />
+        </span>
+      </div>
+      <div className="editor-small-info-cell-box ">
+        <Typography.H9>مارجین</Typography.H9>
+      </div>
+    </section>
+  );
+};
+const ChangePaddingBox = ({
+  _interval_Padding_Ref,
+  onChange = () => {},
+  onClick = () => {},
+  value = 0,
+}) => {
+  return (
+    <section className="editor-medium-cell-box px-2  d-flex align-items-center justify-content-between ">
+      <Text />
+      <input
+        onChange={(event) => onChange(event, "PADDING")}
+        type="number"
+        className="custom-input-editor "
+        value={value}
+      />
+      {/* <Typography.H9 className={" ms-2 "} language="en">
+        {cellForReadStyle.padding || 0}
+      </Typography.H9> */}
+      <div className="d-flex flex-column  justify-content-center ">
+        <span
+          className="d-flex justify-content-center"
+          onClick={() => onClick("PADDING/INCREMENT")}
+          onMouseDown={() => {
+            _interval_Padding_Ref.current = setInterval(() => {
+              onClick("PADDING/INCREMENT");
+            }, 100);
+          }}
+          onMouseUp={() => {
+            clearInterval(_interval_Padding_Ref.current);
+          }}
+        >
+          <Up />
+        </span>
+        <span
+          className="d-flex justify-content-center"
+          onClick={() => onClick("PADDING/DECREMENT")}
+          onMouseDown={() => {
+            _interval_Padding_Ref.current = setInterval(() => {
+              onClick("PADDING/DECREMENT");
+            }, 100);
+          }}
+          onMouseUp={() => {
+            clearInterval(_interval_Padding_Ref.current);
+          }}
+        >
+          <Down />
+        </span>
+      </div>
+      <div className="editor-small-info-cell-box ">
+        <Typography.H9>پدینگ</Typography.H9>
+      </div>
+    </section>
+  );
+};

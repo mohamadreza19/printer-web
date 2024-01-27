@@ -36,7 +36,6 @@ export const User_Profile_Call = () => {
         message: "",
       });
       if (data) {
-        console.log(data);
         setProfile_store(data);
       }
     }

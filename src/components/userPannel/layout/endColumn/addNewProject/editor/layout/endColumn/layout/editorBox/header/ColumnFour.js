@@ -12,23 +12,45 @@ import {
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
 import useCellReducer from "../../../../../../../../../../../recoil/reducer/useCellReducer";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getPossibleRedo,
+  getPossibleUndo,
+  redo,
+  reverseCustomLabels,
+  undo,
+} from "../../../../../../../../../../../redux/project/history_changer_slice";
+import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
+import { useState } from "react";
 
 export default function () {
-  const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
-  const useRedo = useRecoilValue(ColumnFour_redo);
-  const useUndo = useRecoilValue(ColumnFour_undo);
-  const setCell = useCellReducer();
-  const JustifyRealBox = () => {
-    function onClick(justifyToSet) {
-      if (justifyToSet == "right") {
-        setJustify("right");
-      }
-      if (justifyToSet == "left") {
-        setJustify("left");
-      }
+  const dispatch = useDispatch();
+  const possibleUndo = useSelector(getPossibleUndo);
+  const possibleRedo = useSelector(getPossibleRedo);
+  const [justify, setJustify] = useState("left");
+
+  function handleRedo() {
+    if (possibleRedo) {
+      dispatch(redo());
     }
-    function callReverse() {
-      setCell({}, "REVERSE");
+  }
+  function handleUndo() {
+    if (possibleUndo) {
+      dispatch(undo());
+    }
+  }
+  const JustifyRealBox = () => {
+    function onClick(justify = "") {
+      switch (justify) {
+        case "right":
+          setJustify("right");
+          dispatch(reverseCustomLabels());
+          break;
+        case "left":
+          setJustify("left");
+          dispatch(reverseCustomLabels());
+          break;
+      }
     }
 
     return (
@@ -37,7 +59,6 @@ export default function () {
           <section
             onClick={() => {
               onClick("right");
-              callReverse();
             }}
             className="cell-regular"
           >
@@ -57,7 +78,6 @@ export default function () {
           <section
             onClick={() => {
               onClick("left");
-              callReverse();
             }}
             className="cell-regular"
           >
@@ -77,16 +97,12 @@ export default function () {
     );
   };
   const RedoBox = () => {
-    function onClick() {
-      setCell(undefined, "REDO");
-    }
-
     return (
       <article className="position-relative">
-        <section onClick={onClick} className="cell-regular">
+        <section onClick={handleRedo} className="cell-regular">
           <div
             className={`editor-small-cell-box me-2 d-flex justify-content-center align-items-center ${
-              useRedo ? "" : "opacity-4"
+              possibleRedo ? "" : "opacity-4"
             }`}
           >
             <Redo />
@@ -99,15 +115,12 @@ export default function () {
     );
   };
   const UndoBox = () => {
-    function onClick() {
-      setCell(undefined, "UNDO");
-    }
     return (
       <article className="position-relative">
-        <section onClick={onClick} className="cell-regular">
+        <section onClick={handleUndo} className="cell-regular">
           <div
             className={`editor-small-cell-box d-flex justify-content-center align-items-center ${
-              useUndo ? "" : "opacity-4"
+              possibleUndo ? "" : "opacity-4"
             }`}
           >
             <Undo />

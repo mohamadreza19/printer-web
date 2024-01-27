@@ -1,4 +1,5 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useDispatch, useSelector } from "react-redux";
 import { useDynamicCssClass } from "../../../../../../../../../../../recoil/readStore";
 import {} from "../../../../../../../../../../../styles/__ready/EditorIcons";
 import Icons from "../../../../../../../../../../../styles/__ready/Icons";
@@ -7,7 +8,7 @@ import RailArea from "./railArea";
 
 import {
   product_column,
-  rails,
+  // rails,
   railsLength_store,
   railsWidth_store,
 } from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
@@ -30,10 +31,16 @@ import {
   Project_templateFindOne_Qury,
 } from "../../../../../../../../../../../reactQuery/common/callGetService";
 import { useSetLabel } from "../../../../../../../../../../../recoil/store/label";
-import { useDispatch } from "react-redux";
-import { fetch } from "../../../../../../../../../../../redux/project/projectTemplateSlice";
+
 import { useSetBorderToProntState } from "../../../../../../../../../../../recoil/userEditorStore/bordersToPrint";
 import { useSetProject_baseState } from "../../../../../../../../../../../recoil/userEditorStore/project_base";
+import { addRails } from "../../../../../../../../../../../redux/project/rails_slice";
+import { fetchProject } from "../../../../../../../../../../../redux/project/project._slice";
+import {
+  addEmptyRail,
+  addPresent,
+  getRails,
+} from "../../../../../../../../../../../redux/project/history_changer_slice";
 
 //  data = {
 //   frontId: 112,
@@ -61,6 +68,8 @@ function setFindOne_based_editor_access(editorAccess) {
 }
 
 export default memo(function () {
+  const dispatch = useDispatch();
+  const rails = useSelector(getRails);
   const [editor_access, _] = useLocalStorage("editor_access");
   const setLabel = useSetLabel();
   const [railsArr, setRailsArr] = useState([]);
@@ -70,7 +79,7 @@ export default memo(function () {
     setFindOne_based_editor_access(editor_access);
 
   const setRail = useRailReducer();
-  const [railsState, setRailsState] = useRecoilState(rails);
+  // const [railsState, setRailsState] = useRecoilState(rails);
 
   const product = useRecoilValue(product_column);
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
@@ -98,194 +107,155 @@ export default memo(function () {
         setProject_base(data.base);
       }
       if (data) {
-        if (product) {
-          if (
-            editor_access === PROJECT_TEMPLATES_EDIT ||
-            editor_access === PROJECT_TEMPLATES_USER_EDIT
-          ) {
-            railWidth_data = data.label.width;
-            setLabel({
-              width: data.label.width,
-              height: data.label.height,
-            });
-            const Rail_temp = [
-              {
-                id: 13,
-
-                // projectId: 13,
-                frontId: "GvSSDkAcT",
-                customLabels: [
-                  {
-                    id: 11,
-                    // createdAt: "2023-09-20T09:25:29.488Z",
-                    // updatedAt: "2023-09-20T09:25:29.488Z",
-                    // railId: 13,
-                    frontId: "y0GhF0XpL",
-                    structure: {
-                      split: "none",
-                      content: {
-                        text: "",
-                        style: {
-                          id: 11,
-                          createdAt: "2023-09-20T09:25:29.459Z",
-                          updatedAt: "2023-09-20T09:25:29.459Z",
-                          fontFamily: "Arial",
-                          fontStyle: "regular",
-                          fontSize: 14,
-                          angle: 0,
-                          textAlign: "none",
-                          textDirecton: "right",
-                          padding: 0,
-                          margin: 0,
-                        },
-                      },
-                      frontId: "y0GhF0XpL",
-                      isQrcode: false,
-                      isBarcode: false,
-                      isSelected: true,
-                    },
-                    product: {
-                      id: 10,
-                      createdAt: "2023-09-20T09:08:33.615Z",
-                      updatedAt: "2023-09-20T09:08:33.615Z",
-                      link: "https://web.telegram.org",
-                      width: 22,
-                      widthOfPrintingArea: 22,
-                      name: {
-                        id: 19,
-                        createdAt: "2023-09-20T09:08:33.608Z",
-                        updatedAt: "2023-09-20T09:08:33.608Z",
-                        english: "test22",
-                        persian: "test22",
-                        turkish: "test22",
-                      },
-                      admin: {
-                        id: 1,
-                        createdAt: "2023-08-19T09:48:27.498Z",
-                        updatedAt: "2023-08-19T09:48:27.498Z",
-                        username: "raad",
-                        firstName: "raad",
-                        lastName: "super admin",
-                        role: "superAdmin",
-                        deleteDate: null,
-                      },
-                    },
-                    productId: 10,
-                  },
-                ],
-              },
-            ];
-
-            if (
-              data.rails.length == 0 ||
-              data.rails[0].customLabels.length == 0
-            ) {
-              myRails = Rail_temp;
-            } else {
-              myRails = data.rails;
-            }
-          } else {
-            numberOfRails = data.numberOfRails;
-            railsArrLength = data.rails.length;
-            firstRailToCopy = { ...data.rails[0] };
-
-            railWidth_data = data.railWidth;
-
-            if (numberOfRails !== railsArrLength) {
-              delete firstRailToCopy["id"];
-
-              for (let i = 0; i < numberOfRails; i++) {
-                myRails.push({ ...firstRailToCopy, frontId: "id-test" + i });
-              }
-            } else {
-              myRails = data.rails;
-            }
+        dispatch(fetchProject(data));
+        dispatch(addPresent(data.rails));
+        if (
+          editor_access !== PROJECT_TEMPLATES_EDIT ||
+          editor_access !== PROJECT_TEMPLATES_USER_EDIT
+        ) {
+          if (data.numberOfRails > 1 && data.rails.length === 1) {
+            dispatch(addEmptyRail(data.numberOfRails - 1));
           }
-
-          setRailsWidth(railWidth_data);
-          setRailsArr(myRails);
-          setRailsState((draft) => ({
-            ...draft,
-            present: myRails,
-          }));
-          // setRail({}, "ADDRAIL");
-          const direction = data.direction;
-          setJustify(direction);
         }
+        // if (product) {
+        //   if (
+        //     editor_access === PROJECT_TEMPLATES_EDIT ||
+        //     editor_access === PROJECT_TEMPLATES_USER_EDIT
+        //   ) {
+        //     railWidth_data = data.label.width;
+        //     setLabel({
+        //       width: data.label.width,
+        //       height: data.label.height,
+        //     });
+        //     const Rail_temp = [
+        //       {
+        //         id: 13,
+        //         // projectId: 13,
+        //         frontId: "GvSSDkAcT",
+        //         customLabels: [
+        //           {
+        //             id: 11,
+        //             // createdAt: "2023-09-20T09:25:29.488Z",
+        //             // updatedAt: "2023-09-20T09:25:29.488Z",
+        //             // railId: 13,
+        //             frontId: "y0GhF0XpL",
+        //             structure: {
+        //               split: "none",
+        //               content: {
+        //                 text: "",
+        //                 style: {
+        //                   id: 11,
+        //                   createdAt: "2023-09-20T09:25:29.459Z",
+        //                   updatedAt: "2023-09-20T09:25:29.459Z",
+        //                   fontFamily: "Arial",
+        //                   fontStyle: "regular",
+        //                   fontSize: 14,
+        //                   angle: 0,
+        //                   textAlign: "none",
+        //                   textDirecton: "right",
+        //                   padding: 0,
+        //                   margin: 0,
+        //                 },
+        //               },
+        //               frontId: "y0GhF0XpL",
+        //               isQrcode: false,
+        //               isBarcode: false,
+        //               isSelected: true,
+        //             },
+        //             product: {
+        //               id: 10,
+        //               createdAt: "2023-09-20T09:08:33.615Z",
+        //               updatedAt: "2023-09-20T09:08:33.615Z",
+        //               link: "https://web.telegram.org",
+        //               width: 22,
+        //               widthOfPrintingArea: 22,
+        //               name: {
+        //                 id: 19,
+        //                 createdAt: "2023-09-20T09:08:33.608Z",
+        //                 updatedAt: "2023-09-20T09:08:33.608Z",
+        //                 english: "test22",
+        //                 persian: "test22",
+        //                 turkish: "test22",
+        //               },
+        //               admin: {
+        //                 id: 1,
+        //                 createdAt: "2023-08-19T09:48:27.498Z",
+        //                 updatedAt: "2023-08-19T09:48:27.498Z",
+        //                 username: "raad",
+        //                 firstName: "raad",
+        //                 lastName: "super admin",
+        //                 role: "superAdmin",
+        //                 deleteDate: null,
+        //               },
+        //             },
+        //             productId: 10,
+        //           },
+        //         ],
+        //       },
+        //     ];
+        //     if (
+        //       data.rails.length == 0 ||
+        //       data.rails[0].customLabels.length == 0
+        //     ) {
+        //       myRails = Rail_temp;
+        //     } else {
+        //       myRails = data.rails;
+        //     }
+        //   } else {
+        //     numberOfRails = data.numberOfRails;
+        //     railsArrLength = data.rails.length;
+        //     firstRailToCopy = { ...data.rails[0] };
+        //     railWidth_data = data.railWidth;
+        //     if (numberOfRails !== railsArrLength) {
+        //       delete firstRailToCopy["id"];
+        //       for (let i = 0; i < numberOfRails; i++) {
+        //         myRails.push({ ...firstRailToCopy, frontId: "id-test" + i });
+        //       }
+        //     } else {
+        //       myRails = data.rails;
+        //     }
+        //   }
+        //   setRailsWidth(railWidth_data);
+        //   setRailsArr(myRails);
+        //   setRailsState((draft) => ({
+        //     ...draft,
+        //     present: myRails,
+        //   }));
+        //   // setRail({}, "ADDRAIL");
+        //   const direction = data.direction;
+        //   setJustify(direction);
+        // }
       }
 
       return () => {
-        setRailsState({
-          past: [],
-          present: [],
-          future: [],
-        });
+        // setRailsState({
+        //   past: [],
+        //   present: [],
+        //   future: [],
+        // });
       };
     }
   }, [isSuccess]);
-  useEffect(() => {
-    if (wantNewRail) {
-      if (railsState.present.length < 1) {
-        setRail({}, "ADDRAIL");
-        SetwantNewRail(false);
-      }
-    }
-  }, [wantNewRail]);
 
-  const AddNewRailButton = () => {
-    function onClick() {
-      SetwantNewRail(true);
-    }
-    if (railsState.present.length < 1) {
-      return (
-        <div
-          onClick={onClick}
-          className={`add-new-rail-btn ${
-            railsState.present.length > 1 ? "disabled" : ""
-          }`}
+  if (rails.length > 0)
+    return (
+      <div className="dir-ltr bg-white scrollable-x-large position-relative disabled_gray2">
+        <ScaleContainer
+          id="rails-box"
+          scale={scaleState_}
+          className={"dir-ltr rails-box-pt   border-r-bottom-20"}
         >
-          <Typography.H9 className="color-white font-400">
-            ریل جدید
-          </Typography.H9>
-          <Icons.Plus />
-        </div>
-      );
-    } else return null;
-  };
-  const check_divider_show = (index) => {
-    const railLenth = railsState.present.length;
-    if (index === railLenth - 1 && railLenth) {
-    }
-  };
-  return (
-    <div className="dir-ltr bg-white scrollable-x-large position-relative disabled_gray2">
-      <ScaleContainer
-        id="rails-box"
-        scale={scaleState_}
-        className={"dir-ltr rails-box-pt   border-r-bottom-20"}
-      >
-        {railsState.present?.map((rail, index) => {
-          return (
-            <RailArea
-              key={index}
-              index={index}
-              isLastRail={index === railsState.present.length - 1}
-              rail={rail}
-              deleteRail={() => setRail({ railId: rail.frontId }, "DELETERAIL")}
-            />
-          );
-        })}
-        {/* {railsState.present?.map((rail, index) => {
-          return (
-            <RailArea
-              key={index}
-              rail={rail}
-              deleteRail={() => setRail({ railId: rail.frontId }, "DELETERAIL")}
-            />
-          );
-        })} */}
-        <AddNewRailButton />
-      </ScaleContainer>
-    </div>
-  );
+          {rails.map((rail, index) => {
+            return (
+              <RailArea
+                key={index}
+                index={index}
+                isLastRail={index === rails.length - 1}
+                rail={rail}
+              />
+            );
+          })}
+        </ScaleContainer>
+      </div>
+    );
 });

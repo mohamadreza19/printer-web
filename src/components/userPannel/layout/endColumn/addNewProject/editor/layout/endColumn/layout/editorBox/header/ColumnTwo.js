@@ -9,33 +9,38 @@ import {
   TextUnderLine,
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
-import {
-  ColumnThree_FontStyle,
-  ColumnTwo_TextAlign,
-  ColumnTwo_font,
-} from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
-import { selectedCellForReadStyle } from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
+
+import useSelectedCell, {
+  getSelectedCellSyle,
+} from "../../../../../../../../../../../redux/project/selectedCell";
+import { useDispatch } from "react-redux";
+import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
+import { useState } from "react";
 
 export default function () {
-  const [font, setFont] = useRecoilState(ColumnTwo_font);
-  const [fontStyle, setFontStyle] = useRecoilState(ColumnThree_FontStyle);
-  const [textAlign, setTextAlign] = useRecoilState(ColumnTwo_TextAlign);
+  const dispatch = useDispatch();
 
-  const cellForReadStyle = useRecoilValue(selectedCellForReadStyle);
-
+  const Cell = useSelectedCell("get");
+  const selectedCell = getSelectedCellSyle();
+  function onClick(type = "", value = "") {
+    dispatch(
+      addEditEvent({
+        type: type,
+        itemId: Cell.frontId,
+        value,
+      })
+    );
+  }
   const SelectFont = () => {
-    function onClick() {
-      setFont((draft) => ({
-        ...draft,
-        isShow: !font.isShow,
-      }));
+    const [open, setOpen] = useState(false);
+    function toggle() {
+      setOpen(!open);
     }
+
     const FontsMenu = () => {
       return (
         <menu
-          className={`position-absolute  ${
-            font.isShow ? "d-flex" : "d-none"
-          } flex-column`}
+          className={`position-absolute  flex-column`}
           style={{
             width: "224px",
             left: 0,
@@ -44,64 +49,34 @@ export default function () {
             backgroundColor: "#ecececcc",
             borderBottomLeftRadius: "10px",
             borderBottomRightRadius: "10px",
-            display: "",
+            display: open ? "flex" : "none",
           }}
         >
           <span
             className="mt-2 w-100 border"
-            onClick={() => {
-              setFont((draft) => ({
-                ...draft,
-                font: "Arial",
-                isOnClick: true,
-              }));
-            }}
+            onClick={() => onClick("FONT/CHANGE", "Arial")}
           >
             Arial
           </span>
           <span
             className="mt-2 w-100 border"
-            onClick={() => {
-              setFont((draft) => ({
-                ...draft,
-                font: "Ubuntu",
-                isOnClick: true,
-              }));
-            }}
+            onClick={() => onClick("FONT/CHANGE", "Ubuntu")}
           >
             Ubuntu
           </span>
           <span
             className="mt-2 w-100 border"
-            onClick={() => {
-              setFont((draft) => ({
-                ...draft,
-                font: "Roboto",
-                isOnClick: true,
-              }));
-            }}
+            onClick={() => onClick("FONT/CHANGE", "Roboto")}
           >
             Roboto
-          </span>
-          <span
-            className="mt-2 w-100 border"
-            onClick={() => {
-              setFont((draft) => ({
-                ...draft,
-                font: "DynaPuff",
-                isOnClick: true,
-              }));
-            }}
-          >
-            DynaPuff
           </span>
         </menu>
       );
     };
     return (
       <section
-        className="editor-big-cell-box px-2 d-flex justify-content-between align-items-center position-relative"
-        onClick={onClick}
+        className="editor-big-cell-box px-2 d-flex justify-content-between align-items-center "
+        onClick={toggle}
       >
         <DropDown />
 
@@ -111,44 +86,23 @@ export default function () {
           }}
           className="h-100 d-flex justify-content-center align-items-center position-relative"
         >
-          <Typography.H8>{cellForReadStyle.fontFamily}</Typography.H8>
+          <Typography.H8>{selectedCell.fontFamily}</Typography.H8>
           <FontsMenu />
         </span>
         <div className="editor-small-info-cell-box">
-          <Typography.H9>ادغام ستون</Typography.H9>
+          <Typography.H9>نوع فونت</Typography.H9>
         </div>
       </section>
     );
   };
 
   const TextBoldBox = () => {
-    function onClick() {
-      setFontStyle((draft) => {
-        if (cellForReadStyle.fontStyle == "regular") {
-          return {
-            chosenStyle: "bold",
-            isUsed: true,
-          };
-        }
-        if (cellForReadStyle.fontStyle == "bold") {
-          console.log("is bold");
-          return {
-            chosenStyle: "regular",
-            isUsed: true,
-          };
-        }
-        return {
-          chosenStyle: "bold",
-          isUsed: true,
-        };
-      });
-    }
     return (
       <span
-        onClick={onClick}
+        onClick={() => onClick("FONT/STYLE", "bold")}
         className={`editor-group-button-left-box d-flex justify-content-center align-item-center ${
-          // cellForReadStyle.fontStyle == "bold" && "opacity-4"
-          fontStyle.chosenStyle == "bold" ? "opacity-4" : " "
+          // selectedCell.fontStyle == "bold" && "opacity-4"
+          selectedCell.fontStyle == "bold" ? "opacity-4" : " "
         }`}
       >
         <TextBold />
@@ -156,32 +110,12 @@ export default function () {
     );
   };
   const TextUnderLineBox = () => {
-    function onClick() {
-      setFontStyle((draft) => {
-        if (cellForReadStyle.fontStyle == "regular") {
-          return {
-            chosenStyle: "underline",
-            isUsed: true,
-          };
-        }
-        if (cellForReadStyle.fontStyle == "underline") {
-          return {
-            chosenStyle: "regular",
-            isUsed: true,
-          };
-        }
-        return {
-          chosenStyle: "underline",
-          isUsed: true,
-        };
-      });
-    }
     return (
       <span
-        onClick={onClick}
+        onClick={() => onClick("FONT/STYLE", "underline")}
         className={`editor-group-button-right-box  d-flex justify-content-center align-item-center ${
-          // cellForReadStyle.fontStyle == "bold" && "opacity-4"
-          fontStyle.chosenStyle == "underline" && "opacity-4"
+          // selectedCell.fontStyle == "bold" && "opacity-4"
+          selectedCell.fontStyle == "underline" && "opacity-4"
         }`}
       >
         <TextUnderLine />
@@ -189,32 +123,12 @@ export default function () {
     );
   };
   const TextItalicBox = () => {
-    function onClick() {
-      setFontStyle((draft) => {
-        if (cellForReadStyle.fontStyle == "regular") {
-          return {
-            chosenStyle: "italic",
-            isUsed: true,
-          };
-        }
-        if (cellForReadStyle.fontStyle == "italic") {
-          return {
-            chosenStyle: "regular",
-            isUsed: true,
-          };
-        }
-        return {
-          chosenStyle: "italic",
-          isUsed: true,
-        };
-      });
-    }
     return (
       <span
-        onClick={onClick}
+        onClick={() => onClick("FONT/STYLE", "italic")}
         className={`editor-group-button-center-box d-flex justify-content-center align-item-center ${
-          // cellForReadStyle.fontStyle == "bold" && "opacity-4"
-          fontStyle.chosenStyle == "italic" && "opacity-4"
+          // selectedCell.fontStyle == "bold" && "opacity-4"
+          selectedCell.fontStyle == "italic" && "opacity-4"
         }`}
       >
         <TextItalic />
@@ -222,57 +136,36 @@ export default function () {
     );
   };
   const TextJustify = () => {
-    function onClickRight() {
-      setTextAlign((draft) => {
-        return {
-          chosenAlign: "right",
-          isUsed: true,
-        };
-      });
-    }
-    function onClickCenter() {
-      setTextAlign((draft) => {
-        return {
-          chosenAlign: "center",
-          isUsed: true,
-        };
-      });
-    }
-    function onClickLeft() {
-      setTextAlign((draft) => {
-        return {
-          chosenAlign: "left",
-          isUsed: true,
-        };
-      });
-    }
-
     return (
-      <section className="d-flex ">
+      <section className="d-flex grop-box">
         <span
-          onClick={onClickRight}
+          onClick={() => onClick("FONT/ALIGN", "right")}
           className={`editor-group-button-right-box d-flex justify-content-center align-item-center ${
-            cellForReadStyle.textAlign == "right" && "opacity-4"
+            selectedCell.textAlign == "right" && "opacity-4"
           }`}
         >
           <TextRight />
         </span>
         <span
-          onClick={onClickCenter}
+          onClick={() => onClick("FONT/ALIGN", "center")}
           className={`editor-group-button-center-box d-flex justify-content-center align-item-center  ${
-            cellForReadStyle.textAlign == "center" && "opacity-4"
+            selectedCell.textAlign == "center" && "opacity-4"
           }`}
         >
           <TextCenter />
         </span>
         <span
-          onClick={onClickLeft}
+          onClick={() => onClick("FONT/ALIGN", "left")}
           className={`editor-group-button-left-box d-flex justify-content-center align-item-center  ${
-            cellForReadStyle.textAlign == "left" && "opacity-4"
+            selectedCell.textAlign == "left" && "opacity-4"
           }`}
         >
           <TextLeft />
         </span>
+
+        <div className="editor-small-info-cell-box ">
+          <Typography.H9>نوع تراز متن</Typography.H9>
+        </div>
       </section>
     );
   };
@@ -283,10 +176,13 @@ export default function () {
       </header>
       <footer className="d-flex justify-content-between">
         <TextJustify />
-        <section className="d-flex">
+        <section className="d-flex grop-box">
           <TextUnderLineBox />
           <TextItalicBox />
           <TextBoldBox />
+          <div className="editor-small-info-cell-box ">
+            <Typography.H9>استایل متن</Typography.H9>
+          </div>
         </section>
       </footer>
     </article>

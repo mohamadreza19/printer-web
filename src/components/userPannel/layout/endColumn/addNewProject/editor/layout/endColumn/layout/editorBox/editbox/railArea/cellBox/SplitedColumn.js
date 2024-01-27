@@ -5,14 +5,7 @@ import CellSplitController from "./CellSplitController";
 import { useEffect } from "react";
 import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 
-export default function ({
-  railId = "",
-  child,
-  parent = {
-    frontId: " ",
-    isSelected: false,
-  },
-}) {
+export default function ({ child }) {
   return (
     <main className="w-100 h-100 d-flex ">
       {child.children.map((child, index) => {
@@ -30,7 +23,6 @@ export default function ({
           >
             <CellSplitController
               cellForCheck={child}
-              railId={railId}
               isLeftCell={isLeftCell}
               isRightCell={isRightCell}
             />

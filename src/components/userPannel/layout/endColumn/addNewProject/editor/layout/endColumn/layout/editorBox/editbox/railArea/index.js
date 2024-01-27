@@ -14,7 +14,6 @@ export default function ({
   index = 0,
   rail = {
     frontId: "",
-    // customLabels: [],
     customLabels: [],
   },
   isLastRail = false,
@@ -55,7 +54,8 @@ const Divider = styled.div`
   height: 1.5px;
   // background-color: red;
   // display: ${(prop) => (prop.isLastRail ? "none" : "block")};
-  width: 80vw;
+  width: 100%;
+  min-width: 80vw;
   position: absolute;
   top: 99%;
   border: 1.5px dashed black;

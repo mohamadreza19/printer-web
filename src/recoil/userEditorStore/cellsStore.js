@@ -1,4 +1,5 @@
-import { atom, selector } from "recoil";
+import { useEffect } from "react";
+import { atom, selector, useRecoilValue, useSetRecoilState } from "recoil";
 import shortid from "shortid";
 
 const initialState = [
@@ -90,4 +91,32 @@ export const product_column = atom({
     //   width: 300,
     // },
   ],
+});
+
+export const cell_editEvent_store = atom({
+  key: "cell_store",
+  default: {
+    type: "", // PADDING|PADDING/INCREMENT | PADDING/DECREMENT
+    value: "",
+    cellId: "",
+    padrentId: "",
+    symbolId: "",
+  },
+});
+
+export function useCell_editEventValue() {
+  const editEvent = useRecoilValue(cell_editEvent_store);
+
+  return editEvent;
+}
+export function useSetCell_editEvent() {
+  const setEditEvent = useSetRecoilState(cell_editEvent_store);
+  return setEditEvent;
+}
+export const customLabels_store = atom({
+  key: "customLabels_store",
+  default: {
+    type: "",
+    value: null,
+  },
 });

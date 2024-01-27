@@ -7,7 +7,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   product_column,
-  rails,
+  // rails,
 } from "../../../../../../../../recoil/userEditorStore/cellsStore";
 import ColOne from "./columns/ColOne";
 import ColTwo from "./columns/ColTwo";
@@ -17,17 +17,24 @@ import { showHide_Btn } from "../../../../../../../../recoil/userEditorStore/sea
 import userEditor_DnD from "../../../../../../../../helper/userEditor_DnD";
 
 import React from "react";
+import {
+  addPresent,
+  getRails,
+} from "../../../../../../../../redux/project/history_changer_slice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default React.memo(function () {
   const cssClass = useDynamicCssClass();
-
-  const [railsArray, setRailsArray] = useRecoilState(rails);
+  // const [railsArray, setRailsArray] = useRecoilState(rails);
+  const dispatch = useDispatch();
+  const rails = useSelector(getRails);
 
   const products = useRecoilValue(product_column);
 
   const [showHide, setShowHide] = useRecoilState(showHide_Btn);
 
   // if (is_project_sucess_edit ) return <SuccessBox />;
+
   return (
     <div
       className={"w-100 h-100 bg_info editor-end-column-r position-relative  "}
@@ -47,7 +54,7 @@ export default React.memo(function () {
               (product) => product.id == draggableId
             );
 
-            const findedRail = railsArray.present.find(
+            const findedRail = rails.find(
               (rail) => rail.frontId == destination.droppableId
             );
 
@@ -56,9 +63,10 @@ export default React.memo(function () {
                 findedRail,
                 findedProduct,
                 destination,
-                railsArray.present
+                rails
               );
-              setRailsArray((draft) => ({ ...draft, present: newRails }));
+              dispatch(addPresent(newRails));
+              // setRailsArray((draft) => ({ ...draft, present: newRails }));
             }
             if (
               !findedProduct &&
@@ -70,9 +78,10 @@ export default React.memo(function () {
                 draggableId,
                 destination,
                 source,
-                railsArray.present
+                rails
               );
-              setRailsArray((draft) => ({ ...draft, present: newRails }));
+              dispatch(addPresent(newRails));
+              // setRailsArray((draft) => ({ ...draft, present: newRails }));
             }
           }}
         >

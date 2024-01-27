@@ -23,12 +23,15 @@ import { EditTemplate_project_Mutation } from "../../../../../../../../reactQuer
 import { useSetBorderToProntState } from "../../../../../../../../recoil/userEditorStore/bordersToPrint";
 import { useProject_baseValue } from "../../../../../../../../recoil/userEditorStore/project_base";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { addBorderEvent } from "../../../../../../../../redux/project/border_slice";
 
 const PROJECT_EDIT = "project/edit";
 const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
 const PROJECT_TEMPLATES_EDIT = "project-templates/edit";
 
 export default function () {
+  const disptach = useDispatch();
   const [openPopUp, setOpenPopUp] = useState(false);
   const [printRepetition, setRrintRepetition] = useState(1);
   const [editor_access, _] = useLocalStorage("editor_access");
@@ -56,7 +59,13 @@ export default function () {
   const handle_bundled_project = useBundleProject();
 
   const autoPrint = useScreenShot();
-
+  function handleBorderToPrint(value) {
+    const payload = {
+      type: "none",
+      value,
+    };
+    disptach(addBorderEvent(payload));
+  }
   function handleSetBordersToPrint(e) {
     const checkbox_horizontal = document.getElementById("checkbox-horizontal");
 
@@ -67,32 +76,32 @@ export default function () {
         checkbox_horizontal.isEqualNode(e.target) &&
         checkbox_vertical.checked === false
       ) {
-        setBordersToPrint("HORIZONTAL");
+        handleBorderToPrint("HORIZONTAL");
       }
       if (
         checkbox_vertical.isEqualNode(e.target) &&
         checkbox_horizontal.checked === false
       ) {
-        setBordersToPrint("VERTICAL");
+        handleBorderToPrint("VERTICAL");
       }
       if (checkbox_vertical.checked && checkbox_horizontal.checked) {
-        setBordersToPrint("ALL");
+        handleBorderToPrint("ALL");
       }
     } else {
       if (
         checkbox_horizontal.isEqualNode(e.target) &&
         checkbox_vertical.checked === true
       ) {
-        setBordersToPrint("VERTICAL");
+        handleBorderToPrint("VERTICAL");
       }
       if (
         checkbox_vertical.isEqualNode(e.target) &&
         checkbox_horizontal.checked === true
       ) {
-        setBordersToPrint("HORIZONTAL");
+        handleBorderToPrint("HORIZONTAL");
       }
       if (!checkbox_vertical.checked && !checkbox_horizontal.checked) {
-        setBordersToPrint("NONE");
+        handleBorderToPrint("NONE");
       }
     }
   }

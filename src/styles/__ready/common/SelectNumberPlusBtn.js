@@ -9,6 +9,7 @@ const SelectNumberPlusBtn = ({
   selectedItem = 0,
   mutateValue = 1,
   setItemInList = () => {},
+  handleChange = () => {},
   incresment = () => {},
   decrement = () => {},
   submit = () => {},
@@ -60,7 +61,16 @@ const SelectNumberPlusBtn = ({
           }}
           className={cssClass.pe_3}
         >
-          <Typography.H8>{mutateValue}</Typography.H8>
+          <input
+            type="number"
+            style={{
+              width: 20,
+              height: 20,
+            }}
+            className="border-0 pe-2"
+            onChange={handleChange}
+            value={mutateValue}
+          />
         </section>
 
         <footer className={"d-flex flex-column " + cssClass.me_1}>

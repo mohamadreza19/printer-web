@@ -41,6 +41,10 @@ export default function ({
   },
   index,
   railId = "",
+  projectDimensions = {
+    width: 0,
+    height: 0,
+  },
 }) {
   const setCell = useCellReducer();
   const label_project_template = useGetLabel();
@@ -105,24 +109,28 @@ export default function ({
       }
     }
   }, [deleteAction, duplicateAction]);
+
   function get_Dimensions_based_label_project_template_exist() {
     let dimensions = {
       width: "",
       height: "",
     };
+
     if (projectBase === "CUSTOM") {
       dimensions.width = cell.height;
-      dimensions.height = cell.height;
+      dimensions.height = cell.width;
+
       return dimensions;
+    } else {
+      if (projectDimensions.width && projectDimensions.height) {
+        dimensions.width = projectDimensions.height;
+        dimensions.height = projectDimensions.width;
+      } else {
+        dimensions.width = cell.product.width;
+        dimensions.height = cell.product.widthOfPrintingArea;
+      }
     }
 
-    if (label_project_template.width && label_project_template.height) {
-      dimensions.width = label_project_template.height;
-      dimensions.height = label_project_template.width;
-    } else {
-      dimensions.width = cell.product.width;
-      dimensions.height = cell.product.widthOfPrintingArea;
-    }
     return dimensions;
   }
 
@@ -152,11 +160,7 @@ export default function ({
                 className="position-relative "
               >
                 {/* <Description /> */}
-                <CellSplitController
-                  railId={railId}
-                  cellForCheck={{ ...cell.structure, frontId: cell.frontId }}
-                  // rootFrontId={cell.frontId}
-                />
+                <CellSplitController cellForCheck={cell.structure} />
               </div>
             ) : (
               <InnerContainer
@@ -172,8 +176,7 @@ export default function ({
               >
                 {/* <Description /> */}
                 <CellSplitController
-                  railId={railId}
-                  cellForCheck={{ ...cell.structure, frontId: cell.frontId }}
+                  cellForCheck={cell.structure}
                   // rootFrontId={cell.frontId}
                 />
               </InnerContainer>

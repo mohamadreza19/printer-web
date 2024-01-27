@@ -45,10 +45,7 @@ export default class {
     return newRails;
   }
   static create_customProduct(
-    stateObj = {
-      state: { present: [] },
-      setState: () => {},
-    },
+    state = [],
     option = {
       width: 0,
       height: 0,
@@ -80,7 +77,8 @@ export default class {
         },
       },
     };
-    const newPresentState = stateObj.state.present.map((rail, index) => {
+
+    const newPresentState = state.map((rail, index) => {
       if (option.railToMove === index) {
         const mapedCustomLabels = add_item_to_array_with_repeatNumber(
           rail.customLabels,
@@ -97,7 +95,7 @@ export default class {
       }
       return rail;
     });
-    stateObj.setState((draft) => ({ ...draft, present: newPresentState }));
+    return newPresentState;
     function add_item_to_array_with_repeatNumber(
       array,
       option = {
@@ -116,6 +114,7 @@ export default class {
           height: option.height,
           structure: {
             frontId: id,
+            rootId: id,
             isQrcode: false,
             isBarcode: false,
             isSelected: false,
@@ -156,6 +155,7 @@ export default class {
         productId: product.id,
         frontId: frontId,
         structure: {
+          rootId: frontId,
           frontId: frontId,
           isQrcode: false,
           isBarcode: false,

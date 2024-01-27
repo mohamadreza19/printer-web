@@ -65,6 +65,12 @@ export default function ({
       setCopyNumber(copyNumber - 1);
     }
   }
+  function handle_Change_copyNumber(event) {
+    const value = Number(event.target.value);
+    if (value > 1) {
+      setCopyNumber(value);
+    }
+  }
   function handle_click_plus_btn() {
     const option = {
       numberOfCopy: Number(copyNumber),
@@ -195,7 +201,18 @@ export default function ({
                       }}
                       className={cssClass.pe_3}
                     >
-                      <Typography.H8>{copyNumber}</Typography.H8>
+                      <input
+                        style={{
+                          width: 20,
+                          height: 20,
+                          position: "relative",
+                          left: 10,
+                        }}
+                        type="number"
+                        onChange={handle_Change_copyNumber}
+                        className="border-0"
+                        value={copyNumber}
+                      />
                     </section>
 
                     <footer className={"d-flex flex-column " + cssClass.me_1}>

@@ -14,6 +14,9 @@ import {
   ColumnOne_splitRow,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
+import { useDispatch } from "react-redux";
+import useSelectedCell from "../../../../../../../../../../../redux/project/selectedCell";
+import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 
 export default function ({
   mergeRowContent,
@@ -21,17 +24,21 @@ export default function ({
   mergeColumnContent,
   columnSeparatorContent,
 }) {
-  const [splitColumn, setSplitColumn] = useRecoilState(ColumnOne_splitColumn);
-  const [splitRow, setSplitRow] = useRecoilState(ColumnOne_splitRow);
-  const [joinRow, setJoinRow] = useRecoilState(ColumnOne_joinRow);
-  const [joinColumn, setJoinColumn] = useRecoilState(ColumnOne_joinColumn);
+  const dispatch = useDispatch();
+  const Cell = useSelectedCell("get");
+
+  function onClick(type = "") {
+    dispatch(
+      addEditEvent({
+        type: type,
+        itemId: Cell.frontId,
+      })
+    );
+  }
   const SplitRowBox = () => {
-    function onClick() {
-      setSplitRow(true);
-    }
     return (
       <section
-        onClick={onClick}
+        onClick={() => onClick("SPLIT/ROW")}
         className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
       >
         <SpliteRow />
@@ -39,12 +46,9 @@ export default function ({
     );
   };
   const JoinRowBox = () => {
-    function onClick() {
-      setJoinRow(true);
-    }
     return (
       <section
-        onClick={onClick}
+        onClick={() => onClick("JOIN/ROW")}
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <JoinRow />
@@ -52,25 +56,19 @@ export default function ({
     );
   };
   const SplitColumnBox = () => {
-    function onClick() {
-      setSplitColumn(true);
-    }
     return (
       <section
         className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
-        onClick={onClick}
+        onClick={() => onClick("SPLIT/COLUMN")}
       >
         <SpliteColumn />
       </section>
     );
   };
   const JoinColumnBox = () => {
-    function onClick() {
-      setJoinColumn(true);
-    }
     return (
       <section
-        onClick={onClick}
+        onClick={() => onClick("JOIN/COLUMN")}
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <JoinColumn />

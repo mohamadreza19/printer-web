@@ -1,4 +1,20 @@
-import { atom } from "recoil";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+
+export const dynamicNumber = atom({
+  key: "dynamicNumber",
+  default: {
+    type: "", //padding | margin | rotate | fontSize
+    number: 0,
+  },
+});
+
+export function useValue_dynamicNumber() {
+  return useRecoilValue(dynamicNumber);
+}
+
+export function useSet_dynamicNumber() {
+  return useSetRecoilState(dynamicNumber);
+}
 
 export const ColumnOne_splitRow = atom({
   key: "splitRow",

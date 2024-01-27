@@ -18,7 +18,8 @@ import { ToastContainer } from "./styles/__ready/Toasts";
 
 import changeBaseUrlBasedHost from "./utility/changeBaseUrlBasedHost";
 
-import Providers from "./redux/Providers";
+import Providers from "./redux/ReduxProviders";
+import ReduxProviders from "./redux/ReduxProviders";
 
 function App() {
   changeBaseUrlBasedHost();
@@ -28,17 +29,19 @@ function App() {
   const queryClient = new QueryClient();
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackComponent}>
-      <MycacheProider>
-        <ThemeProvider
-          //  theme={language === "fa" ? RtlTheme : LtrTheme}
-          // theme={language == "fa" ? RtlTheme : LtrTheme}
-          theme={RtlTheme}
-        >
-          <ToastContainer>
-            <QueryClientProvider client={queryClient} children={<Routes />} />
-          </ToastContainer>
-        </ThemeProvider>
-      </MycacheProider>
+      <ReduxProviders>
+        <MycacheProider>
+          <ThemeProvider
+            //  theme={language === "fa" ? RtlTheme : LtrTheme}
+            // theme={language == "fa" ? RtlTheme : LtrTheme}
+            theme={RtlTheme}
+          >
+            <ToastContainer>
+              <QueryClientProvider client={queryClient} children={<Routes />} />
+            </ToastContainer>
+          </ThemeProvider>
+        </MycacheProider>
+      </ReduxProviders>
     </ErrorBoundary>
   );
 }

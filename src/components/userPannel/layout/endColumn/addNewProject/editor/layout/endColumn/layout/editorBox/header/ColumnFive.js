@@ -12,21 +12,56 @@ import {
   ColumnFive_qr,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
+import { useDispatch } from "react-redux";
+import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
+import useSelectedCell from "../../../../../../../../../../../redux/project/selectedCell";
 
 export default function ({ content }) {
+  const dispatch = useDispatch();
+  const Cell = useSelectedCell("get");
   const [deleteAction, setdeleteDeleteAction] =
     useRecoilState(ColumnFive_delete);
   const [duplicateAction, setDuplicateAction] =
     useRecoilState(ColumnFive_duplicate);
   const [isBacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
   const [isQrWant, setisQrWant] = useRecoilState(ColumnFive_qr);
+
+  function handleDelete() {
+    dispatch(
+      addEditEvent({
+        itemId: Cell.frontId,
+        type: "DELETECELL",
+      })
+    );
+  }
+  function handleDuplicate() {
+    dispatch(
+      addEditEvent({
+        itemId: Cell.rootId,
+        type: "DUPLICATECELL",
+      })
+    );
+  }
+  function handleBarcode() {
+    dispatch(
+      addEditEvent({
+        itemId: Cell.frontId,
+        type: "ISBACODE",
+      })
+    );
+  }
+  function handleQRcode() {
+    dispatch(
+      addEditEvent({
+        itemId: Cell.frontId,
+        type: "QRCODE",
+      })
+    );
+  }
   const DeleteBox = () => {
-    function onClick() {
-      setdeleteDeleteAction(true);
-    }
     return (
       <section
-        onClick={onClick}
+        onClick={handleDelete}
         className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
       >
         <Delete />
@@ -37,12 +72,9 @@ export default function ({ content }) {
     );
   };
   const DuplicateBox = () => {
-    function onClick() {
-      setDuplicateAction(true);
-    }
     return (
       <section
-        onClick={onClick}
+        onClick={handleDuplicate}
         className="editor-small-cell-box d-flex justify-content-center align-items-center"
       >
         <Duplicate />
@@ -53,13 +85,9 @@ export default function ({ content }) {
     );
   };
   const BarcodeBox = () => {
-    function onClick() {
-      setisQrWant(false);
-      setIsBacodeWant(true);
-    }
     return (
       <section
-        onClick={onClick}
+        onClick={handleBarcode}
         className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
       >
         <OneTwo />
@@ -70,13 +98,9 @@ export default function ({ content }) {
     );
   };
   const QrcodeBox = () => {
-    function onClick() {
-      setIsBacodeWant(false);
-      setisQrWant(true);
-    }
     return (
       <section
-        onClick={onClick}
+        onClick={handleQRcode}
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <Barcode />

@@ -5,10 +5,7 @@ import Label_product from "./Label_product";
 
 import Search from "./Search";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  product_column,
-  rails,
-} from "../../../../../../../../../../recoil/userEditorStore/cellsStore";
+import { product_column } from "../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import {
   Admin_User_Image,
   Admin_User_ProductList_Call,
@@ -22,12 +19,20 @@ import { isAllowShowProductsBookmark_store } from "../../../../../../../../../..
 import { useState } from "react";
 import { useView } from "../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
 import userEditor_DnD from "../../../../../../../../../../helper/userEditor_DnD";
+import {
+  addPresent,
+  getRails,
+  getRailsLength,
+} from "../../../../../../../../../../redux/project/history_changer_slice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function () {
+  const railsLength = useSelector(getRailsLength);
+  const rails = useSelector(getRails);
+  const dispatch = useDispatch();
   const cssClass = useDynamicCssClass();
   const [product_column_, setProduct_column_] = useRecoilState(product_column);
-  const [railsObj, setRailsObj] = useRecoilState(rails);
-  const railsLength = railsObj.present.length;
+
   const [filteredProduct_column_, setFilteredProduct_column_] = useState([]);
   const [search, setSearch] = useState("");
   const isAllowShowProductsBookmark = useRecoilValue(
@@ -98,11 +103,12 @@ export default function () {
   ) {
     const newPresentRails = userEditor_DnD.create_rail_with_customLabel(
       product,
-      railsObj.present,
+      rails,
       option
     );
-
-    setRailsObj((draft) => ({ ...draft, present: newPresentRails }));
+    console.log({ option });
+    console.log({ newPresentRails });
+    dispatch(addPresent(newPresentRails));
   }
 
   function onlyShowBookmarkedProduct() {

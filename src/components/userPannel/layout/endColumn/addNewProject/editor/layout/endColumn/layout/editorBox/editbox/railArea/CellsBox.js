@@ -14,6 +14,8 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { useGetLabel } from "../../../../../../../../../../../../recoil/store/label";
 import useLocalStorage from "react-use-localstorage";
+import { useSelector } from "react-redux";
+import { getProjectDimensions } from "../../../../../../../../../../../../redux/project/project._slice";
 
 export default function ({
   key,
@@ -23,6 +25,7 @@ export default function ({
 }) {
   // const cells = useCells();
   const [editor_access, _] = useLocalStorage("editor_access");
+  const projectDimensions = useSelector(getProjectDimensions);
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
   const [railsLength, setRailsLength] = useRecoilState(railsLength_store);
@@ -31,15 +34,15 @@ export default function ({
 
   function get_railsWidth_based_editor_access() {
     if (editor_access === "project/edit") {
-      return railsWidth;
+      return projectDimensions.width;
     }
-    return label_project_template.width;
+    return projectDimensions.width;
   }
   function get_railsLegth_based_editor_access() {
     if (editor_access === "project/edit") {
-      return railsLength;
+      return projectDimensions.height;
     }
-    return label_project_template.width;
+    return projectDimensions.width;
   }
 
   return (
@@ -64,7 +67,13 @@ export default function ({
           >
             {customLabels?.map((c, index) => {
               return (
-                <CellBox key={index} index={index} cell={c} railId={railId} />
+                <CellBox
+                  projectDimensions={projectDimensions}
+                  key={index}
+                  index={index}
+                  cell={c}
+                  railId={railId}
+                />
               );
             })}
             {provided.placeholder}

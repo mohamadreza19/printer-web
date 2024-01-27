@@ -12,112 +12,113 @@ import {
   ColumnFive_qr,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
+import { useDispatch } from "react-redux";
+import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
+import useSelectedCell from "../../../../../../../../../../../redux/project/selectedCell";
 
-export default function ({
-  deleteContent,
-  copyContent,
-  barcodeContent,
-  qrcodeContent,
-}) {
+export default function ({ content }) {
+  const dispatch = useDispatch();
+  const Cell = useSelectedCell("get");
   const [deleteAction, setdeleteDeleteAction] =
     useRecoilState(ColumnFive_delete);
   const [duplicateAction, setDuplicateAction] =
     useRecoilState(ColumnFive_duplicate);
   const [isBacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
   const [isQrWant, setisQrWant] = useRecoilState(ColumnFive_qr);
+
+  function handleDelete() {
+    dispatch(
+      addEditEvent({
+        itemId: Cell.frontId,
+        type: "DELETECELL",
+      })
+    );
+  }
+  function handleDuplicate() {
+    dispatch(
+      addEditEvent({
+        itemId: Cell.rootId,
+        type: "DUPLICATECELL",
+      })
+    );
+  }
+  function handleBarcode() {
+    dispatch(
+      addEditEvent({
+        itemId: Cell.frontId,
+        type: "ISBACODE",
+      })
+    );
+  }
+  function handleQRcode() {
+    dispatch(
+      addEditEvent({
+        itemId: Cell.frontId,
+        type: "QRCODE",
+      })
+    );
+  }
   const DeleteBox = () => {
-    function onClick() {
-      setdeleteDeleteAction(true);
-    }
     return (
       <section
-        onClick={onClick}
-        className="editor-small-cell-box d-flex justify-content-center align-items-center ms-2"
+        onClick={handleDelete}
+        className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
       >
         <Delete />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>{content.delete}</Typography.H9>
+        </div>
       </section>
     );
   };
   const DuplicateBox = () => {
-    function onClick() {
-      setDuplicateAction(true);
-    }
     return (
       <section
-        onClick={onClick}
-        className="editor-small-cell-box d-flex justify-content-center align-items-center  "
+        onClick={handleDuplicate}
+        className="editor-small-cell-box d-flex justify-content-center align-items-center"
       >
         <Duplicate />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>{content.copy}</Typography.H9>
+        </div>
       </section>
     );
   };
   const BarcodeBox = () => {
-    function onClick() {
-      setIsBacodeWant(true);
-    }
     return (
       <section
-        onClick={onClick}
-        className="editor-small-cell-box  d-flex justify-content-center align-items-center"
+        onClick={handleBarcode}
+        className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
       >
         <OneTwo />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>{content.barcode}</Typography.H9>
+        </div>
       </section>
     );
   };
   const QrcodeBox = () => {
-    function onClick() {
-      setisQrWant(true);
-    }
     return (
       <section
-        onClick={onClick}
+        onClick={handleQRcode}
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <Barcode />
+        <div className="editor-small-info-cell-box">
+          <Typography.H9>{content.QRCode}</Typography.H9>
+        </div>
       </section>
     );
   };
   return (
     <article className="">
-      <header className="d-flex justify-content-between align-items-center mb-2 ">
-        <section
-          style={{
-            width: "108px",
-          }}
-          className="d-flex justify-content-end align-items-center"
-        >
-          <Typography.H9_5>{deleteContent}</Typography.H9_5>
-          <DeleteBox />
-        </section>
-        <section
-          style={{
-            width: "144px",
-          }}
-          className="d-flex justify-content-end align-items-center"
-        >
-          <Typography.H9_5 className="me-2">{copyContent}</Typography.H9_5>
-          <DuplicateBox />
-        </section>
+      <header className="d-flex mb-2">
+        <DeleteBox />
+        <DuplicateBox />
       </header>
-      <footer className="d-flex justify-content-end align-items-center">
-        <section
-          style={{
-            width: "108px",
-          }}
-          className="d-flex justify-content-end align-items-center "
-        >
-          <Typography.H9_5 className="me-2">{barcodeContent}</Typography.H9_5>
-          <BarcodeBox />
-        </section>
-        <section
-          style={{
-            width: "144px",
-          }}
-          className="d-flex justify-content-end align-items-center"
-        >
-          <Typography.H9_5 className="me-2">{qrcodeContent}</Typography.H9_5>
-          <QrcodeBox />
-        </section>
+      <footer className="d-flex">
+        <BarcodeBox />
+        <QrcodeBox />
       </footer>
     </article>
   );

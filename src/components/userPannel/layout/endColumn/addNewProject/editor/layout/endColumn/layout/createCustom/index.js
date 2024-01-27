@@ -9,13 +9,27 @@ import {
 } from "../../../../../../../../../../styles/__ready/EditorIcons";
 import SelectNumberPlusBtn from "../../../../../../../../../../styles/__ready/common/SelectNumberPlusBtn";
 import { useRecoilState } from "recoil";
-import { rails } from "../../../../../../../../../../recoil/userEditorStore/cellsStore";
+
 import userEditor_DnD from "../../../../../../../../../../helper/userEditor_DnD";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addPresent,
+  getRails,
+  getRailsLength,
+} from "../../../../../../../../../../redux/project/history_changer_slice";
 
 const CreateCustom = () => {
-  const [railsObj, setRailsObj] = useRecoilState(rails);
+  const railsLength = useSelector(getRailsLength);
+  const rails = useSelector(getRails);
+  const dispatch = useDispatch();
 
-  return <CreateCustomPoduct railsObj={railsObj} setRailsObj={setRailsObj} />;
+  return (
+    <CreateCustomPoduct
+      railsLength={railsLength}
+      rails={rails}
+      setRails={dispatch}
+    />
+  );
 };
 const Input = styled.input`
   width: 105px;
@@ -27,8 +41,8 @@ const Input = styled.input`
 class CreateCustomPoduct extends React.Component {
   constructor(
     props = {
-      setRailsObj: () => {},
-      railsObj: {},
+      setRails: () => {},
+      rails: {},
     }
   ) {
     super();
@@ -56,13 +70,19 @@ class CreateCustomPoduct extends React.Component {
     this.setState({ ...this.state, railToMove });
   };
   getRailLength = () => {
-    const railsLength = this.props.railsObj.present.length;
+    const railsLength = this.props.railsLength;
     return railsLength;
   };
   incresment_repeatNumber = () => {
     const repeatNumber = this.state.repeatNumber;
     this.setState({ ...this.state, repeatNumber: repeatNumber + 1 });
     // setCopyNumber(copyNumber + 1);
+  };
+  handleChange_repeatNumber = (event) => {
+    const value = Number(event.target.value);
+    if (value > 1) {
+      this.setState({ ...this.state, repeatNumber: value });
+    }
   };
   decrement_repeatNumber = () => {
     if (this.state.repeatNumber > 1) {
@@ -71,13 +91,12 @@ class CreateCustomPoduct extends React.Component {
     }
   };
   submit = () => {
-    userEditor_DnD.create_customProduct(
-      {
-        state: this.props.railsObj,
-        setState: this.props.setRailsObj,
-      },
+    const newRails = userEditor_DnD.create_customProduct(
+      this.props.rails,
+
       this.state
     );
+    this.props.setRails(addPresent(newRails));
   };
   render() {
     return (
@@ -132,6 +151,7 @@ class CreateCustomPoduct extends React.Component {
                 incresment={this.incresment_repeatNumber}
                 decrement={this.decrement_repeatNumber}
                 mutateValue={this.state.repeatNumber}
+                handleChange={this.handleChange_repeatNumber}
 
                 // railsLength={railsLength}
               />

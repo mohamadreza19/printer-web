@@ -45,8 +45,8 @@ export default function (
     username: string().min(4, messages.username.minLength),
     password: string()
       // .min(8, messages.password.minLength)
-      .max(16, messages.password.maxLength)
-      .matches(/^(?=.*\d).{0,}$/, messages.password.match),
+      .max(16, messages.password.maxLength),
+    // .matches(/^(?=.*\d).{0,}$/, messages.password.match),
     // .matches(/^(?=.*\d).{0,}$/, messages.password.match),
     // .matches(
     //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{0,}$/,
