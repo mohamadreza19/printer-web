@@ -17,7 +17,7 @@ export function getSelectedCellSyle() {
   const selectedCellJson = localStorage.getItem(KEY);
   const parsed = JSON.parse(selectedCellJson);
 
-  if ("content" in parsed) {
+  if (parsed && "content" in parsed) {
     return parsed.content.style;
   } else {
     return {
