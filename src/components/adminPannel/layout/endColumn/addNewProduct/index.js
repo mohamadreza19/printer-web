@@ -15,27 +15,49 @@ import RowTwo from "./RowTwo";
 import UploadFile from "./uploadFile";
 //__v
 import useValidateproduct from "../../../../../helper/admin_add_product_label/validate_product";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { setProduct_label_key } from "../../../../../reactQuery/querykey/admin_key";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  validate,
+  getPageOneProductErrorValidate,
+} from "../../../../../redux/product/product_slice";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
-  const [allowNextFlow, setAllowNextFlow] = useState(false);
+  const [allowNextPage, setAllowNextPage] = useState(false);
   const allInput = useAdmin_Add_Product();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const pageOneProductErrorValidate = useSelector(
+    getPageOneProductErrorValidate
+  );
 
   const cssClass = useDynamicCssClass();
   const content =
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label;
   const handleProductNameValidate = useValidateproduct();
-  async function handle() {
-    try {
-      await handleProductNameValidate();
-      setAllowNextFlow(true);
-    } catch (error) {}
+
+  const [state, setState] = useState();
+
+  function handle(pageOneProductErrorValidate) {
+    dispatch(validate());
+
+    // if (!pageOneProductHasErrorValidate) {
+    //   setAllowNextPage(true);
+    // }
   }
-  if (allowNextFlow) {
+
+  if (allowNextPage) {
     return <UploadFile />;
   }
 
+  function handle_OnChange_SelectBox(e) {
+    // console.log(e.target.value);
+    navigate("/admin/" + e.target.value, {
+      replace: true,
+    });
+  }
   return (
     <div
       className="w-100 h-100
@@ -46,7 +68,22 @@ export default function () {
       <Header />
       <Grid container className={"mt-5 " + cssClass.ps_6}>
         <Grid item lg={12} className="">
-          <RowOne />
+          {/* <RowOne /> */}
+          <article className={" " + cssClass.me_3}>
+            <select
+              onChange={handle_OnChange_SelectBox}
+              name="cars"
+              id="cars"
+              className="select-extra-large"
+            >
+              <option value="add-product">
+                <Typography.H8>{content.addNewProduct}</Typography.H8>
+              </option>
+              <option value="add-label-beta">
+                <Typography.H9>{content.addNewLabel}</Typography.H9>
+              </option>
+            </select>
+          </article>
         </Grid>
         <Grid item lg={12} className="height">
           <RowTwo />
@@ -60,7 +97,12 @@ export default function () {
         </Grid>
       </Grid>
       <footer className="w-100 d-flex justify-content-end px-4">
-        <Buttons.Contained onClick={handle} className="button_large">
+        <Buttons.Contained
+          onClick={() => {
+            handle(pageOneProductErrorValidate);
+          }}
+          className="button_large"
+        >
           <Typography.H7 className="font-300">ادامه</Typography.H7>
         </Buttons.Contained>
       </footer>

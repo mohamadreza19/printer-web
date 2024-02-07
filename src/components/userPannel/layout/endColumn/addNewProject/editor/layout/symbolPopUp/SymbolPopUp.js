@@ -12,13 +12,30 @@ import {
 } from "../../../../../../../../reactQuery/common/callGetService";
 import Symbol from "./Symbol";
 import { memo, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useSelectedCell from "../../../../../../../../redux/project/selectedCell";
+import { addEditEvent } from "../../../../../../../../redux/project/edit_event_slice";
+import { getSelectedCell } from "../../../../../../../../redux/project/selectedCell_slice";
 function SymbolPopUp() {
+  const dispatch = useDispatch();
+  const cell = useSelector(getSelectedCell);
+
   const showSymbol = useRecoilValue(isShowSymbol_store);
   const symbolList = Admin_UserSymbols("user");
   const symbolDetail = Admin_User_Symbol("user");
-  const [symbolUsed, setSymbolUsed] = useRecoilState(symbolUsed_store);
 
   const language = useLanguage();
+  function onClick(symbolId) {
+    if (cell.isSelected) {
+      const payload = {
+        type: "SETSYMBOL",
+        symbolId: symbolId,
+        itemId: cell.frontId,
+      };
+
+      dispatch(addEditEvent(payload));
+    }
+  }
 
   if (symbolList.data && symbolList.data.length > 0)
     return (
@@ -42,9 +59,9 @@ function SymbolPopUp() {
         >
           {symbolList.data.map((symbol) => (
             <Symbol
+              onClick={() => onClick(symbol.id)}
               key={symbol.id}
               id={symbol.id}
-              setSymbolUsed={setSymbolUsed}
               symbolDetail={symbolDetail}
             />
           ))}

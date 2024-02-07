@@ -7,7 +7,7 @@ export default function ({ items = [], currentList = "" }) {
   const naviage = useNavigate();
   function navigate_edit_product_label(id) {
     if (currentList === "Product") {
-      naviage(`/admin/add-product/edit/${id}`);
+      naviage(`/admin/edit-product/${id}`);
     }
     if (currentList === "Label") {
       setEditor_access("project-templates/edit");

@@ -7,6 +7,7 @@ export class PayloadCenter {
     type: "",
     itemId: "",
     value: "",
+    symbolId: "",
   };
 
   static setEvent(payload) {
@@ -36,6 +37,13 @@ export class CellTool {
       _else: { ...this.#structure, isSelected: false },
     };
   }
+  get UN_SELECT() {
+    const structure = this.#structure;
+    return {
+      _target: { ...structure, isSelected: false },
+      _else: { ...structure, isSelected: false },
+    };
+  }
   get VIEW() {
     const structure = this.#structure;
 
@@ -46,7 +54,7 @@ export class CellTool {
   }
   get ["SPLIT/COLUMN"]() {
     const structure = this.#structure;
-    console.log({ structure });
+
     const target = {
       ...structure,
       split: "vertical",
@@ -154,9 +162,10 @@ export class CellTool {
 
   get SETSYMBOL() {
     const structure = this.#structure;
+
     const target = {
       ...structure,
-      symbolId: PayloadCenter._symbolId,
+      symbolId: PayloadCenter.event.symbolId,
     };
     return {
       _target: target,
@@ -558,6 +567,7 @@ export class Structure {
     const { _target, _else } = new CellTool(structure)[
       PayloadCenter.event.type
     ];
+
     if (PayloadCenter.event.itemId) {
       switch (structure.frontId === PayloadCenter.event.itemId) {
         case true:
@@ -574,42 +584,7 @@ export class Structure {
           return _else;
       }
     }
-    // if (PayloadCenter._parentId) {
-    //   if (structure.parentId === PayloadCenter._parentId) {
-    //     if (
-    //       PayloadCenter._action !== "DELETECELL" &&
-    //       PayloadCenter._action !== "JOINCOLUMN" &&
-    //       PayloadCenter._action !== "JOINROW"
-    //     ) {
-    //       const style = _target.content.style;
 
-    //       PayloadCenter._setSelectedCellForReadStyle(style);
-    //     }
-
-    //     return _target;
-    //   } else {
-    //     return _else;
-    //   }
-    // }
-
-    // if (PayloadCenter._cellId) {
-    //   if (structure.frontId === PayloadCenter._cellId) {
-    //     if (
-    //       PayloadCenter._action !== "DELETECELL" &&
-    //       PayloadCenter._action !== "JOINCOLUMN" &&
-    //       PayloadCenter._action !== "JOINROW"
-    //     ) {
-    //       const style = _target.content.style;
-
-    //       PayloadCenter._setSelectedCellForReadStyle(style);
-    //     }
-
-    //     return _target;
-    //   }
-    //   return _else;
-
-    //   // return structure;
-    // }
     return _else;
   }
   vertical(structure) {
@@ -647,6 +622,14 @@ export class CustomLabel {
       structure: {},
     }
   ) {
+    if (
+      PayloadCenter.event.type === "JOIN/COLUMN" ||
+      PayloadCenter.event.type === "JOIN/ROW"
+    ) {
+      if (customLabel.structure.split === "none") {
+        PayloadCenter.event.itemId = "";
+      }
+    }
     this.#_customLabel = {
       ...customLabel,
       structure: new Structure(customLabel.structure).structure,

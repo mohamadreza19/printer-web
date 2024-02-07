@@ -21,7 +21,7 @@ import AdminPannel from "../components/adminPannel";
 import AdminControlPannel from "../components/adminPannel/layout/endColumn/controlPannel";
 import AdimHistory from "../components/adminPannel/layout/endColumn/controlPannel/adimHistory";
 import AdminAddNewUser from "../components/adminPannel/layout/endColumn/controlPannel/adminAddNewUser";
-import AdminAddProduct from "../components/adminPannel/layout/endColumn/addNewProduct";
+
 import AdminAddProduct_UploadFile from "../components/adminPannel/layout/endColumn/addNewProduct/uploadFile";
 
 import AdminList_Of_Label_And_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product";
@@ -48,6 +48,7 @@ import { Suspense } from "react";
 import ViewPrinitChart from "../components/adminPannel/layout/endColumn/viewPrinitChart";
 import Loading from "../styles/__ready/Loading";
 import AdminAuthentication from "../controller/AdminAuthentication";
+import Product from "../components/adminPannel/layout/endColumn/addProduct/Product";
 
 const ListOfProject = React.lazy(() =>
   import("../components/userPannel/layout/endColumn/listOfProject")
@@ -117,11 +118,8 @@ export default function () {
         <Route path="control-pannel" element={<AdminControlPannel />} />
         <Route path="control-pannel/history" element={<AdimHistory />} />
         <Route path="control-pannel/add-user" element={<AdminAddNewUser />} />
-        <Route path="add-product/" element={<AdminAddProduct />} />
-        <Route
-          path="add-product/edit/:productid"
-          element={<Admin_Edit_Product />}
-        />
+        <Route path="add-product/" element={<Product />} />
+        <Route path="edit-product/:productid" element={<Product />} />
         <Route
           path="add-product/upload-flie"
           element={<AdminAddProduct_UploadFile />}

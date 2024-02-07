@@ -5,34 +5,43 @@ import {
 import { TextFieldFUN_v5_Big } from "../../../../../styles/__ready/Textfields";
 import Typography from "../../../../../styles/__ready/Typography";
 import useAdminAdd_Product from "../../../../../helper/admin_add_product_label/control_product_dynamic_input";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  addProduct,
+  getProductDescription,
+} from "../../../../../redux/product/product_slice";
+import { useDispatch, useSelector } from "react-redux";
 export default function () {
   const cssClass = useDynamicCssClass();
+  const dispatch = useDispatch();
+  const productDescription = useSelector(getProductDescription);
+  const [lan, setLan] = useState("persian");
   const content =
     useContent_Based_Language().AdminPannel.end_col.addNew_Project_Or_Label
       .rowFour;
-  const {
-    additionalInfoValue,
-    additionalInfoHandeler,
-    handleSetLanguage_Of__AdditionalInfo_Header_Card,
-    AdditionalInfo_headerCardCurrentBackground,
-  } = useAdminAdd_Product("additionalInfo");
+  function handleChangeLan(value) {
+    setLan(value);
+  }
+  function handleChangeProductDescription(lan, event) {
+    const value = event.target.value;
 
-  useEffect(() => {
-    return () => {
-      const e = {
-        target: {
-          value: " ",
-        },
-      };
-      handleSetLanguage_Of__AdditionalInfo_Header_Card("fa");
-      additionalInfoHandeler(e);
-      handleSetLanguage_Of__AdditionalInfo_Header_Card("en");
-      additionalInfoHandeler(e);
-      handleSetLanguage_Of__AdditionalInfo_Header_Card("tr");
-      additionalInfoHandeler(e);
+    const payload = {
+      type: "ADD/DESCRIPTION",
+      lan,
+      value,
     };
-  }, []);
+    dispatch(addProduct(payload));
+  }
+  function getCssClassBasedLan(target) {
+    if (target === lan) {
+      return "bg_primary_g color-white";
+    }
+    return "bg_primary_light color-primary";
+  }
+  function getCurrentNameBasedLan() {
+    return productDescription[lan];
+  }
+
   return (
     <>
       <div className={"position-relative " + cssClass.ms_3}>
@@ -59,15 +68,13 @@ export default function () {
           <TextFieldFUN_v5_Big
             className="language-card-select-large"
             InputclassName=" "
-            value={additionalInfoValue}
-            onChange={additionalInfoHandeler}
+            onChange={(event) => handleChangeProductDescription(lan, event)}
+            value={getCurrentNameBasedLan()}
           />
         </article>
         <article className="position-absolute d-flex add-product-big-text-area-header-card ">
           <section
-            onClick={() =>
-              handleSetLanguage_Of__AdditionalInfo_Header_Card("fa")
-            }
+            onClick={() => handleChangeLan("persian")}
             style={{
               zIndex: "1",
               right: "34.32rem",
@@ -75,7 +82,7 @@ export default function () {
             }}
             className={
               "laguage-card  d-flex justify-content-center align-item-center " +
-              AdditionalInfo_headerCardCurrentBackground.persian
+              getCssClassBasedLan("persian")
             }
           >
             <span
@@ -91,9 +98,7 @@ export default function () {
             </span>
           </section>
           <section
-            onClick={() =>
-              handleSetLanguage_Of__AdditionalInfo_Header_Card("en")
-            }
+            onClick={() => handleChangeLan("english")}
             style={{
               zIndex: "1",
               right: "40rem",
@@ -101,7 +106,7 @@ export default function () {
             }}
             className={
               "laguage-card  d-flex justify-content-center align-item-center mx-1 " +
-              AdditionalInfo_headerCardCurrentBackground.english
+              getCssClassBasedLan("english")
             }
           >
             <span
@@ -116,9 +121,7 @@ export default function () {
             </span>
           </section>
           <section
-            onClick={() =>
-              handleSetLanguage_Of__AdditionalInfo_Header_Card("tr")
-            }
+            onClick={() => handleChangeLan("turkish")}
             style={{
               zIndex: "1",
               right: "47.59rem",
@@ -126,7 +129,7 @@ export default function () {
             }}
             className={
               "laguage-card  d-flex justify-content-center align-item-center " +
-              AdditionalInfo_headerCardCurrentBackground.turkish
+              getCssClassBasedLan("turkish")
             }
           >
             <span

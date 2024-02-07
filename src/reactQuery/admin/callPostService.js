@@ -19,6 +19,8 @@ import {
   admin_user_symbolList,
   setAdmin_user_symbolList,
 } from "../querykey/common";
+import { useSelector } from "react-redux";
+import { getProduct } from "../../redux/product/product_slice";
 export const AdminLogin_Mutation = () => {
   const [_, setIsAdminLogin] = useRecoilState(isAdminLogin);
 
@@ -125,27 +127,24 @@ export const AdminAddUser_Mutation = () => {
 export const AdminAddProduct_Mutation = () => {
   const { value: token } = useAdmin_CachedToken();
   const setLoading = useToastReducer();
-  const meta = useAdd_product("none", false, true, false);
-  const modifedDate = { ...meta };
 
-  delete modifedDate.picture;
   const result = useMutation({
     mutationKey: "add-product",
-    mutationFn: (body) => api_post.add_product(token, modifedDate),
+    mutationFn: (body) => api_post.add_product(token, body),
   });
   const { isSuccess, isLoading, error } = result;
   useEffect(() => {
     if (isLoading) {
-      // setLoading(() => ({
-      //   isShow: true,
-      //   message: "",
-      // }));
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
     }
     if (isSuccess) {
-      // setLoading(() => ({
-      //   isShow: false,
-      //   message: "",
-      // }));
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
     }
     if (error) {
       console.log(error);

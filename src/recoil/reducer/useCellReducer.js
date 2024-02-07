@@ -13,8 +13,6 @@ import shortid from "shortid";
 import {
   ColumnFour_redo,
   ColumnFour_undo,
-  useSet_dynamicNumber,
-  useValue_dynamicNumber,
 } from "../userEditorStore/EditorHeaderActionButton";
 import React, { useEffect } from "react";
 

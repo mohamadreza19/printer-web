@@ -27,6 +27,12 @@ export default function () {
   const [allowReplaceInputToDiv, setAllowReplaceInputToDiv] = useRecoilState(
     allowReplaceInputToDiv_store
   );
+  //
+  const addRailBtns = document.getElementsByClassName("add-rail");
+  const deleteRailBtns = document.getElementsByClassName("delete-rail");
+  const railDividers = document.getElementsByClassName("dashed-divider");
+
+  //
 
   const uploadFile = AddImage_ToPrint_Local_Mutation();
   const addPrint = Add_Print();
@@ -61,43 +67,61 @@ export default function () {
     if (type === PRODUCT) {
       dispatch(changeType("use"));
       handleOnclickSelectionButton("VIEW");
-      setTimeout(async () => {
-        const rootElement = document.querySelector("#rails-box");
-        const clonedRootElement = rootElement.cloneNode(true);
 
-        clonedRootElement.classList.remove("rails-box-pt");
+      const rootElement = document.querySelector("#rails-box");
+      forEach(addRailBtns, (item) => {
+        item.style.display = "none";
+      });
+      forEach(railDividers, (item) => {
+        item.style.display = "none";
+      });
+      forEach(deleteRailBtns, (item) => {
+        item.style.display = "none";
+      });
 
-        document.body.appendChild(clonedRootElement);
-        clonedRootElement.childNodes.forEach((child) => {
-          child.style.border = "none";
-        });
+      const clonedRootElement = rootElement.cloneNode(true);
 
-        const imgListener = new ImageListener({
-          element: clonedRootElement,
-        });
-        const imgDataURL = await imgListener.getImageDataURLFromCanvas();
+      clonedRootElement.classList.remove("rails-box-pt");
 
-        const blob = imgListener.getB64toBlob(imgDataURL);
+      document.body.appendChild(clonedRootElement);
+      clonedRootElement.childNodes.forEach((child) => {
+        child.style.border = "none";
+      });
 
-        const generatedForm = new FormCreator({
-          elemetWidth: railsWidth,
-          blobedFile: blob,
-          printRepetition,
-        });
+      const imgListener = new ImageListener({
+        element: clonedRootElement,
+      });
+      const imgDataURL = await imgListener.getImageDataURLFromCanvas();
 
-        const form = generatedForm.imageInputFormGenerator();
+      const blob = imgListener.getB64toBlob(imgDataURL);
 
-        addPrint.mutate({
-          projectId: Number(id),
-        });
+      const generatedForm = new FormCreator({
+        elemetWidth: railsWidth,
+        blobedFile: blob,
+        printRepetition,
+      });
 
-        form.submit();
-        dispatch(changeType("none"));
-        setTimeout(() => {
-          document.body.removeChild(clonedRootElement);
-          handleShow_dashed_divider(true);
-        }, 10000);
-      }, 3000);
+      const form = generatedForm.imageInputFormGenerator();
+
+      addPrint.mutate({
+        projectId: Number(id),
+      });
+
+      form.submit();
+      dispatch(changeType("none"));
+      setTimeout(() => {
+        document.body.removeChild(clonedRootElement);
+        handleShow_dashed_divider(true);
+      }, 10000);
+      forEach(addRailBtns, (item) => {
+        item.style.display = "block";
+      });
+      forEach(railDividers, (item) => {
+        item.style.display = "block";
+      });
+      forEach(deleteRailBtns, (item) => {
+        item.style.display = "block";
+      });
     }
     if (type === LABEL) {
       const blob = labelOption.labelImg;
@@ -119,6 +143,16 @@ export default function () {
       dispatch(changeType("use"));
       handleOnclickSelectionButton("VIEW");
       setTimeout(async () => {
+        forEach(addRailBtns, (item) => {
+          item.style.display = "none";
+        });
+        forEach(railDividers, (item) => {
+          item.style.display = "none";
+        });
+        forEach(deleteRailBtns, (item) => {
+          item.style.display = "none";
+        });
+
         const rootElement = document.querySelector("#rails-box");
         const clonedRootElement = rootElement.cloneNode(true);
 
@@ -140,10 +174,18 @@ export default function () {
         const a_tag = new FormCreator().AtagdownloadLinkGenerator(imgDataURL);
         a_tag.click();
         dispatch(changeType("none"));
-        setTimeout(() => {
-          document.body.removeChild(clonedRootElement);
-          handleShow_dashed_divider(true);
-        }, 10000);
+
+        document.body.removeChild(clonedRootElement);
+        handleShow_dashed_divider(true);
+        forEach(addRailBtns, (item) => {
+          item.style.display = "block";
+        });
+        forEach(railDividers, (item) => {
+          item.style.display = "block";
+        });
+        forEach(deleteRailBtns, (item) => {
+          item.style.display = "block";
+        });
       }, 3000);
     }
   }
@@ -267,4 +309,9 @@ function handleShow_dashed_divider(show = false) {
     }
   }
   // }
+}
+function forEach(items, callback) {
+  for (let i = 0; i < items.length; i++) {
+    callback(items[i]);
+  }
 }

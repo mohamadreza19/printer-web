@@ -21,16 +21,17 @@ import {
   useSetCell_editEvent,
 } from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import useSelectedCell, {
   getSelectedCellSyle,
 } from "../../../../../../../../../../../redux/project/selectedCell";
+import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
 
 export default function () {
   const dispatch = useDispatch();
 
-  const Cell = useSelectedCell("get");
+  const Cell = useSelector(getSelectedCell);
   const selectedCellStyle = getSelectedCellSyle();
 
   const _interval_Margin_Ref = useRef(null);

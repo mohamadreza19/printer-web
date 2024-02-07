@@ -60,6 +60,7 @@ export default function () {
 
       //
       const picture = meta.picture;
+
       const payload = {
         entityType,
         entityId,

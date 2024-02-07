@@ -15,6 +15,7 @@ import {
   changeType,
   getBorderToPrint,
 } from "../../../../../../../../../../../../../redux/project/border_slice";
+import { addSelectedCell } from "../../../../../../../../../../../../../redux/project/selectedCell_slice";
 export default function ({
   symbolDetail,
 
@@ -58,6 +59,7 @@ export default function ({
       itemId: cell.frontId,
     };
     dispatch(addEditEvent(payload));
+    selectedCell("set", cell);
   }
   function handleDeleteSymbol() {
     if ("symbolId" in cell) {
@@ -75,18 +77,22 @@ export default function ({
     };
     dispatch(addEditEvent(payload));
   }
-
+  useEffect(() => {
+    if (cell.isSelected) {
+      dispatch(addSelectedCell(cell));
+    }
+  }, [cell.isSelected]);
   useEffect(() => {
     if ("symbolId" in cell) {
       symbolDetail.mutate({ id: cell.symbolId });
     }
   }, [cell.symbolId]);
   // console.log({ data: symbolDetail.data });
-  useEffect(() => {
-    if (cell.isSelected) {
-      selectedCell("set", cell);
-    }
-  }, [cell.isSelected]);
+  // useEffect(() => {
+  //   if (cell.isSelected) {
+  //     selectedCell("set", cell);
+  //   }
+  // }, [cell.isSelected]);
   useEffect(() => {
     setParentSize({
       width: getOrintaion("WIDTH"),
@@ -128,6 +134,7 @@ export default function ({
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
         overflow: "hidden",
+        boxSizing: "border-box",
       }}
     >
       {"symbolId" in cell && symbolDetail.isSuccess ? (

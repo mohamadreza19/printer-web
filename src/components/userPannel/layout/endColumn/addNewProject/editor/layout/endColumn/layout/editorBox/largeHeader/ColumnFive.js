@@ -12,13 +12,14 @@ import {
   ColumnFive_qr,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import useSelectedCell from "../../../../../../../../../../../redux/project/selectedCell";
+import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
 
 export default function ({ content }) {
   const dispatch = useDispatch();
-  const Cell = useSelectedCell("get");
+  const Cell = useSelector(getSelectedCell);
   const [deleteAction, setdeleteDeleteAction] =
     useRecoilState(ColumnFive_delete);
   const [duplicateAction, setDuplicateAction] =

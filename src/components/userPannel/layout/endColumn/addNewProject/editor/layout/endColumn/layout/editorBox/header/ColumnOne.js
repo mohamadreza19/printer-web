@@ -9,11 +9,12 @@ import useCellReducer from "../../../../../../../../../../../recoil/reducer/useC
 import { useRecoilState } from "recoil";
 
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useSelectedCell, {
   getSelectedCellSyle,
 } from "../../../../../../../../../../../redux/project/selectedCell";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
+import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
 
 export default function ({
   poject_base,
@@ -23,13 +24,19 @@ export default function ({
   columnSeparatorContent,
 }) {
   const dispatch = useDispatch();
-  const Cell = useSelectedCell("get");
+  const Cell = useSelector(getSelectedCell);
 
   function onClick(type = "") {
     dispatch(
       addEditEvent({
         type: type,
         itemId: Cell.frontId,
+      })
+    );
+    dispatch(
+      addEditEvent({
+        type: "UN_SELECT",
+        // itemId: Cell.frontId,
       })
     );
   }

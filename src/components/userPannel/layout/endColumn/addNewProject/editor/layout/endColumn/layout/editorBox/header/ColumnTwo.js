@@ -13,14 +13,15 @@ import Typography from "../../../../../../../../../../../styles/__ready/Typograp
 import useSelectedCell, {
   getSelectedCellSyle,
 } from "../../../../../../../../../../../redux/project/selectedCell";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import { useState } from "react";
+import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
 
 export default function () {
   const dispatch = useDispatch();
 
-  const Cell = useSelectedCell("get");
+  const Cell = useSelector(getSelectedCell);
   const selectedCell = getSelectedCellSyle();
   function onClick(type = "", value = "") {
     dispatch(
@@ -69,6 +70,24 @@ export default function () {
             onClick={() => onClick("FONT/CHANGE", "Roboto")}
           >
             Roboto
+          </span>
+          <span
+            className="mt-2 w-100 border"
+            onClick={() => onClick("FONT/CHANGE", "Traffic")}
+          >
+            Traffic
+          </span>
+          <span
+            className="mt-2 w-100 border"
+            onClick={() => onClick("FONT/CHANGE", "Titr")}
+          >
+            Titr
+          </span>
+          <span
+            className="mt-2 w-100 border"
+            onClick={() => onClick("FONT/CHANGE", "Nazanin")}
+          >
+            Nazanin
           </span>
         </menu>
       );

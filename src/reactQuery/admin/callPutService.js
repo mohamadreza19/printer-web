@@ -74,13 +74,21 @@ export const AdminEditUser_Mutation = () => {
 export const AdminEditProduct_Mutation = () => {
   const { value: token } = useAdmin_CachedToken();
   const setLoading = useToastReducer();
-  const meta = useAdd_product("none", false, true, false);
-  const modifedDate = { ...meta };
 
-  delete modifedDate.picture;
   const result = useMutation({
     mutationKey: "edit-product",
-    mutationFn: (option) => api_put.edit_product(token, option.id, modifedDate),
+    mutationFn: (option) => {
+      const { productId } = option;
+      console.log({ option });
+      const copy = { ...option };
+      delete copy.exel_file;
+      delete copy.exel_file;
+      delete copy.is_popup_open;
+      delete copy.productId;
+      delete copy.file;
+
+      return api_put.edit_product(token, productId, copy);
+    },
   });
   const { isSuccess, isLoading, error } = result;
   useEffect(() => {

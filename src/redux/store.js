@@ -5,6 +5,9 @@ import projectReducer from "./project/project._slice";
 import historyReducer_ from "./project/history_changer_slice";
 import editeEventReducer from "./project/edit_event_slice";
 import borderReducer from "./project/border_slice";
+import productReducer from "./product/product_slice";
+import toastMessageReducer from "./toastMessage/toastMessage_slice";
+import selectedCellReducer from "./project/selectedCell_slice";
 
 const historyChanger = combineReducers({
   history: historyReducer_,
@@ -17,6 +20,9 @@ const store = configureStore({
     project: projectReducer,
     historyChanger: historyChanger,
     customLabelsBorder: borderReducer,
+    product: productReducer,
+    toastMessage: toastMessageReducer,
+    selectedCell: selectedCellReducer,
   },
 });
 

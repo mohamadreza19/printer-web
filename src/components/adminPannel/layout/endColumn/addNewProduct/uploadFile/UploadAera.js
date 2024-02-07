@@ -8,7 +8,15 @@ import { useState } from "react";
 import { useDynamicCssClass } from "../../../../../../recoil/readStore";
 
 import use_PictureInput_Controller from "../../../../../../helper/admin_add_product_label/control_product_dynamic_input/";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addProduct,
+  getProductPicture,
+} from "../../../../../../redux/product/product_slice";
 export default function ({ onLoadedMeta = null }) {
+  const dispatch = useDispatch();
+  const productPicture = useSelector(getProductPicture);
+
   //onLoadedMeta= {
   //   loaded_mb: loaded_mb,
   //   total_mb: total_mb,
@@ -16,6 +24,18 @@ export default function ({ onLoadedMeta = null }) {
   // }
   const meta = use_PictureInput_Controller("picture");
   const cssClass = useDynamicCssClass();
+  function handleAddPicture(
+    obj = {
+      file: null,
+      preview: "",
+    }
+  ) {
+    const payload = {
+      type: "ADD/PICTURE",
+      value: obj,
+    };
+    dispatch(addProduct(payload));
+  }
 
   const IconBox = () => {
     return (
@@ -66,7 +86,7 @@ export default function ({ onLoadedMeta = null }) {
     return null;
   };
   const File = () => {
-    return !meta.state.file ? (
+    return !productPicture.file ? (
       <div
         onClick={() => {
           document.getElementById("imgupload").click();
@@ -82,12 +102,12 @@ export default function ({ onLoadedMeta = null }) {
             e.preventDefault();
 
             const fetchedFile = e.target.files[0];
-            console.log(fetchedFile);
+
             const preview = URL.createObjectURL(fetchedFile);
 
-            meta.handeler({
+            handleAddPicture({
               file: fetchedFile,
-              previewUrl: preview,
+              preview: preview,
             });
           }}
           accept=".jpg,.png,.jpeg"
@@ -102,19 +122,20 @@ export default function ({ onLoadedMeta = null }) {
       <div className="w-100 height-190 d-flex justify-content-start align-item-center px-4 ">
         <img
           onClick={() => {
-            meta.handeler({
-              file: "",
-              previewUrl: "",
+            handleAddPicture({
+              file: null,
+              preview: null,
             });
           }}
           className="upload-file-area-preview  img-fill"
-          src={meta.state.previewUrl}
+          src={productPicture.preview}
         />
+
         <ImageUploadedTickIcon />
         <section className={"w-100 " + cssClass.ms_2}>
           <span>
             <Typography.H7 language="en" className="font-400">
-              {meta.state.file.name}
+              {productPicture.name}
             </Typography.H7>
           </span>
           <Onloaded />

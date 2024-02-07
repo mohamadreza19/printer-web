@@ -26,6 +26,14 @@ const history_changer_slice = createSlice({
         state.present.push(rail);
       }
     },
+    removeRail(state, action) {
+      const frontId = action.payload.frontId;
+
+      const filterdRail = state.present.filter(
+        (rail) => rail.frontId !== frontId
+      );
+      state.present = filterdRail;
+    },
     redo(state) {
       console.log("redoo");
       const { past, future, present } = state;
@@ -60,10 +68,12 @@ const history_changer_slice = createSlice({
   extraReducers: (bulder) => {
     bulder.addCase(addEditEvent.type, (state, action) => {
       const presentRails = current(state.present);
+      console.log("test");
       const event = {
         type: action.payload.type,
         itemId: action.payload.itemId,
         value: action.payload.value,
+        symbolId: action.payload.symbolId,
       };
       PayloadCenter.setEvent(event);
       const mutateRails = new Rails(presentRails).railsArr;
@@ -76,8 +86,14 @@ const history_changer_slice = createSlice({
   },
 });
 
-export const { addPresent, addEmptyRail, redo, undo, reverseCustomLabels } =
-  history_changer_slice.actions;
+export const {
+  addPresent,
+  addEmptyRail,
+  removeRail,
+  redo,
+  undo,
+  reverseCustomLabels,
+} = history_changer_slice.actions;
 //
 
 export const getRails = (state) => state.historyChanger.history.present;

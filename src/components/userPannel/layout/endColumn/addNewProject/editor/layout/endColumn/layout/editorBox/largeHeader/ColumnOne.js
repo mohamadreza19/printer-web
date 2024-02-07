@@ -14,9 +14,10 @@ import {
   ColumnOne_splitRow,
 } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useSelectedCell from "../../../../../../../../../../../redux/project/selectedCell";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
+import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
 
 export default function ({
   mergeRowContent,
@@ -25,13 +26,19 @@ export default function ({
   columnSeparatorContent,
 }) {
   const dispatch = useDispatch();
-  const Cell = useSelectedCell("get");
+  const Cell = useSelector(getSelectedCell);
 
   function onClick(type = "") {
     dispatch(
       addEditEvent({
         type: type,
         itemId: Cell.frontId,
+      })
+    );
+    dispatch(
+      addEditEvent({
+        type: "UN_SELECT",
+        // itemId: Cell.frontId,
       })
     );
   }

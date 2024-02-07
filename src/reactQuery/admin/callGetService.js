@@ -598,7 +598,7 @@ export const AdminProduct_findOne = (id = "") => {
   const setLoading = useToastReducer();
 
   const result = useQuery({
-    queryKey: ["label-findOne"],
+    queryKey: ["Product-findOne"],
     queryFn: () => {
       return api_get.product_findOne(token, id);
     },

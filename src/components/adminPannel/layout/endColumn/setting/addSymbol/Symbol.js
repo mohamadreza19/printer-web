@@ -32,10 +32,6 @@ function Symbol({ id }) {
       // Trigger a click on the link to start the download
     }
     if (symbol.isSuccess === true) {
-      console.log({
-        data: symbol.data,
-        id,
-      });
       // const mimeType = "image/svg";
       // downloadBinaryFile(symbol.data, "svg", mimeType);
     }

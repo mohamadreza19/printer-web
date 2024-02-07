@@ -408,9 +408,7 @@ export const TextFieldFUN_v5 = ({
           ${cssClass.ms_2}`}
           value={value}
           placeholder={placeholder}
-          onChange={(e) => {
-            onChange(e);
-          }}
+          onChange={onChange}
         />
       </div>
       <footer className={"w-100 d-flex justify-content-end px-2 mt-1"}>

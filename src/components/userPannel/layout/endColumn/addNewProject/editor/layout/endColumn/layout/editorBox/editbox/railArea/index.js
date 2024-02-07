@@ -9,6 +9,8 @@ import Icons from "../../../../../../../../../../../../styles/__ready/Icons";
 import useScreenShot from "../../../../../../../../../../../../utility/useScreenShot";
 import { useRef } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { removeRail } from "../../../../../../../../../../../../redux/project/history_changer_slice";
 
 export default function ({
   index = 0,
@@ -19,9 +21,20 @@ export default function ({
   isLastRail = false,
   deleteRail = () => {},
 }) {
+  const dispatch = useDispatch();
+  function handleDeleteRail() {
+    const payload = {
+      frontId: rail.frontId,
+    };
+    dispatch(removeRail(payload));
+  }
+
   const TrashBox = () => {
     return (
-      <div onClick={deleteRail} className="position-absolute trash-rail-box ">
+      <div
+        onClick={handleDeleteRail}
+        className="position-absolute trash-rail-box cur-pointer delete-rail"
+      >
         <Icons.Trash classNameForPath="fill_white" isForEditor />
       </div>
     );
@@ -37,7 +50,7 @@ export default function ({
       }
     >
       <article className="d-flex align-items-center ">
-        {/* <TrashBox /> */}
+        <TrashBox />
         {/* <Title children={"ریل " + (Number(index) + 1)} /> */}
         <CellsBox
           isFirstRail={index === 0}

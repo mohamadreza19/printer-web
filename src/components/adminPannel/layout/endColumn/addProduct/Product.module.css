@@ -1,0 +1,221 @@
+.container {
+  min-height: 820px;
+  padding: 0 18px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+}
+.header-item {
+  font-size: 16px !important;
+  /* color: red !important; */
+  display: flex;
+  column-gap: 13.7px;
+}
+.pop-up-container {
+  width: 800px;
+  height: 600px;
+  border-radius: 25px;
+  padding: 31.77px 37.88px 53.16px 37.88px;
+  position: absolute;
+  display: flex;
+  row-gap: 39.82px;
+  flex-direction: column;
+  align-items: center;
+  top: 5%;
+
+  background-color: #f5f5f5;
+
+  border: 0.5px solid rgb(203, 203, 203);
+
+  z-index: 11;
+}
+.pop-up-close-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 37px;
+
+  background-color: #d9d9d9;
+}
+.limit-width-btn {
+  width: 178px;
+  /* column-gap: 8px; */
+}
+.text-limit-width {
+  width: 399px;
+  text-align: center;
+  font-weight: 400;
+}
+.pop-up-section-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+}
+.pop-up-section-2 {
+  width: 100%;
+  height: 180px;
+  padding: 45.64px 0 30px 0;
+
+  border: 2px dotted #cbcbcb;
+  border-radius: 20px;
+}
+.pop-up-section-2-upload-area {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 30px;
+}
+.pop-up-submit {
+  width: 180px;
+  height: 64px;
+}
+.pop-up-delete-file-icon {
+  position: absolute;
+  top: -20px;
+  right: 12px;
+}
+.page-1-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 66px;
+  width: 100%;
+  height: fit-content;
+  padding-top: 44.97px;
+}
+.page-2-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 66px;
+  width: 100%;
+  height: fit-content;
+
+  padding: 144px 50px 0 50px;
+}
+.input-box {
+  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  row-gap: 6px;
+}
+.input-box label {
+  right: 20.73px;
+  top: -30px;
+  position: absolute;
+}
+
+.input-box input {
+  height: 52px;
+  border-radius: 20px;
+  border: 2px solid #ececec;
+  padding: 0 20.73px;
+  z-index: 10;
+}
+.input-box select {
+  height: 52px;
+  border-radius: 20px;
+  border: 2px solid #ececec;
+  padding: 0 20.73px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.34535 7.12837C6.72112 7.45379 7.27888 7.45379 7.65465 7.12837L13.6327 1.95124C14.3326 1.34511 13.9039 0.195312 12.978 0.195312H1.02197C0.0960879 0.195312 -0.332586 1.34511 0.367318 1.95124L6.34535 7.12837Z' fill='%23404042'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-position: 17px 50%;
+}
+.input-medium {
+  width: 490px;
+}
+.input-small {
+  width: 200px;
+}
+.input-small input {
+  padding-right: 40px;
+  text-align: end;
+}
+.input-big {
+  width: 864.9px;
+}
+.input-big textarea {
+  height: 127.25px !important;
+  border-radius: 20px;
+  border: 2px solid #ececec;
+  padding: 0 20.73px;
+  z-index: 10;
+  padding-top: 20px;
+}
+.input-big textarea:focus {
+  outline: none;
+}
+.link-icon {
+  position: absolute;
+  z-index: 11;
+  right: -15px;
+  top: 4px;
+}
+.language-select-cards {
+  position: absolute;
+  display: flex;
+  column-gap: 4px;
+  left: 0;
+  top: -45px;
+
+  cursor: pointer;
+}
+.language-select-card {
+  width: 100px;
+  height: 74px;
+
+  display: flex;
+  justify-content: center;
+
+  background: linear-gradient(111.74deg, #ffcbb3 24.86%, #ffd8c6 69.34%);
+  color: #f36523;
+
+  padding-top: 15px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.language-select-card-selected {
+  color: white;
+  font-weight: 400;
+  background: linear-gradient(111.74deg, #ff7d41 24.86%, #ff5100 69.34%);
+}
+.color-disabled {
+  color: #cbcbcb;
+  /* margin-right: auto; */
+}
+.submit-btn {
+  width: 173.03px;
+  margin-right: auto;
+}
+.length {
+  position: absolute;
+  left: 0;
+  bottom: -25px;
+}
+.err-message {
+  color: #fa452d;
+  position: absolute;
+  z-index: 11;
+  bottom: -25px;
+}
+.measurement {
+  position: absolute;
+  z-index: 11;
+  right: 21.22px;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+.selected-file-preview {
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+}

@@ -3,6 +3,8 @@ import { useLanguage } from "../../../../../../../../recoil/readStore";
 import { useShowSymbolPopUp_reducer } from "../../../../../../../../recoil/userEditorStore/showSymbol_store";
 import Icons from "../../../../../../../../styles/__ready/Icons";
 import SymbolPopUp from "../symbolPopUp/SymbolPopUp";
+import { useDispatch } from "react-redux";
+import { addEditEvent } from "../../../../../../../../redux/project/edit_event_slice";
 
 export default function ({
   selectedActionButton,
@@ -14,6 +16,7 @@ export default function ({
   useUseText,
   useUseShape,
 }) {
+  const dispatch = useDispatch();
   const language = useLanguage();
   const { TOGGLE } = useShowSymbolPopUp_reducer();
   function onClickShape() {
@@ -65,7 +68,14 @@ export default function ({
         });
     return (
       <section
-        onClick={() => handeler(actions.VIEW)}
+        onClick={() => {
+          handeler(actions.VIEW);
+          dispatch(
+            addEditEvent({
+              type: "UN_SELECT",
+            })
+          );
+        }}
         className={
           "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem " +
           changedColor.bg

@@ -20,6 +20,7 @@ import changeBaseUrlBasedHost from "./utility/changeBaseUrlBasedHost";
 
 import Providers from "./redux/ReduxProviders";
 import ReduxProviders from "./redux/ReduxProviders";
+import ToastMessage from "./common/ToastMessage/ToastMessage";
 
 function App() {
   changeBaseUrlBasedHost();
@@ -36,6 +37,7 @@ function App() {
             // theme={language == "fa" ? RtlTheme : LtrTheme}
             theme={RtlTheme}
           >
+            <ToastMessage />
             <ToastContainer>
               <QueryClientProvider client={queryClient} children={<Routes />} />
             </ToastContainer>

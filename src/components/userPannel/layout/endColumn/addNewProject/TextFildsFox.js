@@ -115,7 +115,7 @@ export default function ({
     }));
   };
   const handleChangeRailWidth = (event) => {
-    const value = event.target.value.replace(/\D/g, "");
+    const value = event.target.value.replace(/[^0-9.]/g, "");
 
     setState((draft) => ({
       ...draft,

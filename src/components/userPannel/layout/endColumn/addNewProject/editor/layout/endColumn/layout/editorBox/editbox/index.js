@@ -237,6 +237,21 @@ export default memo(function () {
     }
   }, [isSuccess]);
 
+  const AddNewRailButton = () => {
+    function onClick() {
+      dispatch(addEmptyRail());
+    }
+
+    return (
+      <div
+        onClick={onClick}
+        className={`add-new-rail-btn cur-pointer add-rail`}
+      >
+        <Typography.H9 className="color-white font-400">ریل جدید</Typography.H9>
+        <Icons.Plus />
+      </div>
+    );
+  };
   if (rails.length > 0)
     return (
       <div className="dir-ltr bg-white scrollable-x-large position-relative disabled_gray2">
@@ -255,6 +270,7 @@ export default memo(function () {
               />
             );
           })}
+          <AddNewRailButton />
         </ScaleContainer>
       </div>
     );

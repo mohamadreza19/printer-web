@@ -4,20 +4,38 @@ import Typography from "../../../../../../styles/__ready/Typography";
 import { useDynamicCssClass } from "../../../../../../recoil/readStore";
 import useController from "../../../../../../helper/admin_add_product_label/control_product_dynamic_input/index";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addProduct,
+  getProductWidth,
+  getProductWidthOfPrintingArea,
+} from "../../../../../../redux/product/product_slice";
 export default function () {
   const cssClass = useDynamicCssClass();
-  const meta = useController("widths");
-  useEffect(() => {
-    return () => {
-      const e = {
-        target: {
-          value: null,
-        },
-      };
-      meta.handler.handleonChangeWidth(e);
-      meta.handler.handleonChangWidthOfPrintingArea(e);
+  const width = useSelector(getProductWidth);
+
+  const widthOfPrintingArea = useSelector(getProductWidthOfPrintingArea);
+  const dispatch = useDispatch();
+
+  function handleChangeWidth(event) {
+    const value = event.target.value;
+
+    const payload = {
+      type: "ADD/WIDTH",
+      value,
     };
-  }, []);
+    dispatch(addProduct(payload));
+  }
+  function handleChangeWidthOfPrintingArea(event) {
+    const value = event.target.value;
+
+    const payload = {
+      type: "ADD/WIDTHOFPRINTINGAREA",
+      value,
+    };
+    dispatch(addProduct(payload));
+  }
+
   return (
     <main className="w-100 h-100 px-4 pt-2">
       <article className="mt-9 d-flex ">
@@ -27,12 +45,12 @@ export default function () {
           </Typography.H8>
           <TextField_small_Custom
             type="number"
-            value={meta.state.width.value}
-            onChange={meta.handler.handleonChangeWidth}
+            value={width}
+            onChange={handleChangeWidth}
             className="product-label-upload-file-small-input"
           />
           <Typography.H10 className="color_danger">
-            {meta.state.width.validateErr}
+            {/* {meta.state.width.validateErr} */}
           </Typography.H10>
         </section>
         <section className={cssClass.ms_2}>
@@ -42,11 +60,11 @@ export default function () {
           <TextField_small_Custom
             type="number"
             className="product-label-upload-file-small-input"
-            value={meta.state.widthOfPrintingArea.value}
-            onChange={meta.handler.handleonChangWidthOfPrintingArea}
+            onChange={handleChangeWidthOfPrintingArea}
+            value={widthOfPrintingArea}
           />
           <Typography.H10 className="color_danger">
-            {meta.state.widthOfPrintingArea.validateErr}
+            {/* {meta.state.widthOfPrintingArea.validateErr} */}
           </Typography.H10>
         </section>
       </article>
