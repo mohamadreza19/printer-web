@@ -7,7 +7,7 @@ import {
 } from "../../../../../../../../../../../../recoil/userEditorStore/cellsStore";
 import Icons from "../../../../../../../../../../../../styles/__ready/Icons";
 import useScreenShot from "../../../../../../../../../../../../utility/useScreenShot";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { removeRail } from "../../../../../../../../../../../../redux/project/history_changer_slice";
@@ -19,7 +19,6 @@ export default function ({
     customLabels: [],
   },
   isLastRail = false,
-  deleteRail = () => {},
 }) {
   const dispatch = useDispatch();
   function handleDeleteRail() {
@@ -42,23 +41,17 @@ export default function ({
 
   return (
     <div
-      className=" d-flex align-items-end rail position-relative "
-      style={
-        {
-          // height: railsWidth + "px",
-        }
-      }
+      id={rail.frontId}
+      className=" d-flex rail align-items-center position-relative "
     >
-      <article className="d-flex align-items-center ">
-        <TrashBox />
-        {/* <Title children={"ریل " + (Number(index) + 1)} /> */}
-        <CellsBox
-          isFirstRail={index === 0}
-          //  customLabels={rail.customLabels} railId={rail.frontId}
-          customLabels={rail.customLabels}
-          railId={rail.frontId}
-        />
-      </article>
+      <TrashBox />
+      {/* <Title children={"ریل " + (Number(index) + 1)} /> */}
+      <CellsBox
+        isFirstRail={index === 0}
+        customLabels={rail.customLabels}
+        railId={rail.frontId}
+      />
+
       {isLastRail ? null : <Divider className="dashed-divider" />}
     </div>
   );

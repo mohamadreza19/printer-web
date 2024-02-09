@@ -45,6 +45,7 @@ export default function ({
     width: 0,
     height: 0,
   },
+  disableDrag,
 }) {
   const setCell = useCellReducer();
   const label_project_template = useGetLabel();
@@ -146,6 +147,7 @@ export default function ({
           <>
             {!isViewMode ? (
               <div
+                data-cell-root
                 style={{
                   width: `${
                     get_Dimensions_based_label_project_template_exist().width

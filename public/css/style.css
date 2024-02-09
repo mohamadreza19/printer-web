@@ -1395,3 +1395,11 @@ html[dir="ltr"] .add-new-rail-btn {
   background-color: #ececec;
   text-align: center;
 }
+.select-area {
+  background-color: rgb(165, 118, 42);
+  opacity: 0.4;
+  position: absolute;
+
+  pointer-events: none;
+  border: 3px solid #f48024;
+}

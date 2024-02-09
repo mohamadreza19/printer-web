@@ -8,11 +8,13 @@ import { useSetAdminProfile } from "../../../../../../recoil/store/admin/profile
 import useLocalStorage from "react-use-localstorage";
 import { User_Profile_Call } from "../../../../../../reactQuery/user/callGetService";
 import useEditor from "../../../../../../modules/useEditor";
+import SelectArea from "../../../../../../utility/editor-tools/useSelectArea";
 
 export default function () {
   const user_profile = User_Profile_Call();
   const setProfile = useSetAdminProfile();
   const [editor_access, setEditor_access] = useLocalStorage("editor_access");
+
   useEditor();
   useEffect(() => {
     if (user_profile.isSuccess) {
@@ -39,6 +41,7 @@ export default function () {
       <Grid className="bg_secondray h-100 " item lg={11}>
         <EndColumn />
       </Grid>
+      <SelectArea />
     </Grid>
   );
 }

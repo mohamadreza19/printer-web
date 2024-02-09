@@ -26,11 +26,11 @@ export default function ({
   // const cells = useCells();
   const [editor_access, _] = useLocalStorage("editor_access");
   const projectDimensions = useSelector(getProjectDimensions);
-  const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
-  const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
-  const [railsLength, setRailsLength] = useRecoilState(railsLength_store);
+
   const [isDragging, setIsDraggingOver] = useState(false);
-  const label_project_template = useGetLabel();
+
+  const [isMouseOver, setIsMouseOver] = useState(false);
+  const [isMouseDown, setIsMouseDown] = useState(false);
 
   function get_railsWidth_based_editor_access() {
     if (editor_access === "project/edit") {
@@ -46,12 +46,7 @@ export default function ({
   }
 
   return (
-    <Droppable
-      droppableId={railId}
-      direction={"horizontal"}
-
-      // isCombineEnabled={true}
-    >
+    <Droppable droppableId={railId} direction={"horizontal"}>
       {(provided, snapshot) => {
         setIsDraggingOver(snapshot.isDraggingOver);
         return (
@@ -60,8 +55,8 @@ export default function ({
             railsLength={get_railsLegth_based_editor_access()}
             isDragingOver={isDragging}
             id="test-screen"
+            data-rail-id={railId}
             key={key}
-            justify={justify}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >

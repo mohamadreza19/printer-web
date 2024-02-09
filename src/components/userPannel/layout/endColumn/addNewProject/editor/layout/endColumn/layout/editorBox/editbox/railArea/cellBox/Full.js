@@ -79,6 +79,7 @@ export default function ({
   }
   useEffect(() => {
     if (cell.isSelected) {
+      console.log({ cell });
       dispatch(addSelectedCell(cell));
     }
   }, [cell.isSelected]);
