@@ -15,6 +15,11 @@ import useSelectedCell, {
 } from "../../../../../../../../../../../redux/project/selectedCell";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
+import {
+  getMutliSelectCells,
+  getMutliSelectCellsLength,
+  joinCustomLabels,
+} from "../../../../../../../../../../../redux/project/multi_selectCell_slice";
 
 export default function ({
   poject_base,
@@ -26,7 +31,14 @@ export default function ({
   const dispatch = useDispatch();
   const Cell = useSelector(getSelectedCell);
 
+  const multiSelectCells = useSelector(getMutliSelectCells);
+
   function onClick(type = "") {
+    if (multiSelectCells.cellIds.length > 1) {
+      if ("JOIN/COLUMN") {
+        dispatch(joinCustomLabels(multiSelectCells));
+      }
+    }
     dispatch(
       addEditEvent({
         type: type,

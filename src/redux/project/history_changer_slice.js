@@ -2,6 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import shortid from "shortid";
 import { addEditEvent } from "./edit_event_slice";
 import { PayloadCenter, Rails } from "../../utility/editor-tools";
+import { addMultiCell, joinCustomLabels } from "./multi_selectCell_slice";
 
 const history_changer_slice = createSlice({
   name: "rails",
@@ -68,7 +69,7 @@ const history_changer_slice = createSlice({
   extraReducers: (bulder) => {
     bulder.addCase(addEditEvent.type, (state, action) => {
       const presentRails = current(state.present);
-      console.log("test");
+
       const event = {
         type: action.payload.type,
         itemId: action.payload.itemId,
@@ -81,6 +82,163 @@ const history_changer_slice = createSlice({
       state.present = mutateRails;
       if (event.type !== "SELECT") {
         state.past = [...state.past, state.present];
+      }
+    });
+    bulder.addCase(addMultiCell.type, (state, action) => {
+      const { cellIds, mostRailIdRepeat } = action.payload;
+      const currentState = current(state);
+      state.present = currentState.present.map((rail) => {
+        if (rail.frontId === mostRailIdRepeat) {
+          return {
+            ...rail,
+            customLabels: customLabelsHandeler(rail.customLabels, cellIds),
+          };
+        }
+        return rail;
+      });
+
+      function customLabelsHandeler(customLabels = [], cellIds = []) {
+        const newCustomLabels = customLabels.map((customLabel, index) => {
+          for (let t = 0; t < cellIds.length; t++) {
+            if (customLabel.frontId === cellIds[t]) {
+              return {
+                ...customLabel,
+                structure: {
+                  ...customLabel.structure,
+
+                  isSelected: true,
+                },
+              };
+            }
+          }
+
+          return customLabel;
+        });
+
+        return newCustomLabels;
+      }
+      // function customLabelsHandeler(customLabels = [], cellIds = []) {
+      //   let widths = 0;
+      //   let bigestheight = 0;
+      //   let firstCellIndex;
+      //   const newCustomLabels = customLabels
+      //     .map((customLabel, index) => {
+      //       for (let t = 0; t < cellIds.length; t++) {
+      //         if (customLabel.frontId === cellIds[t]) {
+      //           if (!firstCellIndex) {
+      //             firstCellIndex = index;
+      //           }
+      //           widths += customLabel.width;
+      //           if (!bigestheight) {
+      //             bigestheight = customLabel.height;
+      //           } else {
+      //             bigestheight =
+      //               customLabel.height > bigestheight
+      //                 ? customLabel.height
+      //                 : bigestheight;
+      //           }
+      //           return undefined;
+      //         }
+      //       }
+
+      //       return customLabel;
+      //     })
+      //     .filter((customlabel) => customlabel !== undefined);
+
+      //   console.log({ newCustomLabels });
+      //   console.log({ widths });
+      //   console.log({ bigestheight });
+      //   console.log({ firstCellIndex });
+      //   return newCustomLabels;
+      // }
+    });
+    bulder.addCase(joinCustomLabels.type, (state, action) => {
+      const { cellIds, mostRailIdRepeat } = action.payload;
+
+      state.present = current(state).present.map((rail) => {
+        if (rail.frontId === mostRailIdRepeat) {
+          return {
+            ...rail,
+            customLabels: customLabelsHandeler(rail.customLabels, cellIds),
+          };
+        }
+        return rail;
+      });
+
+      function customLabelsHandeler(customLabels = [], cellIds = []) {
+        let heights = 0;
+        let bigestWigth = 0;
+        let firstCellIndex;
+        let isZeroIndexIncludes = false;
+        let newCustomLabel;
+        const clearedCustomLabels = customLabels
+          .map((customLabel, index) => {
+            for (let t = 0; t < cellIds.length; t++) {
+              if (customLabel.frontId === cellIds[t]) {
+                if (!firstCellIndex) {
+                  if (index === 0) {
+                    isZeroIndexIncludes = true;
+                  }
+                  firstCellIndex = index;
+                }
+                heights += customLabel.height;
+                if (!bigestWigth) {
+                  bigestWigth = customLabel.width;
+                } else {
+                  bigestWigth =
+                    customLabel.width > bigestWigth
+                      ? customLabel.width
+                      : bigestWigth;
+                }
+                return undefined;
+              }
+            }
+
+            return customLabel;
+          })
+          .filter((item) => item !== undefined);
+
+        newCustomLabel = createCustomLabel(heights, bigestWigth);
+
+        const newCustomLabels = [...clearedCustomLabels];
+        console.log({ firstCellIndex });
+        if (isZeroIndexIncludes) {
+          firstCellIndex = firstCellIndex - 1;
+        }
+        newCustomLabels.splice(firstCellIndex, 0, newCustomLabel);
+
+        // return newCustomLabels;
+        return newCustomLabels;
+      }
+      function createCustomLabel(heights, bigestWigth) {
+        const frontId = shortid.generate();
+
+        return {
+          frontId: frontId,
+          structure: {
+            split: "none",
+            rootId: frontId,
+            content: {
+              text: "",
+              style: {
+                fontFamily: "Arial",
+                fontStyle: "regular",
+                fontSize: 14,
+                angle: 0,
+                textAlign: "none",
+                textDirecton: "right",
+                padding: 0,
+                margin: 0,
+              },
+            },
+            frontId: frontId,
+            isQrcode: false,
+            isBarcode: false,
+            isSelected: false,
+          },
+          width: bigestWigth,
+          height: heights,
+        };
       }
     });
   },

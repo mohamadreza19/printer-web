@@ -8,6 +8,7 @@ import borderReducer from "./project/border_slice";
 import productReducer from "./product/product_slice";
 import toastMessageReducer from "./toastMessage/toastMessage_slice";
 import selectedCellReducer from "./project/selectedCell_slice";
+import muitiSelectCellReducer from "./project/multi_selectCell_slice";
 
 const historyChanger = combineReducers({
   history: historyReducer_,
@@ -23,6 +24,7 @@ const store = configureStore({
     product: productReducer,
     toastMessage: toastMessageReducer,
     selectedCell: selectedCellReducer,
+    muitiSelectCell: muitiSelectCellReducer,
   },
 });
 

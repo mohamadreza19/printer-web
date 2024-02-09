@@ -1399,7 +1399,8 @@ html[dir="ltr"] .add-new-rail-btn {
   background-color: rgb(165, 118, 42);
   opacity: 0.4;
   position: absolute;
+  /* height: 10px; */
 
   pointer-events: none;
-  border: 3px solid #f48024;
+  /* border: 3px solid #f48024; */
 }

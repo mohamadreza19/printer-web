@@ -147,7 +147,8 @@ export default function ({
           <>
             {!isViewMode ? (
               <div
-                data-cell-root
+                data-root-id={cell.structure.frontId}
+                data-rail-id={railId}
                 style={{
                   width: `${
                     get_Dimensions_based_label_project_template_exist().width
@@ -166,6 +167,8 @@ export default function ({
               </div>
             ) : (
               <InnerContainer
+                data-root-id={cell.structure.frontId}
+                data-rail-id={railId}
                 {...provided.draggableProps}
                 ref={provided.innerRef}
                 {...provided.dragHandleProps}
