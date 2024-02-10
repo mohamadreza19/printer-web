@@ -5,19 +5,16 @@ import { addMultiCell } from "../../redux/project/multi_selectCell_slice";
 
 class SelectArea extends Component {
   state = {
-    event: "mouseup",
-    width: 0,
-    height: 0,
-    firstPointX: 0,
-    firstPointY: 0,
-    secondPointX: 0,
-    secondPointY: 0,
-    isMouseDown: false,
-    innerWidth: window.innerWidth,
-    innerHeight: window.innerHeight,
+    isComponentMount: false,
   };
 
   componentDidMount() {
+    this.mutateState("isComponentMount", true);
+  }
+  componentWillUpdate(nextProps, nextState) {
+    const { editMode } = nextProps;
+    console.log({ editMode });
+    console.log({ nextProps });
     let width = 0;
     let height = 0;
     let firstPointX = 0;
@@ -32,6 +29,7 @@ class SelectArea extends Component {
 
     zoneArea.style.display = "block";
     document.body.appendChild(zoneArea);
+
     document.addEventListener("mousemove", (event) => {
       secondPointX = event.pageX;
       secondPointY = event.pageY;
@@ -44,7 +42,6 @@ class SelectArea extends Component {
           firstPointY,
           secondPointY,
         };
-        this.handleSelectedItem(coordinates);
 
         if (secondPointX < firstPointX) {
           zoneArea.style.removeProperty("left");
@@ -66,14 +63,19 @@ class SelectArea extends Component {
         }
 
         if (firstPointX && secondPointX) {
-          width = Math.abs(firstPointX - secondPointX);
-          height = Math.abs(firstPointY - secondPointY);
+          if (editMode === "SELECT_MODE") {
+            console.log({ editMode__: editMode });
+            this.handleSelectedItem(coordinates);
+            width = Math.abs(firstPointX - secondPointX);
+            height = Math.abs(firstPointY - secondPointY);
+          } else {
+            width = 0;
+            height = 0;
+          }
+
           zoneArea.style.width = width + "px";
           zoneArea.style.height = height + "px";
         }
-
-        // console.log({ firstPointY });
-        // console.log({ secondPointY });
       } else {
         firstPointX = null;
         secondPointX = null;
@@ -102,22 +104,6 @@ class SelectArea extends Component {
       innerWidth = event.target.innerWidth;
       innerHeight = event.target.innerHeight;
     });
-  }
-  componentWillUpdate(nextProps, nextState) {
-    // console.log("this.state.innerWidth" + this.state.innerWidth);
-    // console.log("this.state.firstPointX" + this.state.firstPointX);
-    // console.log("this.state.secondPointX" + this.state.secondPointX);
-    // console.log("this.state.innerHeight" + this.state.innerHeight);
-    // console.log("this.state.firstPointY" + this.state.firstPointY);
-    // console.log("this.state.secondPointY" + this.state.secondPointY);
-    // console.log("firstPointInState" + nextState.firstPointX);
-    const coordinates = {
-      firstPointX: this.state.firstPointX,
-      secondPointX: this.state.secondPointX,
-      firstPointY: this.state.firstPointY,
-      secondPointY: this.state.secondPointY,
-    };
-    this.handleSelectedItem(coordinates);
   }
   mouseMove() {
     let width = 0;
@@ -245,6 +231,7 @@ class SelectArea extends Component {
         selectedElements.push(childs[i]);
       }
     }
+
     this.dispatchSelecteditems(selectedElements);
   }
   is_elemet_in_coordinates(
@@ -356,5 +343,9 @@ const mapDispatchToProps = (dispatch) => {
       ),
   };
 };
+const mapStateToProps = (state) => {
+  const { editMode } = state;
+  return { editMode: editMode };
+};
 
-export default connect(null, mapDispatchToProps)(SelectArea);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectArea);

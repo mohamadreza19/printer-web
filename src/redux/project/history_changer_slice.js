@@ -1,8 +1,16 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import shortid from "shortid";
 import { addEditEvent } from "./edit_event_slice";
-import { PayloadCenter, Rails } from "../../utility/editor-tools";
-import { addMultiCell, joinCustomLabels } from "./multi_selectCell_slice";
+import {
+  PayloadCenter,
+  Rails,
+  SelectParntAndChilds,
+} from "../../utility/editor-tools";
+import {
+  addMultiCell,
+  joinCustomLabels,
+  muiti_selectCell_caseReducers,
+} from "./multi_selectCell_slice";
 
 const history_changer_slice = createSlice({
   name: "rails",
@@ -66,9 +74,11 @@ const history_changer_slice = createSlice({
       state.present = mapedRails;
     },
   },
-  extraReducers: (bulder) => {
-    bulder.addCase(addEditEvent.type, (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(addEditEvent.type, (state, action) => {
       const presentRails = current(state.present);
+      console.log(action.payload.itemId);
+      console.log(action.payload.type);
 
       const event = {
         type: action.payload.type,
@@ -76,7 +86,9 @@ const history_changer_slice = createSlice({
         value: action.payload.value,
         symbolId: action.payload.symbolId,
       };
+
       PayloadCenter.setEvent(event);
+
       const mutateRails = new Rails(presentRails).railsArr;
 
       state.present = mutateRails;
@@ -84,7 +96,7 @@ const history_changer_slice = createSlice({
         state.past = [...state.past, state.present];
       }
     });
-    bulder.addCase(addMultiCell.type, (state, action) => {
+    builder.addCase(addMultiCell.type, (state, action) => {
       const { cellIds, mostRailIdRepeat } = action.payload;
       const currentState = current(state);
       state.present = currentState.present.map((rail) => {
@@ -103,11 +115,9 @@ const history_changer_slice = createSlice({
             if (customLabel.frontId === cellIds[t]) {
               return {
                 ...customLabel,
-                structure: {
-                  ...customLabel.structure,
-
-                  isSelected: true,
-                },
+                structure: new SelectParntAndChilds(
+                  customLabel.structure
+                ).getNewStructure(),
               };
             }
           }
@@ -117,42 +127,8 @@ const history_changer_slice = createSlice({
 
         return newCustomLabels;
       }
-      // function customLabelsHandeler(customLabels = [], cellIds = []) {
-      //   let widths = 0;
-      //   let bigestheight = 0;
-      //   let firstCellIndex;
-      //   const newCustomLabels = customLabels
-      //     .map((customLabel, index) => {
-      //       for (let t = 0; t < cellIds.length; t++) {
-      //         if (customLabel.frontId === cellIds[t]) {
-      //           if (!firstCellIndex) {
-      //             firstCellIndex = index;
-      //           }
-      //           widths += customLabel.width;
-      //           if (!bigestheight) {
-      //             bigestheight = customLabel.height;
-      //           } else {
-      //             bigestheight =
-      //               customLabel.height > bigestheight
-      //                 ? customLabel.height
-      //                 : bigestheight;
-      //           }
-      //           return undefined;
-      //         }
-      //       }
-
-      //       return customLabel;
-      //     })
-      //     .filter((customlabel) => customlabel !== undefined);
-
-      //   console.log({ newCustomLabels });
-      //   console.log({ widths });
-      //   console.log({ bigestheight });
-      //   console.log({ firstCellIndex });
-      //   return newCustomLabels;
-      // }
     });
-    bulder.addCase(joinCustomLabels.type, (state, action) => {
+    builder.addCase(joinCustomLabels.type, (state, action) => {
       const { cellIds, mostRailIdRepeat } = action.payload;
 
       state.present = current(state).present.map((rail) => {
@@ -164,7 +140,7 @@ const history_changer_slice = createSlice({
         }
         return rail;
       });
-
+      muiti_selectCell_caseReducers.reInital();
       function customLabelsHandeler(customLabels = [], cellIds = []) {
         let heights = 0;
         let bigestWigth = 0;

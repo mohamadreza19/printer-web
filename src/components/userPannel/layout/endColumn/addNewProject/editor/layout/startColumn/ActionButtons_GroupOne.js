@@ -3,12 +3,15 @@ import { useLanguage } from "../../../../../../../../recoil/readStore";
 import { useShowSymbolPopUp_reducer } from "../../../../../../../../recoil/userEditorStore/showSymbol_store";
 import Icons from "../../../../../../../../styles/__ready/Icons";
 import SymbolPopUp from "../symbolPopUp/SymbolPopUp";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addEditEvent } from "../../../../../../../../redux/project/edit_event_slice";
+import {
+  getEditMode,
+  selectMode,
+  viewMode,
+} from "../../../../../../../../redux/project/edit_mode_slice";
 
 export default function ({
-  selectedActionButton,
-  setSelectedActionButton,
   actions = " ",
   handeler = () => {},
   useSelection,
@@ -17,29 +20,37 @@ export default function ({
   useUseShape,
 }) {
   const dispatch = useDispatch();
+  const editMode = useSelector(getEditMode);
   const language = useLanguage();
+
   const { TOGGLE } = useShowSymbolPopUp_reducer();
   function onClickShape() {
     TOGGLE();
   }
 
-  const Select = ({ is }) => {
-    let changedColor = {
-      bg: " ",
-      iconFill: " ",
-    };
-    changedColor = is
-      ? (changedColor = {
-          bg: "editor-action-buttons-bg-primary",
-          iconFill: "fill_white",
-        })
-      : (changedColor = {
-          bg: "editor-action-buttons-bg-white",
-          iconFill: "fill_primary ",
-        });
+  function changeEditMode(type) {
+    switch (type) {
+      case "SELECT_MODE":
+        return dispatch(selectMode());
+      case "VIEW_MODE":
+        return dispatch(viewMode());
+    }
+  }
+
+  const Select = () => {
+    const changedColor =
+      editMode === "SELECT_MODE"
+        ? {
+            bg: "editor-action-buttons-bg-primary",
+            iconFill: "fill_white",
+          }
+        : {
+            bg: "editor-action-buttons-bg-white",
+            iconFill: "fill_primary ",
+          };
     return (
       <section
-        onClick={() => handeler(actions.SELECT)}
+        onClick={() => changeEditMode("SELECT_MODE")}
         className={
           "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-3 " +
           changedColor.bg
@@ -52,30 +63,20 @@ export default function ({
       </section>
     );
   };
-  const View = ({ is }) => {
-    let changedColor = {
-      bg: " ",
-      iconFill: " ",
-    };
-    changedColor = is
-      ? (changedColor = {
-          bg: "editor-action-buttons-bg-primary",
-          iconFill: "fill_white",
-        })
-      : (changedColor = {
-          bg: "editor-action-buttons-bg-white",
-          iconFill: "fill_primary ",
-        });
+  const View = () => {
+    const changedColor =
+      editMode === "VIEW_MODE"
+        ? {
+            bg: "editor-action-buttons-bg-primary",
+            iconFill: "fill_white",
+          }
+        : {
+            bg: "editor-action-buttons-bg-white",
+            iconFill: "fill_primary ",
+          };
     return (
       <section
-        onClick={() => {
-          handeler(actions.VIEW);
-          dispatch(
-            addEditEvent({
-              type: "UN_SELECT",
-            })
-          );
-        }}
+        onClick={() => changeEditMode("VIEW_MODE")}
         className={
           "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem " +
           changedColor.bg
@@ -85,38 +86,12 @@ export default function ({
       </section>
     );
   };
-  const Text = ({ is }) => {
-    let changedColor = {
-      bg: " ",
-      iconFill: " ",
-    };
-    changedColor = is
-      ? (changedColor = {
-          bg: "editor-action-buttons-bg-primary",
-          iconFill: "fill_white",
-        })
-      : (changedColor = {
-          bg: "editor-action-buttons-bg-white",
-          iconFill: "fill_primary ",
-        });
-    return (
-      <section
-        onClick={() => handeler(actions.TEXT)}
-        className={
-          "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem " +
-          changedColor.bg
-        }
-      >
-        <Icons.Text size="medium_v1" pathClassName={changedColor.iconFill} />
-      </section>
-    );
-  };
 
   return (
     <div className="w-100 d-flex flex-column align-items-center ">
-      <Select is={useSelection} />
-      <View is={useView} />
-      {/* <Text is={useUseText} /> */}
+      <Select />
+      <View />
+
       <Shape is={useUseShape} onClickShape={onClickShape} language={language} />
     </div>
   );

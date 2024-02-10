@@ -45,16 +45,7 @@ export default function () {
         <ColumnFour />
         <Divider />
         <ColumnFive
-          deleteContent={
-            content.userPannel.editor.endColumn.editorHeader.delete
-          }
-          copyContent={content.userPannel.editor.endColumn.editorHeader.copy}
-          barcodeContent={
-            content.userPannel.editor.endColumn.editorHeader.barcode
-          }
-          qrcodeContent={
-            content.userPannel.editor.endColumn.editorHeader.QRCode
-          }
+          content={content.userPannel.editor.endColumn.editorHeader}
         />
       </div>
     </div>

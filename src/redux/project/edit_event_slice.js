@@ -18,5 +18,5 @@ const edit_event_slice = createSlice({
 
 export const { addEditEvent } = edit_event_slice.actions;
 //
-
+export const edit_event_sliceCaseReducers = edit_event_slice.caseReducers;
 export default edit_event_slice.reducer;

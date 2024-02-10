@@ -622,14 +622,14 @@ export class CustomLabel {
       structure: {},
     }
   ) {
-    if (
-      PayloadCenter.event.type === "JOIN/COLUMN" ||
-      PayloadCenter.event.type === "JOIN/ROW"
-    ) {
-      if (customLabel.structure.split === "none") {
-        PayloadCenter.event.itemId = "";
-      }
-    }
+    // if (
+    //   PayloadCenter.event.type === "JOIN/COLUMN" ||
+    //   PayloadCenter.event.type === "JOIN/ROW"
+    // ) {
+    //   if (customLabel.structure.split === "none") {
+    //     PayloadCenter.event.itemId = "";
+    //   }
+    // }
     this.#_customLabel = {
       ...customLabel,
       structure: new Structure(customLabel.structure).structure,
@@ -781,5 +781,45 @@ export class Rails {
   railsArr = [];
   constructor(railsArr = []) {
     this.railsArr = railsArr.map((rail) => new Rail(rail).rail);
+  }
+}
+export class SelectParntAndChilds {
+  structure;
+  constructor(structure) {
+    this.structure = structure;
+  }
+
+  getNewStructure() {
+    const splitType = this.structure.split;
+
+    return this[splitType](this.structure);
+  }
+  none(structure) {
+    return { ...structure, isSelected: true };
+  }
+  vertical(structure) {
+    const mapedChildren = structure.children.map((child) => {
+      const childSplitType = child.split;
+
+      return this[childSplitType](child);
+    });
+
+    const newStructure = {
+      ...structure,
+      children: mapedChildren,
+    };
+    return newStructure;
+  }
+  horizontal(structure) {
+    const mapedChildren = structure.children.map((child) => {
+      const childSplitType = child.split;
+      return this[childSplitType](child);
+    });
+    const newStructure = {
+      ...structure,
+      children: mapedChildren,
+    };
+
+    return newStructure;
   }
 }
