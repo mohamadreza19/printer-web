@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addEditEvent } from "../../redux/project/edit_event_slice";
 import { addMultiCell } from "../../redux/project/multi_selectCell_slice";
@@ -10,13 +10,15 @@ class SelectArea extends Component {
 
   componentDidMount() {
     this.mutateState("isComponentMount", true);
+    const zoneArea = document.createElement("div");
+    zoneArea.classList.add("select-area");
+    zoneArea.id = "select-area";
+    zoneArea.style.display = "block";
+    document.body.appendChild(zoneArea);
   }
   componentWillUpdate(nextProps, nextState) {
     const { editMode } = nextProps;
-    console.log({ editMode });
-    console.log({ nextProps });
-    let width = 0;
-    let height = 0;
+
     let firstPointX = 0;
     let firstPointY = 0;
     let secondPointX = 0;
@@ -24,18 +26,17 @@ class SelectArea extends Component {
     let isMouseDown = false;
     let innerWidth = window.innerWidth;
     let innerHeight = window.innerHeight;
-    const zoneArea = document.createElement("div");
-    zoneArea.classList.add("select-area");
-
-    zoneArea.style.display = "block";
-    document.body.appendChild(zoneArea);
+    const zoneArea = document.getElementById("select-area");
 
     document.addEventListener("mousemove", (event) => {
+      let width = 0;
+      let height = 0;
       secondPointX = event.pageX;
       secondPointY = event.pageY;
 
       if (isMouseDown) {
         zoneArea.style.display = "block";
+
         const coordinates = {
           firstPointX,
           secondPointX,
@@ -64,13 +65,9 @@ class SelectArea extends Component {
 
         if (firstPointX && secondPointX) {
           if (editMode === "SELECT_MODE") {
-            console.log({ editMode__: editMode });
             this.handleSelectedItem(coordinates);
             width = Math.abs(firstPointX - secondPointX);
             height = Math.abs(firstPointY - secondPointY);
-          } else {
-            width = 0;
-            height = 0;
           }
 
           zoneArea.style.width = width + "px";
@@ -105,109 +102,7 @@ class SelectArea extends Component {
       innerHeight = event.target.innerHeight;
     });
   }
-  mouseMove() {
-    let width = 0;
-    let height = 0;
-    document.addEventListener("mousemove", (event) => {
-      this.mutateState("event", "mousemove");
-      //   this.restState();
-      //   console.log("secondPoint" + event.pageX);
 
-      this.mutateState("secondPointX", event.pageX);
-      this.mutateState("secondPointY", event.pageY);
-      if (this.state.isMouseDown) {
-        this.getSelectArea().style.display = "block";
-
-        // console.log(this.state.secondPointX < this.state.firstPointX);
-        // console.log(this.state.firstPointX);
-        // console.log(this.state.secondPointX);
-        if (this.state.secondPointX < this.state.firstPointX) {
-          this.getSelectArea().style.removeProperty("left");
-
-          const distance = this.state.innerWidth - this.state.firstPointX;
-
-          // this.getSelectArea().style.right = distance + "px";
-        } else {
-          // this.getSelectArea().style.removeProperty("right");
-          // this.getSelectArea().style.left = this.state.firstPointX + "px";
-        }
-
-        if (this.state.secondPointY < this.state.firstPointY) {
-          this.getSelectArea().style.removeProperty("top");
-          const distance = this.state.innerHeight - this.state.firstPointY;
-          this.getSelectArea().style.bottom = distance + "px";
-        } else {
-          this.getSelectArea().style.removeProperty("bottom");
-          this.getSelectArea().style.top = this.state.firstPointY + "px";
-        }
-
-        if (this.state.firstPointX && this.state.secondPointX) {
-          console.log("firstPointX" + this.state.firstPointX);
-          console.log("secondPointX" + this.state.secondPointX);
-          setTimeout(() => {
-            console.log(" setTimeout");
-            console.log("firstPointX" + this.state.firstPointX);
-            console.log("secondPointX" + this.state.secondPointX);
-          }, 2000);
-          width = Math.abs(this.state.firstPointX - this.state.secondPointX);
-        }
-        if (this.state.firstPointY && this.state.secondPointY) {
-          height = Math.abs(this.state.firstPointY - this.state.secondPointY);
-        }
-
-        // console.log({ distance });
-
-        this.getSelectArea().style.width = width + "px";
-        this.getSelectArea().style.height = height + "px";
-      } else {
-        this.restState();
-      }
-    });
-  }
-
-  mouseDown() {
-    document.addEventListener("mousedown", (event) => {
-      // this.mutateState("event", "mousedown");
-
-      this.mutateState("isMouseDown", true);
-      this.mutateState("firstPointX", event.pageX);
-      this.mutateState("firstPointY", event.pageY);
-
-      // this.getSelectArea().style.left = this.state.firstPointX + "px";
-      // this.getSelectArea().style.top = this.state.firstPointY + "px";
-
-      this.getSelectArea().style.removeProperty("right");
-      this.getSelectArea().style.removeProperty("bottom");
-    });
-  }
-  mouseUp() {
-    document.addEventListener("mouseup", (event) => {
-      this.mutateState("event", "mouseup");
-
-      // this.getSelectArea().style.display = "none";
-
-      this.mutateState("isMouseDown", false);
-      this.restState();
-
-      //   this.initalSelectArea();
-    });
-  }
-  changeInnerDimensionBasedScreenResize() {
-    window.addEventListener("resize", (event) => {
-      this.mutateState("innerWidth", event.target.innerWidth);
-      this.mutateState("innerHeight", event.target.innerHeight);
-    });
-  }
-  initalSelectArea() {
-    const selectArea = document.createElement("div");
-    selectArea.classList.add("select-area");
-    selectArea.style.display = "block";
-    selectArea.id = "select-zone";
-    document.body.appendChild(selectArea);
-  }
-  getSelectArea() {
-    return document.getElementById("select-zone");
-  }
   mutateState(key, value) {
     this.setState((draft) => ({ ...draft, [key]: value }));
   }
@@ -280,15 +175,7 @@ class SelectArea extends Component {
 
     return isIncluded;
   }
-  restState() {
-    this.mutateState("firstPointX", null);
-    this.mutateState("firstPointY", null);
-    this.mutateState("secondPointX", null);
-    this.mutateState("secondPointY", null);
-    this.getSelectArea().style.width = 0;
-    this.getSelectArea().style.height = 0;
-    this.getSelectArea().style.display = "none";
-  }
+
   dispatchSelecteditems(items = []) {
     let cellIds = [];
 

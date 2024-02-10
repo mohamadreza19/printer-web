@@ -1,21 +1,16 @@
-import { forwardRef, useEffect } from "react";
-import {
-  ColumnFive_delete,
-  ColumnFive_duplicate,
-} from "../../../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import CellSplitController from "./CellSplitController";
 // import { ColumnFive_delete } from "../../../";
-import Full from "./Full";
-import SplitedColumn from "./SplitedColumn";
+
 import { useRecoilState, useRecoilValue } from "recoil";
-import useCellReducer from "../../../../../../../../../../../../../recoil/reducer/useCellReducer";
+
 import { Draggable } from "react-beautiful-dnd";
 
 import { isView } from "../../../../../../../../../../../../../recoil/userEditorStore/selectionButtonsStore/actionButton";
 import InnerContainer from "./layout/InnerContainer";
-import { useRef } from "react";
-import { useGetLabel } from "../../../../../../../../../../../../../recoil/store/label";
+
 import { useProject_baseValue } from "../../../../../../../../../../../../../recoil/userEditorStore/project_base";
+import { useSelector } from "react-redux";
+import { getEditMode } from "../../../../../../../../../../../../../redux/project/edit_mode_slice";
 
 export default function ({
   children,
@@ -47,9 +42,6 @@ export default function ({
   },
   disableDrag,
 }) {
-  const setCell = useCellReducer();
-  const label_project_template = useGetLabel();
-
   const Description = () => {
     function substringText(text) {
       if (text)
@@ -79,37 +71,9 @@ export default function ({
       </>
     );
   };
-  const [deleteAction, setdeleteAction] = useRecoilState(ColumnFive_delete);
-  const isViewMode = useRecoilValue(isView);
+
+  const editMode = useSelector(getEditMode);
   const projectBase = useProject_baseValue();
-
-  const [duplicateAction, setDuplicateAction] =
-    useRecoilState(ColumnFive_duplicate);
-
-  useEffect(() => {
-    if (cell.structure.isSelected) {
-      if (duplicateAction) {
-        if (!cell.parentId) {
-          const payload = {
-            cellId: cell.frontId,
-            railId,
-          };
-          setCell(payload, "DUPLICATECELL");
-          setDuplicateAction(false);
-        }
-      }
-      if (deleteAction) {
-        if (!cell.parentId) {
-          const payload = {
-            cellId: cell.frontId,
-            railId,
-          };
-          setCell(payload, "DELETECELL");
-          setdeleteAction(false);
-        }
-      }
-    }
-  }, [deleteAction, duplicateAction]);
 
   function get_Dimensions_based_label_project_template_exist() {
     let dimensions = {
@@ -137,6 +101,7 @@ export default function ({
 
   return (
     <Draggable
+      isDragDisabled={editMode !== "VIEW_MODE"}
       draggableId={cell.structure.frontId}
       index={index}
       key={cell.structure.frontId}
@@ -145,7 +110,7 @@ export default function ({
       {(provided, snapshot) => {
         return (
           <>
-            {!isViewMode ? (
+            {editMode !== "VIEW_MODE" ? (
               <div
                 data-root-id={cell.structure.frontId}
                 data-rail-id={railId}

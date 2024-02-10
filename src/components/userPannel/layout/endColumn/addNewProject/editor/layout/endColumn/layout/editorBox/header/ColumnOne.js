@@ -32,7 +32,7 @@ export default function ({
   const Cell = useSelector(getSelectedCell);
 
   const multiSelectCells = useSelector(getMutliSelectCells);
-  console.log({ Cell });
+
   function onClick(type = "") {
     if (multiSelectCells.cellIds.length > 1) {
       if ("JOIN/COLUMN") {

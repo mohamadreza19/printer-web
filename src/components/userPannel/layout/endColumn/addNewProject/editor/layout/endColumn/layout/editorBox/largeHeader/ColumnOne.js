@@ -4,20 +4,16 @@ import {
   SpliteColumn,
   SpliteRow,
 } from "../../../../../../../../../../../styles/__ready/EditorIcons";
-import cellAction from "../../../../../../../../../../../recoil/actions/editor/cell/cell";
-import useCellReducer from "../../../../../../../../../../../recoil/reducer/useCellReducer";
-import { useRecoilState } from "recoil";
-import {
-  ColumnOne_joinColumn,
-  ColumnOne_joinRow,
-  ColumnOne_splitColumn,
-  ColumnOne_splitRow,
-} from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
+
 import Typography from "../../../../../../../../../../../styles/__ready/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import useSelectedCell from "../../../../../../../../../../../redux/project/selectedCell";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
+import {
+  getMutliSelectCells,
+  joinCustomLabels,
+} from "../../../../../../../../../../../redux/project/multi_selectCell_slice";
 
 export default function ({
   mergeRowContent,
@@ -27,20 +23,32 @@ export default function ({
 }) {
   const dispatch = useDispatch();
   const Cell = useSelector(getSelectedCell);
-
+  const multiSelectCells = useSelector(getMutliSelectCells);
   function onClick(type = "") {
-    dispatch(
-      addEditEvent({
-        type: type,
-        itemId: Cell.frontId,
-      })
-    );
-    dispatch(
-      addEditEvent({
-        type: "UN_SELECT",
-        // itemId: Cell.frontId,
-      })
-    );
+    if (multiSelectCells.cellIds.length > 1) {
+      if ("JOIN/COLUMN") {
+        dispatch(joinCustomLabels(multiSelectCells));
+        dispatch(
+          addEditEvent({
+            type: "UN_SELECT",
+            // itemId: Cell.frontId,
+          })
+        );
+      }
+    } else {
+      dispatch(
+        addEditEvent({
+          type: type,
+          itemId: Cell.frontId,
+        })
+      );
+      // dispatch(
+      //   addEditEvent({
+      //     type: "UN_SELECT",
+      //     // itemId: Cell.frontId,
+      //   })
+      // );
+    }
   }
   const SplitRowBox = () => {
     return (
