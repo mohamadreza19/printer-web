@@ -16,9 +16,10 @@ import {
   getBorderToPrint,
 } from "../../../../../../../../../../../../../redux/project/border_slice";
 import { addSelectedCell } from "../../../../../../../../../../../../../redux/project/selectedCell_slice";
+import { getEditMode } from "../../../../../../../../../../../../../redux/project/edit_mode_slice";
 export default function ({
   symbolDetail,
-
+  index,
   cell = {
     frontId: " ",
 
@@ -33,13 +34,13 @@ export default function ({
     isSelected: false,
     symbolId: null,
   },
+  removeBorderRight = false,
+
   // rootFrontId = "",
-  setCell = () => {},
 }) {
   const dispatch = useDispatch();
   const borderToPrint = useSelector(getBorderToPrint);
-
-  const isSelection = useSelection();
+  const editMode = useSelector(getEditMode);
 
   const allowReplaceInputToDiv = useRecoilValue(allowReplaceInputToDiv_store);
 
@@ -66,7 +67,7 @@ export default function ({
       const payload = {
         cellId: cell.frontId,
       };
-      setCell(payload, "DELETESYMBOL");
+      // setCell(payload, "DELETESYMBOL");
     }
   }
   function handleChangeValue(value) {
@@ -75,11 +76,11 @@ export default function ({
       itemId: cell.frontId,
       value,
     };
+
     dispatch(addEditEvent(payload));
   }
   useEffect(() => {
     if (cell.isSelected) {
-      console.log({ cell });
       dispatch(addSelectedCell(cell));
     }
   }, [cell.isSelected]);
@@ -88,12 +89,7 @@ export default function ({
       symbolDetail.mutate({ id: cell.symbolId });
     }
   }, [cell.symbolId]);
-  // console.log({ data: symbolDetail.data });
-  // useEffect(() => {
-  //   if (cell.isSelected) {
-  //     selectedCell("set", cell);
-  //   }
-  // }, [cell.isSelected]);
+
   useEffect(() => {
     setParentSize({
       width: getOrintaion("WIDTH"),
@@ -121,6 +117,7 @@ export default function ({
     return cell.content.style;
   }
 
+  // console.log(removeBorderRight);
   return (
     <main
       ref={ref}
@@ -130,14 +127,32 @@ export default function ({
       onClick={handleSelectCell_Via_onClick}
       className="w-100 h-100  bg-white position-relative d-flex justify-content-center align-content-center "
       style={{
-        ...borderToPrintController(borderToPrint, cell.isSelected),
+        ...borderToPrintController(
+          borderToPrint,
+          cell.isSelected,
+          removeBorderRight
+        ),
+        minWidth: "100%",
         margin: "0",
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
         overflow: "hidden",
         boxSizing: "border-box",
+
+        right: index + "px",
       }}
     >
+      {/* <Editor_Cell_Input
+        allowReplaceInputToDiv={allowReplaceInputToDiv}
+        value={cell.content.text}
+        disabled={cell.isSelected}
+        onChange={handleChangeValue}
+        style={cell.content.style}
+        isBarcode={cell.isBarcode}
+        isQrcode={cell.isQrcode}
+        isSelection={editMode === "SELECT_MODE"}
+       
+      /> */}
       {"symbolId" in cell && symbolDetail.isSuccess ? (
         <ImageContainer
           svgSrc={symbolDetail.data}
@@ -154,7 +169,7 @@ export default function ({
             style={cell.content.style}
             isBarcode={cell.isBarcode}
             isQrcode={cell.isQrcode}
-            isSelection={isSelection}
+            isSelection={editMode === "SELECT_MODE"}
             // parentWidth={parentSize.width}
             // parentHeight={parentSize.height}
             // font={font.font}
@@ -226,12 +241,33 @@ function borderToPrintController(
     type: "",
     value: "",
   },
-  CellIsSelected
+  CellIsSelected,
+  removeBorderRight,
+  removeBorderBottom
 ) {
+  console.log(borderToPrint.value);
   const border = borderToPrint.value;
   const USE = "use";
   const NONE = "none";
-
+  // console.log({ removeBorderRight });
+  function handleBorderRight() {
+    if (removeBorderRight) {
+      return "none";
+    } else {
+      return border === "VERTICAL" || border === "ALL"
+        ? "1px solid black"
+        : "none";
+    }
+  }
+  function handleBorderBottom() {
+    if (removeBorderBottom) {
+      return "none";
+    } else {
+      return border === "HORIZONTAL" || border === "ALL"
+        ? "1px solid black"
+        : "none";
+    }
+  }
   switch (borderToPrint.type) {
     case USE:
       return {
@@ -240,18 +276,12 @@ function borderToPrintController(
             ? "1px solid black"
             : "none",
 
-        borderRight:
-          border === "VERTICAL" || border === "ALL"
-            ? "1px solid black"
-            : "none",
+        borderRight: handleBorderRight(),
         borderTop:
           border === "HORIZONTAL" || border === "ALL"
             ? "1px solid black"
             : "none",
-        borderBottom:
-          border === "HORIZONTAL" || border === "ALL"
-            ? "1px solid black"
-            : "none",
+        borderBottom: handleBorderBottom(),
       };
 
     case NONE:
@@ -259,6 +289,7 @@ function borderToPrintController(
         borderColor: CellIsSelected ? "#F36523" : "black",
         borderWidth: "1px",
         borderStyle: "solid",
+        // borderRight: removeBorderRight ? "none" : "1px solid black",
       };
 
     default:

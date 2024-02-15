@@ -14,6 +14,7 @@ import { rails, railsWidth_store } from "../recoil/userEditorStore/cellsStore";
 import useSelectionReducer from "../recoil/reducer/editor/actionButtons/useSelectionReducer";
 import { useDispatch } from "react-redux";
 import { changeType } from "../redux/project/border_slice";
+import { viewMode } from "../redux/project/edit_mode_slice";
 //
 
 export default function () {
@@ -30,7 +31,6 @@ export default function () {
   //
   const addRailBtns = document.getElementsByClassName("add-rail");
   const deleteRailBtns = document.getElementsByClassName("delete-rail");
-  const railDividers = document.getElementsByClassName("dashed-divider");
 
   //
 
@@ -49,7 +49,9 @@ export default function () {
     }
   }, [autoPrint, document.readyState, allowClosePage]);
   return screenShot;
-
+  function view_mode() {
+    dispatch(viewMode());
+  }
   async function screenShot(
     type = "PRODUCT",
     id = "",
@@ -65,8 +67,9 @@ export default function () {
     const IMAGE = "IMAGE";
 
     if (type === PRODUCT) {
+      const railDividers = document.getElementsByClassName("dashed-divider");
       dispatch(changeType("use"));
-      handleOnclickSelectionButton("VIEW");
+      view_mode();
 
       const rootElement = document.querySelector("#rails-box");
       forEach(addRailBtns, (item) => {
@@ -140,8 +143,9 @@ export default function () {
       form.submit();
     }
     if (type === IMAGE) {
+      const railDividers = document.getElementsByClassName("dashed-divider");
       dispatch(changeType("use"));
-      handleOnclickSelectionButton("VIEW");
+      view_mode();
       setTimeout(async () => {
         forEach(addRailBtns, (item) => {
           item.style.display = "none";
@@ -186,7 +190,7 @@ export default function () {
         forEach(deleteRailBtns, (item) => {
           item.style.display = "block";
         });
-      }, 3000);
+      }, 5000);
     }
   }
 }

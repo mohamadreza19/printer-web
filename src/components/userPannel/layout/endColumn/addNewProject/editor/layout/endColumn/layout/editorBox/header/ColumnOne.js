@@ -92,10 +92,7 @@ export default function ({
     return (
       <section
         onClick={() => onClick("SPLIT/COLUMN")}
-        style={{
-          display: poject_base === "PRODUCT" ? "none" : "flex",
-        }}
-        className="editor-small-cell-box me-2  justify-content-center align-items-center"
+        className="d-flex editor-small-cell-box me-2  justify-content-center align-items-center"
       >
         <SpliteColumn />
         <div className="editor-small-info-cell-box">
@@ -108,10 +105,7 @@ export default function ({
     return (
       <section
         onClick={() => onClick("JOIN/COLUMN")}
-        style={{
-          display: poject_base === "PRODUCT" ? "none" : "flex",
-        }}
-        className="editor-small-cell-box  justify-content-center align-items-center"
+        className="d-flex editor-small-cell-box  justify-content-center align-items-center"
       >
         <JoinColumn />
         <div className="editor-small-info-cell-box">

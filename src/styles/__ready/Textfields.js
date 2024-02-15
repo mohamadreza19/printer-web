@@ -564,7 +564,7 @@ export const Editor_Cell_Input = ({
           {!isSelection ? (
             <div
               ref={ref}
-              className="d-flex align-items-center w-100 h-100   editor-cell-input  "
+              className="d-flex align-items-center   "
               style={{
                 color: "black",
                 fontFamily: style.fontFamily,
@@ -575,16 +575,14 @@ export const Editor_Cell_Input = ({
                   style.fontStyle == "underline" ? "underline" : "none",
                 textAlign: style.textAlign,
                 rotate: `${style.angle}deg`,
-                // margin: `${style.margin}px `,
-                padding: `${style.padding}px`,
               }}
             >
-              <div
+              {/* <div
                 style={{ textAlign: style.textAlign, paddingTop: "2px" }}
                 className="w-100"
-              >
-                {value}
-              </div>
+              > */}
+              {value}
+              {/* </div> */}
             </div>
           ) : (
             <input

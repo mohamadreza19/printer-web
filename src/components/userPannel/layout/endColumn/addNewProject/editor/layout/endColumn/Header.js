@@ -25,6 +25,10 @@ import { useProject_baseValue } from "../../../../../../../../recoil/userEditorS
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { addBorderEvent } from "../../../../../../../../redux/project/border_slice";
+import {
+  addSuccess,
+  clearSuccess,
+} from "../../../../../../../../redux/project/success_slice";
 
 const PROJECT_EDIT = "project/edit";
 const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
@@ -127,10 +131,8 @@ export default function () {
           body: handle_bundled_project(),
         });
         break;
-
-      default:
-        break;
     }
+
     // mutate.mutate({
     //   body: handle_bundled_project(),
     // });
@@ -157,18 +159,22 @@ export default function () {
   function sreenShot() {
     autoPrint("IMAGE");
   }
+  function handleClearSuccess() {
+    disptach(clearSuccess());
+    window.location.reload();
+  }
+  function handleSuccess() {
+    const payload = {
+      status: "success",
+      onBack: handleClearSuccess,
+      body: project_mutate.data,
+      type: "edit",
+    };
+    disptach(addSuccess(payload));
+  }
 
   if (project_mutate.isSuccess || project_template_mutate.isSuccess) {
-    if (
-      editor_access === PROJECT_EDIT ||
-      editor_access === PROJECT_TEMPLATES_USER_EDIT
-    ) {
-      setShowPutProjectResponse(project_mutate.data);
-      navigate("/user/add-project");
-    }
-    if (editor_access === PROJECT_TEMPLATES_EDIT) {
-      navigate("/admin/list-labels-products");
-    }
+    handleSuccess();
   }
   return (
     <header className="w-100 d-flex align-items-center justify-content-between  pt-4 px-4">

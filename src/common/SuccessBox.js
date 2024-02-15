@@ -1,26 +1,21 @@
 import { useEffect } from "react";
-import { useH } from "react-router-dom";
-import { useDynamicCssClass } from "../../../../../../recoil/readStore";
-import Icons from "../../../../../../styles/__ready/Icons";
-import Typography from "../../../../../../styles/__ready/Typography";
-import Buttons from "../../../../../../styles/__ready/Buttons";
+import { useH, useNavigate } from "react-router-dom";
+
 import { ArrowBack } from "@mui/icons-material";
-export default function ({
-  language = "",
-  showPutProjectResponse = {
-    createdAt: "",
-    createdBy: "createdBy1",
-    direction: "left",
-    id: 4,
-    products: [],
-    projectName: "projectname1",
-    rails: [],
-    updatedAt: "2023-06-07T12:18:52.000Z",
-    userId: 1,
-  },
-  setShowPutProjectResponse = () => {},
-}) {
+import { useDynamicCssClass, useLanguage } from "../recoil/readStore";
+import Icons from "../styles/__ready/Icons";
+import Typography from "../styles/__ready/Typography";
+import Buttons from "../styles/__ready/Buttons";
+import { useSelector } from "react-redux";
+import { getEditSussess } from "../redux/project/success_slice";
+export default function () {
+  const success = useSelector(getEditSussess);
+  const language = useLanguage();
+  const body = success.body;
+  const type = success.type;
+
   const cssClass = useDynamicCssClass();
+  const navigate = useNavigate();
 
   function getDirectionText_Based_laguage(language) {
     let string = "";
@@ -39,22 +34,29 @@ export default function ({
 
     return string;
   }
-  useEffect(() => {
-    return () => {
-      setShowPutProjectResponse(null);
-    };
-  }, []);
-  function onClickaddNewProject() {
-    // when  ite object will give empty success will be apear
-    setShowPutProjectResponse(null);
+  function handleMessage() {
+    switch (type) {
+      case "add":
+        return "پروژه شما با موفقیت ساخته شد";
+      case "edit":
+        return "پروژه شما با موفقیت ویرایش شد";
+    }
   }
+  function onBack() {
+    success.onBack();
+  }
+
+  function handleClickNewProject() {
+    navigate("/user/add-project");
+  }
+
   return (
     <div className="w-100">
       <header className="w-100 d-flex justify-content-center pt-5">
         <Typography.H5 className="color-primary">
-          پروژه شما با موفقیت ویرایش شد
+          {handleMessage()}
         </Typography.H5>
-        <span>
+        <span onClick={onBack} className="cur-pointer">
           <ArrowBack
             style={{
               position: "absolute",
@@ -78,14 +80,14 @@ export default function ({
           </header>
           <footer className="d-flex flex-column align-items-center">
             <Typography.H7 className="font-500">
-              {showPutProjectResponse.projectName}
+              {body.projectName}
             </Typography.H7>
             <section className="d-flex mt-2">
               <span className={cssClass.me_1}>
                 <Icons.Persion />
               </span>
               <Typography.H7 className="font-400">
-                {showPutProjectResponse.createdBy}
+                {body.createdBy}
               </Typography.H7>
             </section>
             <section className="d-flex mt-3">
@@ -101,7 +103,8 @@ export default function ({
                 <Icons.Stack pathClassName="fill_secondray_v1" />
               </span>
               <Typography.H7 className="font-400">
-                {showPutProjectResponse.products?.length} لیبل
+                {body.products?.length}
+                لیبل
               </Typography.H7>
             </section>
           </footer>
@@ -110,7 +113,7 @@ export default function ({
       <footer className="w-100 d-flex justify-content-center align-item-center mt-5">
         <Buttons.Outlined
           className="button_medium_v01"
-          onClick={onClickaddNewProject}
+          onClick={handleClickNewProject}
         >
           <span>
             <Icons.AddNewProject classNameForPath="fill_primary" />

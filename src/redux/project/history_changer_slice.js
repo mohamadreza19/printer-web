@@ -151,21 +151,34 @@ const history_changer_slice = createSlice({
           .map((customLabel, index) => {
             for (let t = 0; t < cellIds.length; t++) {
               if (customLabel.frontId === cellIds[t]) {
+                console.log({ customLabel });
                 if (!firstCellIndex) {
                   if (index === 0) {
                     isZeroIndexIncludes = true;
                   }
                   firstCellIndex = index;
                 }
-                heights += customLabel.height;
-                if (!bigestWigth) {
-                  bigestWigth = customLabel.width;
+                if ("product" in customLabel && customLabel.product !== null) {
+                  heights += customLabel.product.width;
+
+                  if (!bigestWigth)
+                    bigestWigth =
+                      customLabel.product.widthOfPrintingArea > bigestWigth
+                        ? customLabel.product.widthOfPrintingArea
+                        : bigestWigth;
+                  console.log({ bigestWigth });
                 } else {
-                  bigestWigth =
-                    customLabel.width > bigestWigth
-                      ? customLabel.width
-                      : bigestWigth;
+                  heights += customLabel.height;
+                  if (!bigestWigth) {
+                    bigestWigth = customLabel.width;
+                  } else {
+                    bigestWigth =
+                      customLabel.width > bigestWigth
+                        ? customLabel.width
+                        : bigestWigth;
+                  }
                 }
+
                 return undefined;
               }
             }
@@ -177,7 +190,7 @@ const history_changer_slice = createSlice({
         newCustomLabel = createCustomLabel(heights, bigestWigth);
 
         const newCustomLabels = [...clearedCustomLabels];
-        console.log({ firstCellIndex });
+
         if (isZeroIndexIncludes) {
           firstCellIndex = firstCellIndex - 1;
         }
@@ -188,7 +201,7 @@ const history_changer_slice = createSlice({
       }
       function createCustomLabel(heights, bigestWigth) {
         const frontId = shortid.generate();
-
+        console.log({ heights, bigestWigth });
         return {
           frontId: frontId,
           structure: {
@@ -213,7 +226,7 @@ const history_changer_slice = createSlice({
             isSelected: false,
           },
           width: bigestWigth,
-          height: heights,
+          height: !heights ? null : heights,
         };
       }
     });

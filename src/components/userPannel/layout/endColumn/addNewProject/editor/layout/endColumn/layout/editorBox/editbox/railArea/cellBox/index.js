@@ -40,7 +40,8 @@ export default function ({
     width: 0,
     height: 0,
   },
-  disableDrag,
+
+  isRootCell = false,
 }) {
   const Description = () => {
     function substringText(text) {
@@ -91,8 +92,13 @@ export default function ({
         dimensions.width = projectDimensions.height;
         dimensions.height = projectDimensions.width;
       } else {
-        dimensions.width = cell.product.width;
-        dimensions.height = cell.product.widthOfPrintingArea;
+        if ("product" in cell && cell.product !== null) {
+          dimensions.width = cell.product.width;
+          dimensions.height = cell.product.widthOfPrintingArea;
+        } else {
+          dimensions.width = cell.height;
+          dimensions.height = cell.width;
+        }
       }
     }
 
@@ -128,7 +134,11 @@ export default function ({
                 className="position-relative "
               >
                 {/* <Description /> */}
-                <CellSplitController cellForCheck={cell.structure} />
+                <CellSplitController
+                  cellForCheck={cell.structure}
+                  index={index}
+                  isRootCell={isRootCell}
+                />
               </div>
             ) : (
               <InnerContainer
@@ -146,7 +156,9 @@ export default function ({
               >
                 {/* <Description /> */}
                 <CellSplitController
+                  index={index}
                   cellForCheck={cell.structure}
+                  isRootCell={isRootCell}
                   // rootFrontId={cell.frontId}
                 />
               </InnerContainer>

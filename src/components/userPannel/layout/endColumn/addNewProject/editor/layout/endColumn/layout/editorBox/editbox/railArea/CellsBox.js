@@ -29,9 +29,6 @@ export default function ({
 
   const [isDragging, setIsDraggingOver] = useState(false);
 
-  const [isMouseOver, setIsMouseOver] = useState(false);
-  const [isMouseDown, setIsMouseDown] = useState(false);
-
   function get_railsWidth_based_editor_access() {
     if (editor_access === "project/edit") {
       return projectDimensions.width;
@@ -64,6 +61,7 @@ export default function ({
               return (
                 <CellBox
                   projectDimensions={projectDimensions}
+                  isRootCell={true}
                   key={index}
                   index={index}
                   cell={c}

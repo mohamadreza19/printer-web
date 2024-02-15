@@ -10,12 +10,16 @@ import useCachedLanguage from "../../../../../utility/useCachedLanguage";
 import Header from "./Header";
 
 import TextFildsFox from "./TextFildsFox";
-import SuccessBox from "./successBox";
+
 import { useRecoilState } from "recoil";
 import { showPutProjectResponse } from "../../../../../recoil/store/user/showPutProjectResponse";
+import SuccessBox from "../../../../../common/SuccessBox";
+import { getEditSussess } from "../../../../../redux/project/success_slice";
+import { useSelector } from "react-redux";
 
 export default function () {
   const content = useContent_Based_Language();
+  const success = useSelector(getEditSussess);
   const language = useLanguage();
   const cssClass = useDynamicCssClass();
   const { value } = useCachedLanguage();
@@ -23,14 +27,6 @@ export default function () {
     showPutProjectResponse
   );
 
-  if (showPutProjectResponse_)
-    return (
-      <SuccessBox
-        language={language}
-        showPutProjectResponse={showPutProjectResponse_}
-        setShowPutProjectResponse={setShowPutProjectResponse}
-      />
-    );
   return (
     <div className="w-100">
       <Header
