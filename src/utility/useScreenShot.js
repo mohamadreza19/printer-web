@@ -29,6 +29,7 @@ export default function () {
     allowReplaceInputToDiv_store
   );
   //
+  const railDividers = document.getElementsByClassName("dashed-divider");
   const addRailBtns = document.getElementsByClassName("add-rail");
   const deleteRailBtns = document.getElementsByClassName("delete-rail");
 
@@ -67,7 +68,6 @@ export default function () {
     const IMAGE = "IMAGE";
 
     if (type === PRODUCT) {
-      const railDividers = document.getElementsByClassName("dashed-divider");
       dispatch(changeType("use"));
       view_mode();
 
@@ -114,7 +114,6 @@ export default function () {
       dispatch(changeType("none"));
       setTimeout(() => {
         document.body.removeChild(clonedRootElement);
-        handleShow_dashed_divider(true);
       }, 10000);
       forEach(addRailBtns, (item) => {
         item.style.display = "block";
@@ -143,7 +142,6 @@ export default function () {
       form.submit();
     }
     if (type === IMAGE) {
-      const railDividers = document.getElementsByClassName("dashed-divider");
       dispatch(changeType("use"));
       view_mode();
       setTimeout(async () => {
@@ -166,9 +164,6 @@ export default function () {
         clonedRootElement.childNodes.forEach((child) => {
           child.style.border = "none";
         });
-        const rootElementChildren = document.querySelectorAll(
-          "#test-screen div main"
-        );
 
         const imgListener = new ImageListener({
           element: clonedRootElement,
@@ -180,7 +175,7 @@ export default function () {
         dispatch(changeType("none"));
 
         document.body.removeChild(clonedRootElement);
-        handleShow_dashed_divider(true);
+        // handleShow_dashed_divider(true);
         forEach(addRailBtns, (item) => {
           item.style.display = "block";
         });

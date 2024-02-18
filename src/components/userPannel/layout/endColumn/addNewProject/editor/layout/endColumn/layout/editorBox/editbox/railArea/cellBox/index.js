@@ -87,24 +87,25 @@ export default function ({
       dimensions.height = cell.width;
 
       return dimensions;
-    } else {
+    } else if (projectBase === "PRODUCT") {
+      console.log({ cell });
       if (projectDimensions.width && projectDimensions.height) {
-        dimensions.width = projectDimensions.height;
-        dimensions.height = projectDimensions.width;
-      } else {
+        // dimensions.width = projectDimensions.height;
+        // dimensions.height = projectDimensions.width;
+
         if ("product" in cell && cell.product !== null) {
           dimensions.width = cell.product.width;
-          dimensions.height = cell.product.widthOfPrintingArea;
+          dimensions.height = cell.width || projectDimensions.height;
         } else {
           dimensions.width = cell.height;
-          dimensions.height = cell.width;
+          dimensions.height = projectDimensions.height;
         }
       }
     }
 
     return dimensions;
   }
-
+  console.log(get_Dimensions_based_label_project_template_exist());
   return (
     <Draggable
       isDragDisabled={editMode !== "VIEW_MODE"}

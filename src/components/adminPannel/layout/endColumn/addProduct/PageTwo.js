@@ -62,18 +62,21 @@ const PageTwo = () => {
   function handleChange_with(e) {
     const value = e.target.value;
 
-    distapch({
-      type: "CHANGE_WIDTH",
-      payload: Number(value),
-    });
+    if (Number(value) > 0) {
+      distapch({
+        type: "CHANGE_WIDTH",
+        payload: Number(value),
+      });
+    }
   }
   function handleChange_withOfPritingArea(e) {
     const value = e.target.value;
-
-    distapch({
-      type: "CHANGE_WIDTHOFPRITINGAREA",
-      payload: Number(value),
-    });
+    if (Number(value) > 0) {
+      distapch({
+        type: "CHANGE_WIDTHOFPRITINGAREA",
+        payload: Number(value),
+      });
+    }
   }
   function handleSubmit() {
     const {

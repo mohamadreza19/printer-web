@@ -166,7 +166,6 @@ const history_changer_slice = createSlice({
                       customLabel.product.widthOfPrintingArea > bigestWigth
                         ? customLabel.product.widthOfPrintingArea
                         : bigestWigth;
-                  console.log({ bigestWigth });
                 } else {
                   heights += customLabel.height;
                   if (!bigestWigth) {
