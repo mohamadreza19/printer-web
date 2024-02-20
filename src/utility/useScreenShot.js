@@ -90,7 +90,7 @@ export default function () {
       clonedRootElement.childNodes.forEach((child) => {
         child.style.border = "none";
       });
-
+      clonedRootElement.style.padding = "0";
       const imgListener = new ImageListener({
         element: clonedRootElement,
       });
@@ -164,6 +164,7 @@ export default function () {
         clonedRootElement.childNodes.forEach((child) => {
           child.style.border = "none";
         });
+        clonedRootElement.style.padding = "0";
 
         const imgListener = new ImageListener({
           element: clonedRootElement,
@@ -217,6 +218,7 @@ class ImageListener {
   constructor(option = interfaceObj_) {
     this.element = option.element;
   }
+
   async getImageDataURLFromCanvas() {
     const canvas = await html2canvas(this.element, {
       allowTaint: true,

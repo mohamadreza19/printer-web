@@ -88,24 +88,25 @@ export default function ({
 
       return dimensions;
     } else if (projectBase === "PRODUCT") {
+      console.log({ projectDimensions });
       console.log({ cell });
-      if (projectDimensions.width && projectDimensions.height) {
-        // dimensions.width = projectDimensions.height;
-        // dimensions.height = projectDimensions.width;
 
-        if ("product" in cell && cell.product !== null) {
-          dimensions.width = cell.product.width;
-          dimensions.height = cell.width || projectDimensions.height;
-        } else {
-          dimensions.width = cell.height;
-          dimensions.height = projectDimensions.height;
-        }
+      // dimensions.width = projectDimensions.height;
+      // dimensions.height = projectDimensions.width;
+
+      if ("product" in cell && cell.product !== null) {
+        console.log("test");
+        dimensions.width = cell.product.width;
+        dimensions.height = cell.width || projectDimensions.height;
+      } else {
+        dimensions.width = cell.height;
+        dimensions.height = projectDimensions.height;
       }
     }
 
     return dimensions;
   }
-  console.log(get_Dimensions_based_label_project_template_exist());
+
   return (
     <Draggable
       isDragDisabled={editMode !== "VIEW_MODE"}
@@ -115,6 +116,7 @@ export default function ({
       disableInteractiveElementBlocking={true}
     >
       {(provided, snapshot) => {
+        console.log(snapshot.isDragging);
         return (
           <>
             {editMode !== "VIEW_MODE" ? (
