@@ -32,5 +32,6 @@ export const getProjectDimensions = (state) => {
 };
 //
 export const getProject = (state) => state.project;
+export const getProjectRailWidth = (state) => state.project.railWidth;
 
 export default project.reducer;

@@ -12,19 +12,21 @@ import allowReplaceInputToDiv_store from "../recoil/userEditorStore/allowReplace
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { rails, railsWidth_store } from "../recoil/userEditorStore/cellsStore";
 import useSelectionReducer from "../recoil/reducer/editor/actionButtons/useSelectionReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeType } from "../redux/project/border_slice";
 import { viewMode } from "../redux/project/edit_mode_slice";
+import { getProjectRailWidth } from "../redux/project/project._slice";
 //
 
 export default function () {
   const dispatch = useDispatch();
+  const railWidth = useSelector(getProjectRailWidth);
   const [searchParams, setSearchParams] = useSearchParams();
   const handleOnclickSelectionButton = useSelectionReducer();
   let { projectId } = useParams();
   const [allowClosePage, setAllowClosePage] = useState(false);
   const autoPrint = searchParams.get("autoPrint");
-  const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
+
   const [allowReplaceInputToDiv, setAllowReplaceInputToDiv] = useRecoilState(
     allowReplaceInputToDiv_store
   );
@@ -35,7 +37,7 @@ export default function () {
 
   //
 
-  const uploadFile = AddImage_ToPrint_Local_Mutation();
+  // const uploadFile = AddImage_ToPrint_Local_Mutation();
   const addPrint = Add_Print();
 
   useEffect(() => {
@@ -99,7 +101,7 @@ export default function () {
       const blob = imgListener.getB64toBlob(imgDataURL);
 
       const generatedForm = new FormCreator({
-        elemetWidth: railsWidth,
+        elemetWidth: railWidth,
         blobedFile: blob,
         printRepetition,
       });
