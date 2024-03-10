@@ -1,10 +1,12 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default styled.div`
-  width: 100%;
-  max-height: ${(prop) => (prop.isDragging ? `54.32px` : "100%")};
+  width: ${(props) => {
+    return props.isDragging ? props.productWidth + 'mm' : '100%';
+  }};
+  max-height: ${(prop) => (prop.isDragging ? `54.32px` : '100%')};
   background: white;
-  border: ${(props) => (props.isDragging ? "1.5px solid #F36523" : "none")};
+  border: ${(props) => (props.isDragging ? '1.5px solid #F36523' : 'none')};
 `;
 // export default styled.div`
 

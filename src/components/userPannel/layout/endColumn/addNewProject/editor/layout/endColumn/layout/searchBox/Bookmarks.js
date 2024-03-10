@@ -16,12 +16,7 @@ export default function ({ BookmarkedList }) {
   function handleChangeIsAllowShowProductsBookmark() {
     setIsAllowShowProductsBookmark((draft) => !draft);
   }
-  const favarites = [
-    "ترمینال پیچی",
-    "ترمینال پیچی",
-    "ترمینال پیچی",
-    "ترمینال پیچی",
-  ];
+
   return (
     <Swiper
       style={{

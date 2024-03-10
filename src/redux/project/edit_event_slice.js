@@ -1,18 +1,16 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
-  type: "",
-  value: "",
-  id: "",
+  type: '',
+  value: '',
+  id: '',
 };
 
 const edit_event_slice = createSlice({
-  name: "edite_event",
+  name: 'edite_event',
   initialState,
   reducers: {
-    addEditEvent(state, action) {
-      return initialState;
-    },
+    addEditEvent(state, action) {},
   },
 });
 

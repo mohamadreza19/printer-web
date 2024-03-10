@@ -1,17 +1,21 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import {
   AdminAddImage_Mutation,
   AdminAddProduct_Mutation,
-} from "../../../../../reactQuery/admin/callPostService";
-import Buttons from "../../../../../styles/__ready/Buttons";
-import Icons from "../../../../../styles/__ready/Icons";
-import Typography from "../../../../../styles/__ready/Typography";
-import styles from "./Product.module.css";
-import { useProductContext } from "./product.context";
-import { AdminEditProduct_Mutation } from "../../../../../reactQuery/admin/callPutService";
-import { useParams } from "react-router-dom";
+} from '../../../../../reactQuery/admin/callPostService';
+import Buttons from '../../../../../styles/__ready/Buttons';
+import Icons from '../../../../../styles/__ready/Icons';
+import Typography from '../../../../../styles/__ready/Typography';
+import styles from './Product.module.css';
+import { useProductContext } from './product.context';
+import {
+  AdminEditImage_Mutation,
+  AdminEditProduct_Mutation,
+} from '../../../../../reactQuery/admin/callPutService';
+import { useParams } from 'react-router-dom';
 const PageTwo = () => {
   const { state, distapch } = useProductContext();
+  const editImage = AdminEditImage_Mutation();
 
   const product = state.productId
     ? AdminEditProduct_Mutation()
@@ -20,7 +24,7 @@ const PageTwo = () => {
   function handleAddFile(e) {
     const file = e.target.files[0];
     const action = {
-      type: "ADD_FILE",
+      type: 'ADD_FILE',
       payload: file,
     };
     distapch(action);
@@ -30,12 +34,12 @@ const PageTwo = () => {
     const file = e.dataTransfer.files[0];
     const fileName = file.name;
     if (
-      fileName.includes("jpeg") ||
-      fileName.includes("png") ||
-      fileName.includes("jpg")
+      fileName.includes('jpeg') ||
+      fileName.includes('png') ||
+      fileName.includes('jpg')
     ) {
       const action = {
-        type: "ADD_EXEL_FILE",
+        type: 'ADD_EXEL_FILE',
         payload: file,
       };
       distapch(action);
@@ -43,18 +47,18 @@ const PageTwo = () => {
   }
   function clearFile() {
     distapch({
-      type: "CLEAR__FILE",
+      type: 'CLEAR__FILE',
     });
-    const hideInput = document.getElementById("upload-file");
+    const hideInput = document.getElementById('upload-file');
 
     hideInput.remove();
 
-    const newInput = document.createElement("input");
+    const newInput = document.createElement('input');
 
-    newInput.type = "file";
-    newInput.id = "upload-file";
-    newInput.style.display = "none";
-    newInput.accept = ".png,.jpeg,.jpg";
+    newInput.type = 'file';
+    newInput.id = 'upload-file';
+    newInput.style.display = 'none';
+    newInput.accept = '.png,.jpeg,.jpg';
     newInput.onchange = handleAddFile;
 
     document.body.appendChild(newInput);
@@ -64,7 +68,7 @@ const PageTwo = () => {
 
     if (Number(value) > 0) {
       distapch({
-        type: "CHANGE_WIDTH",
+        type: 'CHANGE_WIDTH',
         payload: Number(value),
       });
     }
@@ -73,7 +77,7 @@ const PageTwo = () => {
     const value = e.target.value;
     if (Number(value) > 0) {
       distapch({
-        type: "CHANGE_WIDTHOFPRITINGAREA",
+        type: 'CHANGE_WIDTHOFPRITINGAREA',
         payload: Number(value),
       });
     }
@@ -94,7 +98,7 @@ const PageTwo = () => {
     delete mutatedName.err;
     delete mutatedDescription.err;
     if (!file.file) {
-      callErr("file", "لطفا تصویر محصول را وارد کنید");
+      callErr('file', 'لطفا تصویر محصول را وارد کنید');
     }
 
     const body = {
@@ -109,7 +113,7 @@ const PageTwo = () => {
     product.mutate(body);
     function callErr(target, value) {
       const action = {
-        type: "ERROR",
+        type: 'ERROR',
         payload: {
           target,
           value,
@@ -118,35 +122,51 @@ const PageTwo = () => {
       distapch(action);
     }
   }
+
   useEffect(() => {
     if (product.isSuccess) {
-      const entityType = "product";
+      const entityType = 'product';
       const entityId = +product.data.id;
 
       //
       const picture = state.file.file;
 
-      const payload = {
-        entityType,
-        entityId,
-        file: picture,
-      };
-      addImage.mutate(payload);
+      if (state.productId) {
+        editImageHandeler();
+      } else {
+        addImageHandeler();
+      }
       distapch({
-        type: "NEXT_PAGE",
+        type: 'NEXT_PAGE',
       });
+      function addImageHandeler() {
+        const payload = {
+          entityType,
+          entityId,
+          file: picture,
+        };
+        addImage.mutate(payload);
+        distapch({
+          type: 'NEXT_PAGE',
+        });
+      }
+      function editImageHandeler() {
+        const payload = { perviusFileId: state.fileId, file: picture };
+
+        editImage.mutate(payload);
+      }
     }
   }, [product?.isSuccess]);
 
   return (
-    <div className={styles["page-2-container"]}>
+    <div className={styles['page-2-container']}>
       <article
         style={{
-          columnGap: "15px",
+          columnGap: '15px',
         }}
         className="d-flex"
       >
-        <section className={styles["input-box"] + " " + styles["input-small"]}>
+        <section className={styles['input-box'] + ' ' + styles['input-small']}>
           <label>
             <Typography.H8>عرض محصول</Typography.H8>
           </label>
@@ -155,10 +175,10 @@ const PageTwo = () => {
             onChange={handleChange_with}
             value={state.width.value}
           />
-          <div className={styles["err-message"]}>{state.width.err}</div>
-          <span className={styles["measurement"]}>mn</span>
+          <div className={styles['err-message']}>{state.width.err}</div>
+          <span className={styles['measurement']}>mn</span>
         </section>
-        <section className={styles["input-box"] + " " + styles["input-small"]}>
+        <section className={styles['input-box'] + ' ' + styles['input-small']}>
           <label>
             <Typography.H8>عرض محل چاپ</Typography.H8>
           </label>
@@ -167,10 +187,10 @@ const PageTwo = () => {
             onChange={handleChange_withOfPritingArea}
             value={state.widthOfPrintingArea.value}
           />
-          <div className={styles["err-message"]}>
+          <div className={styles['err-message']}>
             {state.widthOfPrintingArea.err}
           </div>
-          <span className={styles["measurement"]}>mn</span>
+          <span className={styles['measurement']}>mn</span>
         </section>
       </article>
       <UploadArea
@@ -189,7 +209,7 @@ const PageTwo = () => {
       <div>
         <Buttons.Contained
           onClick={handleSubmit}
-          className={styles["submit-btn"]}
+          className={styles['submit-btn']}
         >
           ادامه
         </Buttons.Contained>
@@ -199,7 +219,7 @@ const PageTwo = () => {
 };
 const UploadArea = ({ file, clearFile, onChange, onDrop }) => {
   function handle_open_hidden_input() {
-    document.getElementById("upload-file").click();
+    document.getElementById('upload-file').click();
   }
   const File = () => {
     return (
@@ -209,7 +229,7 @@ const UploadArea = ({ file, clearFile, onChange, onDrop }) => {
             top: -10,
           }}
           onClick={clearFile}
-          className={styles["pop-up-delete-file-icon"] + " cur-pointer"}
+          className={styles['pop-up-delete-file-icon'] + ' cur-pointer'}
         >
           <svg
             width="15"
@@ -227,7 +247,7 @@ const UploadArea = ({ file, clearFile, onChange, onDrop }) => {
           </svg>
         </span>
         <img
-          className={styles["selected-file-preview"]}
+          className={styles['selected-file-preview']}
           src={URL.createObjectURL(file)}
         />
         <section className="px-3">{file.name}</section>
@@ -239,14 +259,14 @@ const UploadArea = ({ file, clearFile, onChange, onDrop }) => {
       style={{
         paddingTop: 10,
       }}
-      className={styles["pop-up-section-2"]}
+      className={styles['pop-up-section-2']}
       onDragOver={(e) => e.preventDefault()}
       onDrop={onDrop}
     >
       {file ? (
         <File />
       ) : (
-        <div className={styles["pop-up-section-2-upload-area"]}>
+        <div className={styles['pop-up-section-2-upload-area']}>
           <span onClick={handle_open_hidden_input}>
             <Icons.Download width="44" height="44" fill="#CBCBCB" />
           </span>

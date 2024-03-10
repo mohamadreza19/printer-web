@@ -10,6 +10,7 @@ import { User_Profile_Call } from "../../../../reactQuery/user/callGetService";
 import formatData from "../../../../utility/useFormetDate";
 import { memo } from "react";
 import { useGetUserProfile } from "../../../../recoil/store/user/profile_store";
+import { useTranslation } from "react-i18next";
 // const user_profile_data = {
 //   companyName: "",
 //   email: "",
@@ -17,7 +18,8 @@ import { useGetUserProfile } from "../../../../recoil/store/user/profile_store";
 // };
 const RowOne = memo(function () {
   const cssClass = useDynamicCssClass();
-  const content = useContent_Based_Language();
+
+  const { t } = useTranslation();
   const { value } = useCachedLanguage();
   const user_profile = useGetUserProfile();
   const language = useLanguage();
@@ -37,7 +39,7 @@ const RowOne = memo(function () {
           </header>
           <footer className="w-100 d-flex justify-content-start  align-item-center">
             <Typography.Body2 className={"disabled_gray2  "}>
-              <span>{content.userPannel.start_col.row1.epirationOfCredit}</span>
+              <span>{t("epirationOfCredit")}</span>
             </Typography.Body2>
             <Typography.Body2
               isFa={value == "fa"}

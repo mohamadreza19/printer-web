@@ -17,17 +17,19 @@ import {
   getRails,
   getRailsLength,
 } from "../../../../../../../../../../redux/project/history_changer_slice";
+import { useTranslation } from "react-i18next";
 
 const CreateCustom = () => {
   const railsLength = useSelector(getRailsLength);
   const rails = useSelector(getRails);
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   return (
     <CreateCustomPoduct
       railsLength={railsLength}
       rails={rails}
       setRails={dispatch}
+      t={t}
     />
   );
 };
@@ -99,6 +101,7 @@ class CreateCustomPoduct extends React.Component {
     this.props.setRails(addPresent(newRails));
   };
   render() {
+    const { t } = this.props;
     return (
       <div style={{ paddingRight: "28px" }} className={"custom"}>
         <main
@@ -107,7 +110,7 @@ class CreateCustomPoduct extends React.Component {
           }}
           className="d-flex align-items-center flex-column bg-white border-r-top-right-20 p-2"
         >
-          <Typography.H6>ساخت Product Custom</Typography.H6>
+          <Typography.H6>{t("editor.createProductCustom")}</Typography.H6>
           <div
             className="w-100 d-flex flex-wrap justify-content-center"
             style={{
@@ -119,7 +122,7 @@ class CreateCustomPoduct extends React.Component {
               style={{ columnGap: "5px", borderRadius: "10px" }}
               className="d-flex align-items-center"
             >
-              <Typography.H9_5>عرض mm</Typography.H9_5>
+              <Typography.H9_5>{t("width")} mm</Typography.H9_5>
               <Input
                 value={this.state.width}
                 onChange={this.setWidth}
@@ -130,7 +133,7 @@ class CreateCustomPoduct extends React.Component {
               style={{ columnGap: "5px", borderRadius: "10px" }}
               className="d-flex align-items-center"
             >
-              <Typography.H9_5>طول mm</Typography.H9_5>
+              <Typography.H9_5>{t("length")} mm</Typography.H9_5>
               <Input
                 value={this.state.height}
                 onChange={this.setHeight}

@@ -19,6 +19,12 @@ input:-webkit-autofill:active {
 .c-pointer {
   cursor: pointer;
 }
+html[dir="ltr"] * {
+  font-family: Arial, Helvetica, sans-serif;
+}
+html[dir="ltr"] .MuiTypography-h6 {
+  font-family: Vazirmatn;
+}
 html[dir="ltr"] .eye-password {
   right: 16px;
 }
@@ -47,15 +53,20 @@ input:disabled {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none;
+  /* -webkit-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none; */
 }
 a {
   color: inherit;
   text-decoration: none !important;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
+  /* -webkit-user-select: none;
+  -ms-user-select: none; 
+  user-select: none;  */
+}
+.un-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 
@@ -1020,6 +1031,10 @@ html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
   position: relative;
   left: 1.1rem;
 }
+html[dir="ltr"] .product-label-icon-plus-box {
+  left: 0;
+  /* right: 1.1rem; */
+}
 .product-label-description {
   max-height: 2vh;
 }
@@ -1133,18 +1148,20 @@ html[dir="ltr"] .add-new-rail-btn {
   position: absolute;
   z-index: 10000;
   top: 50%;
-  right: 50%;
+  left: 50%;
   /* background-color: #00000031; */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .toast-box {
-  position: absolute;
+  position: fixed;
   z-index: 10000;
-  width: 100vw;
+  top: 50%;
+  left: 50%;
+  width: 100%;
   height: 100vh;
-  min-height: 768px;
+  transform: translate(-50%, -50%);
   background-color: #00000031;
   display: flex;
   justify-content: center;
@@ -1403,4 +1420,8 @@ html[dir="ltr"] .add-new-rail-btn {
 
   pointer-events: none;
   /* border: 3px solid #f48024; */
+}
+
+.rotate-0 {
+  rotate: 0deg;
 }

@@ -1,19 +1,20 @@
-import { createSlice, current } from "@reduxjs/toolkit";
-import shortid from "shortid";
-import { addEditEvent } from "./edit_event_slice";
+import { createSlice, current } from '@reduxjs/toolkit';
+import shortid from 'shortid';
+import { addEditEvent } from './edit_event_slice';
 import {
   PayloadCenter,
   Rails,
   SelectParntAndChilds,
-} from "../../utility/editor-tools";
+} from '../../utility/editor-tools';
 import {
   addMultiCell,
   joinCustomLabels,
   muiti_selectCell_caseReducers,
-} from "./multi_selectCell_slice";
+} from './multi_selectCell_slice';
+import { selectMode, viewMode } from './edit_mode_slice';
 
 const history_changer_slice = createSlice({
-  name: "rails",
+  name: 'rails',
   initialState: {
     future: [],
     present: [],
@@ -44,7 +45,7 @@ const history_changer_slice = createSlice({
       state.present = filterdRail;
     },
     redo(state) {
-      console.log("redoo");
+      console.log('redoo');
       const { past, future, present } = state;
       return {
         future: future.slice(1),
@@ -75,10 +76,27 @@ const history_changer_slice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(viewMode.type, (state, action) => {
+      const presentRails = current(state.present);
+
+      const event = {
+        type: 'UN_SELECT',
+        // itemId: action.payload.itemId,
+        // value: action.payload.value,
+        // symbolId: action.payload.symbolId,
+      };
+
+      PayloadCenter.setEvent(event);
+
+      const mutateRails = new Rails(presentRails).railsArr;
+
+      state.present = mutateRails;
+      if (event.type !== 'SELECT') {
+        state.past = [...state.past, state.present];
+      }
+    });
     builder.addCase(addEditEvent.type, (state, action) => {
       const presentRails = current(state.present);
-      console.log(action.payload.itemId);
-      console.log(action.payload.type);
 
       const event = {
         type: action.payload.type,
@@ -92,22 +110,33 @@ const history_changer_slice = createSlice({
       const mutateRails = new Rails(presentRails).railsArr;
 
       state.present = mutateRails;
-      if (event.type !== "SELECT") {
+
+      if (event.type !== 'SELECT') {
         state.past = [...state.past, state.present];
       }
     });
     builder.addCase(addMultiCell.type, (state, action) => {
       const { cellIds, mostRailIdRepeat } = action.payload;
       const currentState = current(state);
-      state.present = currentState.present.map((rail) => {
-        if (rail.frontId === mostRailIdRepeat) {
-          return {
-            ...rail,
-            customLabels: customLabelsHandeler(rail.customLabels, cellIds),
-          };
-        }
-        return rail;
-      });
+
+      if (cellIds.length > 0) {
+        state.present = currentState.present.map((rail) => {
+          if (rail.frontId === mostRailIdRepeat) {
+            return {
+              ...rail,
+              customLabels: customLabelsHandeler(rail.customLabels, cellIds),
+            };
+          }
+          return rail;
+        });
+      } else {
+        // const event = {
+        //   type: 'UN_SELECT',
+        // };
+        // PayloadCenter.setEvent(event);
+        // const mutateRails = new Rails(state.present).railsArr;
+        // state.present = mutateRails;
+      }
 
       function customLabelsHandeler(customLabels = [], cellIds = []) {
         const newCustomLabels = customLabels.map((customLabel, index) => {
@@ -122,7 +151,13 @@ const history_changer_slice = createSlice({
             }
           }
 
-          return customLabel;
+          return {
+            ...customLabel,
+            structure: {
+              ...customLabel.structure,
+              isSelected: false,
+            },
+          };
         });
 
         return newCustomLabels;
@@ -158,7 +193,7 @@ const history_changer_slice = createSlice({
                   }
                   firstCellIndex = index;
                 }
-                if ("product" in customLabel && customLabel.product !== null) {
+                if ('product' in customLabel && customLabel.product !== null) {
                   heights += customLabel.product.width;
 
                   if (!bigestWigth)
@@ -204,17 +239,17 @@ const history_changer_slice = createSlice({
         return {
           frontId: frontId,
           structure: {
-            split: "none",
+            split: 'none',
             rootId: frontId,
             content: {
-              text: "",
+              text: '',
               style: {
-                fontFamily: "Arial",
-                fontStyle: "regular",
+                fontFamily: 'Arial',
+                fontStyle: 'regular',
                 fontSize: 14,
                 angle: 0,
-                textAlign: "none",
-                textDirecton: "right",
+                textAlign: 'none',
+                textDirecton: 'right',
                 padding: 0,
                 margin: 0,
               },

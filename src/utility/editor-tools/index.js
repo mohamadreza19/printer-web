@@ -1,13 +1,13 @@
-import shortid from "shortid";
-import selectedCell from "../../redux/project/selectedCell";
+import shortid from 'shortid';
+import selectedCell from '../../redux/project/selectedCell';
 
 export class PayloadCenter {
   selectedCellStyleHandeler = () => {};
   _event = {
-    type: "",
-    itemId: "",
-    value: "",
-    symbolId: "",
+    type: '',
+    itemId: '',
+    value: '',
+    symbolId: '',
   };
 
   static setEvent(payload) {
@@ -24,8 +24,8 @@ export class PayloadCenter {
   }
 }
 export class CellTool {
-  cellId = "";
-  action = "";
+  cellId = '';
+  action = '';
   #structure;
   constructor(structure = {}) {
     this.#structure = structure;
@@ -52,31 +52,31 @@ export class CellTool {
       _else: { ...structure, isSelected: false },
     };
   }
-  get ["SPLIT/COLUMN"]() {
+  get ['SPLIT/COLUMN']() {
     const structure = this.#structure;
 
     const target = {
       ...structure,
-      split: "vertical",
+      split: 'vertical',
       children: [
         {
           rootId: structure.rootId,
-          split: "none",
+          split: 'none',
 
           frontId: shortid.generate(),
           content: {
-            text: "",
+            text: '',
             style: structure.content.style,
           },
           isSelected: false,
         },
         {
           rootId: structure.rootId,
-          split: "none",
+          split: 'none',
 
           frontId: shortid.generate(),
           content: {
-            text: "",
+            text: '',
             style: structure.content.style,
           },
           isSelected: false,
@@ -89,30 +89,30 @@ export class CellTool {
     };
   }
 
-  get ["SPLIT/ROW"]() {
+  get ['SPLIT/ROW']() {
     const structure = this.#structure;
     const target = {
       ...structure,
-      split: "horizontal",
+      split: 'horizontal',
       children: [
         {
           rootId: structure.rootId,
-          split: "none",
+          split: 'none',
 
           frontId: shortid.generate(),
           content: {
-            text: "",
+            text: '',
             style: structure.content.style,
           },
           isSelected: false,
         },
         {
           rootId: structure.rootId,
-          split: "none",
+          split: 'none',
 
           frontId: shortid.generate(),
           content: {
-            text: "",
+            text: '',
             style: structure.content.style,
           },
           isSelected: false,
@@ -124,14 +124,14 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["JOIN/COLUMN"]() {
+  get ['JOIN/COLUMN']() {
     const target = undefined;
     return {
       _target: target,
       _else: this.#structure,
     };
   }
-  get ["JOIN/ROW"]() {
+  get ['JOIN/ROW']() {
     const target = undefined;
     return {
       _target: target,
@@ -144,7 +144,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["CONTENT/NEW"]() {
+  get ['CONTENT/NEW']() {
     const structure = this.#structure;
     let value = PayloadCenter.event.value;
     const target = {
@@ -198,7 +198,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["FONT/CHANGE"]() {
+  get ['FONT/CHANGE']() {
     const structure = this.#structure;
     let font = PayloadCenter.event.value;
     return {
@@ -215,7 +215,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["FONT/STYLE"]() {
+  get ['FONT/STYLE']() {
     const structure = this.#structure;
     let style = PayloadCenter.event.value;
     return {
@@ -232,7 +232,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["FONT/ALIGN"]() {
+  get ['FONT/ALIGN']() {
     const structure = this.#structure;
     let textAlign = PayloadCenter.event.value;
     return {
@@ -267,7 +267,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["ANGLE/INCREMENT"]() {
+  get ['ANGLE/INCREMENT']() {
     const structure = this.#structure;
     let newAngle = structure.content.style.angle;
     newAngle = Number(newAngle) + 1;
@@ -286,7 +286,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["ANGLE/DECREMENT"]() {
+  get ['ANGLE/DECREMENT']() {
     const structure = this.#structure;
     let newAngle = structure.content.style.angle;
 
@@ -326,7 +326,7 @@ export class CellTool {
     };
   }
 
-  get ["TEXTSIZE/INCREMENT"]() {
+  get ['TEXTSIZE/INCREMENT']() {
     const structure = this.#structure;
     let newFontSize = structure.content.style.fontSize;
     newFontSize = Number(newFontSize) + 1;
@@ -345,7 +345,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["TEXTSIZE/DECREMENT"]() {
+  get ['TEXTSIZE/DECREMENT']() {
     const structure = this.#structure;
     let newFontSize = structure.content.style.fontSize;
 
@@ -384,7 +384,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["MARGIN/INCREMENT"]() {
+  get ['MARGIN/INCREMENT']() {
     const structure = this.#structure;
     let newMargin = structure.content.style.margin;
 
@@ -404,7 +404,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["MARGIN/DECREMENT"]() {
+  get ['MARGIN/DECREMENT']() {
     const structure = this.#structure;
     let newMargin = structure.content.style.margin;
 
@@ -443,7 +443,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["PADDING/INCREMENT"]() {
+  get ['PADDING/INCREMENT']() {
     const structure = this.#structure;
     let newPadding = structure.content.style.padding;
 
@@ -463,7 +463,7 @@ export class CellTool {
       _else: this.#structure,
     };
   }
-  get ["PADDING/DECREMENT"]() {
+  get ['PADDING/DECREMENT']() {
     const structure = this.#structure;
     let newPadding = structure.content.style.padding;
 
@@ -541,7 +541,7 @@ export class CellTool {
     if (is_children_undefined) {
       return {
         ...structure,
-        split: "none",
+        split: 'none',
         children: null,
       };
     } else return structure;
@@ -549,10 +549,10 @@ export class CellTool {
 }
 
 export class Structure {
-  #structure = { split: "" };
+  #structure = { split: '' };
   constructor(
     structure = {
-      split: "",
+      split: '',
     }
   ) {
     this.#structure = structure;
@@ -572,11 +572,10 @@ export class Structure {
       switch (structure.frontId === PayloadCenter.event.itemId) {
         case true:
           if (
-            PayloadCenter.event.type !== "JOIN/COLUMN" &&
-            PayloadCenter.event.type !== "JOIN/ROW" &&
-            PayloadCenter.event.type !== "DELETECELL"
+            PayloadCenter.event.type !== 'JOIN/COLUMN' &&
+            PayloadCenter.event.type !== 'JOIN/ROW' &&
+            PayloadCenter.event.type !== 'DELETECELL'
           ) {
-            selectedCell("set", _target);
           }
           return _target;
 
@@ -614,7 +613,7 @@ export class Structure {
 }
 export class CustomLabel {
   #_customLabel = {
-    split: "",
+    split: '',
     structure: {},
   };
   constructor(
@@ -643,7 +642,7 @@ export class CustomLabel {
 export class CustomLabels {
   #_customLabels = [];
   constructor(customLabels = []) {
-    if (PayloadCenter.event.type !== "DUPLICATECELL") {
+    if (PayloadCenter.event.type !== 'DUPLICATECELL') {
       this.#_customLabels = customLabels.map(
         (customLabel) => new CustomLabel(customLabel).customLabel
       );
@@ -657,10 +656,10 @@ export class CustomLabels {
       (customLabel) => customLabel.structure !== undefined
     );
 
-    if (PayloadCenter._action === "REVERSE") {
+    if (PayloadCenter._action === 'REVERSE') {
       return this.reverse(cleanCustomLabels);
     }
-    if (PayloadCenter.event.type === "DUPLICATECELL") {
+    if (PayloadCenter.event.type === 'DUPLICATECELL') {
       const rootId = PayloadCenter.event.itemId;
       const findedIndex = cleanCustomLabels.findIndex(
         (customLabel) => customLabel.structure.rootId === rootId
@@ -686,15 +685,15 @@ export class CustomLabels {
             const mapedChildren = cellForCheck.structure.children.map(
               (child) => {
                 if (
-                  child.split == "none" ||
-                  child?.structure?.split == "none"
+                  child.split == 'none' ||
+                  child?.structure?.split == 'none'
                 ) {
                   return fullCellChecker(child);
                 }
-                if (child.split == "vertical") {
+                if (child.split == 'vertical') {
                   return verticalCellChecker(child);
                 }
-                if (child.split == "horizontal") {
+                if (child.split == 'horizontal') {
                   return horizontalCellChecker(child);
                 }
                 return child;
@@ -711,13 +710,13 @@ export class CustomLabels {
           function horizontalCellChecker(cellForCheck) {
             const mapedChildren = cellForCheck.structure.children.map(
               (child) => {
-                if (child.structure.split == "none") {
+                if (child.structure.split == 'none') {
                   return fullCellChecker(child);
                 }
-                if (child.structure.split == "vertical") {
+                if (child.structure.split == 'vertical') {
                   return verticalCellChecker(child);
                 }
-                if (child.structure.split == "horizontal") {
+                if (child.structure.split == 'horizontal') {
                   return horizontalCellChecker(child);
                 }
                 return child;
@@ -732,13 +731,13 @@ export class CustomLabels {
             };
           }
 
-          if (cell.structure.split == "none") {
+          if (cell.structure.split == 'none') {
             return fullCellChecker(cell);
           }
-          if (cell.structure.split == "vertical") {
+          if (cell.structure.split == 'vertical') {
             return verticalCellChecker(cell);
           }
-          if (cell.structure.split == "horizontal") {
+          if (cell.structure.split == 'horizontal') {
             return horizontalCellChecker(cell);
           }
         }

@@ -18,6 +18,7 @@ import {
 } from "../../../recoil/readStore";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ({
   submitDataPickred = () => {},
@@ -26,7 +27,7 @@ export default function ({
   fileNameForDonwloadedFile = "",
 }) {
   const date = useDateObject();
-
+  const { t } = useTranslation();
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
   const { value: currentLanguage } = useCachedLanguage();
@@ -70,7 +71,7 @@ export default function ({
     return currentLanguage === "fa" ? (
       <section className={"d-flex align-items-center "}>
         <Typography.H9 className={"font-400 me-3"}>
-          {content.userPannel.end_col.historyOfPrinting.calender.from}
+          {t("sortingFrom")}
         </Typography.H9>
         <DatePicker
           render={<FromInput />}
@@ -84,9 +85,7 @@ export default function ({
       </section>
     ) : (
       <section className="d-flex align-items-center flex-row-reverse">
-        <Typography.H9 className={"font-400 ms-3"}>
-          {content.userPannel.end_col.historyOfPrinting.calender.from}
-        </Typography.H9>
+        <Typography.H9 className={"font-400 ms-3"}>{t("to")}</Typography.H9>
         <DatePicker
           render={<FromInput />}
           className=""
@@ -190,18 +189,14 @@ export default function ({
         className="px-2_3rem bg_primary border-r-20  mx-2 "
         onClick={submitDataPickred}
       >
-        <Typography.H9 className="font-400">
-          {content.userPannel.end_col.historyOfPrinting.sortButton}
-        </Typography.H9>
+        <Typography.H9 className="font-400">{t("sort")}</Typography.H9>
       </Buttons.Contained_Custom>
 
       <Buttons.Outlined
         className="px-3 border-r-20   "
         onClick={handleOnClickDownload_excel}
       >
-        <Typography.H9 className="font-400">
-          {content.userPannel.end_col.historyOfPrinting.downloadExcel}
-        </Typography.H9>
+        <Typography.H9 className="font-400">{t("downloadExcel")}</Typography.H9>
       </Buttons.Outlined>
     </div>
   );

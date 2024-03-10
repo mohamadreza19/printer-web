@@ -1,33 +1,33 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { Editor_Cell_Input } from "../../../../../../../../../../../../../styles/__ready/Textfields";
-import allowReplaceInputToDiv_store from "../../../../../../../../../../../../../recoil/userEditorStore/allowReplaceInputToDiv_store";
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { Editor_Cell_Input } from '../../../../../../../../../../../../../styles/__ready/Textfields';
+import allowReplaceInputToDiv_store from '../../../../../../../../../../../../../recoil/userEditorStore/allowReplaceInputToDiv_store';
 
-import { useEffect, useRef, useState } from "react";
-import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
+import { useEffect, useRef, useState } from 'react';
+import { useSelection } from '../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton';
 
-import styled from "styled-components";
-import shortid from "shortid";
+import styled from 'styled-components';
+import shortid from 'shortid';
 
-import { useDispatch, useSelector } from "react-redux";
-import { addEditEvent } from "../../../../../../../../../../../../../redux/project/edit_event_slice";
-import selectedCell from "../../../../../../../../../../../../../redux/project/selectedCell";
+import { useDispatch, useSelector } from 'react-redux';
+import { addEditEvent } from '../../../../../../../../../../../../../redux/project/edit_event_slice';
+import selectedCell from '../../../../../../../../../../../../../redux/project/selectedCell';
 import {
   changeType,
   getBorderToPrint,
-} from "../../../../../../../../../../../../../redux/project/border_slice";
-import { addSelectedCell } from "../../../../../../../../../../../../../redux/project/selectedCell_slice";
-import { getEditMode } from "../../../../../../../../../../../../../redux/project/edit_mode_slice";
+} from '../../../../../../../../../../../../../redux/project/border_slice';
+import { addSelectedCell } from '../../../../../../../../../../../../../redux/project/selectedCell_slice';
+import { getEditMode } from '../../../../../../../../../../../../../redux/project/edit_mode_slice';
 export default function ({
   symbolDetail,
   index,
   cell = {
-    frontId: " ",
+    frontId: ' ',
 
     style: {
-      fontSize: "14",
-      angle: "14",
-      textAlign: "center",
-      fontStyle: "bold",
+      fontSize: '14',
+      angle: '14',
+      textAlign: 'center',
+      fontStyle: 'bold',
     },
     isBarcode: false,
     isQrcode: false,
@@ -56,14 +56,13 @@ export default function ({
   // const symbolDetail = Admin_User_Symbol("user");
   function handleSelectCell_Via_onClick() {
     const payload = {
-      type: "SELECT",
+      type: 'SELECT',
       itemId: cell.frontId,
     };
     dispatch(addEditEvent(payload));
-    selectedCell("set", cell);
   }
   function handleDeleteSymbol() {
-    if ("symbolId" in cell) {
+    if ('symbolId' in cell) {
       const payload = {
         cellId: cell.frontId,
       };
@@ -72,7 +71,7 @@ export default function ({
   }
   function handleChangeValue(value) {
     const payload = {
-      type: "CONTENT/NEW",
+      type: 'CONTENT/NEW',
       itemId: cell.frontId,
       value,
     };
@@ -85,20 +84,20 @@ export default function ({
     }
   }, [cell.isSelected]);
   useEffect(() => {
-    if ("symbolId" in cell) {
+    if ('symbolId' in cell) {
       symbolDetail.mutate({ id: cell.symbolId });
     }
   }, [cell.symbolId]);
 
   useEffect(() => {
     setParentSize({
-      width: getOrintaion("WIDTH"),
-      height: getOrintaion("HEIGHT"),
+      width: getOrintaion('WIDTH'),
+      height: getOrintaion('HEIGHT'),
     });
   }, []);
-  function getOrintaion(type = "") {
-    const WIDTH = "WIDTH";
-    const HEIGHT = "HEIGHT";
+  function getOrintaion(type = '') {
+    const WIDTH = 'WIDTH';
+    const HEIGHT = 'HEIGHT';
     const parent = ref?.current;
 
     if (parent) {
@@ -117,7 +116,6 @@ export default function ({
     return cell.content.style;
   }
 
-  // console.log(removeBorderRight);
   return (
     <main
       ref={ref}
@@ -132,14 +130,14 @@ export default function ({
           cell.isSelected,
           removeBorderRight
         ),
-        minWidth: "100%",
-        margin: "0",
+        minWidth: '100%',
+        margin: '0',
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
-        overflow: "hidden",
-        boxSizing: "border-box",
+        overflow: 'hidden',
+        boxSizing: 'border-box',
 
-        right: index + "px",
+        right: index + 'px',
       }}
     >
       {/* <Editor_Cell_Input
@@ -153,7 +151,7 @@ export default function ({
         isSelection={editMode === "SELECT_MODE"}
        
       /> */}
-      {"symbolId" in cell && symbolDetail.isSuccess ? (
+      {'symbolId' in cell && symbolDetail.isSuccess ? (
         <ImageContainer
           svgSrc={symbolDetail.data}
           style={cell.content.style}
@@ -169,7 +167,7 @@ export default function ({
             style={cell.content.style}
             isBarcode={cell.isBarcode}
             isQrcode={cell.isQrcode}
-            isSelection={editMode === "SELECT_MODE"}
+            isSelection={editMode === 'SELECT_MODE'}
             // parentWidth={parentSize.width}
             // parentHeight={parentSize.height}
             // font={font.font}
@@ -183,13 +181,13 @@ export default function ({
 const ImageContainer = ({
   style = {
     angle: 0,
-    fontFamily: "0",
+    fontFamily: '0',
     fontSize: 0,
-    fontStyle: "regular",
+    fontStyle: 'regular',
     margin: 0,
     padding: 0,
-    textAlign: "",
-    textDirecton: "",
+    textAlign: '',
+    textDirecton: '',
   },
   svgSrc,
   cellSymbolId,
@@ -204,8 +202,8 @@ const ImageContainer = ({
       `#cell-svg-container-${generatedID} svg`
     );
     if (svgContainer) {
-      svgContainer.setAttribute("width", `${style.fontSize}px`);
-      svgContainer.setAttribute("height", `${style.fontSize}px`);
+      svgContainer.setAttribute('width', `${style.fontSize}px`);
+      svgContainer.setAttribute('height', `${style.fontSize}px`);
     }
   }, [svgSrc, style.fontSize]);
 
@@ -230,65 +228,64 @@ const Container = styled.div`
   align-items: center;
 `;
 function textAlignToJustify(textAlign) {
-  if (textAlign === "right") return "end";
-  if (textAlign === "center") return "center";
-  if (textAlign === "left") return "start";
-  return "center";
+  if (textAlign === 'right') return 'end';
+  if (textAlign === 'center') return 'center';
+  if (textAlign === 'left') return 'start';
+  return 'center';
 }
 
 function borderToPrintController(
   borderToPrint = {
-    type: "",
-    value: "",
+    type: '',
+    value: '',
   },
   CellIsSelected,
   removeBorderRight,
   removeBorderBottom
 ) {
-  console.log(borderToPrint.value);
   const border = borderToPrint.value;
-  const USE = "use";
-  const NONE = "none";
+  const USE = 'use';
+  const NONE = 'none';
   // console.log({ removeBorderRight });
   function handleBorderRight() {
     if (removeBorderRight) {
-      return "none";
+      return 'none';
     } else {
-      return border === "VERTICAL" || border === "ALL"
-        ? "1px solid black"
-        : "none";
+      return border === 'VERTICAL' || border === 'ALL'
+        ? '1px solid black'
+        : 'none';
     }
   }
   function handleBorderBottom() {
     if (removeBorderBottom) {
-      return "none";
+      return 'none';
     } else {
-      return border === "HORIZONTAL" || border === "ALL"
-        ? "1px solid black"
-        : "none";
+      return border === 'HORIZONTAL' || border === 'ALL'
+        ? '1px solid black'
+        : 'none';
     }
   }
   switch (borderToPrint.type) {
     case USE:
       return {
         borderLeft:
-          border === "VERTICAL" || border === "ALL"
-            ? "1px solid black"
-            : "none",
+          border === 'VERTICAL' || border === 'ALL'
+            ? '1px solid black'
+            : 'none',
 
         borderRight: handleBorderRight(),
         borderTop:
-          border === "HORIZONTAL" || border === "ALL"
-            ? "1px solid black"
-            : "none",
+          border === 'HORIZONTAL' || border === 'ALL'
+            ? '1px solid black'
+            : 'none',
         borderBottom: handleBorderBottom(),
       };
 
     case NONE:
       return {
-        borderColor: CellIsSelected ? "#F36523" : "black",
-        borderWidth: "1px",
-        borderStyle: "solid",
+        borderColor: CellIsSelected ? '#F36523' : 'black',
+        borderWidth: '1px',
+        borderStyle: 'solid',
         // borderRight: removeBorderRight ? "none" : "1px solid black",
       };
 

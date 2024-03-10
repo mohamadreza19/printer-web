@@ -4,11 +4,12 @@ import {
 } from "../../../recoil/readStore";
 import { flexModel_1 } from "../../../styles/cssClass";
 import Buttons from "../../../styles/__ready/Buttons";
+import { useTranslation } from "react-i18next";
 
 export default function () {
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
-
+  const { t } = useTranslation();
   return (
     <header
       className={
@@ -23,7 +24,7 @@ export default function () {
       <div className={cssClass.me_2}>
         <Buttons.Outlined>
           <img src="/svg/icon/support.svg" className={cssClass.me_2} />
-          <section>{content.login.header.supportButton}</section>
+          <section>{t("login.support")}</section>
         </Buttons.Outlined>
       </div>
     </header>

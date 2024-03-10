@@ -15,11 +15,7 @@ export default function ({ column }) {
 
   return (
     <div className="w-100 h-100  position-relative">
-      {!showHide ? (
-        <Header poject_base={poject_base} />
-      ) : (
-        <LargeHeader poject_base={poject_base} />
-      )}
+      <Header poject_base={poject_base} />
 
       <Editbox />
       <ScaleController />

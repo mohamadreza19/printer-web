@@ -5,6 +5,7 @@ import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 import useScreenShot from "../../../../../utility/useScreenShot";
 import useLocalStorage from "react-use-localstorage";
+import { useTranslation } from "react-i18next";
 
 export default function ({
   project = {
@@ -19,6 +20,7 @@ export default function ({
   const getScreen = useScreenShot();
   const cssClass = useDynamicCssClass();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const ActionButton = () => {
     function navigateEditorById() {
       setEditor_access("project/edit");
@@ -79,7 +81,8 @@ export default function ({
               <span className={cssClass.me_1}>
                 <Icons.Stack />
               </span>
-              {project.productsCount}محصول
+              {project.productsCount}
+              {t("projectList.product")}
             </Typography.Body2>
           </div>
           <div>
@@ -87,7 +90,7 @@ export default function ({
               <span className={cssClass.me_1}>
                 <Icons.LeftDirection />
               </span>
-              راست به چپ
+              {t("projectList.rtl")}
             </Typography.Body2>
           </div>
         </article>

@@ -27,12 +27,15 @@ import useSelectedCell, {
   getSelectedCellSyle,
 } from "../../../../../../../../../../../redux/project/selectedCell";
 import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export default function () {
   const dispatch = useDispatch();
 
   const Cell = useSelector(getSelectedCell);
   const selectedCellStyle = getSelectedCellSyle();
+  const { t } = useTranslation();
 
   const _interval_Margin_Ref = useRef(null);
   const _interval_Padding_Ref = useRef(null);
@@ -140,7 +143,7 @@ const TextAngleBox = ({
         </span>
       </div>
       <div className="editor-small-info-cell-box ">
-        <Typography.H9>زاویه</Typography.H9>
+        <Typography.H9>{t("editor.angle")}</Typography.H9>
       </div>
     </section>
   );
@@ -194,7 +197,7 @@ const TextChangeSizeBox = ({
         </span>
       </div>
       <div className="editor-small-info-cell-box ">
-        <Typography.H9>اندازه متن</Typography.H9>
+        <Typography.H9>{t("editor.fontSize")}</Typography.H9>
       </div>
     </section>
   );
@@ -246,7 +249,7 @@ const ChangeMarginBox = ({
         </span>
       </div>
       <div className="editor-small-info-cell-box ">
-        <Typography.H9>مارجین</Typography.H9>
+        <Typography.H9>{t("editor.margin")}</Typography.H9>
       </div>
     </section>
   );
@@ -300,7 +303,7 @@ const ChangePaddingBox = ({
         </span>
       </div>
       <div className="editor-small-info-cell-box ">
-        <Typography.H9>پدینگ</Typography.H9>
+        <Typography.H9>{t("editor.padding")}</Typography.H9>
       </div>
     </section>
   );

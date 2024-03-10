@@ -13,10 +13,12 @@ import RememberPassword from "./RememberPassword";
 import FooterButton from "./FooterButton";
 import { useEffect, useState } from "react";
 import Typography from "../../../styles/__ready/Typography";
+import { useTranslation } from "react-i18next";
 export default function ({ error = "", handleLogin = () => {} }) {
   const content = useContent_Based_Language();
   const lan = useLanguage();
   const cssClass = useDynamicCssClass();
+  const { t } = useTranslation();
   const [state, setState] = useState({
     username: {
       value: "",
@@ -81,7 +83,7 @@ export default function ({ error = "", handleLogin = () => {} }) {
     <Grid container className=" d-flex justify-content-center ">
       <Grid item lg={7} md={10} sm={10} xs={10}>
         <UserNameTextField
-          content={content.login.textFeilds.userName}
+          content={t("login.userName")}
           value={state.username.value}
           onChange={onchangeUserName}
           className="mt-3"
@@ -94,7 +96,7 @@ export default function ({ error = "", handleLogin = () => {} }) {
         <LoginPasswordTextField
           value={state.password.value}
           onChange={onchangeUserPassword}
-          content={content.login.textFeilds.password}
+          content={t("login.password")}
           className="mt-3"
           Input_marginStart_based_Language={cssClass.ms_3}
           onEnterKeyDown={submit}

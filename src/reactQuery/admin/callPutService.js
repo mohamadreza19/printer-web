@@ -1,24 +1,24 @@
-import useToastReducer from "../../recoil/reducer/useToastReducer";
-import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
+import useToastReducer from '../../recoil/reducer/useToastReducer';
+import useAdmin_CachedToken from '../../utility/useAdmin_CachedToken';
 
-import useAdd_user_controller from "../../helper/admin_add_user/controlInputs";
-import useAdd_product from "../../helper/admin_add_product_label/control_product_dynamic_input";
-import use_label from "../../helper/admin_add_product_label/control_label_dynamic_input";
-import { useMutation, useQueryClient } from "react-query";
-import api_put from "../../services/admin/api_put";
-import { apiUrl } from "../../services/urlStore";
-import { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import { is_project_sucess_edit_store } from "../../recoil/store/user/project_store";
-import { useResetRecoilState } from "recoil";
+import useAdd_user_controller from '../../helper/admin_add_user/controlInputs';
+import useAdd_product from '../../helper/admin_add_product_label/control_product_dynamic_input';
+import use_label from '../../helper/admin_add_product_label/control_label_dynamic_input';
+import { useMutation, useQueryClient } from 'react-query';
+import api_put from '../../services/admin/api_put';
+import { apiUrl } from '../../services/urlStore';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { is_project_sucess_edit_store } from '../../recoil/store/user/project_store';
+import { useResetRecoilState } from 'recoil';
 export const AdminEditUser_Mutation = () => {
   const { value: token } = useAdmin_CachedToken();
   const setLoading = useToastReducer();
   const meta = useAdd_user_controller(false, true);
   const result = useMutation({
-    mutationKey: "edit-user",
+    mutationKey: 'edit-user',
     mutationFn: (option) => api_put.edit_user(token, option.id, option.body),
   });
   const { isSuccess, isLoading, error } = result;
@@ -26,37 +26,37 @@ export const AdminEditUser_Mutation = () => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
       console.log(error);
       if (error.statusCode === 409) {
-        const username = error.message.includes("username");
-        const email = error.message.includes("email");
+        const username = error.message.includes('username');
+        const email = error.message.includes('email');
 
         let message = {
-          userName: "این نام کاربری قبلا ثبت شده!",
-          email: "این ایمیل قبلا ثبت شده !",
+          userName: 'این نام کاربری قبلا ثبت شده!',
+          email: 'این ایمیل قبلا ثبت شده !',
         };
         if (username) {
           meta.setUsername((draft) => ({ ...draft, errMsg: message.userName }));
           setLoading(() => ({
             isShow: false,
-            message: "",
+            message: '',
           }));
           return;
         }
         if (email) {
           setLoading(() => ({
             isShow: false,
-            message: "",
+            message: '',
           }));
           meta.setEmail((draft) => ({ ...draft, errMsg: message.email }));
           return;
@@ -76,7 +76,7 @@ export const AdminEditProduct_Mutation = () => {
   const setLoading = useToastReducer();
 
   const result = useMutation({
-    mutationKey: "edit-product",
+    mutationKey: 'edit-product',
     mutationFn: (option) => {
       const { productId } = option;
       console.log({ option });
@@ -95,13 +95,13 @@ export const AdminEditProduct_Mutation = () => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -123,7 +123,7 @@ export const AdminEditLabel_Mutation = () => {
 
   delete modifedDate.picture;
   const result = useMutation({
-    mutationKey: "add-product",
+    mutationKey: 'add-product',
     mutationFn: (option) => api_put.edit_label(token, option.id, modifedDate),
   });
   const { isSuccess, isLoading, error } = result;
@@ -157,13 +157,13 @@ export const AdminEditImage_Mutation = () => {
   const [onLoadedMeta, setOnLoadedMeta] = useState(null);
 
   const result = useMutation({
-    mutationKey: "add-product",
+    mutationKey: 'add-product',
     mutationFn: async (payload) => {
       const { perviusFileId, file } = payload;
-      console.log({ file });
+
       const formData = new FormData();
 
-      formData.append("picture", file);
+      formData.append('picture', file);
 
       return await axios.put(
         `${apiUrl}/file/upload-image/admin/${perviusFileId}`,
@@ -171,8 +171,8 @@ export const AdminEditImage_Mutation = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            accept: "application/json",
-            "Content-Type": "multipart/form-data",
+            accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
 
           onUploadProgress: (progressEvent) => {
@@ -181,9 +181,9 @@ export const AdminEditImage_Mutation = () => {
             // console.log({ loaded, total });
             const percentage = Math.floor((loaded / total) * 100);
             // console.log(percentage);
-            const progressBar = document.getElementById("file-progress");
-            const loadedTo_mg = document.getElementById("file-progress-loaded");
-            const totalTo_mg = document.getElementById("file-progress-total");
+            const progressBar = document.getElementById('file-progress');
+            const loadedTo_mg = document.getElementById('file-progress-loaded');
+            const totalTo_mg = document.getElementById('file-progress-total');
 
             const loaded_mb = Number(loaded / Math.pow(1024, 2)).toFixed(2);
             const total_mb = Number(total / Math.pow(1024, 2)).toFixed(2);
@@ -217,7 +217,7 @@ export const EditTemplate_project_Mutation = () => {
   const setLoading = useToastReducer();
   const { projectId } = useParams();
   const result = useMutation({
-    mutationKey: "project-template-put",
+    mutationKey: 'project-template-put',
     mutationFn: (option) =>
       api_put.edit_project_templateById(token, option.body, projectId),
 
@@ -231,7 +231,7 @@ export const EditTemplate_project_Mutation = () => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
   }, [isLoading]);
@@ -239,7 +239,7 @@ export const EditTemplate_project_Mutation = () => {
   if (isSuccess) {
     setLoading({
       isShow: false,
-      message: "",
+      message: '',
     });
     setIsSucess_edit(true);
   }

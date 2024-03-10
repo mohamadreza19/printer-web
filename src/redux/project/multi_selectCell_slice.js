@@ -1,18 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   cellIds: [],
-  mostRailIdRepeat: "",
+  mostRailIdRepeat: '',
 };
 const muiti_selectCell_slice = createSlice({
-  name: "muiti_selectCell",
+  name: 'muiti_selectCell',
   initialState,
   reducers: {
     addMultiCell(state, action) {
       return action.payload;
     },
     reInital(state, action) {
-      console.log("hi");
       return initialState;
     },
     joinCustomLabels(state, action) {

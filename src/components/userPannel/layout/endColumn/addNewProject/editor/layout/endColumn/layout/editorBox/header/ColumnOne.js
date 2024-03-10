@@ -3,23 +3,24 @@ import {
   JoinRow,
   SpliteColumn,
   SpliteRow,
-} from "../../../../../../../../../../../styles/__ready/EditorIcons";
-import cellAction from "../../../../../../../../../../../recoil/actions/editor/cell/cell";
-import useCellReducer from "../../../../../../../../../../../recoil/reducer/useCellReducer";
-import { useRecoilState } from "recoil";
+} from '../../../../../../../../../../../styles/__ready/EditorIcons';
+import cellAction from '../../../../../../../../../../../recoil/actions/editor/cell/cell';
+import useCellReducer from '../../../../../../../../../../../recoil/reducer/useCellReducer';
+import { useRecoilState } from 'recoil';
 
-import Typography from "../../../../../../../../../../../styles/__ready/Typography";
-import { useDispatch, useSelector } from "react-redux";
+import Typography from '../../../../../../../../../../../styles/__ready/Typography';
+import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCell, {
   getSelectedCellSyle,
-} from "../../../../../../../../../../../redux/project/selectedCell";
-import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
-import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
+} from '../../../../../../../../../../../redux/project/selectedCell';
+import { addEditEvent } from '../../../../../../../../../../../redux/project/edit_event_slice';
+import { getSelectedCell } from '../../../../../../../../../../../redux/project/selectedCell_slice';
 import {
   getMutliSelectCells,
   getMutliSelectCellsLength,
   joinCustomLabels,
-} from "../../../../../../../../../../../redux/project/multi_selectCell_slice";
+} from '../../../../../../../../../../../redux/project/multi_selectCell_slice';
+import { useTranslation } from 'react-i18next';
 
 export default function ({
   poject_base,
@@ -30,16 +31,17 @@ export default function ({
 }) {
   const dispatch = useDispatch();
   const Cell = useSelector(getSelectedCell);
+  const { t } = useTranslation();
 
   const multiSelectCells = useSelector(getMutliSelectCells);
 
-  function onClick(type = "") {
+  function onClick(type = '') {
     if (multiSelectCells.cellIds.length > 1) {
-      if ("JOIN/COLUMN") {
+      if ('JOIN/COLUMN') {
         dispatch(joinCustomLabels(multiSelectCells));
         dispatch(
           addEditEvent({
-            type: "UN_SELECT",
+            type: 'UN_SELECT',
             // itemId: Cell.frontId,
           })
         );
@@ -63,12 +65,12 @@ export default function ({
     return (
       <>
         <section
-          onClick={() => onClick("SPLIT/ROW")}
+          onClick={() => onClick('SPLIT/ROW')}
           className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
         >
           <SpliteRow />
           <div className="editor-small-info-cell-box">
-            <Typography.H9>{rowSeparatorContent}</Typography.H9>
+            <Typography.H9>{t('editor.rowSeparator')}</Typography.H9>
           </div>
         </section>
       </>
@@ -77,12 +79,12 @@ export default function ({
   const JoinRowBox = () => {
     return (
       <section
-        onClick={() => onClick("JOIN/ROW")}
+        onClick={() => onClick('JOIN/ROW')}
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <JoinRow />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>{mergeRowContent}</Typography.H9>
+          <Typography.H9>{t('editor.mergeRow')}</Typography.H9>
         </div>
       </section>
     );
@@ -91,12 +93,12 @@ export default function ({
   const SplitColumnBox = () => {
     return (
       <section
-        onClick={() => onClick("SPLIT/COLUMN")}
+        onClick={() => onClick('SPLIT/COLUMN')}
         className="d-flex editor-small-cell-box me-2  justify-content-center align-items-center"
       >
         <SpliteColumn />
         <div className="editor-small-info-cell-box">
-          <Typography.H9> {columnSeparatorContent}</Typography.H9>
+          <Typography.H9> {t('editor.columnSeparator')}</Typography.H9>
         </div>
       </section>
     );
@@ -104,12 +106,12 @@ export default function ({
   const JoinColumnBox = () => {
     return (
       <section
-        onClick={() => onClick("JOIN/COLUMN")}
+        onClick={() => onClick('JOIN/COLUMN')}
         className="d-flex editor-small-cell-box  justify-content-center align-items-center"
       >
         <JoinColumn />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>{mergeColumnContent}</Typography.H9>
+          <Typography.H9>{t('editor.mergeColumn')}</Typography.H9>
         </div>
       </section>
     );

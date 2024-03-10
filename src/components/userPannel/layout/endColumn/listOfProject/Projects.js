@@ -4,6 +4,7 @@ import useDeleteAlert from "../../../../../recoil/reducer/useDeleteAlert";
 
 import { ProjectDeleteOne } from "../../../../../reactQuery/user/callDeleteServices";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useTranslation } from "react-i18next";
 
 export default function ({
   projectList = [{}],
@@ -13,6 +14,7 @@ export default function ({
   const { error, isLoading, mutate, isSuccess, data } = ProjectDeleteOne();
   const setLoading = useToastReducer();
   const setDeleteAlert = useDeleteAlert();
+  const { t } = useTranslation();
 
   return (
     <InfiniteScroll
@@ -27,7 +29,7 @@ export default function ({
           setDeleteAlert((draft) => ({
             ...draft,
             isShow: true,
-            message: "ایا از حذف پروژه خود مطمعا هستید",
+            message: t("projectList.messageToDelete"),
             deleteFn: () => mutate(project.id),
           }));
         }

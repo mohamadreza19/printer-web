@@ -7,11 +7,13 @@ import {
 } from "../../../../recoil/readStore";
 import { Link, useLocation } from "react-router-dom";
 import { UserRoutePath } from "../../../../routes/Routes";
+import { useTranslation } from "react-i18next";
 export default function () {
   const { pathname } = useLocation();
 
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
+  const { t } = useTranslation();
   const buttonsText = content.userPannel.start_col.row2;
   const colorClass = true
     ? "bg_secondray box_shadow_disabled"
@@ -41,7 +43,7 @@ export default function () {
           <Typography.H7
             className={`font-200 ${cssClass.ms_2} ${dynamicColor.color}`}
           >
-            {buttonsText.listOfProjects}
+            {t("projectList.projectList")}
           </Typography.H7>
         </Buttons.Contained_Custom>
       </Link>
@@ -75,7 +77,7 @@ export default function () {
             className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
           >
             {" "}
-            {buttonsText.addNewProject}
+            {t("addNewProject.addNewProject")}
           </Typography.H7>
         </Buttons.Contained_Custom>
       </Link>
@@ -105,7 +107,7 @@ export default function () {
           <Typography.H7
             className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
           >
-            {buttonsText.listOfLabels}
+            {t("listOfLabels.listOfLabels")}
           </Typography.H7>
         </Buttons.Contained_Custom>
       </Link>
@@ -135,7 +137,7 @@ export default function () {
           <Typography.H7
             className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
           >
-            {buttonsText.historyOfPrinting}
+            {t("histroyOfPrinting.histroyOfPrinting")}
           </Typography.H7>
         </Buttons.Contained_Custom>
       </Link>
@@ -151,7 +153,7 @@ export default function () {
       >
         <Icons.Setting />
         <Typography.H7 className={"font-200 " + cssClass.ms_2}>
-          {buttonsText.settings}
+          {t("setting.setting")}
         </Typography.H7>
       </Buttons.Contained_Custom>
     );

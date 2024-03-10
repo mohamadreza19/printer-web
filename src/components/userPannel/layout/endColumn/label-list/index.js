@@ -16,12 +16,14 @@ import {
 import { useState } from "react";
 import { Add_Label_Bookmark_Mutation } from "../../../../../reactQuery/user/callPostServices";
 import { Bookmark_Label_Delete } from "../../../../../reactQuery/user/callDeleteServices";
+import { useTranslation } from "react-i18next";
 
 export default function () {
   const [labelList, setLabelList] = useState([]);
   const [filteredLabelList, setFilteredLabelList] = useState([]);
   const [isAllowShowBookmarkedLabel, setIsAllowShowBookmarkedLabel] =
     useState(false);
+
   const [search, setSearch] = useState("");
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
@@ -107,13 +109,6 @@ export default function () {
           isAllowShowBookmarkedLabel={isAllowShowBookmarkedLabel}
           setIsAllowShowBookmarkedLabel={setIsAllowShowBookmarkedLabel}
           setSearch={setSearch}
-          content={{
-            labelList: content.userPannel.start_col.row2.listOfLabels,
-            selectedLabelButton:
-              content.userPannel.end_col.labelList.selectedLabelsButton,
-            searchPlaceHolder:
-              content.userPannel.end_col.labelList.searchPlaceHolder,
-          }}
           margin={{
             ms_1: cssClass.ms_1,
             ms_2: cssClass.ms_2,

@@ -1,15 +1,15 @@
-import { Grid } from "@mui/material";
-import EndColumn from "./layout/endColumn";
+import { Grid } from '@mui/material';
+import EndColumn from './layout/endColumn';
 // import StartColumn from "./layout/startColumn";
-import StartColumn from "./layout/startColumn/index";
-import { Outlet } from "react-router-dom";
-import { User_Profile_Call } from "../../reactQuery/user/callGetService";
-import { useEffect } from "react";
-import { useSetAdminProfile } from "../../recoil/store/admin/profile";
-import useLocalStorage from "react-use-localstorage";
+import StartColumn from './layout/startColumn/index';
+import { Outlet } from 'react-router-dom';
+import { User_Profile_Call } from '../../reactQuery/user/callGetService';
+import { useEffect } from 'react';
+import { useSetAdminProfile } from '../../recoil/store/admin/profile';
+import useLocalStorage from 'react-use-localstorage';
 export default function () {
   const user_profile = User_Profile_Call();
-  const [editor_access, setEditor_access] = useLocalStorage("editor_access");
+  const [editor_access, setEditor_access] = useLocalStorage('editor_access');
   const setProfile = useSetAdminProfile();
   useEffect(() => {
     if (user_profile.isSuccess) {
@@ -20,10 +20,10 @@ export default function () {
   return (
     <Grid
       container
-      className="bg_secondray vh100 "
+      className="bg_secondray  "
       style={{
         // minHeight: () => {},
-        minHeight: "768px",
+        minHeight: '100vh',
         // height: "768px",
         // maxHeight: "768px",
         // minWidth: "1366px",

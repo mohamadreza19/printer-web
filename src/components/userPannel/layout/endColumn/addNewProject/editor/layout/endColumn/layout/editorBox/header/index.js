@@ -54,21 +54,7 @@ export default function ({ poject_base }) {
         }}
         className="w-100 bg_gray2  border-r-20 d-flex align-items-center  justify-content-center"
       >
-        <ColumnOne
-          poject_base={poject_base}
-          mergeRowContent={
-            content.userPannel.editor.endColumn.editorHeader.mergeRow
-          }
-          rowSeparatorContent={
-            content.userPannel.editor.endColumn.editorHeader.rowSeparator
-          }
-          mergeColumnContent={
-            content.userPannel.editor.endColumn.editorHeader.mergeColumn
-          }
-          columnSeparatorContent={
-            content.userPannel.editor.endColumn.editorHeader.columnSeparator
-          }
-        />
+        <ColumnOne poject_base={poject_base} />
         <Divider />
         <ColumnTwo />
         <ColumnThree />

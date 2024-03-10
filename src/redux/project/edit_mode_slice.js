@@ -1,19 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { edit_event_sliceCaseReducers } from "./edit_event_slice";
+import { createSlice } from '@reduxjs/toolkit';
+import { edit_event_sliceCaseReducers } from './edit_event_slice';
 
 const edit_mode_slice = createSlice({
-  name: "edit_mode",
-  initialState: "VIEW_MODE",
+  name: 'edit_mode',
+  initialState: 'VIEW_MODE',
 
   reducers: {
     selectMode() {
-      return "SELECT_MODE";
+      return 'SELECT_MODE';
     },
     viewMode() {
       edit_event_sliceCaseReducers.addEditEvent({
-        type: "UN_SELECT",
+        type: 'UN_SELECT',
       });
-      return "VIEW_MODE";
+      return 'VIEW_MODE';
     },
   },
 });

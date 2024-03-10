@@ -41,6 +41,7 @@ import {
   addPresent,
   getRails,
 } from "../../../../../../../../../../../redux/project/history_changer_slice";
+import { useTranslation } from "react-i18next";
 
 //  data = {
 //   frontId: 112,
@@ -85,6 +86,7 @@ export default memo(function () {
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
   const [railsLength, setRailsLength] = useRecoilState(railsLength_store);
+  const { t } = useTranslation();
 
   const [wantNewRail, SetwantNewRail] = useRecoilState(addRail);
   const setLoading = useToastReducer();
@@ -132,8 +134,10 @@ export default memo(function () {
         onClick={onClick}
         className={`add-new-rail-btn cur-pointer add-rail`}
       >
-        <Typography.H9 className="color-white font-400">ریل جدید</Typography.H9>
         <Icons.Plus />
+        <Typography.H9 className="color-white font-400">
+          {t("editor.addNewRail")}
+        </Typography.H9>
       </div>
     );
   };

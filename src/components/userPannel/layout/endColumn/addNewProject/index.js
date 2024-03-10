@@ -16,6 +16,7 @@ import { showPutProjectResponse } from "../../../../../recoil/store/user/showPut
 import SuccessBox from "../../../../../common/SuccessBox";
 import { getEditSussess } from "../../../../../redux/project/success_slice";
 import { useSelector } from "react-redux";
+import { t } from "i18next";
 
 export default function () {
   const content = useContent_Based_Language();
@@ -31,26 +32,11 @@ export default function () {
     <div className="w-100">
       <Header
         ms_2={cssClass.ms_2}
-        addNewProject={content.userPannel.start_col.row2.addNewProject}
+        addNewProject={t("addNewProject.addNewProject")}
       />
       <TextFildsFox
         ms_2={cssClass.ms_2}
         me_1={cssClass.me_2}
-        content={{
-          header: content.userPannel.end_col.addNewProject.header,
-          inputLabelOne: content.userPannel.end_col.addNewProject.inputLabelOne,
-          inputLabelTwo: content.userPannel.end_col.addNewProject.inputLabelTwo,
-          inputLabelThree:
-            content.userPannel.end_col.addNewProject.inputLabelThree,
-          rightToLeft:
-            content.userPannel.end_col.addNewProject.directionButton
-              .rightToLeft,
-          leftToRight:
-            content.userPannel.end_col.addNewProject.directionButton
-              .leftToRight,
-          continueButton:
-            content.userPannel.end_col.addNewProject.continueButton,
-        }}
         isFa={value == "fa"}
       />
     </div>

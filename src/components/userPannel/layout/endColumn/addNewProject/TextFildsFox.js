@@ -13,24 +13,19 @@ import { useDynamicCssClass } from "../../../../../recoil/readStore";
 import { AddProject_Mutation } from "../../../../../reactQuery/user/callPostServices";
 import { ColumnFour_justify_start } from "../../../../../recoil/userEditorStore/EditorHeaderActionButton";
 import { useRecoilState } from "recoil";
+import { useTranslation } from "react-i18next";
 
 export default function ({
   ms_2 = " ",
   pe_1 = " ",
-  content = {
-    inputLabelOne: " ",
-    inputLabelTwo: " ",
-    inputLabelThree: "",
-    rightToLeft: " ",
-    leftToRight: " ",
-    continueButton: " ",
-  },
+
   isFa = false,
 }) {
   const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
   const navigate = useNavigate();
   const { isSuccess, isLoading, mutate, error, data } = AddProject_Mutation();
   const cssClass = useDynamicCssClass();
+  const { t } = useTranslation();
   const [state, setState] = useState({
     createdBy: {
       value: "",
@@ -202,12 +197,14 @@ export default function ({
   return (
     <div className={`w-100 mt-7 px-5 ${cssClass.ms_3}`}>
       <header className="px-3">
-        <Typography.H7 className="font-500">{content.header}</Typography.H7>
+        <Typography.H7 className="font-500">
+          {t("addNewProject.pleaseEnterYourProjectInformation")}
+        </Typography.H7>
       </header>
       {/* name */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
-          {content.inputLabelOne}
+          {t("addNewProject.projectName")}
         </Typography.H8>
         <section className="w-100 position-relative">
           <TextFieldFUN_v5
@@ -223,7 +220,7 @@ export default function ({
       {/* project base */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
-          {"نوع پروژه"}
+          {t("addNewProject.typeOfProject")}
         </Typography.H8>
         <section
           style={{
@@ -269,7 +266,7 @@ export default function ({
       {/* stripOrLabel */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
-          استریپ یا لیبل
+          {t("addNewProject.stripOrLabel")}
         </Typography.H8>
         <section
           style={{
@@ -315,7 +312,7 @@ export default function ({
       {/* CreatedBy */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
-          {content.inputLabelTwo}
+          {t("addNewProject.nameOfCreator")}
         </Typography.H8>
 
         <section className="w-100 position-relative">
@@ -332,7 +329,7 @@ export default function ({
       {/* railWidth */}
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
-          {content.inputLabelThree}
+          {t("addNewProject.railWidth")}
         </Typography.H8>
 
         <section className="w-100 position-relative">
@@ -354,7 +351,7 @@ export default function ({
         className={"mt-4 w-60 " + cssClass.ms_2}
       >
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
-          طول ریل
+          {t("addNewProject.railLength")}
         </Typography.H8>
 
         <section className="w-100 position-relative">
@@ -372,7 +369,7 @@ export default function ({
       <article className={"mt-4 w-60 " + cssClass.ms_2}>
         <Typography.H8 className={"mb-2 font-400 " + ms_2}>
           {/* {content.inputLabelThree} */}
-          {"تعداد ریل"}
+          {t("addNewProject.numberOfRails")}
         </Typography.H8>
 
         <section className="w-100 position-relative">
@@ -417,7 +414,7 @@ export default function ({
         </div>
         <section className={ms_2}>
           <Typography.H8 className="font-400">
-            {isRightToleft ? content.rightToLeft : content.leftToRight}
+            {isRightToleft ? t("addNewProject.rtl") : t("addNewProject.ltr")}
           </Typography.H8>
         </section>
       </article>
@@ -429,7 +426,7 @@ export default function ({
               onClick={submitForm}
             >
               <Typography.H6 className=" font-200 ">
-                {content.continueButton}
+                {t("continue")}
               </Typography.H6>
             </Buttons.Contained>
           </Grid>

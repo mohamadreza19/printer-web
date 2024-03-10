@@ -5,11 +5,13 @@ import Icons from "./Icons";
 import Buttons from "./Buttons";
 import { showInfoPopUp_store } from "../../recoil/userEditorStore/showInfoPopUp_store";
 import { PopUpInfo } from "../../components/userPannel/layout/endColumn/addNewProject/editor/layout/startColumn/PopUpInfo";
+import { useTranslation } from "react-i18next";
 
 export const ToastContainer = ({ children }) => {
   const [toast, setToast] = useRecoilState(toastifyStore);
   const [deleteAlert, setDeleteAlert] = useRecoilState(delete_alert);
   const [showInfoPopUp, setShowInfoPopUp] = useRecoilState(showInfoPopUp_store);
+  const { t } = useTranslation();
   function unShowDeleteMesage() {
     setDeleteAlert((draft) => ({
       ...draft,
@@ -41,7 +43,7 @@ export const ToastContainer = ({ children }) => {
                 className="button_medium_v01"
                 onClick={unShowDeleteMesage}
               >
-                <Typography.H7>منصرف شدم</Typography.H7>
+                <Typography.H7>{t("cancel")}</Typography.H7>
               </Buttons.Outlined>
               <Buttons.Contained
                 className="button_medium_v01"
@@ -50,7 +52,7 @@ export const ToastContainer = ({ children }) => {
                   setDeleteAlert((draft) => ({ ...draft, isShow: false }));
                 }}
               >
-                <Typography.H7>حذف</Typography.H7>
+                <Typography.H7>{t("delete")}</Typography.H7>
               </Buttons.Contained>
             </footer>
           </article>

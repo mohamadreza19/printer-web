@@ -6,16 +6,18 @@ import {
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 import TextFields from "../../../../../styles/__ready/Textfields";
+import { useTranslation } from "react-i18next";
 export default function ({ setSearch = () => {} }) {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
+  const { t } = useTranslation();
   return (
     <Grid container className="w-100 d-flex border-bottom-gray pb-2_5  px-4">
       <Grid item xs={6} className="d-flex">
         <div className="d-flex align-item-center">
           <Icons.List className="fill_black " />
           <Typography.H8 className={cssClass.ms_1 + " font-500"}>
-            {content.userPannel.start_col.row2.listOfProjects}
+            {t("projectList.projectList")}
           </Typography.H8>
         </div>
       </Grid>
@@ -23,7 +25,7 @@ export default function ({ setSearch = () => {} }) {
         <div className={" w-90 " + cssClass.ms_auto}>
           <TextFields.v2_SearchBox
             onClickAndGetValeFn={setSearch}
-            placeholder={content.userPannel.end_col.row2.searchPlaceHolder}
+            placeholder={t("projectList.searchByProjectName")}
           />
         </div>
       </Grid>

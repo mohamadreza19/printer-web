@@ -1,18 +1,18 @@
-import { memo } from "react";
-import { useLanguage } from "../../../../../../../../recoil/readStore";
-import { useShowSymbolPopUp_reducer } from "../../../../../../../../recoil/userEditorStore/showSymbol_store";
-import Icons from "../../../../../../../../styles/__ready/Icons";
-import SymbolPopUp from "../symbolPopUp/SymbolPopUp";
-import { useDispatch, useSelector } from "react-redux";
-import { addEditEvent } from "../../../../../../../../redux/project/edit_event_slice";
+import { memo } from 'react';
+import { useLanguage } from '../../../../../../../../recoil/readStore';
+import { useShowSymbolPopUp_reducer } from '../../../../../../../../recoil/userEditorStore/showSymbol_store';
+import Icons from '../../../../../../../../styles/__ready/Icons';
+import SymbolPopUp from '../symbolPopUp/SymbolPopUp';
+import { useDispatch, useSelector } from 'react-redux';
+import { addEditEvent } from '../../../../../../../../redux/project/edit_event_slice';
 import {
   getEditMode,
   selectMode,
   viewMode,
-} from "../../../../../../../../redux/project/edit_mode_slice";
+} from '../../../../../../../../redux/project/edit_mode_slice';
 
 export default function ({
-  actions = " ",
+  actions = ' ',
   handeler = () => {},
   useSelection,
   useView,
@@ -30,29 +30,29 @@ export default function ({
 
   function changeEditMode(type) {
     switch (type) {
-      case "SELECT_MODE":
+      case 'SELECT_MODE':
         return dispatch(selectMode());
-      case "VIEW_MODE":
+      case 'VIEW_MODE':
         return dispatch(viewMode());
     }
   }
 
   const Select = () => {
     const changedColor =
-      editMode === "SELECT_MODE"
+      editMode === 'SELECT_MODE'
         ? {
-            bg: "editor-action-buttons-bg-primary",
-            iconFill: "fill_white",
+            bg: 'editor-action-buttons-bg-primary',
+            iconFill: 'fill_white',
           }
         : {
-            bg: "editor-action-buttons-bg-white",
-            iconFill: "fill_primary ",
+            bg: 'editor-action-buttons-bg-white',
+            iconFill: 'fill_primary ',
           };
     return (
       <section
-        onClick={() => changeEditMode("SELECT_MODE")}
+        onClick={() => changeEditMode('SELECT_MODE')}
         className={
-          "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-3 " +
+          'editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-3 ' +
           changedColor.bg
         }
       >
@@ -65,20 +65,20 @@ export default function ({
   };
   const View = () => {
     const changedColor =
-      editMode === "VIEW_MODE"
+      editMode === 'VIEW_MODE'
         ? {
-            bg: "editor-action-buttons-bg-primary",
-            iconFill: "fill_white",
+            bg: 'editor-action-buttons-bg-primary',
+            iconFill: 'fill_white',
           }
         : {
-            bg: "editor-action-buttons-bg-white",
-            iconFill: "fill_primary ",
+            bg: 'editor-action-buttons-bg-white',
+            iconFill: 'fill_primary ',
           };
     return (
       <section
-        onClick={() => changeEditMode("VIEW_MODE")}
+        onClick={() => changeEditMode('VIEW_MODE')}
         className={
-          "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem " +
+          'editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem ' +
           changedColor.bg
         }
       >
@@ -98,17 +98,17 @@ export default function ({
 }
 const Shape = ({ is, onClickShape, language }) => {
   let changedColor = {
-    bg: " ",
-    iconFill: " ",
+    bg: ' ',
+    iconFill: ' ',
   };
   changedColor = is
     ? (changedColor = {
-        bg: "editor-action-buttons-bg-primary",
-        iconFill: "fill_white",
+        bg: 'editor-action-buttons-bg-primary',
+        iconFill: 'fill_white',
       })
     : (changedColor = {
-        bg: "editor-action-buttons-bg-white",
-        iconFill: "fill_primary ",
+        bg: 'editor-action-buttons-bg-white',
+        iconFill: 'fill_primary ',
       });
   return (
     <div className="position-relative">
@@ -119,16 +119,16 @@ const Shape = ({ is, onClickShape, language }) => {
           onClickShape();
         }}
         className={
-          "editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem position-relative " +
+          'editor-action-buttons  border-r-20 d-flex justify-content-center align-items-center mt-0_8rem position-relative ' +
           changedColor.bg
         }
       >
         <Icons.Shape size="medium_v1" pathClassName={changedColor.iconFill} />
         <div
           className={`position-absolute  ${
-            language == "fa"
-              ? "footer-shape-icon-box-rtl"
-              : "footer-shape-icon-box-ltr"
+            language == 'fa'
+              ? 'footer-shape-icon-box-rtl'
+              : 'footer-shape-icon-box-ltr'
           }`}
         >
           <Icons.Footer_Shape pathClassName={changedColor.iconFill} />

@@ -17,12 +17,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import { useState } from "react";
 import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
+import { useTranslation } from "react-i18next";
 
 export default function () {
   const dispatch = useDispatch();
 
   const Cell = useSelector(getSelectedCell);
   const selectedCell = getSelectedCellSyle();
+  const { t } = useTranslation();
   function onClick(type = "", value = "") {
     dispatch(
       addEditEvent({
@@ -109,7 +111,7 @@ export default function () {
           <FontsMenu />
         </span>
         <div className="editor-small-info-cell-box">
-          <Typography.H9>نوع فونت</Typography.H9>
+          <Typography.H9>{t("editor.fontType")}</Typography.H9>
         </div>
       </section>
     );
@@ -183,7 +185,7 @@ export default function () {
         </span>
 
         <div className="editor-small-info-cell-box ">
-          <Typography.H9>نوع تراز متن</Typography.H9>
+          <Typography.H9>{t("editor.textAlignment")}</Typography.H9>
         </div>
       </section>
     );
@@ -200,7 +202,7 @@ export default function () {
           <TextItalicBox />
           <TextBoldBox />
           <div className="editor-small-info-cell-box ">
-            <Typography.H9>استایل متن</Typography.H9>
+            <Typography.H9>{t("editor.textStyle")}</Typography.H9>
           </div>
         </section>
       </footer>

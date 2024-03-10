@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import useSelectedCell from "../../../../../../../../../../../redux/project/selectedCell";
 import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
+import { useTranslation } from "react-i18next";
 
 export default function ({ content }) {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function ({ content }) {
     useRecoilState(ColumnFive_duplicate);
   const [isBacodeWant, setIsBacodeWant] = useRecoilState(ColumnFive_barcode);
   const [isQrWant, setisQrWant] = useRecoilState(ColumnFive_qr);
+  const { t } = useTranslation();
 
   function handleDelete() {
     dispatch(
@@ -67,7 +69,7 @@ export default function ({ content }) {
       >
         <Delete />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>{content.delete}</Typography.H9>
+          <Typography.H9>{t("editor.delete")}</Typography.H9>
         </div>
       </section>
     );
@@ -80,7 +82,7 @@ export default function ({ content }) {
       >
         <Duplicate />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>{content.copy}</Typography.H9>
+          <Typography.H9>{t("editor.copy")}</Typography.H9>
         </div>
       </section>
     );
@@ -93,7 +95,7 @@ export default function ({ content }) {
       >
         <OneTwo />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>{content.barcode}</Typography.H9>
+          <Typography.H9>{t("editor.barcode")}</Typography.H9>
         </div>
       </section>
     );
@@ -106,7 +108,7 @@ export default function ({ content }) {
       >
         <Barcode />
         <div className="editor-small-info-cell-box">
-          <Typography.H9>{content.QRCode}</Typography.H9>
+          <Typography.H9>{t("editor.qrcode")}</Typography.H9>
         </div>
       </section>
     );

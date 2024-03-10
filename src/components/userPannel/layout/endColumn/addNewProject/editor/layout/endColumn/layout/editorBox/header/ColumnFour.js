@@ -22,12 +22,14 @@ import {
 } from "../../../../../../../../../../../redux/project/history_changer_slice";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function () {
   const dispatch = useDispatch();
   const possibleUndo = useSelector(getPossibleUndo);
   const possibleRedo = useSelector(getPossibleRedo);
   const [justify, setJustify] = useState("left");
+  const { t } = useTranslation();
 
   function handleRedo() {
     if (possibleRedo) {
@@ -70,7 +72,7 @@ export default function () {
               <RightToLeft />
             </div>
             <div className="editor-small-info-cell-box">
-              <Typography.H9>چینش راست به چپ</Typography.H9>
+              <Typography.H9>{t("addNewProject.rtl")}</Typography.H9>
             </div>
           </section>
         </article>
@@ -89,7 +91,7 @@ export default function () {
               <LeftToRight />
             </div>
             <div className="editor-small-info-cell-box">
-              <Typography.H9>چینش چپ به راست</Typography.H9>
+              <Typography.H9>{t("addNewProject.ltr")}</Typography.H9>
             </div>
           </section>
         </article>
@@ -108,7 +110,7 @@ export default function () {
             <Redo />
           </div>
           <div className="editor-small-info-cell-box">
-            <Typography.H9>رفتن به جلو</Typography.H9>
+            <Typography.H9>{t("editor.goForward")}</Typography.H9>
           </div>
         </section>
       </article>
@@ -126,7 +128,7 @@ export default function () {
             <Undo />
           </div>
           <div className="editor-small-info-cell-box">
-            <Typography.H9>بازگشت به قبل</Typography.H9>
+            <Typography.H9>{t("editor.goBack")}</Typography.H9>
           </div>
         </section>
       </article>

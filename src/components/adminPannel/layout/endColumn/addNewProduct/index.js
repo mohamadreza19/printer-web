@@ -1,28 +1,28 @@
-import { Grid } from "@mui/material";
-import useAdmin_Add_Product from "../../../../../helper/admin_add_product_label/control_product_dynamic_input";
+import { Grid } from '@mui/material';
+import useAdmin_Add_Product from '../../../../../helper/admin_add_product_label/control_product_dynamic_input';
 import {
   useContent_Based_Language,
   useDynamicCssClass,
-} from "../../../../../recoil/readStore";
-import Buttons from "../../../../../styles/__ready/Buttons";
-import Typography from "../../../../../styles/__ready/Typography";
+} from '../../../../../recoil/readStore';
+import Buttons from '../../../../../styles/__ready/Buttons';
+import Typography from '../../../../../styles/__ready/Typography';
 //
-import Header from "./Header";
-import RowFour from "./RowFour";
-import RowOne from "./RowOne";
-import RowThree from "./RowThree";
-import RowTwo from "./RowTwo";
-import UploadFile from "./uploadFile";
+import Header from './Header';
+import RowFour from './RowFour';
+import RowOne from './RowOne';
+import RowThree from './RowThree';
+import RowTwo from './RowTwo';
+import UploadFile from './uploadFile';
 //__v
-import useValidateproduct from "../../../../../helper/admin_add_product_label/validate_product";
-import { useEffect, useMemo, useState } from "react";
-import { setProduct_label_key } from "../../../../../reactQuery/querykey/admin_key";
-import { useDispatch, useSelector } from "react-redux";
+import useValidateproduct from '../../../../../helper/admin_add_product_label/validate_product';
+import { useEffect, useMemo, useState } from 'react';
+import { setProduct_label_key } from '../../../../../reactQuery/querykey/admin_key';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   validate,
   getPageOneProductErrorValidate,
-} from "../../../../../redux/product/product_slice";
-import { useNavigate } from "react-router-dom";
+} from '../../../../../redux/product/product_slice';
+import { useNavigate } from 'react-router-dom';
 
 export default function () {
   const [allowNextPage, setAllowNextPage] = useState(false);
@@ -54,22 +54,23 @@ export default function () {
 
   function handle_OnChange_SelectBox(e) {
     // console.log(e.target.value);
-    navigate("/admin/" + e.target.value, {
+    navigate('/admin/' + e.target.value, {
       replace: true,
     });
   }
+
   return (
     <div
       className="w-100 h-100
     
     "
-      style={{ overflowY: "auto" }}
+      style={{ overflowY: 'auto' }}
     >
       <Header />
-      <Grid container className={"mt-5 " + cssClass.ps_6}>
+      <Grid container className={'mt-5 ' + cssClass.ps_6}>
         <Grid item lg={12} className="">
           {/* <RowOne /> */}
-          <article className={" " + cssClass.me_3}>
+          <article className={' ' + cssClass.me_3}>
             <select
               onChange={handle_OnChange_SelectBox}
               name="cars"

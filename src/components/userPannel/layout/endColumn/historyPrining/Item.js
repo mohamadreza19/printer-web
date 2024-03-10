@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   useContent_Based_Language,
   useDynamicCssClass,
@@ -21,6 +22,7 @@ export default function ({
   const cssClass = useDynamicCssClass();
   const { value: currentLanguage } = useCachedLanguage();
   const content = useContent_Based_Language();
+  const { t } = useTranslation();
 
   const ActionButton = () => {
     function openNewTabAndPrint() {
@@ -38,7 +40,7 @@ export default function ({
           }`}
         >
           <span className={cssClass.me_1}>{project.printsCount || 0}</span>
-          <span>{content.userPannel.end_col.historyOfPrinting.print}</span>
+          <span>{t("print")}</span>
         </Typography.Body2>
         <Buttons.Contained_Custom
           className="button_medium_ bg_primary "
@@ -46,7 +48,7 @@ export default function ({
         >
           <Icons.Print />
           <Typography.H9 className={"font-400 " + cssClass.ms_1}>
-            {content.userPannel.end_col.historyOfPrinting.reprint}
+            {t("histroyOfPrinting.reprint")}
           </Typography.H9>
         </Buttons.Contained_Custom>
       </div>

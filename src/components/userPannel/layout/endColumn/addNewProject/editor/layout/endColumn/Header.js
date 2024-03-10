@@ -29,6 +29,7 @@ import {
   addSuccess,
   clearSuccess,
 } from "../../../../../../../../redux/project/success_slice";
+import { useTranslation } from "react-i18next";
 
 const PROJECT_EDIT = "project/edit";
 const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
@@ -44,6 +45,7 @@ export default function () {
   const profile = useGetUserProfile();
   const beForward = language == "fa" ? true : false;
   const cssClass = useDynamicCssClass();
+  const { t } = useTranslation();
   const content =
     useContent_Based_Language().userPannel.editor.endColumn.rootHeader;
   const navigate = useNavigate();
@@ -192,7 +194,9 @@ export default function () {
             pathClassName="fill_disabled"
             beForward={beForward}
           />
-          <Typography.H8 className="">{content.addNewProject}</Typography.H8>
+          <Typography.H8 className="">
+            {t("addNewProject.addNewProject")}
+          </Typography.H8>
         </section>
         <section className="d-flex">
           <Icons.Back
@@ -230,7 +234,7 @@ export default function () {
               id="checkbox-vertical"
             />
             <label class="form-check-label" for="flexCheckDefault">
-              <Typography.H8>چاپ خطوط عمودی</Typography.H8>
+              <Typography.H8>{t("editor.printVerticalLines")}</Typography.H8>
             </label>
           </div>
           <div class="form-check">
@@ -241,7 +245,7 @@ export default function () {
               id="checkbox-horizontal"
             />
             <label class="form-check-label" for="flexCheckDefault">
-              <Typography.H8>چاپ خطوط افقی</Typography.H8>
+              <Typography.H8>{t("editor.printHorizontalLines")}</Typography.H8>
             </label>
           </div>
         </main>
@@ -252,7 +256,7 @@ export default function () {
           >
             <Icons.Editor_ExportFile size="large" />
             <Typography.H7 className={cssClass.ms_1}>
-              {content.Output}
+              {t("editor.output")}
             </Typography.H7>
           </Buttons.Outlined>
           <Buttons.Contained
@@ -264,7 +268,7 @@ export default function () {
           >
             <Icons.Editor_Print size="large" />
             <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-              {content.print}
+              {t("print")}
             </Typography.H7>
           </Buttons.Contained>
           <PopUpBox openPopUp={openPopUp}>
@@ -281,7 +285,7 @@ export default function () {
                 }}
               >
                 <Typography.H9 className="text-nowrap ">
-                  تعداد چاپ
+                  {t("editor.numberOfPrints")}
                 </Typography.H9>
               </div>
             </header>
@@ -308,7 +312,7 @@ export default function () {
               >
                 <Icons.Editor_Print size="large" />
                 <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-                  {content.print}
+                  {t("print")}
                 </Typography.H7>
               </Buttons.Contained>
             </main>
@@ -320,7 +324,7 @@ export default function () {
           >
             <Icons.Editor_Save size="medium" />
             <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-              {content.saveAndContinue}
+              {t("saveAndContinue")}
             </Typography.H7>
           </Buttons.Contained>
         </div>
