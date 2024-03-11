@@ -265,6 +265,7 @@ function borderToPrintController(
         : 'none';
     }
   }
+
   switch (borderToPrint.type) {
     case USE:
       return {

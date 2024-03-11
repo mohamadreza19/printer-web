@@ -3,26 +3,26 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-} from "react-query";
-import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
-import useCachedToken from "../../utility/useCachedToken";
-import useToastReducer from "../../recoil/reducer/useToastReducer";
+} from 'react-query';
+import useAdmin_CachedToken from '../../utility/useAdmin_CachedToken';
+import useCachedToken from '../../utility/useCachedToken';
+import useToastReducer from '../../recoil/reducer/useToastReducer';
 
-import api_get from "../../services/admin/api_get";
-import { useEffect } from "react";
+import api_get from '../../services/admin/api_get';
+import { useEffect } from 'react';
 import {
   admins_and_users_key,
   product_label_key,
   setProduct_label_key,
-} from "../querykey/admin_key";
-import { useLanguage } from "../../recoil/readStore";
-import { apiUrl } from "../../services/urlStore";
+} from '../querykey/admin_key';
+import { useLanguage } from '../../recoil/readStore';
+import { apiUrl } from '../../services/urlStore';
 // export const Admin_Profile = ()
 export const Admin_Profile_Call = () => {
   const { value } = useAdmin_CachedToken();
   const setLoading = useToastReducer();
   const result = useQuery({
-    queryKey: "user_profile",
+    queryKey: 'user_profile',
     queryFn: () => api_get.profile_info(value),
   });
 
@@ -32,13 +32,13 @@ export const Admin_Profile_Call = () => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
     if (isSuccess) {
       setLoading({
         isShow: false,
-        message: "",
+        message: '',
       });
     }
     if (error) {
@@ -52,16 +52,16 @@ export const Admin_Profile_Call = () => {
   return result;
 };
 
-export const AdminUser_FindOne = (role = "admin", id) => {
+export const AdminUser_FindOne = (role = 'admin', id) => {
   const { value: token } = useAdmin_CachedToken();
   const { value: userToken } = useCachedToken();
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
 
-  const currentToken = role === "admin" ? token : userToken;
+  const currentToken = role === 'admin' ? token : userToken;
 
   const result = useQuery({
-    queryKey: ["find-one-user", id],
+    queryKey: ['find-one-user', id],
     queryFn: () => api_get.findOne_user(currentToken, id),
   });
   const { isLoading, isSuccess, error } = result;
@@ -69,13 +69,13 @@ export const AdminUser_FindOne = (role = "admin", id) => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -93,7 +93,7 @@ export const AdminProjects = () => {
   const { value: token } = useAdmin_CachedToken();
   const queryClient = useQueryClient();
   const result = useQuery({
-    queryKey: "admin-projects",
+    queryKey: 'admin-projects',
     queryFn: () => api_get.projects(token),
   });
   const { isLoading, error, data } = result;
@@ -102,20 +102,20 @@ export const AdminProjects = () => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
     if (data) {
       setLoading({
         isShow: false,
-        message: "",
+        message: '',
       });
     }
   }, [isLoading, error, data]);
 
   return result;
 };
-export const AdminUsers = (search, order = "ASC") => {
+export const AdminUsers = (search, order = 'ASC') => {
   const { value: token } = useAdmin_CachedToken();
   const setLoading = useToastReducer();
   const queryClient = useQueryClient();
@@ -126,7 +126,7 @@ export const AdminUsers = (search, order = "ASC") => {
   initialUrl = initialUrl.concat(`order=${order}&`);
 
   const result = useInfiniteQuery({
-    queryKey: ["admin-users", admins_and_users_key, search],
+    queryKey: ['admin-users', admins_and_users_key, search],
 
     queryFn: ({ pageParam = initialUrl }) => api_get.users(token, pageParam),
 
@@ -139,13 +139,13 @@ export const AdminUsers = (search, order = "ASC") => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -171,9 +171,9 @@ export const AdminPrints = (
   limit = 10,
   justProduct = false,
   justLabel = false,
-  startDate = "",
-  endDate = "",
-  order = "ASC"
+  startDate = '',
+  endDate = '',
+  order = 'ASC'
 ) => {
   const { value: token } = useAdmin_CachedToken();
   const queryClient = useQueryClient();
@@ -200,7 +200,7 @@ export const AdminPrints = (
 
   const result = useInfiniteQuery({
     queryKey: [
-      "admin-print",
+      'admin-print',
       startDate,
       endDate,
       order,
@@ -249,13 +249,13 @@ export const AdminPrints = (
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -280,7 +280,7 @@ export const AdminPrints_Excel = () => {
   const setLoading = useToastReducer();
 
   const result = useMutation({
-    mutationKey: ["admin-print-excel"],
+    mutationKey: ['admin-print-excel'],
     mutationFn: (option) => {
       let url = `${apiUrl}/print/export/excel?`;
       const { page, limit, justProduct, justLabel, startDate, endDate, order } =
@@ -313,13 +313,13 @@ export const AdminPrints_Excel = () => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -339,7 +339,7 @@ export const AdminActive_users = () => {
   const setLoading = useToastReducer();
 
   const result = useQuery({
-    queryKey: "active-users",
+    queryKey: 'active-users',
     queryFn: () => api_get.active_users(token),
   });
   const { isLoading, isSuccess, error } = result;
@@ -347,13 +347,13 @@ export const AdminActive_users = () => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -377,7 +377,7 @@ export const AdminPrintsStatistics = (
   const setLoading = useToastReducer();
 
   const result = useQuery({
-    queryKey: ["prints-statistics", key_for_apiCall_acordingToDate],
+    queryKey: ['prints-statistics', key_for_apiCall_acordingToDate],
     queryFn: () => api_get.print_statistics(token, startDate, endDate),
   });
   const { isLoading, isSuccess, error } = result;
@@ -385,13 +385,13 @@ export const AdminPrintsStatistics = (
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -410,7 +410,7 @@ export const AdminProduct_Label_Count = () => {
   const setLoading = useToastReducer();
 
   const result = useQuery({
-    queryKey: "product_label_count",
+    queryKey: 'product_label_count',
     queryFn: () => api_get.product_label_count(token),
   });
   const { isLoading, isSuccess, error } = result;
@@ -418,13 +418,13 @@ export const AdminProduct_Label_Count = () => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -438,15 +438,15 @@ export const AdminProduct_Label_Count = () => {
   return result;
 };
 export async function AdminProduct_Label_v2(
-  option = { productLableFilter: "", search: "", limit: "", page: "" }
+  option = { productLableFilter: '', search: '', limit: '', page: '' }
 ) {
   let initialUrl = `${apiUrl}/product-label?productLableFilter=${option.productLableFilter}&page=1&limit=10&`;
-  const token = localStorage.getItem("admin-t");
-  const language = localStorage.getItem("language");
-  let lan = "persian";
-  if (language === "fa") lan = "persian";
-  if (language === "en") lan = "english";
-  if (language === "tr") lan = "turkish";
+  const token = localStorage.getItem('admin-t');
+  const language = localStorage.getItem('language');
+  let lan = 'persian';
+  if (language === 'fa') lan = 'persian';
+  if (language === 'en') lan = 'english';
+  if (language === 'tr') lan = 'turkish';
 
   if (option.search) {
     initialUrl = initialUrl.concat(`search=${option.search}&`);
@@ -454,17 +454,17 @@ export async function AdminProduct_Label_v2(
 }
 
 export const AdminProduct_Label = (
-  option = { productLableFilter: "", search: "", limit: "", page: "" }
+  option = { productLableFilter: '', search: '', limit: '', page: '' }
 ) => {
   const { value: token } = useAdmin_CachedToken();
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
   const language = useLanguage();
-  let lan = "persian";
+  let lan = 'persian';
 
-  if (language === "fa") lan = "persian";
-  if (language === "en") lan = "english";
-  if (language === "tr") lan = "turkish";
+  if (language === 'fa') lan = 'persian';
+  if (language === 'en') lan = 'english';
+  if (language === 'tr') lan = 'turkish';
   const { productLableFilter, search, limit, page } = option;
   // console.table(page, limit, productLableFilter, search);
 
@@ -474,7 +474,13 @@ export const AdminProduct_Label = (
     initialUrl = initialUrl.concat(`search=${search}&`);
   }
   const result = useInfiniteQuery({
-    queryKey: ["product_label", productLableFilter, search, product_label_key],
+    queryKey: [
+      'product_label',
+      productLableFilter,
+      search,
+      product_label_key,
+      search,
+    ],
     queryFn: ({ pageParam = initialUrl }) => {
       return api_get.product_label(
         token,
@@ -501,13 +507,13 @@ export const AdminProduct_Label = (
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -553,7 +559,7 @@ export const AdminProduct_Label = (
   // return { ...result, data: arr };
 };
 
-export const AdminLabel_findOne = (id = "") => {
+export const AdminLabel_findOne = (id = '') => {
   const { value: token } = useAdmin_CachedToken();
 
   const setLoading = useToastReducer();
@@ -561,7 +567,7 @@ export const AdminLabel_findOne = (id = "") => {
   // console.table(page, limit, productLableFilter, search);
 
   const result = useQuery({
-    queryKey: ["label-findOne"],
+    queryKey: ['label-findOne'],
     queryFn: () => {
       return api_get.label_findOne(token, id);
     },
@@ -572,13 +578,13 @@ export const AdminLabel_findOne = (id = "") => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -592,39 +598,42 @@ export const AdminLabel_findOne = (id = "") => {
   return result;
 };
 
-export const AdminProduct_findOne = (id = "") => {
+export const AdminProduct_findOne = (id = '') => {
   const { value: token } = useAdmin_CachedToken();
 
   const setLoading = useToastReducer();
 
   const result = useQuery({
-    queryKey: ["Product-findOne"],
+    queryKey: ['Product-findOne'],
     queryFn: () => {
-      return api_get.product_findOne(token, id);
+      if (id) {
+        return api_get.product_findOne(token, id);
+      }
+      return Promise.reject();
     },
   });
 
   const { isLoading, isSuccess, error } = result;
-  useEffect(() => {
-    if (isLoading) {
-      setLoading(() => ({
-        isShow: true,
-        message: "",
-      }));
-    }
-    if (isSuccess) {
-      setLoading(() => ({
-        isShow: false,
-        message: "",
-      }));
-    }
-    if (error) {
-      setLoading(() => ({
-        isShow: true,
-        message: error,
-      }));
-    }
-  }, [isSuccess, isLoading, error]);
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     setLoading(() => ({
+  //       isShow: true,
+  //       message: '',
+  //     }));
+  //   }
+  //   if (isSuccess) {
+  //     setLoading(() => ({
+  //       isShow: false,
+  //       message: '',
+  //     }));
+  //   }
+  //   if (error) {
+  //     setLoading(() => ({
+  //       isShow: true,
+  //       message: error,
+  //     }));
+  //   }
+  // }, [isSuccess, isLoading, error]);
 
   return result;
 };
@@ -641,7 +650,7 @@ export const Admin_Print_Info_Chart = (
 
   const result = useQuery({
     queryKey: [
-      "print_info_chart",
+      'print_info_chart',
       interval,
       scale,
       key_for_apiCall_acordingToDate,
@@ -662,13 +671,13 @@ export const Admin_Print_Info_Chart = (
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -687,9 +696,9 @@ export const UserProjects_Excel_Call = () => {
   let initUrl = `${apiUrl}/project/excel?`;
 
   const result = useMutation({
-    mutationKey: ["user-projects-excel"],
+    mutationKey: ['user-projects-excel'],
     mutationFn: (option) => {
-      const { search = "", startDate = null, endDate = null } = option;
+      const { search = '', startDate = null, endDate = null } = option;
 
       if (search) initUrl = initUrl.concat(`search=${search}&`);
       if (startDate) initUrl = initUrl.concat(`startDate=${startDate}&`);
@@ -705,13 +714,13 @@ export const UserProjects_Excel_Call = () => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {

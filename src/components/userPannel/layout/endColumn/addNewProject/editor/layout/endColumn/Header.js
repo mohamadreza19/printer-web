@@ -2,48 +2,52 @@ import {
   useContent_Based_Language,
   useDynamicCssClass,
   useLanguage,
-} from "../../../../../../../../recoil/readStore";
-import Icons from "../../../../../../../../styles/__ready/Icons";
-import Typography from "../../../../../../../../styles/__ready/Typography";
-import Buttons from "../../../../../../../../styles/__ready/Buttons";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+} from '../../../../../../../../recoil/readStore';
+import Icons from '../../../../../../../../styles/__ready/Icons';
+import Typography from '../../../../../../../../styles/__ready/Typography';
+import Buttons from '../../../../../../../../styles/__ready/Buttons';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import profile_store, {
   useGetUserProfile,
-} from "../../../../../../../../recoil/store/user/profile_store";
-import project_store from "../../../../../../../../recoil/store/user/project_store";
-import useBundleProject from "../../../../../../../../utility/useBundleProject";
-import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { showPutProjectResponse } from "../../../../../../../../recoil/store/user/showPutProjectResponse";
-import useScreenShot from "../../../../../../../../utility/useScreenShot";
-import { FormatColorResetRounded } from "@mui/icons-material";
-import useLocalStorage from "react-use-localstorage";
-import { EditTemplate_project_Mutation } from "../../../../../../../../reactQuery/admin/callPutService";
-import { useSetBorderToProntState } from "../../../../../../../../recoil/userEditorStore/bordersToPrint";
-import { useProject_baseValue } from "../../../../../../../../recoil/userEditorStore/project_base";
-import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { addBorderEvent } from "../../../../../../../../redux/project/border_slice";
+} from '../../../../../../../../recoil/store/user/profile_store';
+import project_store from '../../../../../../../../recoil/store/user/project_store';
+import useBundleProject from '../../../../../../../../utility/useBundleProject';
+import { EditProject_Mutation } from '../../../../../../../../reactQuery/user/callPutServices';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { showPutProjectResponse } from '../../../../../../../../recoil/store/user/showPutProjectResponse';
+import useScreenShot from '../../../../../../../../utility/useScreenShot';
+import { FormatColorResetRounded } from '@mui/icons-material';
+import useLocalStorage from 'react-use-localstorage';
+import { EditTemplate_project_Mutation } from '../../../../../../../../reactQuery/admin/callPutService';
+import { useSetBorderToProntState } from '../../../../../../../../recoil/userEditorStore/bordersToPrint';
+import { useProject_baseValue } from '../../../../../../../../recoil/userEditorStore/project_base';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addBorderEvent,
+  getBorderToPrint,
+} from '../../../../../../../../redux/project/border_slice';
 import {
   addSuccess,
   clearSuccess,
-} from "../../../../../../../../redux/project/success_slice";
-import { useTranslation } from "react-i18next";
+} from '../../../../../../../../redux/project/success_slice';
+import { useTranslation } from 'react-i18next';
 
-const PROJECT_EDIT = "project/edit";
-const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
-const PROJECT_TEMPLATES_EDIT = "project-templates/edit";
+const PROJECT_EDIT = 'project/edit';
+const PROJECT_TEMPLATES_USER_EDIT = 'project-templates/user_edit';
+const PROJECT_TEMPLATES_EDIT = 'project-templates/edit';
 
 export default function () {
   const disptach = useDispatch();
   const [openPopUp, setOpenPopUp] = useState(false);
   const [printRepetition, setRrintRepetition] = useState(1);
-  const [editor_access, _] = useLocalStorage("editor_access");
+  const [saveMode, setSaveMode] = useState('idle');
+  const [editor_access, _] = useLocalStorage('editor_access');
   const language = useLanguage();
   const { projectId } = useParams();
   const profile = useGetUserProfile();
-  const beForward = language == "fa" ? true : false;
+  const beForward = language == 'fa' ? true : false;
   const cssClass = useDynamicCssClass();
   const { t } = useTranslation();
   const content =
@@ -52,6 +56,7 @@ export default function () {
 
   const profile_state = useRecoilValue(profile_store);
   const project_state = useRecoilValue(project_store);
+  const borderToPrint = useSelector(getBorderToPrint);
 
   const poject_base = useProject_baseValue(); // CUSTOM | PRODUCT
 
@@ -67,47 +72,47 @@ export default function () {
   const autoPrint = useScreenShot();
   function handleBorderToPrint(value) {
     const payload = {
-      type: "none",
+      type: 'none',
       value,
     };
     disptach(addBorderEvent(payload));
   }
   function handleSetBordersToPrint(e) {
-    const checkbox_horizontal = document.getElementById("checkbox-horizontal");
+    const checkbox_horizontal = document.getElementById('checkbox-horizontal');
 
-    const checkbox_vertical = document.getElementById("checkbox-vertical");
+    const checkbox_vertical = document.getElementById('checkbox-vertical');
 
     if (e.target.checked) {
       if (
         checkbox_horizontal.isEqualNode(e.target) &&
         checkbox_vertical.checked === false
       ) {
-        handleBorderToPrint("HORIZONTAL");
+        handleBorderToPrint('HORIZONTAL');
       }
       if (
         checkbox_vertical.isEqualNode(e.target) &&
         checkbox_horizontal.checked === false
       ) {
-        handleBorderToPrint("VERTICAL");
+        handleBorderToPrint('VERTICAL');
       }
       if (checkbox_vertical.checked && checkbox_horizontal.checked) {
-        handleBorderToPrint("ALL");
+        handleBorderToPrint('ALL');
       }
     } else {
       if (
         checkbox_horizontal.isEqualNode(e.target) &&
         checkbox_vertical.checked === true
       ) {
-        handleBorderToPrint("VERTICAL");
+        handleBorderToPrint('VERTICAL');
       }
       if (
         checkbox_vertical.isEqualNode(e.target) &&
         checkbox_horizontal.checked === true
       ) {
-        handleBorderToPrint("HORIZONTAL");
+        handleBorderToPrint('HORIZONTAL');
       }
       if (!checkbox_vertical.checked && !checkbox_horizontal.checked) {
-        handleBorderToPrint("NONE");
+        handleBorderToPrint('NONE');
       }
     }
   }
@@ -153,29 +158,35 @@ export default function () {
     }
   }
   function print() {
-    autoPrint("PRODUCT", projectId, printRepetition);
+    autoPrint('PRODUCT', projectId, printRepetition);
   }
   function singlePrint() {
-    autoPrint("PRODUCT", projectId, 1);
+    autoPrint('PRODUCT', projectId, 1);
   }
   function sreenShot() {
-    autoPrint("IMAGE");
+    autoPrint('IMAGE');
   }
   function handleClearSuccess() {
     disptach(clearSuccess());
+    // setSaveMode('idle');
     window.location.reload();
   }
   function handleSuccess() {
     const payload = {
-      status: "success",
+      status: 'success',
       onBack: handleClearSuccess,
       body: project_mutate.data,
-      type: "edit",
+      type: 'edit',
     };
     disptach(addSuccess(payload));
   }
+  function handleSaveMode(action) {
+    setSaveMode(action);
+  }
 
   if (project_mutate.isSuccess || project_template_mutate.isSuccess) {
+    if (saveMode === 'saveAndContinue') {
+    }
     handleSuccess();
   }
   return (
@@ -195,7 +206,7 @@ export default function () {
             beForward={beForward}
           />
           <Typography.H8 className="">
-            {t("addNewProject.addNewProject")}
+            {t('addNewProject.addNewProject')}
           </Typography.H8>
         </section>
         <section className="d-flex">
@@ -222,7 +233,7 @@ export default function () {
       <article className="d-flex">
         <main
           style={{
-            columnGap: "15px",
+            columnGap: '15px',
           }}
           className="mx-3 d-flex align-items-center"
         >
@@ -232,9 +243,13 @@ export default function () {
               class="form-check-input"
               type="checkbox"
               id="checkbox-vertical"
+              checked={
+                borderToPrint.value === 'ALL' ||
+                borderToPrint.value === 'VERTICAL'
+              }
             />
             <label class="form-check-label" for="flexCheckDefault">
-              <Typography.H8>{t("editor.printVerticalLines")}</Typography.H8>
+              <Typography.H8>{t('editor.printVerticalLines')}</Typography.H8>
             </label>
           </div>
           <div class="form-check">
@@ -243,33 +258,34 @@ export default function () {
               class="form-check-input"
               type="checkbox"
               id="checkbox-horizontal"
+              checked={
+                borderToPrint.value === 'ALL' ||
+                borderToPrint.value === 'HORIZONTAL'
+              }
             />
             <label class="form-check-label" for="flexCheckDefault">
-              <Typography.H8>{t("editor.printHorizontalLines")}</Typography.H8>
+              <Typography.H8>{t('editor.printHorizontalLines')}</Typography.H8>
             </label>
           </div>
         </main>
         <div className="d-flex ">
-          <Buttons.Outlined
-            onClick={sreenShot}
-            className="editor-header-button_extra-medium"
-          >
+          <Buttons.Outlined onClick={sreenShot} className="">
             <Icons.Editor_ExportFile size="large" />
-            <Typography.H7 className={cssClass.ms_1}>
-              {t("editor.output")}
-            </Typography.H7>
+            <Typography.H10 className={cssClass.ms_1}>
+              {t('editor.output')}
+            </Typography.H10>
           </Buttons.Outlined>
           <Buttons.Contained
             disabled={openPopUp}
-            onClick={poject_base === "CUSTOM" ? handleOpenPopUp : singlePrint}
+            onClick={poject_base === 'CUSTOM' ? handleOpenPopUp : singlePrint}
             className="editor-header-button_extra-small mx-3 
               position-relative
             "
           >
             <Icons.Editor_Print size="large" />
-            <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-              {t("print")}
-            </Typography.H7>
+            <Typography.H10 className={cssClass.ms_1 + ' font-300'}>
+              {t('print')}
+            </Typography.H10>
           </Buttons.Contained>
           <PopUpBox openPopUp={openPopUp}>
             <header className="d-flex pos">
@@ -278,27 +294,27 @@ export default function () {
               </span>
               <div
                 style={{
-                  position: "absolute",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  top: "18px",
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  top: '18px',
                 }}
               >
                 <Typography.H9 className="text-nowrap ">
-                  {t("editor.numberOfPrints")}
+                  {t('editor.numberOfPrints')}
                 </Typography.H9>
               </div>
             </header>
             <main
               style={{
-                display: "flex",
-                flexDirection: "column",
-                rowGap: "10px",
-                alignItems: "center",
+                display: 'flex',
+                flexDirection: 'column',
+                rowGap: '10px',
+                alignItems: 'center',
               }}
             >
               <PopUpInput
-                disabled={poject_base === "PRODUCT" ? true : false}
+                disabled={poject_base === 'PRODUCT' ? true : false}
                 onChange={handleChangePrintRepetition}
                 type="number"
                 value={printRepetition}
@@ -311,21 +327,34 @@ export default function () {
             "
               >
                 <Icons.Editor_Print size="large" />
-                <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-                  {t("print")}
+                <Typography.H7 className={cssClass.ms_1 + ' font-300'}>
+                  {t('print')}
                 </Typography.H7>
               </Buttons.Contained>
             </main>
           </PopUpBox>
 
           <Buttons.Contained
-            className="editor-header-button_extra-large"
-            onClick={handleSubmitProject}
+            className="editor-header-button_extra-medium"
+            onClick={() => {
+              handleSubmitProject();
+              handleSaveMode('saveAndContinue');
+            }}
           >
-            <Icons.Editor_Save size="medium" />
-            <Typography.H7 className={cssClass.ms_1 + " font-300"}>
-              {t("saveAndContinue")}
-            </Typography.H7>
+            {/* <Icons.Editor_Save size="medium" /> */}
+            <Typography.H10 className={cssClass.ms_1 + ' font-300'}>
+              {t('saveAndContinue')}
+            </Typography.H10>
+          </Buttons.Contained>
+          <Buttons.Contained
+            className="editor-header-button_extra-auto mx-3"
+            onClick={() => {
+              handleSubmitProject();
+              handleSaveMode('save');
+              handleClearSuccess();
+            }}
+          >
+            <Icons.Editor_Save size="medium " />
           </Buttons.Contained>
         </div>
       </article>
@@ -350,7 +379,7 @@ const PopUpBox = styled.div`
   flex-direction: column;
   row-gap: 10px;
   //
-  visibility: ${({ openPopUp }) => (openPopUp ? "visible" : "hidden")};
+  visibility: ${({ openPopUp }) => (openPopUp ? 'visible' : 'hidden')};
 `;
 const PopUpInput = styled.input`
   border-radius: 10px;

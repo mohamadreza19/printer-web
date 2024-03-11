@@ -1,21 +1,21 @@
-import CellsBox from "./CellsBox";
-import Title from "./Title";
-import { useRecoilState, useRecoilValue } from "recoil";
+import CellsBox from './CellsBox';
+import Title from './Title';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   labelRail_column,
   railsWidth_store,
-} from "../../../../../../../../../../../../recoil/userEditorStore/cellsStore";
-import Icons from "../../../../../../../../../../../../styles/__ready/Icons";
-import useScreenShot from "../../../../../../../../../../../../utility/useScreenShot";
-import { useEffect, useRef } from "react";
-import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { removeRail } from "../../../../../../../../../../../../redux/project/history_changer_slice";
+} from '../../../../../../../../../../../../recoil/userEditorStore/cellsStore';
+import Icons from '../../../../../../../../../../../../styles/__ready/Icons';
+import useScreenShot from '../../../../../../../../../../../../utility/useScreenShot';
+import { useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { removeRail } from '../../../../../../../../../../../../redux/project/history_changer_slice';
 
 export default function ({
   index = 0,
   rail = {
-    frontId: "",
+    frontId: '',
     customLabels: [],
   },
   isLastRail = false,
@@ -59,7 +59,7 @@ export default function ({
 const Divider = styled.div`
   height: 1.5px;
   // background-color: red;
-  // display: ${(prop) => (prop.isLastRail ? "none" : "block")};
+  // display: ${(prop) => (prop.isLastRail ? 'none' : 'block')};
   width: 100%;
   min-width: 80vw;
   position: absolute;

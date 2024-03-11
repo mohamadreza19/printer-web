@@ -19,16 +19,16 @@ input:-webkit-autofill:active {
 .c-pointer {
   cursor: pointer;
 }
-html[dir="ltr"] * {
+html[dir='ltr'] * {
   font-family: Arial, Helvetica, sans-serif;
 }
-html[dir="ltr"] .MuiTypography-h6 {
+html[dir='ltr'] .MuiTypography-h6 {
   font-family: Vazirmatn;
 }
-html[dir="ltr"] .eye-password {
+html[dir='ltr'] .eye-password {
   right: 16px;
 }
-html[dir="rtl"] .eye-password {
+html[dir='rtl'] .eye-password {
   left: 16px;
 }
 /* html:dir(ltr) .eye-password {
@@ -127,7 +127,7 @@ input::-ms-clear {
   background-color: red;
 }
 .calendar-input {
-  font-family: "Vazirmatn";
+  font-family: 'Vazirmatn';
   width: 171.96px;
   height: 52px;
   /* border-radius: 20px; */
@@ -259,6 +259,16 @@ input::-ms-clear {
 
 .editor-header-over {
 }
+.editor-header-button_extra-auto {
+  padding: 20px;
+  width: fit-content;
+  height: 64px !important;
+  max-width: 128px !important ;
+  max-height: 64px !important;
+  z-index: 999;
+  /* padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important; */
+}
 .editor-header-button_extra-small {
   width: 128px !important;
   height: 64px !important;
@@ -331,13 +341,13 @@ input::-ms-clear {
   margin-right: 0.65rem;
 }
 .select-rtl {
-  font-family: "Vazirmatn";
+  font-family: 'Vazirmatn';
   width: 160px;
   border-radius: 20px;
   height: 52px;
   appearance: none;
 
-  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-image: url('../svg/icon/DownArrow_SelectBox.svg');
 
   background-repeat: no-repeat;
   background-position: left 1rem center;
@@ -348,16 +358,16 @@ input::-ms-clear {
   text-align: center;
 }
 .disabled-select-box {
-  background-image: url("none");
+  background-image: url('none');
   color: #cbcbcb;
 }
 .select-lft {
-  font-family: "Vazirmatn";
+  font-family: 'Vazirmatn';
   width: 160px;
   border-radius: 20px;
   height: 52px;
   appearance: none;
-  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-image: url('../svg/icon/DownArrow_SelectBox.svg');
   background-repeat: no-repeat;
   background-position: right 1rem center;
   border-radius: 2px;
@@ -373,12 +383,12 @@ select:focus {
 }
 
 .select-medium {
-  font-family: "Vazirmatn";
+  font-family: 'Vazirmatn';
   width: 140px;
   border-radius: 20px;
   height: 52px;
   appearance: none;
-  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-image: url('../svg/icon/DownArrow_SelectBox.svg');
   background-repeat: no-repeat;
   background-position: left 1rem center;
   border-radius: 2px;
@@ -387,19 +397,19 @@ select:focus {
   border-radius: 20px;
   text-align: center;
 }
-html[dir="ltr"] .select-medium {
+html[dir='ltr'] .select-medium {
   background-position: right 1rem center;
 }
 /* // */
 .select-large {
-  font-family: "Vazirmatn";
+  font-family: 'Vazirmatn';
   width: 160px;
   min-width: 160px;
   height: 52px;
   min-height: 52px;
   border-radius: 20px;
   appearance: none;
-  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-image: url('../svg/icon/DownArrow_SelectBox.svg');
   background-repeat: no-repeat;
   background-position: left 1rem center;
   border-radius: 2px;
@@ -408,15 +418,15 @@ html[dir="ltr"] .select-medium {
   border-radius: 20px;
   text-align: center;
 }
-html[dir="ltr"] .select-large {
-  font-family: "Vazirmatn";
+html[dir='ltr'] .select-large {
+  font-family: 'Vazirmatn';
   border-radius: 20px;
   width: 100%;
   min-width: 160px;
   height: 52px;
   height: 52px;
   appearance: none;
-  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-image: url('../svg/icon/DownArrow_SelectBox.svg');
   background-repeat: no-repeat;
   background-position: right 1rem center;
   border-radius: 2px;
@@ -428,7 +438,7 @@ html[dir="ltr"] .select-large {
   /* padding-left: 1.2rem; */
 }
 .select-extra-large {
-  font-family: "Vazirmatn";
+  font-family: 'Vazirmatn';
   width: 490px;
   min-width: 490px;
   height: 52px;
@@ -436,7 +446,7 @@ html[dir="ltr"] .select-large {
   border-radius: 20px;
   appearance: none;
   /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E"); */
-  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-image: url('../svg/icon/DownArrow_SelectBox.svg');
   background-repeat: no-repeat;
   background-position: left 1rem center;
   border-radius: 2px;
@@ -445,8 +455,8 @@ html[dir="ltr"] .select-large {
   border-radius: 20px;
   text-align: start;
 }
-html[dir="ltr"] .select-extra-large {
-  font-family: "Vazirmatn";
+html[dir='ltr'] .select-extra-large {
+  font-family: 'Vazirmatn';
   border-radius: 20px;
   width: 490px;
   min-width: 490px;
@@ -454,7 +464,7 @@ html[dir="ltr"] .select-extra-large {
 
   appearance: none;
   /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.4rem' height='1.2rem' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.1018 8C5.02785 8 4.45387 9.2649 5.16108 10.0731L10.6829 16.3838C11.3801 17.1806 12.6197 17.1806 13.3169 16.3838L18.8388 10.0731C19.5459 9.2649 18.972 8 17.898 8H6.1018Z' fill='%23212121'/%3E%3C/svg%3E"); */
-  background-image: url("../svg/icon/DownArrow_SelectBox.svg");
+  background-image: url('../svg/icon/DownArrow_SelectBox.svg');
   background-repeat: no-repeat;
   background-position: right 1rem center;
   border-radius: 2px;
@@ -514,7 +524,7 @@ html[dir="ltr"] .select-extra-large {
   justify-content: center;
   align-items: center;
 }
-html[dir="ltr"] .user-pass-child-box {
+html[dir='ltr'] .user-pass-child-box {
   border: 0;
   border-right: 1px solid #cbcbcb;
 }
@@ -603,7 +613,7 @@ html[dir="ltr"] .user-pass-child-box {
   bottom: -2rem;
   right: 11.4rem;
 }
-html[dir="ltr"] .add-product-medium-text-area-header-card {
+html[dir='ltr'] .add-product-medium-text-area-header-card {
   right: 0;
   left: 11.39rem;
 }
@@ -611,7 +621,7 @@ html[dir="ltr"] .add-product-medium-text-area-header-card {
   bottom: -2rem;
   right: 34.6rem;
 }
-html[dir="ltr"] .add-product-big-text-area-header-card {
+html[dir='ltr'] .add-product-big-text-area-header-card {
   right: 0;
   left: 34.59rem;
 }
@@ -641,7 +651,7 @@ html[dir="ltr"] .add-product-big-text-area-header-card {
   justify-content: center;
   align-items: center;
 }
-html[dir="ltr"] .cheched-box {
+html[dir='ltr'] .cheched-box {
   left: -8.3rem;
   right: 1rem;
 }
@@ -660,7 +670,7 @@ html[dir="ltr"] .cheched-box {
 }
 .recharts-text {
 }
-html[dir="rtl"] .recharts-text {
+html[dir='rtl'] .recharts-text {
   font-family: Vazirmatn;
 }
 
@@ -793,7 +803,7 @@ line {
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
 }
-html[dir="ltr"] .editor-end-column-r {
+html[dir='ltr'] .editor-end-column-r {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-top-left-radius: 30px;
@@ -951,7 +961,7 @@ html[dir="ltr"] .editor-end-column-r {
   background: #f36523;
   border-radius: 0px 23.2292px 23.2292px 0px;
 }
-html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
+html[dir='ltr'] .editor-searchbox-toggle-show-hide-searchbox {
   rotate: 180deg;
 }
 .editor-searchbox-input {
@@ -1031,7 +1041,7 @@ html[dir="ltr"] .editor-searchbox-toggle-show-hide-searchbox {
   position: relative;
   left: 1.1rem;
 }
-html[dir="ltr"] .product-label-icon-plus-box {
+html[dir='ltr'] .product-label-icon-plus-box {
   left: 0;
   /* right: 1.1rem; */
 }
@@ -1137,7 +1147,12 @@ html[dir="ltr"] .product-label-icon-plus-box {
   padding-top: 7rem;
   padding-left: 2rem;
 }
-html[dir="ltr"] .add-new-rail-btn {
+#rails-box {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* row-gap: 30px; */
+}
+html[dir='ltr'] .add-new-rail-btn {
 }
 .test {
   width: 100px;
@@ -1424,4 +1439,7 @@ html[dir="ltr"] .add-new-rail-btn {
 
 .rotate-0 {
   rotate: 0deg;
+}
+.color-danger {
+  color: #842029;
 }

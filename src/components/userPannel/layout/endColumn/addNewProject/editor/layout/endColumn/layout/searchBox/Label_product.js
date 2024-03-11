@@ -19,6 +19,8 @@ import userEditor_DnD from '../../../../../../../../../../helper/userEditor_DnD'
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import { getProjectDimensions } from '../../../../../../../../../../redux/project/project._slice';
+import { useSelector } from 'react-redux';
 
 const inital = {
   id: ' ',
@@ -57,6 +59,8 @@ export default function ({
   const imageResonse = Admin_User_Image('user');
   const [copyNumber, setCopyNumber] = useState(1);
   const [selectedRail, setSelectedRail] = useState(0);
+  const projectDimensions = useSelector(getProjectDimensions);
+
   const { t } = useTranslation();
 
   function incresment_copyNumber() {
@@ -144,19 +148,24 @@ export default function ({
       index={index}
     >
       {(provided, snapshot) => {
-        console.log({ product });
         return (
-          <DragibleContainerNeedStyled
-            {...provided.draggableProps}
-            ref={provided.innerRef}
-            {...provided.dragHandleProps}
-            isDragging={snapshot.isDragging}
-            productWidth={product.width}
-          >
+          <>
+            <DragibleContainerNeedStyled
+              {...provided.draggableProps}
+              ref={provided.innerRef}
+              {...provided.dragHandleProps}
+              height={projectDimensions.width}
+              isDragging={snapshot.isDragging}
+              productWidth={product.width}
+            />
+
             <article
+              // {...provided.draggableProps}
+              // ref={provided.innerRef}
+              // {...provided.dragHandleProps}
               className={`${
                 snapshot.isDragging && 'd-none'
-              } w-100 d-flex flex-column px-3 pb-4 mb-3 product-label-box `}
+              }  w-100 d-flex flex-column px-3 pb-4 mb-3 product-label-box `}
             >
               <div className="d-flex">
                 <header className="d-flex  align-items-center justify-content-center">
@@ -262,7 +271,7 @@ export default function ({
                 </footer>
               </div>
             </article>
-          </DragibleContainerNeedStyled>
+          </>
         );
       }}
     </Draggable>

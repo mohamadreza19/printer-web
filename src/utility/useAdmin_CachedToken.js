@@ -1,9 +1,9 @@
-import useLocalStorage from "react-use-localstorage";
+import useLocalStorage from 'react-use-localstorage';
 
 export default function () {
   const [admin_cachedLanguage, setAdmin_cachedLanguage] = useLocalStorage(
-    "admin-t",
-    ""
+    'admin-t',
+    ''
   );
 
   return {

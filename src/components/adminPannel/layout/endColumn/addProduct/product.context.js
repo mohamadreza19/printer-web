@@ -151,7 +151,7 @@ const reducer = (state = initalState, action) => {
         ...state,
         [payload.target]: {
           ...state[payload.target],
-          err: payload.value,
+          err: payload.msg,
         },
       };
 
@@ -161,16 +161,18 @@ const reducer = (state = initalState, action) => {
 };
 
 export const ProductProvider = ({ children }) => {
+  // window.location.reload();
   const { productid } = useParams();
   const [state, distapch] = useReducer(reducer, initalState);
 
-  const fetchProduct = productid
-    ? AdminProduct_findOne(productid)
-    : { isSuccess: false };
+  const fetchProduct = AdminProduct_findOne(productid);
+
   const image = Admin_User_Image('admin');
 
   useEffect(() => {
     if (fetchProduct.isSuccess) {
+      // console.log(fetchProduct.data.pictures[0].id);
+
       const fileId = fetchProduct.data.pictures[0].id;
       image.mutate({ fileId: fileId });
       const {
@@ -251,7 +253,8 @@ export const ProductProvider = ({ children }) => {
       });
       //
     }
-  }, [fetchProduct?.isSuccess]);
+  }, [fetchProduct.isSuccess]);
+
   useEffect(() => {
     if (image.isSuccess) {
       const blob = image.data;
@@ -270,6 +273,14 @@ export const ProductProvider = ({ children }) => {
       });
     };
   }, []);
+  useEffect(() => {
+    if (!productid) {
+      distapch({
+        type: 'CLEAR_ALL',
+      });
+    }
+  }, [productid]);
+
   return (
     <ProductContext.Provider value={{ state, distapch }}>
       {children}

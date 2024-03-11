@@ -22,7 +22,19 @@ const PageTwo = () => {
     : AdminAddProduct_Mutation();
   const addImage = AdminAddImage_Mutation();
   function handleAddFile(e) {
+    const maxfilesize = 1024 * 1024; // 1 Mb
     const file = e.target.files[0];
+
+    if (file.size > maxfilesize) {
+      distapch({
+        type: 'ERROR',
+        payload: {
+          target: 'file',
+          msg: 'فایل وارد شده بیشتر از یک مگ میباشد',
+        },
+      });
+      return;
+    }
     const action = {
       type: 'ADD_FILE',
       payload: file,
@@ -99,6 +111,15 @@ const PageTwo = () => {
     delete mutatedDescription.err;
     if (!file.file) {
       callErr('file', 'لطفا تصویر محصول را وارد کنید');
+      return;
+    }
+    if (!width) {
+      callErr('width', 'لطفا عرض محصول را وارپ کنید');
+      return;
+    }
+    if (!widthOfPrintingArea) {
+      callErr('widthOfPrintingArea', 'لطفا عرض محل چاپ را وارد کنید');
+      return;
     }
 
     const body = {
@@ -136,6 +157,7 @@ const PageTwo = () => {
       } else {
         addImageHandeler();
       }
+
       distapch({
         type: 'NEXT_PAGE',
       });
@@ -146,9 +168,6 @@ const PageTwo = () => {
           file: picture,
         };
         addImage.mutate(payload);
-        distapch({
-          type: 'NEXT_PAGE',
-        });
       }
       function editImageHandeler() {
         const payload = { perviusFileId: state.fileId, file: picture };
@@ -206,6 +225,7 @@ const PageTwo = () => {
         id="upload-file"
         onChange={handleAddFile}
       />
+      <span className="color-danger">{state.file.err}</span>
       <div>
         <Buttons.Contained
           onClick={handleSubmit}

@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const border_slice = createSlice({
-  name: "borderToPrint",
+  name: 'borderToPrint',
   initialState: {
-    type: "none", // use | none
-    value: "NONE", //NONE, ALL, HORIZONTAL, VERTICAL
+    type: 'none', // use | none
+    value: 'NONE', //NONE, ALL, HORIZONTAL, VERTICAL
   },
   reducers: {
     addBorderEvent(state, action) {
