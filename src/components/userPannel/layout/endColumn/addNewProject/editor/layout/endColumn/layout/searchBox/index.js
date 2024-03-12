@@ -106,8 +106,7 @@ export default function () {
       rails,
       option
     );
-    console.log({ option });
-    console.log({ newPresentRails });
+
     dispatch(addPresent(newPresentRails));
   }
 

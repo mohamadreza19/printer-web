@@ -37,7 +37,8 @@ export default function () {
     limit,
     page,
   });
-
+  console.log(product);
+  console.log(currentList);
   function get_MapedPage() {
     switch (currentList) {
       case "Product":
@@ -76,7 +77,7 @@ export default function () {
               ? product.fetchNextPage
               : project_template.fetchNextPage
           }
-          dataLength={10}
+          dataLength={get_MapedPage().length}
           hasMore={
             currentList === "Product"
               ? product.hasNextPage

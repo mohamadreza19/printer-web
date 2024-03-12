@@ -176,7 +176,14 @@ export const Admin_User_LabelList_Call = (
         setLanguageHeader_Based_cached_language(language)
       ),
 
-    getNextPageParam: (lastPage) => lastPage.links.next || undefined,
+    getNextPageParam: (lastPage) => {
+      const { currentPage, totalPages } = lastPage.meta;
+
+      if (currentPage < totalPages) {
+        return `${initUrl}?page=${Number(currentPage) + 1}&limit=10`;
+      }
+      return undefined;
+    },
   });
 
   const { isSuccess, isLoading, error, data } = result;
@@ -254,7 +261,14 @@ export const Project_template_List_Call = (
         setLanguageHeader_Based_cached_language(language)
       ),
 
-    getNextPageParam: (lastPage) => lastPage.links.next || undefined,
+    getNextPageParam: (lastPage) => {
+      const { currentPage, totalPages } = lastPage.meta;
+
+      if (currentPage < totalPages) {
+        return `${initUrl}&page=${Number(currentPage) + 1}&limit=10`;
+      }
+      return undefined;
+    },
   });
 
   const { isSuccess, isLoading, error, data } = result;
@@ -335,7 +349,14 @@ export const Admin_User_ProductList_Call = (
         setLanguageHeader_Based_cached_language(language)
       ),
 
-    getNextPageParam: (lastPage) => lastPage.links.next || undefined,
+    getNextPageParam: (lastPage) => {
+      const { currentPage, totalPages } = lastPage.meta;
+
+      if (currentPage < totalPages) {
+        return `${initUrl}?page=${Number(currentPage) + 1}&limit=10`;
+      }
+      return undefined;
+    },
   });
 
   const { isSuccess, isLoading, error, data } = result;

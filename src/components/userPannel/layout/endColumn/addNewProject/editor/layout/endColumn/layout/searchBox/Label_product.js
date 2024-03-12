@@ -1,42 +1,42 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   useContent_Based_Language,
   useDynamicCssClass,
-} from '../../../../../../../../../../recoil/readStore';
+} from "../../../../../../../../../../recoil/readStore";
 import {
   Down,
   PlusPeoduct_Labels,
   StarOne,
   Up,
-} from '../../../../../../../../../../styles/__ready/EditorIcons';
-import Typography from '../../../../../../../../../../styles/__ready/Typography';
-import { Draggable } from 'react-beautiful-dnd';
+} from "../../../../../../../../../../styles/__ready/EditorIcons";
+import Typography from "../../../../../../../../../../styles/__ready/Typography";
+import { Draggable } from "react-beautiful-dnd";
 
-import DragibleContainerNeedStyled from './layout/DragibleContainerNeedStyled';
-import { useEffect, useState } from 'react';
-import { Admin_User_Image } from '../../../../../../../../../../reactQuery/common/callGetService';
-import userEditor_DnD from '../../../../../../../../../../helper/userEditor_DnD';
-import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { useTranslation } from 'react-i18next';
-import { getProjectDimensions } from '../../../../../../../../../../redux/project/project._slice';
-import { useSelector } from 'react-redux';
+import DragibleContainerNeedStyled from "./layout/DragibleContainerNeedStyled";
+import { useEffect, useState } from "react";
+import { Admin_User_Image } from "../../../../../../../../../../reactQuery/common/callGetService";
+import userEditor_DnD from "../../../../../../../../../../helper/userEditor_DnD";
+import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { useTranslation } from "react-i18next";
+import { getProjectDimensions } from "../../../../../../../../../../redux/project/project._slice";
+import { useSelector } from "react-redux";
 
 const inital = {
-  id: ' ',
-  link: 'string',
+  id: " ",
+  link: "string",
   name: {
-    persian: '',
-    turkish: '',
-    english: '',
+    persian: "",
+    turkish: "",
+    english: "",
   },
   description: {
-    persian: '',
-    turkish: '',
-    english: '',
+    persian: "",
+    turkish: "",
+    english: "",
   },
   width: 300,
-  widthOfPrintingArea: '',
+  widthOfPrintingArea: "",
   pictures: [],
   bookmarked: false,
   isDragDisabled: false,
@@ -56,7 +56,7 @@ export default function ({
     useContent_Based_Language().userPannel.editor.endColumn.productsBox;
 
   const cssClass = useDynamicCssClass();
-  const imageResonse = Admin_User_Image('user');
+  const imageResonse = Admin_User_Image("user");
   const [copyNumber, setCopyNumber] = useState(1);
   const [selectedRail, setSelectedRail] = useState(0);
   const projectDimensions = useSelector(getProjectDimensions);
@@ -96,21 +96,21 @@ export default function ({
     options.push(
       <div
         style={{
-          width: '100%',
+          width: "100%",
         }}
         className="cur-pointer"
       >
-        {t('editor.selectedRail')}
+        {t("editor.selectedRail")}
       </div>
     );
     for (let i = 0; i < railsLength; i++) {
       options.push(
         <div
           style={{
-            width: '100%',
-            height: '36px',
+            width: "100%",
+            height: "36px",
             // border: "1px solid black",
-            backgroundColor: i === selectedRail ? '#CBCBCB' : 'white',
+            backgroundColor: i === selectedRail ? "#CBCBCB" : "white",
           }}
           className="cur-pointer"
           key={i}
@@ -160,11 +160,11 @@ export default function ({
             />
 
             <article
-              // {...provided.draggableProps}
-              // ref={provided.innerRef}
-              // {...provided.dragHandleProps}
+              {...provided.draggableProps}
+              ref={provided.innerRef}
+              {...provided.dragHandleProps}
               className={`${
-                snapshot.isDragging && 'd-none'
+                snapshot.isDragging && "d-none"
               }  w-100 d-flex flex-column px-3 pb-4 mb-3 product-label-box `}
             >
               <div className="d-flex">
@@ -172,13 +172,16 @@ export default function ({
                   <span className="product-label-picture d-flex justify-content-center align-items-center">
                     {imageResonse.data && (
                       <img
+                        {...provided.draggableProps}
+                        ref={provided.innerRef}
+                        {...provided.dragHandleProps}
                         className="w-100 h-100 border-r-20"
                         src={URL.createObjectURL(imageResonse.data)}
                       />
                     )}
                   </span>
                 </header>
-                <footer className={'d-flex flex-column ' + cssClass.ms_1}>
+                <footer className={"d-flex flex-column " + cssClass.ms_1}>
                   <Typography.H8 className="font-500 mb-1">
                     {product.name.persian}
                   </Typography.H8>
@@ -189,7 +192,7 @@ export default function ({
               </div>
               <div
                 className={
-                  'd-flex align-items-center  bg-white   mt-3 ' + cssClass.ps_4
+                  "d-flex align-items-center  bg-white   mt-3 " + cssClass.ps_4
                 }
               >
                 <ActionBtnBox>
@@ -207,9 +210,9 @@ export default function ({
                     </header>
                     <section
                       style={{
-                        width: '20px',
-                        maxWidth: '20px',
-                        textAlign: 'center',
+                        width: "20px",
+                        maxWidth: "20px",
+                        textAlign: "center",
                       }}
                       className={cssClass.pe_3}
                     >
@@ -217,7 +220,7 @@ export default function ({
                         style={{
                           width: 20,
                           height: 20,
-                          position: 'relative',
+                          position: "relative",
                           left: 10,
                         }}
                         type="number"
@@ -227,18 +230,18 @@ export default function ({
                       />
                     </section>
 
-                    <footer className={'d-flex flex-column ' + cssClass.me_1}>
+                    <footer className={"d-flex flex-column " + cssClass.me_1}>
                       <span
                         onClick={incresment_copyNumber}
                         className="c-pointer rotate-0 d-flex justify-content-center align-item-center mb-1"
                       >
-                        <Up className_for_path={'fill_secondray_v2 '} />
+                        <Up className_for_path={"fill_secondray_v2 "} />
                       </span>
                       <span
                         onClick={decrement_copyNumber}
                         className="c-pointer rotate-0 d-flex justify-content-center align-item-center "
                       >
-                        <Down className_for_path={'fill_secondray_v2'} />
+                        <Down className_for_path={"fill_secondray_v2"} />
                       </span>
                     </footer>
                   </header>
@@ -247,7 +250,7 @@ export default function ({
                 <footer className="w-100 d-flex align-items-center justify-content-between  ">
                   <span
                     className={
-                      'd-flex justify-content-center align-items-center cur-pointer ' +
+                      "d-flex justify-content-center align-items-center cur-pointer " +
                       cssClass.ms_2
                     }
                     onClick={() => {
@@ -264,7 +267,7 @@ export default function ({
                   <section>
                     <Link to={product.link}>
                       <Typography.H9_5 className="font-400 see-in-site">
-                        {t('showInSite')}
+                        {t("showInSite")}
                       </Typography.H9_5>
                     </Link>
                   </section>
