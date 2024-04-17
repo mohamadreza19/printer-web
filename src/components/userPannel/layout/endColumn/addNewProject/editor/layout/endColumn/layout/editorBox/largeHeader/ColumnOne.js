@@ -3,17 +3,17 @@ import {
   JoinRow,
   SpliteColumn,
   SpliteRow,
-} from "../../../../../../../../../../../styles/__ready/EditorIcons";
+} from '../../../../../../../../../../../styles/__ready/EditorIcons';
 
-import Typography from "../../../../../../../../../../../styles/__ready/Typography";
-import { useDispatch, useSelector } from "react-redux";
-import useSelectedCell from "../../../../../../../../../../../redux/project/selectedCell";
-import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
-import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
+import Typography from '../../../../../../../../../../../styles/__ready/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+import useSelectedCell from '../../../../../../../../../../../redux/project/selectedCell';
+import { addEditEvent } from '../../../../../../../../../../../redux/project/edit_event_slice';
+import { getSelectedCell } from '../../../../../../../../../../../redux/project/selectedCell_slice';
 import {
   getMutliSelectCells,
   joinCustomLabels,
-} from "../../../../../../../../../../../redux/project/multi_selectCell_slice";
+} from '../../../../../../../../../../../redux/project/multi_selectCell_slice';
 
 export default function ({
   mergeRowContent,
@@ -24,36 +24,34 @@ export default function ({
   const dispatch = useDispatch();
   const Cell = useSelector(getSelectedCell);
   const multiSelectCells = useSelector(getMutliSelectCells);
-  function onClick(type = "") {
+  function onClick(type = '') {
     if (multiSelectCells.cellIds.length > 1) {
-      if ("JOIN/COLUMN") {
+      if ('JOIN/COLUMN') {
         dispatch(joinCustomLabels(multiSelectCells));
         dispatch(
           addEditEvent({
-            type: "UN_SELECT",
+            type: 'UN_SELECT',
             // itemId: Cell.frontId,
           })
         );
       }
     } else {
-      dispatch(
-        addEditEvent({
-          type: type,
-          itemId: Cell.frontId,
-        })
-      );
-      // dispatch(
-      //   addEditEvent({
-      //     type: "UN_SELECT",
-      //     // itemId: Cell.frontId,
-      //   })
-      // );
+      const allow = preventToSendJoinEventFromUnchildrenCell(Cell, type);
+
+      if (allow) {
+        dispatch(
+          addEditEvent({
+            type: type,
+            itemId: Cell.frontId,
+          })
+        );
+      }
     }
   }
   const SplitRowBox = () => {
     return (
       <section
-        onClick={() => onClick("SPLIT/ROW")}
+        onClick={() => onClick('SPLIT/ROW')}
         className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
       >
         <SpliteRow />
@@ -63,7 +61,7 @@ export default function ({
   const JoinRowBox = () => {
     return (
       <section
-        onClick={() => onClick("JOIN/ROW")}
+        onClick={() => onClick('JOIN/ROW')}
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <JoinRow />
@@ -74,7 +72,7 @@ export default function ({
     return (
       <section
         className="editor-small-cell-box me-2 d-flex justify-content-center align-items-center"
-        onClick={() => onClick("SPLIT/COLUMN")}
+        onClick={() => onClick('SPLIT/COLUMN')}
       >
         <SpliteColumn />
       </section>
@@ -83,7 +81,7 @@ export default function ({
   const JoinColumnBox = () => {
     return (
       <section
-        onClick={() => onClick("JOIN/COLUMN")}
+        onClick={() => onClick('JOIN/COLUMN')}
         className="editor-small-cell-box  d-flex justify-content-center align-items-center"
       >
         <JoinColumn />
@@ -96,7 +94,7 @@ export default function ({
       <header className="d-flex justify-content-between align-items-center mb-2">
         <section
           style={{
-            width: "146px",
+            width: '146px',
           }}
           className="d-flex justify-content-end align-items-center"
         >
@@ -107,7 +105,7 @@ export default function ({
         </section>
         <section
           style={{
-            width: "134px",
+            width: '134px',
           }}
           className="d-flex justify-content-end align-items-center"
         >
@@ -118,7 +116,7 @@ export default function ({
       <footer className="d-flex justify-content-between  align-items-center">
         <section
           style={{
-            width: "146px",
+            width: '146px',
           }}
           className="d-flex justify-content-end align-items-center"
         >
@@ -129,7 +127,7 @@ export default function ({
         </section>
         <section
           style={{
-            width: "134px",
+            width: '134px',
           }}
           className="d-flex justify-content-end align-items-center"
         >
@@ -141,4 +139,14 @@ export default function ({
       </footer>
     </article>
   );
+}
+function preventToSendJoinEventFromUnchildrenCell(cell, type) {
+  let allow = true;
+  if (type === 'JOIN/COLUMN' || type === 'JOIN/ROW') {
+    if (cell.frontId === cell.rootId) {
+      allow = false;
+    }
+  }
+
+  return allow;
 }

@@ -172,6 +172,9 @@ export default function ({
                   <span className="product-label-picture d-flex justify-content-center align-items-center">
                     {imageResonse.data && (
                       <img
+                        {...provided.draggableProps}
+                        ref={provided.innerRef}
+                        {...provided.dragHandleProps}
                         className="w-100 h-100 border-r-20"
                         src={URL.createObjectURL(imageResonse.data)}
                       />

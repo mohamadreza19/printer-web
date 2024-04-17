@@ -186,7 +186,6 @@ const history_changer_slice = createSlice({
           .map((customLabel, index) => {
             for (let t = 0; t < cellIds.length; t++) {
               if (customLabel.frontId === cellIds[t]) {
-                console.log({ customLabel });
                 if (!firstCellIndex) {
                   if (index === 0) {
                     isZeroIndexIncludes = true;

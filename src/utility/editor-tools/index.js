@@ -602,6 +602,7 @@ export class Structure {
   horizontal(structure) {
     const mapedChildren = structure.children.map((child) => {
       const childSplitType = child.split;
+
       return this[childSplitType](child);
     });
     const newStructure = {

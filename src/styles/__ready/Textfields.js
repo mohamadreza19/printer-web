@@ -1,37 +1,37 @@
-import { Input, TextField } from "@mui/material";
-import ContentEditable from "react-contenteditable";
-import { useDynamicCssClass, useLanguage } from "../../recoil/readStore";
-import Icons from "./Icons";
-import Typography from "./Typography";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { Input, TextField } from '@mui/material';
+import ContentEditable from 'react-contenteditable';
+import { useDynamicCssClass, useLanguage } from '../../recoil/readStore';
+import Icons from './Icons';
+import Typography from './Typography';
+import { useRecoilState, useRecoilValue } from 'recoil';
 //
-import { isView } from "../../recoil/userEditorStore/selectionButtonsStore/actionButton";
-import { useEffect, useRef, useState } from "react";
-import shortid from "shortid";
-import Barcode from "react-barcode";
-import { QRCodeSVG } from "qrcode.react";
-import styled from "styled-components";
-import useLocalStorage from "react-use-localstorage";
+import { isView } from '../../recoil/userEditorStore/selectionButtonsStore/actionButton';
+import { useEffect, useRef, useState } from 'react';
+import shortid from 'shortid';
+import Barcode from 'react-barcode';
+import { QRCodeSVG } from 'qrcode.react';
+import styled from 'styled-components';
+import useLocalStorage from 'react-use-localstorage';
 export default class {
-  static v1({ children = "", className = "" }) {
+  static v1({ children = '', className = '' }) {
     return <TextField className={className} />;
   }
   static v2({
-    children = "",
-    className = "",
-    Input_marginStart_based_Language = "ms-3",
-    value = " ",
+    children = '',
+    className = '',
+    Input_marginStart_based_Language = 'ms-3',
+    value = ' ',
     onChange = () => {},
   }) {
     return (
       <div
         className={
-          "w-100 bg-white border py-3 px-3 d-flex align-items-center border-r-20 " +
+          'w-100 bg-white border py-3 px-3 d-flex align-items-center border-r-20 ' +
           className
         }
       >
         <input
-          className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+          className={'text-filed-input-v2 ' + Input_marginStart_based_Language}
           // value={value}
           onChange={(e) => onChange(e)}
         />
@@ -39,21 +39,21 @@ export default class {
     );
   }
   static v3({
-    children = "",
-    className = "",
-    Input_marginStart_based_Language = "ms-3",
-    value = " ",
+    children = '',
+    className = '',
+    Input_marginStart_based_Language = 'ms-3',
+    value = ' ',
     onChange = () => {},
   }) {
     return (
       <div
         className={
-          " bg-white border  d-flex align-items-center border-r-20 " + className
+          ' bg-white border  d-flex align-items-center border-r-20 ' + className
         }
       >
         <input
           className={
-            "text-filed-input-v2 text-filed-medium " +
+            'text-filed-input-v2 text-filed-medium ' +
             Input_marginStart_based_Language
           }
           // value={value}
@@ -63,21 +63,21 @@ export default class {
     );
   }
   static v4({
-    children = "",
-    className = "",
-    Input_marginStart_based_Language = "ms-3",
-    value = " ",
+    children = '',
+    className = '',
+    Input_marginStart_based_Language = 'ms-3',
+    value = ' ',
     onChange = () => {},
   }) {
     return (
       <div
         className={
-          " bg-white border  d-flex align-items-center border-r-20 " + className
+          ' bg-white border  d-flex align-items-center border-r-20 ' + className
         }
       >
         <input
           className={
-            "text-filed-input-v2  text-filed-large " +
+            'text-filed-input-v2  text-filed-large ' +
             Input_marginStart_based_Language
           }
           // value={value}
@@ -87,34 +87,34 @@ export default class {
     );
   }
   static v2_SearchBox({
-    children = "",
-    className = "",
-    Input_marginStart_based_Language = "ms-3",
-    placeholder = "",
-    iconMarginStart = " ",
+    children = '',
+    className = '',
+    Input_marginStart_based_Language = 'ms-3',
+    placeholder = '',
+    iconMarginStart = ' ',
 
     onClickAndGetValeFn = () => {},
   }) {
     return (
       <div
         className={
-          "w-100 bg-white border py-2 px-3 d-flex align-items-center justify-content-between border-r-20 " +
+          'w-100 bg-white border py-2 px-3 d-flex align-items-center justify-content-between border-r-20 ' +
           className
         }
         style={{
-          height: "52px",
+          height: '52px',
         }}
       >
         <input
           style={{
-            position: "relative",
-            top: "-0.1rem",
+            position: 'relative',
+            top: '-0.1rem',
           }}
-          value={localStorage.getItem("search")}
+          value={localStorage.getItem('search')}
           id="serach-input"
           placeholder={placeholder}
           onKeyDown={(event) => {
-            if (event.key === "Enter") {
+            if (event.key === 'Enter') {
               // Perform your desired action here
               const value = event.target.value;
               onClickAndGetValeFn(value);
@@ -123,24 +123,24 @@ export default class {
           onChange={(e) => {
             const value = e.target.value;
             setTimeout(() => {
-              localStorage.setItem("sreach", value);
+              localStorage.setItem('sreach', value);
 
               onClickAndGetValeFn(value);
             }, 500);
-            if (value === "") {
-              onClickAndGetValeFn("");
+            if (value === '') {
+              onClickAndGetValeFn('');
             }
           }}
           // placeholder="جست و جو بر اساس نام پروژه"
           className={
-            "w-100 text-filed-input-v2 placeholder-v1 " +
+            'w-100 text-filed-input-v2 placeholder-v1 ' +
             Input_marginStart_based_Language
           }
         />
         <span
-          className={"cur-pointer " + iconMarginStart}
+          className={'cur-pointer ' + iconMarginStart}
           onClick={() => {
-            const serach_input = document.getElementById("serach-input");
+            const serach_input = document.getElementById('serach-input');
             const value = serach_input.value;
 
             onClickAndGetValeFn(value);
@@ -153,39 +153,39 @@ export default class {
   }
 
   static v2_password({
-    children = "",
-    className = "",
-    Input_marginStart_based_Language = "ms-3",
+    children = '',
+    className = '',
+    Input_marginStart_based_Language = 'ms-3',
   }) {
     return (
-      <div className={"login-input-box px-3 " + className}>
+      <div className={'login-input-box px-3 ' + className}>
         <img src="/svg/icon/password.svg" className="" />
         <input
-          className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+          className={'text-filed-input-v2 ' + Input_marginStart_based_Language}
         />
       </div>
     );
   }
 }
 export const UserNameTextField = ({
-  content = "content",
-  children = "",
-  className = "",
-  Input_marginStart_based_Language = "ms-3",
-  value = "",
+  content = 'content',
+  children = '',
+  className = '',
+  Input_marginStart_based_Language = 'ms-3',
+  value = '',
 
   onChange = () => {},
 }) => {
   return (
     <div className="d-flex flex-column mb-3">
       <Typography.H6>{content}</Typography.H6>
-      <section className={"login-input-box px-3 " + className}>
+      <section className={'login-input-box px-3 ' + className}>
         <Icons.UserName />
         <input
           type="text"
           value={value}
           onChange={onChange}
-          className={"text-filed-input-v2 " + Input_marginStart_based_Language}
+          className={'text-filed-input-v2 ' + Input_marginStart_based_Language}
         />
       </section>
     </div>
@@ -193,28 +193,28 @@ export const UserNameTextField = ({
 };
 
 export const LoginPasswordTextField = ({
-  content = "content",
-  children = "",
-  className = "",
-  Input_marginStart_based_Language = "ms-3",
-  value = "",
+  content = 'content',
+  children = '',
+  className = '',
+  Input_marginStart_based_Language = 'ms-3',
+  value = '',
   onChange = () => {},
   onEnterKeyDown = () => {},
 }) => {
   function changeIcon() {
-    const input = document.getElementById("password-v1");
+    const input = document.getElementById('password-v1');
     eyeContriller();
-    if (input.type === "password") {
-      input.type = "text";
+    if (input.type === 'password') {
+      input.type = 'text';
     } else {
-      input.type = "password";
+      input.type = 'password';
     }
   }
   function eyeContriller() {
-    const input = document.getElementById("password-v1");
-    const container = document.getElementById("password-input-icon");
+    const input = document.getElementById('password-v1');
+    const container = document.getElementById('password-input-icon');
 
-    if (input.type === "password") {
+    if (input.type === 'password') {
       const svgString = `<svg width="24" height="24" fill="#CBCBCB" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>`;
 
       container.innerHTML = svgString;
@@ -226,7 +226,7 @@ export const LoginPasswordTextField = ({
   return (
     <div className="d-flex flex-column mt-4">
       <Typography.H6>{content}</Typography.H6>
-      <section className={"login-input-box px-3 " + className}>
+      <section className={'login-input-box px-3 ' + className}>
         <img src="/svg/icon/password.svg" className="" />
         <input
           name="password"
@@ -234,11 +234,11 @@ export const LoginPasswordTextField = ({
           id="password-v1"
           value={value}
           onChange={onChange}
-          className={"text-filed-input-v2  " + Input_marginStart_based_Language}
+          className={'text-filed-input-v2  ' + Input_marginStart_based_Language}
           onKeyDown={(e) => {
             const key = e.key;
 
-            if (key === "Enter") {
+            if (key === 'Enter') {
               onEnterKeyDown();
             }
           }}
@@ -263,11 +263,11 @@ export const LoginPasswordTextField = ({
   );
 };
 export const EditorSearchBox = ({
-  children = "",
-  className = "",
-  Input_marginStart_based_Language = "ms-3",
-  placeholder = "نام محصول",
-  iconMarginStart = " ",
+  children = '',
+  className = '',
+  Input_marginStart_based_Language = 'ms-3',
+  placeholder = 'نام محصول',
+  iconMarginStart = ' ',
   setSearch = () => {},
 }) => {
   const cssClass = useDynamicCssClass();
@@ -278,8 +278,8 @@ export const EditorSearchBox = ({
   return (
     <div
       style={{
-        width: "320px",
-        height: "64px",
+        width: '320px',
+        height: '64px',
       }}
       className={` bg-white border py-2  d-flex align-items-center justify-content-between border-r-20
       ${cssClass.ps_2} ${cssClass.pe_1} ${className} `}
@@ -287,34 +287,34 @@ export const EditorSearchBox = ({
       <input
         onChange={onChangeValue}
         style={{
-          position: "relative",
-          top: "-0.1rem",
+          position: 'relative',
+          top: '-0.1rem',
         }}
         placeholder={placeholder}
         // placeholder="جست و جو بر اساس نام پروژه"
         className={
-          " editor-searchbox-input placeholder-v1 " +
+          ' editor-searchbox-input placeholder-v1 ' +
           Input_marginStart_based_Language
         }
       />
       <section
         className={
-          "cur-pointer bg_primary d-flex justify-content-center align-items-center   " +
+          'cur-pointer bg_primary d-flex justify-content-center align-items-center   ' +
           iconMarginStart
         }
-        style={{ width: "60px", height: "52px" }}
+        style={{ width: '60px', height: '52px' }}
       >
-        <Icons.Search className="fill_white " cls={"editor-search-icon"} />
+        <Icons.Search className="fill_white " cls={'editor-search-icon'} />
       </section>
     </div>
   );
 };
 export const TextFieldFUN_v3 = ({
-  value = " ",
-  onChange = " ",
-  placeholder = " ",
-  className = " ",
-  type = "text",
+  value = ' ',
+  onChange = ' ',
+  placeholder = ' ',
+  className = ' ',
+  type = 'text',
 }) => {
   const cssClass = useDynamicCssClass();
   const lan = useLanguage();
@@ -330,17 +330,17 @@ export const TextFieldFUN_v3 = ({
         placeholder={placeholder}
         onChange={(e) => onChange(e)}
         style={{
-          textAlign: lan === "fa" ? "right" : "left",
+          textAlign: lan === 'fa' ? 'right' : 'left',
         }}
       />
     </div>
   );
 };
 export const TextFieldFUN_v4 = ({
-  value = " ",
-  onChange = " ",
-  placeholder = " ",
-  className = " ",
+  value = ' ',
+  onChange = ' ',
+  placeholder = ' ',
+  className = ' ',
 }) => {
   const cssClass = useDynamicCssClass();
 
@@ -359,11 +359,11 @@ export const TextFieldFUN_v4 = ({
   );
 };
 export const TextField_small_Custom = ({
-  value = " ",
+  value = ' ',
   onChange = () => {},
-  placeholder = " ",
-  className = " ",
-  type = "text",
+  placeholder = ' ',
+  className = ' ',
+  type = 'text',
 }) => {
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
@@ -372,7 +372,7 @@ export const TextField_small_Custom = ({
     <div
       className={` bg-white border  d-flex align-items-center border-r-20  ${className}`}
     >
-      <span className={cssClass.ms_2}>mm</span>
+      <span className={cssClass.ms_2}>ml</span>
       <input
         type={type}
         className={`text-filed-input-v2 text-filed-large
@@ -381,22 +381,22 @@ export const TextField_small_Custom = ({
         placeholder={placeholder}
         onChange={onChange}
         style={{
-          textAlign: language === "fa" ? "right" : "left",
+          textAlign: language === 'fa' ? 'right' : 'left',
         }}
       />
     </div>
   );
 };
 export const TextFieldFUN_v5 = ({
-  value = "",
+  value = '',
   onChange = () => {},
-  placeholder = " ",
-  className = " ",
-  ImputclassName = "",
+  placeholder = ' ',
+  className = ' ',
+  ImputclassName = '',
 }) => {
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
-  const changedClass = language == "fa" ? " " : "font-English";
+  const changedClass = language == 'fa' ? ' ' : 'font-English';
 
   return (
     <article className="text-filed-medium-v1">
@@ -411,9 +411,9 @@ export const TextFieldFUN_v5 = ({
           onChange={onChange}
         />
       </div>
-      <footer className={"w-100 d-flex justify-content-end px-2 mt-1"}>
+      <footer className={'w-100 d-flex justify-content-end px-2 mt-1'}>
         <Typography.Button_v2
-          className={"font-400 disabled_gray2 " + changedClass}
+          className={'font-400 disabled_gray2 ' + changedClass}
         >
           {value.length}/120
         </Typography.Button_v2>
@@ -422,15 +422,15 @@ export const TextFieldFUN_v5 = ({
   );
 };
 export const TextFieldFUN_v5_Big = ({
-  value = "",
+  value = '',
   onChange = () => {},
-  placeholder = " ",
-  className = " ",
-  InputclassName = "",
+  placeholder = ' ',
+  className = ' ',
+  InputclassName = '',
 }) => {
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
-  const changedClass = language == "fa" ? " " : "font-English";
+  const changedClass = language == 'fa' ? ' ' : 'font-English';
 
   return (
     <>
@@ -447,9 +447,9 @@ export const TextFieldFUN_v5_Big = ({
           onChange={(e) => onChange(e)}
         />
       </div>
-      <footer className={"w-100 d-flex justify-content-end px-2 mt-1"}>
+      <footer className={'w-100 d-flex justify-content-end px-2 mt-1'}>
         <Typography.Button_v2
-          className={"font-400 disabled_gray2 " + changedClass}
+          className={'font-400 disabled_gray2 ' + changedClass}
         >
           {value.length}/120
         </Typography.Button_v2>
@@ -458,15 +458,15 @@ export const TextFieldFUN_v5_Big = ({
   );
 };
 export const TextFieldFUN_ClipBoardBadge = ({
-  value = " ",
+  value = ' ',
   onChange = () => {},
-  placeholder = " ",
-  className = " ",
-  footerNumber = "0",
+  placeholder = ' ',
+  className = ' ',
+  footerNumber = '0',
 }) => {
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
-  const changedClass = language == "fa" ? " " : "font-English";
+  const changedClass = language == 'fa' ? ' ' : 'font-English';
 
   return (
     <>
@@ -489,15 +489,15 @@ export const TextFieldFUN_ClipBoardBadge = ({
 };
 export const Editor_Cell_Input = ({
   allowReplaceInputToDiv = false,
-  value = "",
+  value = '',
   onChange = () => {},
   isSelection = false,
   onClick = () => {},
   style = {
-    fontFamily: "",
-    fontStyle: "",
+    fontFamily: '',
+    fontStyle: '',
     angle: 0,
-    fontSize: "",
+    fontSize: '',
   },
   isBarcode = false,
   isQrcode = false,
@@ -566,13 +566,13 @@ export const Editor_Cell_Input = ({
               ref={ref}
               className="d-flex align-items-center   "
               style={{
-                color: "black",
+                color: 'black',
                 fontFamily: style.fontFamily,
-                fontWeight: style.fontStyle == "bold" ? 600 : 400,
+                fontWeight: style.fontStyle == 'bold' ? 600 : 400,
                 fontSize: style.fontSize,
-                fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
+                fontStyle: style.fontStyle == 'italic' ? 'italic' : 'normal',
                 textDecoration:
-                  style.fontStyle == "underline" ? "underline" : "none",
+                  style.fontStyle == 'underline' ? 'underline' : 'none',
                 textAlign: style.textAlign,
                 rotate: `${style.angle}deg`,
               }}
@@ -588,14 +588,14 @@ export const Editor_Cell_Input = ({
             <input
               ref={ref}
               className="editor-cell-input  "
-              value={value || ""}
+              value={value || ''}
               style={{
                 fontFamily: style.fontFamily,
-                fontWeight: style.fontStyle == "bold" ? 600 : 400,
+                fontWeight: style.fontStyle == 'bold' ? 600 : 400,
                 fontSize: style.fontSize,
-                fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
+                fontStyle: style.fontStyle == 'italic' ? 'italic' : 'normal',
                 textDecoration:
-                  style.fontStyle == "underline" ? "underline" : "none",
+                  style.fontStyle == 'underline' ? 'underline' : 'none',
                 textAlign: style.textAlign,
                 rotate: `${style.angle}deg`,
                 // margin: `${style.margin}px `,
@@ -619,21 +619,21 @@ export const Editor_Cell_Input = ({
 };
 const RelacedToDiv = ({
   style = {
-    fontFamily: "",
-    fontWeight: "",
-    fontStyle: "",
-    textAlign: "",
-    angle: "",
-    margin: "",
-    padding: "",
+    fontFamily: '',
+    fontWeight: '',
+    fontStyle: '',
+    textAlign: '',
+    angle: '',
+    margin: '',
+    padding: '',
   },
-  value = "",
+  value = '',
 }) => {
   function lookTextAlignToConvertFlex(textAlign) {
-    if (textAlign === "right") return "start";
-    if (textAlign === "center") return "center";
-    if (textAlign === "left") return "end";
-    return "center";
+    if (textAlign === 'right') return 'start';
+    if (textAlign === 'center') return 'center';
+    if (textAlign === 'left') return 'end';
+    return 'center';
   }
   console.log({ style });
   return (
@@ -659,10 +659,10 @@ const Div = styled.div`
   rotate: ${({ rootStyle }) => rootStyle.angle}deg;
   font-family: ${({ rootStyle }) => rootStyle.fontFamily};
   font-weight: ${({ rootStyle }) =>
-    rootStyle.fontWeight == "bold" ? 600 : 400};
+    rootStyle.fontWeight == 'bold' ? 600 : 400};
   font-size: ${({ rootStyle }) => rootStyle.fontSize};
   font-style: ${({ rootStyle }) =>
-    rootStyle.fontStyle == "italic" ? "italic" : "normal"};
+    rootStyle.fontStyle == 'italic' ? 'italic' : 'normal'};
   color: black;
   padding: ${({ rootStyle }) => rootStyle.padding}px;
   margin: ${({ rootStyle }) => rootStyle.padding}px 0;

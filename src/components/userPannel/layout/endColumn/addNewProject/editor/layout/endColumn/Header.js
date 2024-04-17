@@ -33,6 +33,7 @@ import {
   clearSuccess,
 } from '../../../../../../../../redux/project/success_slice';
 import { useTranslation } from 'react-i18next';
+import { setUser_project_findOne } from '../../../../../../../../reactQuery/querykey/user_key';
 
 const PROJECT_EDIT = 'project/edit';
 const PROJECT_TEMPLATES_USER_EDIT = 'project-templates/user_edit';
@@ -46,7 +47,7 @@ export default function () {
   const [editor_access, _] = useLocalStorage('editor_access');
   const language = useLanguage();
   const { projectId } = useParams();
-  const profile = useGetUserProfile();
+
   const beForward = language == 'fa' ? true : false;
   const cssClass = useDynamicCssClass();
   const { t } = useTranslation();
@@ -70,6 +71,7 @@ export default function () {
   const handle_bundled_project = useBundleProject();
 
   const autoPrint = useScreenShot();
+
   function handleBorderToPrint(value) {
     const payload = {
       type: 'none',
@@ -158,10 +160,20 @@ export default function () {
     }
   }
   function print() {
-    autoPrint('PRODUCT', projectId, printRepetition);
+    handleSubmitProject();
+    handleSaveMode('save');
+    setTimeout(() => {
+      handleClearSuccess();
+      setTimeout(() => autoPrint('PRODUCT', projectId, printRepetition), 200);
+    }, 500);
   }
   function singlePrint() {
-    autoPrint('PRODUCT', projectId, 1);
+    handleSubmitProject();
+    handleSaveMode('save');
+    setTimeout(() => {
+      handleClearSuccess();
+      setTimeout(() => autoPrint('PRODUCT', projectId, 1), 200);
+    }, 500);
   }
   function sreenShot() {
     autoPrint('IMAGE');
@@ -169,18 +181,19 @@ export default function () {
   function handleClearSuccess() {
     disptach(clearSuccess());
     // setSaveMode('idle');
-    window.location.reload();
+    // window.location.reload();
   }
   function handleSuccess() {
     const payload = {
       status: 'success',
       onBack: handleClearSuccess,
-      body: project_mutate.data,
+      body: handle_bundled_project(),
       type: 'edit',
     };
     disptach(addSuccess(payload));
   }
   function handleSaveMode(action) {
+    setUser_project_findOne();
     setSaveMode(action);
   }
 
@@ -351,7 +364,7 @@ export default function () {
             onClick={() => {
               handleSubmitProject();
               handleSaveMode('save');
-              handleClearSuccess();
+              setTimeout(() => handleClearSuccess(), 500);
             }}
           >
             <Icons.Editor_Save size="medium " />

@@ -15,7 +15,7 @@ const muiti_selectCell_slice = createSlice({
       return initialState;
     },
     joinCustomLabels(state, action) {
-      return state;
+      return initialState;
     },
   },
 });

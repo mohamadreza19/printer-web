@@ -3,27 +3,28 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-} from "react-query";
-import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
-import { apiUrl } from "../../services/urlStore";
+} from 'react-query';
+import useAdmin_CachedToken from '../../utility/useAdmin_CachedToken';
+import { apiUrl } from '../../services/urlStore';
 
-import api_get from "../../services/common/api_get";
-import useCachedToken from "../../utility/useCachedToken";
-import useToastReducer from "../../recoil/reducer/useToastReducer";
-import { useEffect } from "react";
+import api_get from '../../services/common/api_get';
+import useCachedToken from '../../utility/useCachedToken';
+import useToastReducer from '../../recoil/reducer/useToastReducer';
+import { useEffect } from 'react';
 
 import {
   admin_user_image,
   admin_user_productList,
   admin_user_symbolList,
-} from "../querykey/common";
-import { useLanguage } from "../../recoil/readStore";
-import { useSetRecoilState } from "recoil";
-import { useParams } from "react-router-dom";
-import project_store from "../../recoil/store/user/project_store";
-import { user_project_findOne } from "../querykey/user_key";
+} from '../querykey/common';
+import { useLanguage } from '../../recoil/readStore';
+import { useSetRecoilState } from 'recoil';
+import { useParams } from 'react-router-dom';
+import project_store from '../../recoil/store/user/project_store';
+import { user_project_findOne } from '../querykey/user_key';
+import handleNextPageParam from '../../helper/handleNextPageParam';
 
-export const Admin_User_Image = (role = "admin") => {
+export const Admin_User_Image = (role = 'admin') => {
   const adminToken = useAdmin_CachedToken();
   const userToken = useCachedToken();
   const queryClient = useQueryClient();
@@ -34,7 +35,7 @@ export const Admin_User_Image = (role = "admin") => {
       const { fileId } = option;
 
       const currentToken =
-        role === "admin" ? adminToken.value : userToken.value;
+        role === 'admin' ? adminToken.value : userToken.value;
       return api_get.admin_user_image(currentToken, fileId);
     },
   });
@@ -43,13 +44,13 @@ export const Admin_User_Image = (role = "admin") => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -62,18 +63,18 @@ export const Admin_User_Image = (role = "admin") => {
   // console.log(result);
   return result;
 };
-export const Admin_User_Symbol = (role = "admin") => {
+export const Admin_User_Symbol = (role = 'admin') => {
   const adminToken = useAdmin_CachedToken();
   const userToken = useCachedToken();
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
   const result = useMutation({
-    mutationKey: ["Admin_User_Symbol", admin_user_symbolList],
+    mutationKey: ['Admin_User_Symbol', admin_user_symbolList],
     mutationFn: (option) => {
       const { id } = option;
 
       const currentToken =
-        role === "admin" ? adminToken.value : userToken.value;
+        role === 'admin' ? adminToken.value : userToken.value;
       return api_get.admin_user_symbol(currentToken, id);
     },
   });
@@ -82,13 +83,13 @@ export const Admin_User_Symbol = (role = "admin") => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -107,7 +108,7 @@ export const Admin_User_ImageSlide = () => {
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
   const result = useMutation({
-    mutationKey: ["Admin_User_Symbol", admin_user_symbolList],
+    mutationKey: ['Admin_User_Symbol', admin_user_symbolList],
     mutationFn: (option) => {
       const { id } = option;
 
@@ -119,13 +120,13 @@ export const Admin_User_ImageSlide = () => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -140,8 +141,8 @@ export const Admin_User_ImageSlide = () => {
 };
 
 export const Admin_User_LabelList_Call = (
-  role = "admin",
-  search = "",
+  role = 'admin',
+  search = '',
   startDate = null,
   endDate = null
 ) => {
@@ -151,14 +152,14 @@ export const Admin_User_LabelList_Call = (
 
   const setLoading = useToastReducer();
   function setLanguageHeader_Based_cached_language(language) {
-    if (language == "fa") {
-      return "persian";
+    if (language == 'fa') {
+      return 'persian';
     }
-    if (language == "en") {
-      return "english";
+    if (language == 'en') {
+      return 'english';
     }
-    if (language == "tr") {
-      return "turkish";
+    if (language == 'tr') {
+      return 'turkish';
     }
   }
   let initUrl = `${apiUrl}/label?`;
@@ -167,11 +168,11 @@ export const Admin_User_LabelList_Call = (
   if (endDate) initUrl = initUrl.concat(`endDate=${endDate}&`);
 
   const result = useInfiniteQuery({
-    queryKey: ["admin-user-labelList", search, startDate, endDate],
+    queryKey: ['admin-user-labelList', search, startDate, endDate],
 
     queryFn: ({ pageParam = initUrl }) =>
       api_get.admin_user_labelList(
-        role === "admin" ? adminToken : token,
+        role === 'admin' ? adminToken : token,
         pageParam,
         setLanguageHeader_Based_cached_language(language)
       ),
@@ -185,13 +186,13 @@ export const Admin_User_LabelList_Call = (
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -212,8 +213,8 @@ export const Admin_User_LabelList_Call = (
   return { ...result, data: modifiedData };
 };
 export const Project_template_List_Call = (
-  role = "admin",
-  search = "",
+  role = 'admin',
+  search = '',
   startDate = null,
   endDate = null
 ) => {
@@ -223,14 +224,14 @@ export const Project_template_List_Call = (
 
   const setLoading = useToastReducer();
   function setLanguageHeader_Based_cached_language(language) {
-    if (language == "fa") {
-      return "persian";
+    if (language == 'fa') {
+      return 'persian';
     }
-    if (language == "en") {
-      return "english";
+    if (language == 'en') {
+      return 'english';
     }
-    if (language == "tr") {
-      return "turkish";
+    if (language == 'tr') {
+      return 'turkish';
     }
   }
   let initUrl = `${apiUrl}/project-templates?`;
@@ -240,7 +241,7 @@ export const Project_template_List_Call = (
 
   const result = useInfiniteQuery({
     queryKey: [
-      "project-templates",
+      'project-templates',
       admin_user_productList,
       search,
       startDate,
@@ -249,12 +250,12 @@ export const Project_template_List_Call = (
 
     queryFn: ({ pageParam = initUrl }) =>
       api_get.project_templates(
-        role === "admin" ? adminToken : token,
+        role === 'admin' ? adminToken : token,
         pageParam,
         setLanguageHeader_Based_cached_language(language)
       ),
 
-    getNextPageParam: (lastPage) => lastPage.links.next || undefined,
+    getNextPageParam: (lastPage) => handleNextPageParam(lastPage.meta, initUrl),
   });
 
   const { isSuccess, isLoading, error, data } = result;
@@ -263,13 +264,13 @@ export const Project_template_List_Call = (
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -290,8 +291,8 @@ export const Project_template_List_Call = (
   return { ...result, data: modifiedData };
 };
 export const Admin_User_ProductList_Call = (
-  role = "admin",
-  search = "",
+  role = 'admin',
+  search = '',
   startDate = null,
   endDate = null
 ) => {
@@ -301,14 +302,14 @@ export const Admin_User_ProductList_Call = (
 
   const language = useLanguage();
   function setLanguageHeader_Based_cached_language(language) {
-    if (language == "fa") {
-      return "persian";
+    if (language == 'fa') {
+      return 'persian';
     }
-    if (language == "en") {
-      return "english";
+    if (language == 'en') {
+      return 'english';
     }
-    if (language == "tr") {
-      return "turkish";
+    if (language == 'tr') {
+      return 'turkish';
     }
   }
 
@@ -321,7 +322,7 @@ export const Admin_User_ProductList_Call = (
 
   const result = useInfiniteQuery({
     queryKey: [
-      "admin-user-productList",
+      'admin-user-productList',
       search,
       startDate,
       endDate,
@@ -330,12 +331,14 @@ export const Admin_User_ProductList_Call = (
 
     queryFn: ({ pageParam = initUrl }) =>
       api_get.admin_user_productList(
-        role === "admin" ? adminToken : token,
+        role === 'admin' ? adminToken : token,
         pageParam,
         setLanguageHeader_Based_cached_language(language)
       ),
 
-    getNextPageParam: (lastPage) => lastPage.links.next || undefined,
+    getNextPageParam: (lastPage) => {
+      return handleNextPageParam(lastPage.meta, initUrl);
+    },
   });
 
   const { isSuccess, isLoading, error, data } = result;
@@ -344,13 +347,13 @@ export const Admin_User_ProductList_Call = (
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -369,17 +372,101 @@ export const Admin_User_ProductList_Call = (
 
   return { ...result, data: modifiedData };
 };
-export const Admin_UserSymbols = (role = "admin") => {
+export const ProductList_Call_Project_template_List_Call = (
+  role = 'admin',
+  productLableFilter = 'Product',
+  search = '',
+  startDate = null,
+  endDate = null
+) => {
+  const { value: token } = useCachedToken();
+
+  const { value: adminToken } = useAdmin_CachedToken();
+
+  const language = useLanguage();
+  function setLanguageHeader_Based_cached_language(language) {
+    if (language == 'fa') {
+      return 'persian';
+    }
+    if (language == 'en') {
+      return 'english';
+    }
+    if (language == 'tr') {
+      return 'turkish';
+    }
+  }
+
+  const setLoading = useToastReducer();
+
+  let initUrl = `${apiUrl}/product-label?`;
+
+  if (productLableFilter)
+    initUrl = initUrl.concat(`productLableFilter=${productLableFilter}&`);
+  if (search) initUrl = initUrl.concat(`search=${search}&`);
+  if (startDate) initUrl = initUrl.concat(`startDate=${startDate}&`);
+  if (endDate) initUrl = initUrl.concat(`endDate=${endDate}&`);
+
+  const result = useInfiniteQuery({
+    queryKey: [
+      'admin-user-productList',
+      search,
+      startDate,
+      endDate,
+      admin_user_productList,
+    ],
+
+    queryFn: ({ pageParam = initUrl }) =>
+      api_get.admin_user_productList(
+        role === 'admin' ? adminToken : token,
+        pageParam,
+        setLanguageHeader_Based_cached_language(language)
+      ),
+
+    getNextPageParam: (lastPage) => lastPage.links.next || undefined,
+  });
+
+  const { isSuccess, isLoading, error, data } = result;
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: '',
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: '',
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+  let modifiedData = [];
+  if (result.isSuccess) {
+    data.pages.forEach((page) =>
+      page.items.forEach((item) => modifiedData.push(item))
+    );
+  }
+
+  return { ...result, data: modifiedData };
+};
+export const Admin_UserSymbols = (role = 'admin') => {
   const { value: token } = useAdmin_CachedToken();
   const { value: userToken } = useCachedToken();
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
-  const chosenToken = role === "admin" ? token : userToken;
+  const chosenToken = role === 'admin' ? token : userToken;
 
-  let queryParams = "symbol?";
+  let queryParams = 'symbol?';
 
   const result = useQuery({
-    queryKey: ["admin-symbolList"],
+    queryKey: ['admin-symbolList'],
     queryFn: () => api_get.symbols(chosenToken, queryParams),
   });
 
@@ -388,13 +475,13 @@ export const Admin_UserSymbols = (role = "admin") => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -413,10 +500,10 @@ export const Admin_UserSlider = () => {
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
 
-  let queryParams = "slider?";
+  let queryParams = 'slider?';
 
   const result = useQuery({
-    queryKey: ["admin-slider"],
+    queryKey: ['admin-slider'],
     queryFn: () => api_get.sliders(queryParams),
   });
 
@@ -425,13 +512,13 @@ export const Admin_UserSlider = () => {
     if (isLoading) {
       setLoading(() => ({
         isShow: true,
-        message: "",
+        message: '',
       }));
     }
     if (isSuccess) {
       setLoading(() => ({
         isShow: false,
-        message: "",
+        message: '',
       }));
     }
     if (error) {
@@ -444,7 +531,7 @@ export const Admin_UserSlider = () => {
 
   return result;
 };
-export const Project_templateFindOne_Qury = (role = "admin") => {
+export const Project_templateFindOne_Qury = (role = 'admin') => {
   //admin/user
   const setProjectState = useSetRecoilState(project_store);
   const setLoading = useToastReducer();
@@ -452,10 +539,10 @@ export const Project_templateFindOne_Qury = (role = "admin") => {
   const { value: Admintoken } = useAdmin_CachedToken();
   const { projectId } = useParams();
   const result = useQuery({
-    queryKey: ["project-templates", user_project_findOne],
+    queryKey: ['project-templates', user_project_findOne],
     queryFn: () =>
       api_get.project_template_findOne(
-        role === "admin" ? Admintoken : token,
+        role === 'admin' ? Admintoken : token,
         projectId
       ),
   });
@@ -465,13 +552,13 @@ export const Project_templateFindOne_Qury = (role = "admin") => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
     if (isSuccess) {
       setLoading({
         isShow: false,
-        message: "",
+        message: '',
       });
       if (data) {
         let copy = { ...data };

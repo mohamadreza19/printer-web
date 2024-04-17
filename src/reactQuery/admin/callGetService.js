@@ -17,6 +17,7 @@ import {
 } from '../querykey/admin_key';
 import { useLanguage } from '../../recoil/readStore';
 import { apiUrl } from '../../services/urlStore';
+import handleNextPageParam from '../../helper/handleNextPageParam';
 // export const Admin_Profile = ()
 export const Admin_Profile_Call = () => {
   const { value } = useAdmin_CachedToken();
@@ -130,9 +131,8 @@ export const AdminUsers = (search, order = 'ASC') => {
 
     queryFn: ({ pageParam = initialUrl }) => api_get.users(token, pageParam),
 
-    getNextPageParam: (lastPageResult) => {
-      return lastPageResult.links.next || undefined;
-    },
+    getNextPageParam: (lastPage) =>
+      handleNextPageParam(lastPage.meta, initialUrl),
   });
   const { isSuccess, isLoading, error } = result;
   useEffect(() => {
@@ -182,15 +182,11 @@ export const AdminPrints = (
   if (startDate && endDate) {
     url = url.concat(`startDate=${startDate}&`).concat(`endDate=${endDate}&`);
   }
-  if (page) {
-    url = url.concat(`page=${page}&`);
-  }
+
   if (order) {
     url = url.concat(`order=${order}&`);
   }
-  if (limit) {
-    url = url.concat(`limit=${limit}&`);
-  }
+
   if (justProduct) {
     url = url.concat(`justProduct=${justProduct}&`);
   }
@@ -220,29 +216,7 @@ export const AdminPrints = (
         // order,
         pageParam
       ),
-    getNextPageParam: (lastPageResult) => {
-      let url = lastPageResult.links.next;
-      // if (url) {
-      //   if (startDate && endDate) {
-      //     url = url
-      //       .concat(`startDate=${startDate}&`)
-      //       .concat(`endDate=${endDate}&`);
-      //   }
-
-      //   if (order) {
-      //     url = url.concat(`&order=${order}&`);
-      //   }
-
-      //   if (justProduct) {
-      //     url = url.concat(`justProduct=${justProduct}&`);
-      //   }
-      //   if (justLabel) {
-      //     url = url.concat(`justLabel=${justLabel}&`);
-      //   }
-      // }
-
-      return url || undefined;
-    },
+    getNextPageParam: (lastPage) => handleNextPageParam(lastPage.meta, url),
   });
   const { isLoading, isSuccess, error } = result;
   useEffect(() => {

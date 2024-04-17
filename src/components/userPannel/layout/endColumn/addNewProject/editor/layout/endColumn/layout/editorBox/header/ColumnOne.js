@@ -22,19 +22,13 @@ import {
 } from '../../../../../../../../../../../redux/project/multi_selectCell_slice';
 import { useTranslation } from 'react-i18next';
 
-export default function ({
-  poject_base,
-  mergeRowContent,
-  rowSeparatorContent,
-  mergeColumnContent,
-  columnSeparatorContent,
-}) {
+export default function () {
   const dispatch = useDispatch();
   const Cell = useSelector(getSelectedCell);
   const { t } = useTranslation();
 
   const multiSelectCells = useSelector(getMutliSelectCells);
-
+  console.log(Cell);
   function onClick(type = '') {
     if (multiSelectCells.cellIds.length > 1) {
       if ('JOIN/COLUMN') {
@@ -47,18 +41,16 @@ export default function ({
         );
       }
     } else {
-      dispatch(
-        addEditEvent({
-          type: type,
-          itemId: Cell.frontId,
-        })
-      );
-      // dispatch(
-      //   addEditEvent({
-      //     type: "UN_SELECT",
-      //     // itemId: Cell.frontId,
-      //   })
-      // );
+      const allow = preventToSendJoinEventFromUnchildrenCell(Cell, type);
+
+      if (allow) {
+        dispatch(
+          addEditEvent({
+            type: type,
+            itemId: Cell.frontId,
+          })
+        );
+      }
     }
   }
   const SplitRowBox = () => {
@@ -129,4 +121,15 @@ export default function ({
       </footer>
     </article>
   );
+}
+
+function preventToSendJoinEventFromUnchildrenCell(cell, type) {
+  let allow = true;
+  if (type === 'JOIN/COLUMN' || type === 'JOIN/ROW') {
+    if (cell.frontId === cell.rootId) {
+      allow = false;
+    }
+  }
+
+  return allow;
 }

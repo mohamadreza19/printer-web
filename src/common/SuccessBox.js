@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { useH, useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useH, useNavigate } from 'react-router-dom';
 
-import { ArrowBack } from "@mui/icons-material";
-import { useDynamicCssClass, useLanguage } from "../recoil/readStore";
-import Icons from "../styles/__ready/Icons";
-import Typography from "../styles/__ready/Typography";
-import Buttons from "../styles/__ready/Buttons";
-import { useSelector } from "react-redux";
-import { getEditSussess } from "../redux/project/success_slice";
+import { ArrowBack } from '@mui/icons-material';
+import { useDynamicCssClass, useLanguage } from '../recoil/readStore';
+import Icons from '../styles/__ready/Icons';
+import Typography from '../styles/__ready/Typography';
+import Buttons from '../styles/__ready/Buttons';
+import { useSelector } from 'react-redux';
+import { getEditSussess } from '../redux/project/success_slice';
 export default function () {
   const success = useSelector(getEditSussess);
   const language = useLanguage();
@@ -18,28 +18,28 @@ export default function () {
   const navigate = useNavigate();
 
   function getDirectionText_Based_laguage(language) {
-    let string = "";
-    if (language == "fa") {
-      if ("right") string = " راست به چپ";
-      if ("left") string = "چپ به راست";
+    let string = '';
+    if (language == 'fa') {
+      if ('right') string = ' راست به چپ';
+      if ('left') string = 'چپ به راست';
     }
-    if (language == "en") {
-      if ("right") string = "right to left";
-      if ("left") string = "left to right";
+    if (language == 'en') {
+      if ('right') string = 'right to left';
+      if ('left') string = 'left to right';
     }
-    if (language == "tr") {
-      if ("right") string = "sağdan sola";
-      if ("left") string = "soldan sağa";
+    if (language == 'tr') {
+      if ('right') string = 'sağdan sola';
+      if ('left') string = 'soldan sağa';
     }
 
     return string;
   }
   function handleMessage() {
     switch (type) {
-      case "add":
-        return "پروژه شما با موفقیت ساخته شد";
-      case "edit":
-        return "پروژه شما با موفقیت ویرایش شد";
+      case 'add':
+        return 'پروژه شما با موفقیت ساخته شد';
+      case 'edit':
+        return 'پروژه شما با موفقیت ویرایش شد';
     }
   }
   function onBack() {
@@ -47,7 +47,7 @@ export default function () {
   }
 
   function handleClickNewProject() {
-    navigate("/user/add-project");
+    navigate('/user/add-project');
   }
 
   return (
@@ -59,8 +59,8 @@ export default function () {
         <span onClick={onBack} className="cur-pointer">
           <ArrowBack
             style={{
-              position: "absolute",
-              left: "50px",
+              position: 'absolute',
+              left: '50px',
             }}
           />
         </span>
@@ -71,8 +71,8 @@ export default function () {
             <span
               className="success-logo "
               style={{
-                width: "48.11px",
-                height: "48.11px",
+                width: '48.11px',
+                height: '48.11px',
               }}
             >
               <Icons.Cheked />
@@ -122,7 +122,7 @@ export default function () {
             پروژه جدید
           </Typography.H7>
         </Buttons.Outlined>
-        <Buttons.Contained className={"button_medium_v01 " + cssClass.ms_2}>
+        <Buttons.Contained className={'button_medium_v01 ' + cssClass.ms_2}>
           <span>
             <Icons.PrintLight />
           </span>
