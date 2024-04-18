@@ -1,7 +1,7 @@
-import { Grid } from "@mui/material";
-import Label from "./Label";
-import InfiniteScroll from "react-infinite-scroll-component";
-import useScreenShot from "../../../../../utility/useScreenShot";
+import { Grid } from '@mui/material';
+import Label from './Label';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import useScreenShot from '../../../../../utility/useScreenShot';
 
 export default function ({
   labels = [],

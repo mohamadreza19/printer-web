@@ -1,42 +1,42 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import Icons from "../../../../../styles/__ready/Icons";
-import { TextFieldFUN_v5 } from "../../../../../styles/__ready/Textfields";
-import Typography from "../../../../../styles/__ready/Typography";
-import Buttons from "../../../../../styles/__ready/Buttons";
-import { Grid } from "@mui/material";
+import Icons from '../../../../../styles/__ready/Icons';
+import { TextFieldFUN_v5 } from '../../../../../styles/__ready/Textfields';
+import Typography from '../../../../../styles/__ready/Typography';
+import Buttons from '../../../../../styles/__ready/Buttons';
+import { Grid } from '@mui/material';
 
-import add_project_validation from "../../../../../validation/add_project_validation";
+import add_project_validation from '../../../../../validation/add_project_validation';
 
 // import RowTwo from "@adminPanel/addNewLabel/RowTwo";
-import RowTwo from "../addNewLabel/RowTwo";
+import RowTwo from '../addNewLabel/RowTwo';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import {
   useContent_Based_Language,
   useDynamicCssClass,
-} from "../../../../../recoil/readStore";
-import { AddProject_Mutation } from "../../../../../reactQuery/user/callPostServices";
-import { ColumnFour_justify_start } from "../../../../../recoil/userEditorStore/EditorHeaderActionButton";
-import { useRecoilState } from "recoil";
-import { useGetAdminProfile } from "../../../../../recoil/store/admin/profile";
-import { useEffect } from "react";
+} from '../../../../../recoil/readStore';
+import { AddProject_Mutation } from '../../../../../reactQuery/user/callPostServices';
+import { ColumnFour_justify_start } from '../../../../../recoil/userEditorStore/EditorHeaderActionButton';
+import { useRecoilState } from 'recoil';
+import { useGetAdminProfile } from '../../../../../recoil/store/admin/profile';
+import { useEffect } from 'react';
 import {
   AdminAddLabel_Mutation,
   AdminAddProject_TemplatesMutation,
-} from "../../../../../reactQuery/admin/callPostService";
-import { EditTemplate_project_Mutation } from "../../../../../reactQuery/admin/callPutService";
+} from '../../../../../reactQuery/admin/callPostService';
+import { EditTemplate_project_Mutation } from '../../../../../reactQuery/admin/callPutService';
 
 export default function ({
-  ms_2 = " ",
-  pe_1 = " ",
+  ms_2 = ' ',
+  pe_1 = ' ',
   content = {
-    inputLabelOne: " ",
-    inputLabelTwo: " ",
-    inputLabelThree: "",
-    rightToLeft: " ",
-    leftToRight: " ",
-    continueButton: " ",
+    inputLabelOne: ' ',
+    inputLabelTwo: ' ',
+    inputLabelThree: '',
+    rightToLeft: ' ',
+    leftToRight: ' ',
+    continueButton: ' ',
   },
   isFa = false,
 }) {
@@ -53,25 +53,26 @@ export default function ({
   const cssClass = useDynamicCssClass();
   const [state, setState] = useState({
     createdBy: {
-      value: "",
-      errMsg: "",
+      value: '',
+      errMsg: '',
     },
     projectName: {
-      value: "",
-      errMsg: "",
+      value: '',
+      errMsg: '',
     },
     railWidth: {
-      value: "",
-      errMsg: "",
+      value: '1',
+      errMsg: '',
     },
     Labelheight: {
-      value: "",
-      errMsg: "",
+      value: '1',
+      errMsg: '',
     },
     name: {
-      english: "",
-      persian: "",
-      turkish: "",
+      english: '',
+      persian: '',
+      turkish: '',
+      err: '',
     },
   });
 
@@ -90,7 +91,7 @@ export default function ({
       ...draft,
       projectName: {
         value,
-        errMsg: "",
+        errMsg: '',
       },
     }));
   };
@@ -101,29 +102,29 @@ export default function ({
       ...draft,
       createdBy: {
         value,
-        errMsg: "",
+        errMsg: '',
       },
     }));
   };
   const handleChangeRailWidth = (event) => {
-    const value = event.target.value.replace(/\D/g, "");
-
+    const value = event.target.value.replace(/\D/g, '');
+    if (Number(value) < 1) return;
     setState((draft) => ({
       ...draft,
       railWidth: {
         value,
-        errMsg: "",
+        errMsg: '',
       },
     }));
   };
   const handleChangeLabelWidth = (event) => {
-    const value = event.target.value.replace(/\D/g, "");
-
+    const value = event.target.value.replace(/\D/g, '');
+    if (Number(value) < 1) return;
     setState((draft) => ({
       ...draft,
       Labelheight: {
         value,
-        errMsg: "",
+        errMsg: '',
       },
     }));
   };
@@ -133,31 +134,40 @@ export default function ({
       name: nameObj,
       projectName: {
         value: nameObj.english,
-        errMsg: "",
+        errMsg: '',
       },
     }));
   };
   function handle_OnChange_SelectBox(e) {
     // console.log(e.target.value);
-    navigate("/admin/" + e.target.value, {
+    navigate('/admin/' + e.target.value, {
       replace: true,
     });
   }
+  // function handle_nameError(key, text) {
+  //   setState({
+  //     ...state,
+  //     name: { ...state.name, [key]: {} },
+  //   });
+  // }
   useEffect(() => {
     if (adminProfileObj) {
       setState((draft) => ({
         ...draft,
         createdBy: {
           value: adminProfileObj.username,
-          errMsg: "",
+          errMsg: '',
         },
       }));
     }
   }, [adminProfileObj]);
 
   async function addLabel() {
-    const direction = isRightToleft ? "right" : "left";
+    const direction = isRightToleft ? 'right' : 'left';
     setJustify(direction);
+    if (!state.name.persian) {
+      // setState;
+    }
 
     const body = {
       createdBy: state.createdBy.value,
@@ -191,7 +201,7 @@ export default function ({
     }
   }
   async function addProject_template(labelId) {
-    const direction = isRightToleft ? "right" : "left";
+    const direction = isRightToleft ? 'right' : 'left';
     setJustify(direction);
 
     const body = {
@@ -226,55 +236,55 @@ export default function ({
   }
   function put_projectTemplate() {
     const CustomLabel = {
-      createdAt: "2023-11-05T05:59:23.450Z",
-      updatedAt: "2023-11-05T05:59:23.450Z",
+      createdAt: '2023-11-05T05:59:23.450Z',
+      updatedAt: '2023-11-05T05:59:23.450Z',
 
-      frontId: "3-IP-IkJb",
+      frontId: '3-IP-IkJb',
       structure: {
-        split: "none",
+        split: 'none',
         content: {
-          text: "",
+          text: '',
           style: {
-            createdAt: "2023-11-05T05:59:23.428Z",
-            updatedAt: "2023-11-05T05:59:23.428Z",
-            fontFamily: "Arial",
-            fontStyle: "regular",
+            createdAt: '2023-11-05T05:59:23.428Z',
+            updatedAt: '2023-11-05T05:59:23.428Z',
+            fontFamily: 'Arial',
+            fontStyle: 'regular',
             fontSize: 14,
             angle: 0,
-            textAlign: "none",
-            textDirecton: "right",
+            textAlign: 'none',
+            textDirecton: 'right',
             padding: 0,
             margin: 0,
           },
         },
-        frontId: "3-IP-IkJb",
+        frontId: '3-IP-IkJb',
         isQrcode: false,
         isBarcode: false,
         isSelected: false,
       },
       product: {
         id: 10,
-        createdAt: "2023-09-20T09:08:33.615Z",
-        updatedAt: "2023-09-20T09:08:33.615Z",
-        link: "https://web.telegram.org",
+        createdAt: '2023-09-20T09:08:33.615Z',
+        updatedAt: '2023-09-20T09:08:33.615Z',
+        link: 'https://web.telegram.org',
         width: 22,
         widthOfPrintingArea: 22,
         name: {
           id: 19,
-          createdAt: "2023-09-20T09:08:33.608Z",
-          updatedAt: "2023-09-20T09:08:33.608Z",
-          english: "test22",
-          persian: "test22",
-          turkish: "test22",
+          createdAt: '2023-09-20T09:08:33.608Z',
+          updatedAt: '2023-09-20T09:08:33.608Z',
+          english: 'test22',
+          persian: 'test22',
+          turkish: 'test22',
         },
         admin: {
           id: 1,
-          createdAt: "2023-08-19T09:48:27.498Z",
-          updatedAt: "2023-08-19T09:48:27.498Z",
-          username: "raad",
-          firstName: "raad",
-          lastName: "super admin",
-          role: "superAdmin",
+          createdAt: '2023-08-19T09:48:27.498Z',
+          updatedAt: '2023-08-19T09:48:27.498Z',
+          username: 'raad',
+          firstName: 'raad',
+          lastName: 'super admin',
+          role: 'superAdmin',
           deleteDate: null,
         },
       },
@@ -285,11 +295,11 @@ export default function ({
     if (addlabel.isSuccess) {
       const { id: labelId } = addlabel.data;
       addProject_template(labelId);
+      navigate(`/admin/list-labels-products`);
     }
   }, [addlabel.isSuccess]);
   useEffect(() => {
     if (isSuccess) {
-      navigate(`/admin/list-labels-products`);
     }
   }, [isSuccess]);
 
@@ -297,25 +307,25 @@ export default function ({
     return () => {
       setState({
         createdBy: {
-          value: "",
-          errMsg: "",
+          value: '',
+          errMsg: '',
         },
         projectName: {
-          value: "",
-          errMsg: "",
+          value: '',
+          errMsg: '',
         },
         railWidth: {
-          value: "",
-          errMsg: "",
+          value: '',
+          errMsg: '',
         },
         Labelheight: {
-          value: "",
-          errMsg: "",
+          value: '',
+          errMsg: '',
         },
         name: {
-          english: "",
-          persian: "",
-          turkish: "",
+          english: '',
+          persian: '',
+          turkish: '',
         },
       });
     };
@@ -325,7 +335,7 @@ export default function ({
       {/* <header className="px-3">
         <Typography.H7 className="font-500">{content.header}</Typography.H7>
       </header> */}
-      <article className={"mt-3 " + cssClass.ms_3}>
+      <article className={'mt-3 ' + cssClass.ms_3}>
         <select
           name="cars"
           id="cars"
@@ -341,14 +351,14 @@ export default function ({
         </select>
       </article>
       <article
-        style={{ marginBottom: "160px" }}
-        className={"mt-4 w-60 " + cssClass.ms_2}
+        style={{ marginBottom: '160px' }}
+        className={'mt-4 w-60 ' + cssClass.ms_2}
       >
         <RowTwo setName={setName} />
       </article>
 
-      <article className={"mt-4 w-60 " + cssClass.ms_2}>
-        <Typography.H8 className={"mb-2 font-400 " + ms_2}>
+      <article className={'mt-4 w-60 ' + cssClass.ms_2}>
+        <Typography.H8 className={'mb-2 font-400 ' + ms_2}>
           {/* {content.inputLabelThree} */}
           عرض لیبل mm
         </Typography.H8>
@@ -364,8 +374,8 @@ export default function ({
           </span>
         </section>
       </article>
-      <article className={"mt-4 w-60 " + cssClass.ms_2}>
-        <Typography.H8 className={"mb-2 font-400 " + ms_2}>
+      <article className={'mt-4 w-60 ' + cssClass.ms_2}>
+        <Typography.H8 className={'mb-2 font-400 ' + ms_2}>
           طول لیبل mm
         </Typography.H8>
 
@@ -384,13 +394,13 @@ export default function ({
       <article className="d-flex align-item-center mt-7">
         <div
           style={{
-            width: "80px",
-            height: "45px",
-            minWidth: "80px",
+            width: '80px',
+            height: '45px',
+            minWidth: '80px',
           }}
           className={`
           border-r-20 border d-flex dir-rtl ${
-            isRightToleft ? "justify-content-start" : "justify-content-end"
+            isRightToleft ? 'justify-content-start' : 'justify-content-end'
           }`}
           onClick={handleToggleiSRightToleft}
         >
@@ -398,12 +408,12 @@ export default function ({
             className={`d-flex justify-content-center align-item-center border-r-circle 
           cur-pointer transition-all-v1  
           
-          ${!isRightToleft && "rotate-180"}
+          ${!isRightToleft && 'rotate-180'}
           `}
             style={{
-              width: "40px",
-              height: "40px",
-              backgroundColor: "#F36523",
+              width: '40px',
+              height: '40px',
+              backgroundColor: '#F36523',
             }}
           >
             <Icons.Direction svgClassName="icon" />
@@ -417,7 +427,7 @@ export default function ({
       </article>
 
       <article className="w-100 mt-5   pb-4 ">
-        <Grid container className={"d-flex justify-content-end "}>
+        <Grid container className={'d-flex justify-content-end '}>
           <Grid item lg={3} md={5} sm={10} xs={10}>
             <Buttons.Contained
               className="w-100 button_large "

@@ -1,31 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   AdminPrintsStatistics,
   Admin_Print_Info_Chart,
-} from "../../../../../reactQuery/admin/callGetService";
-import Icons from "../../../../../styles/__ready/Icons";
-import Typography from "../../../../../styles/__ready/Typography";
-import Chart from "./Chart";
-import CompanyStatistics from "./Company_And_PL_Statistics";
-import DynamicCopmanyAndLabel from "./dynamicCopmanyAndLabel";
-import Header from "./Header";
-import { useRecoilState } from "recoil";
-import dateRangeSelectorStore from "../../../../../recoil/store/datepicker/dateRangeSelectorStore";
-import Company_And_PL_Statistics from "./Company_And_PL_Statistics";
-import { useLanguage } from "../../../../../recoil/readStore";
+} from '../../../../../reactQuery/admin/callGetService';
+import Icons from '../../../../../styles/__ready/Icons';
+import Typography from '../../../../../styles/__ready/Typography';
+import Chart from './Chart';
+import CompanyStatistics from './Company_And_PL_Statistics';
+import DynamicCopmanyAndLabel from './dynamicCopmanyAndLabel';
+import Header from './Header';
+import { useRecoilState } from 'recoil';
+import dateRangeSelectorStore from '../../../../../recoil/store/datepicker/dateRangeSelectorStore';
+import Company_And_PL_Statistics from './Company_And_PL_Statistics';
+import { useLanguage } from '../../../../../recoil/readStore';
 
 const options = [
-  { label: "سالیانه", value: "Year" },
-  { label: "ماهیانه", value: "Month" },
-  { label: "هفتگی", value: "Week" },
+  { label: 'سالیانه', value: 'Year' },
+  { label: 'ماهیانه', value: 'Month' },
+  { label: 'هفتگی', value: 'Week' },
 ];
 const Divider = () => {
   return (
     <div
       style={{
-        backgroundColor: "#F5F5F5",
+        backgroundColor: '#F5F5F5',
 
-        height: "20px",
+        height: '20px',
       }}
     ></div>
   );
@@ -33,25 +33,25 @@ const Divider = () => {
 export default function () {
   const language = useLanguage();
   function options_based_language() {
-    if (language === "fa") {
+    if (language === 'fa') {
       return [
-        { label: "سالیانه", value: "Year" },
-        { label: "ماهیانه", value: "Month" },
-        { label: "هفتگی", value: "Week" },
+        { label: 'سالیانه', value: 'Year' },
+        { label: 'ماهیانه', value: 'Month' },
+        { label: 'هفتگی', value: 'Week' },
       ];
     }
-    if (language === "en") {
+    if (language === 'en') {
       return [
-        { label: "yearly", value: "Year" },
-        { label: "monthly", value: "Month" },
-        { label: "weekly", value: "Week" },
+        { label: 'yearly', value: 'Year' },
+        { label: 'monthly', value: 'Month' },
+        { label: 'weekly', value: 'Week' },
       ];
     }
-    if (language === "tr") {
+    if (language === 'tr') {
       return [
-        { label: "yıllık", value: "Year" },
-        { label: "aylık", value: "Month" },
-        { label: "haftalık", value: "Week" },
+        { label: 'yıllık', value: 'Year' },
+        { label: 'aylık', value: 'Month' },
+        { label: 'haftalık', value: 'Week' },
       ];
     }
   }

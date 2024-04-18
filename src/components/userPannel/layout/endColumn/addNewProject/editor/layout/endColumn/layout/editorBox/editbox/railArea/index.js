@@ -19,9 +19,12 @@ export default function ({
     customLabels: [],
   },
   isLastRail = false,
+  railsLength = 0,
 }) {
+  console.log(isLastRail);
   const dispatch = useDispatch();
   function handleDeleteRail() {
+    if (railsLength == 1) return;
     const payload = {
       frontId: rail.frontId,
     };

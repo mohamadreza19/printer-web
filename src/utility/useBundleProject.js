@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
-import { getProject } from "../redux/project/project._slice";
-import { getRails } from "../redux/project/history_changer_slice";
+import { useSelector } from 'react-redux';
+import { getProject } from '../redux/project/project._slice';
+import { getRails } from '../redux/project/history_changer_slice';
 
 export default function () {
   const project = useSelector(getProject);

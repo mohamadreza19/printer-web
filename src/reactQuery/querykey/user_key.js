@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 export let projectsKey = 1;
 export let add_Product_Bookmark_Mutation_key = 1;
 export let delete_bookmark_Product_key = 1;

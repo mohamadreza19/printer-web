@@ -14,9 +14,16 @@ import {
   admins_and_users_key,
   product_label_key,
   setProduct_label_key,
+<<<<<<< HEAD
 } from "../querykey/admin_key";
 import { useLanguage } from "../../recoil/readStore";
 import { apiUrl } from "../../services/urlStore";
+=======
+} from '../querykey/admin_key';
+import { useLanguage } from '../../recoil/readStore';
+import { apiUrl } from '../../services/urlStore';
+import handleNextPageParam from '../../helper/handleNextPageParam';
+>>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
 // export const Admin_Profile = ()
 export const Admin_Profile_Call = () => {
   const { value } = useAdmin_CachedToken();
@@ -130,6 +137,7 @@ export const AdminUsers = (search, order = "ASC") => {
 
     queryFn: ({ pageParam = initialUrl }) => api_get.users(token, pageParam),
 
+<<<<<<< HEAD
     getNextPageParam: (lastPage) => {
       const { currentPage, totalPages } = lastPage.meta;
       if (currentPage < totalPages) {
@@ -137,6 +145,10 @@ export const AdminUsers = (search, order = "ASC") => {
       }
       return undefined;
     },
+=======
+    getNextPageParam: (lastPage) =>
+      handleNextPageParam(lastPage.meta, initialUrl),
+>>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
   });
   const { isSuccess, isLoading, error } = result;
   useEffect(() => {
@@ -187,6 +199,7 @@ export const AdminPrints = (
   if (startDate && endDate) {
     url = url.concat(`startDate=${startDate}&`).concat(`endDate=${endDate}&`);
   }
+<<<<<<< HEAD
   // if (page) {
   //   url = url.concat(`page=${page}&`);
   // }
@@ -196,6 +209,13 @@ export const AdminPrints = (
   // if (limit) {
   //   url = url.concat(`limit=${limit}&`);
   // }
+=======
+
+  if (order) {
+    url = url.concat(`order=${order}&`);
+  }
+
+>>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
   if (justProduct) {
     url = url.concat(`justProduct=${justProduct}&`);
   }
@@ -225,6 +245,7 @@ export const AdminPrints = (
         // order,
         pageParam
       ),
+<<<<<<< HEAD
     getNextPageParam: (lastPage) => {
       const { currentPage, totalPages } = lastPage.meta;
 
@@ -233,6 +254,9 @@ export const AdminPrints = (
       }
       return undefined;
     },
+=======
+    getNextPageParam: (lastPage) => handleNextPageParam(lastPage.meta, url),
+>>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
   });
   const { isLoading, isSuccess, error } = result;
   useEffect(() => {

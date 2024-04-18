@@ -1,19 +1,19 @@
-import { useState } from "react";
-import Typography from "../Typography";
-import { useEffect } from "react";
-import { ClickAwayListener } from "@mui/material";
+import { useState } from 'react';
+import Typography from '../Typography';
+import { useEffect } from 'react';
+import { ClickAwayListener } from '@mui/material';
 
 export default function ({
-  options = [{ label: "", value: "" }],
+  options = [{ label: '', value: '' }],
   onChange = () => {},
-  currentValue = "",
+  currentValue = '',
   isAllow_ShowCurrentValue_Whitout_Seariching_in_option = false,
   disabled = false,
 }) {
   const [isShow, setIsShow] = useState(false);
   const [value, setValue] = useState(null);
 
-  const disabledClass = disabled ? "disabled-select-box" : "";
+  const disabledClass = disabled ? 'disabled-select-box' : '';
 
   // show finded option from currentValue prop for first time
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function ({
         <div className="select-drop-down">
           {options?.map((option, index) => (
             <section
-              className="select-drop-child"
+              className="select-drop-child cur-pointer"
               key={index}
               onClick={() =>
                 setValue({ label: option.label, value: option.value })
@@ -54,7 +54,7 @@ export default function ({
     <ClickAwayListener onClickAway={() => setIsShow(false)}>
       <article
         className={
-          "select-rtl position-relative  d-flex justify-content-center align-items-center " +
+          'select-rtl position-relative  d-flex justify-content-center align-items-center cur-pointer ' +
           disabledClass
         }
         onClick={() => setIsShow(!isShow)}

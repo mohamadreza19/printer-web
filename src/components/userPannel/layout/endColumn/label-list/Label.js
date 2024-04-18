@@ -1,27 +1,27 @@
-import { useEffect } from "react";
-import { Admin_User_Image } from "../../../../../reactQuery/common/callGetService";
+import { useEffect } from 'react';
+import { Admin_User_Image } from '../../../../../reactQuery/common/callGetService';
 import {
   useDynamicCssClass,
   useLanguage,
-} from "../../../../../recoil/readStore";
-import Buttons from "../../../../../styles/__ready/Buttons";
-import Icons from "../../../../../styles/__ready/Icons";
-import Typography from "../../../../../styles/__ready/Typography";
-import { useNavigate } from "react-router-dom";
-import useLocalStorage from "react-use-localstorage";
+} from '../../../../../recoil/readStore';
+import Buttons from '../../../../../styles/__ready/Buttons';
+import Icons from '../../../../../styles/__ready/Icons';
+import Typography from '../../../../../styles/__ready/Typography';
+import { useNavigate } from 'react-router-dom';
+import useLocalStorage from 'react-use-localstorage';
 
 //need edit image url
 export default function ({
   label = {
     id: 1,
     name: {
-      english: "",
-      persian: "",
-      turkish: "",
+      english: '',
+      persian: '',
+      turkish: '',
     },
     width: 0,
     height: 0,
-    nameId: "",
+    nameId: '',
     pictures: [],
     bookmarked: false,
   },
@@ -29,30 +29,32 @@ export default function ({
   handleAdd_Bookmark = () => {},
   handleDeleteBookmark = () => {},
 }) {
-  const [editor_access, setEditor_access] = useLocalStorage("editor_access");
+  const [editor_access, setEditor_access] = useLocalStorage('editor_access');
   const cssClass = useDynamicCssClass();
   const language = useLanguage();
-  const imageResponse = Admin_User_Image("user");
+  const imageResponse = Admin_User_Image('user');
   const navigate = useNavigate();
+
   const DynamicName = () => {
-    if (language == "fa") {
+    if ('name' in label)
+      if (language == 'fa') {
+        return (
+          <Typography.Body2 className="font-500 h_41px">
+            {'persian' in label.name && label.name.persian}
+          </Typography.Body2>
+        );
+      }
+    if (language == 'en') {
       return (
         <Typography.Body2 className="font-500 h_41px">
-          {label.name.persian}
+          {'english' in label.name && label.name.english}
         </Typography.Body2>
       );
     }
-    if (language == "en") {
+    if (language == 'tr') {
       return (
         <Typography.Body2 className="font-500 h_41px">
-          {label.name.english}
-        </Typography.Body2>
-      );
-    }
-    if (language == "tr") {
-      return (
-        <Typography.Body2 className="font-500 h_41px">
-          {label.name.turkish}
+          {'turkish' in label.name && label.name.turkish}
         </Typography.Body2>
       );
     }
@@ -64,7 +66,7 @@ export default function ({
   //   imageResponse.mutate(option);
   // }, []);
   function handlePrintLabel(labelObj, image) {
-    setEditor_access("project-templates/user_edit");
+    setEditor_access('project-templates/user_edit');
     const id = labelObj.id;
     const width = labelObj.width;
     const labelImg = image;
@@ -73,36 +75,36 @@ export default function ({
     //   width,
     //   labelImg,
     // });
-    navigate("/editor/" + id);
+    navigate('/editor/' + id);
   }
   // if (imageResponse.isSuccess)
   return (
     <div
       style={{
-        width: "220px",
-        height: "164px",
-        maxWidth: "220px",
-        maxHeight: "164px",
+        width: '220px',
+        height: '164px',
+        maxWidth: '220px',
+        maxHeight: '164px',
       }}
       className="bg_gray2 border-r-25 mx-1 my-2"
     >
       <section className="w-100 d-flex align-item-center justify-content-center">
         <img
           style={{
-            width: "180px",
-            height: "46.74px",
-            objectFit: "cover",
+            width: '180px',
+            height: '46.74px',
+            objectFit: 'cover',
           }}
-          src={"/image/image-placeholder.png"}
+          src={'/image/image-placeholder.png'}
           className="mt-2 "
         />
       </section>
 
       <section
         style={{
-          width: "220px",
-          height: "101.22px",
-          minHeight: "101.22px",
+          width: '220px',
+          height: '101.22px',
+          minHeight: '101.22px',
         }}
         className="bg-white border mt-3 border border-r-25"
       >

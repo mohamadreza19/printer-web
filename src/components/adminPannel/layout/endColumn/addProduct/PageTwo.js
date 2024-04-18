@@ -195,7 +195,7 @@ const PageTwo = () => {
             value={state.width.value}
           />
           <div className={styles['err-message']}>{state.width.err}</div>
-          <span className={styles['measurement']}>mn</span>
+          <span className={styles['measurement']}>mm</span>
         </section>
         <section className={styles['input-box'] + ' ' + styles['input-small']}>
           <label>
@@ -209,7 +209,7 @@ const PageTwo = () => {
           <div className={styles['err-message']}>
             {state.widthOfPrintingArea.err}
           </div>
-          <span className={styles['measurement']}>mn</span>
+          <span className={styles['measurement']}>mm</span>
         </section>
       </article>
       <UploadArea

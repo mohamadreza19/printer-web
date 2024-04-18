@@ -83,13 +83,9 @@ export default memo(function () {
   const setRail = useRailReducer();
   // const [railsState, setRailsState] = useRecoilState(rails);
 
-  const product = useRecoilValue(product_column);
-  const [justify, setJustify] = useRecoilState(ColumnFour_justify_start);
-  const [railsWidth, setRailsWidth] = useRecoilState(railsWidth_store);
   const [railsLength, setRailsLength] = useRecoilState(railsLength_store);
   const { t } = useTranslation();
 
-  const [wantNewRail, SetwantNewRail] = useRecoilState(addRail);
   const setLoading = useToastReducer();
 
   const [scaleState_, setScaleState] = useRecoilState(scaleStore);
@@ -146,7 +142,7 @@ export default memo(function () {
       </div>
     );
   };
-
+  console.log(rails.length);
   if (rails.length > 0)
     return (
       <div className="dir-ltr bg-white scrollable-x-large position-relative disabled_gray2">
@@ -158,6 +154,7 @@ export default memo(function () {
           {rails.map((rail, index) => {
             return (
               <RailArea
+                railsLength={rails.length}
                 key={index}
                 index={index}
                 isLastRail={index === rails.length - 1}
