@@ -6,6 +6,8 @@ import {
   useContent_Based_Language,
   useDynamicCssClass,
 } from "../../../../../../recoil/readStore";
+import PopUp from "./popUp";
+import { useContext_ } from "./adminHistory.context";
 
 export default function ({
   justProduct = "",
@@ -15,18 +17,22 @@ export default function ({
 }) {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
+  const { state, dispatch } = useContext_();
   const AllPrints = () => {
     function onClick() {
-      setJustLabel(false);
-      setJustProduct(false);
+      dispatch({
+        type: "ALL",
+      });
     }
     const background =
-      justProduct === false && justLabel == false
+      state.just_product === false &&
+      state.just_label == false &&
+      !state.user.id
         ? "bg_primary"
         : "button_contained_v2";
     return (
       <Buttons.Contained_Custom
-        className={"button_medium  box_shadow_disabled " + background}
+        className={"button_medium my-2 box_shadow_disabled " + background}
         onClick={onClick}
       >
         <Typography.H8 className="font-400 ">
@@ -36,14 +42,17 @@ export default function ({
     );
   };
   const OnlyProducts = () => {
-    const background = justProduct ? "bg_primary" : "button_contained_v2";
+    const background = state.just_product
+      ? "bg_primary"
+      : "button_contained_v2";
     function onClick() {
-      setJustLabel(false);
-      setJustProduct(true);
+      dispatch({
+        type: "PRODUCT/CHANGE",
+      });
     }
     return (
       <Buttons.Contained_Custom
-        className={"button_medium  box_shadow_disabled mx-2 " + background}
+        className={"button_medium my-2 box_shadow_disabled mx-2 " + background}
         onClick={onClick}
       >
         <Typography.H8 className="font-400 ">
@@ -53,20 +62,40 @@ export default function ({
     );
   };
   const OnlyLabels = () => {
-    const background = justLabel ? "bg_primary" : "button_contained_v2";
+    const background = state.just_label ? "bg_primary" : "button_contained_v2";
     function onClick() {
-      setJustLabel(true);
-      setJustProduct(false);
+      dispatch({
+        type: "LABEL/CHANGE",
+      });
     }
     return (
       <Buttons.Contained_Custom
         onClick={onClick}
-        className={"button_medium  box_shadow_disabled " + background}
+        className={"button_medium me-2 my-2  box_shadow_disabled " + background}
       >
         <Typography.H8 className="font-400 ">
           {content.AdminPannel.end_col.controlPannel.history.onlyLabels}
         </Typography.H8>
       </Buttons.Contained_Custom>
+    );
+  };
+  const OnlyUsers = () => {
+    const background = justLabel ? "bg_primary" : "button_contained_v2";
+    function onClick() {
+      dispatch({
+        type: "POPUP/CHANGE",
+      });
+    }
+    return (
+      <button
+        className="button_medium border-r-20"
+        style={{}}
+        onClick={onClick}
+      >
+        <Typography.H8 className="font-400 ">
+          {state.user.value ? state.user.value : "انتخاب یوزر"}
+        </Typography.H8>
+      </button>
     );
   };
   return (
@@ -75,6 +104,7 @@ export default function ({
         <AllPrints />
         <OnlyProducts />
         <OnlyLabels />
+        <OnlyUsers />
       </Grid>
       <Grid item lg={6} className={cssClass.ps_2}>
         <TextFields.v2_SearchBox
@@ -85,6 +115,7 @@ export default function ({
           }
         />
       </Grid>
+      <PopUp />
     </Grid>
   );
 }

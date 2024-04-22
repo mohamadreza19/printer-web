@@ -49,6 +49,7 @@ import ViewPrinitChart from "../components/adminPannel/layout/endColumn/viewPrin
 import Loading from "../styles/__ready/Loading";
 import AdminAuthentication from "../controller/AdminAuthentication";
 import Product from "../components/adminPannel/layout/endColumn/addProduct/Product";
+import AdminHistory from "../components/adminPannel/layout/endColumn/controlPannel/adimHistory/adminHistory.context";
 
 const ListOfProject = React.lazy(() =>
   import("../components/userPannel/layout/endColumn/listOfProject")
@@ -116,7 +117,7 @@ export default function () {
         }
       >
         <Route path="control-pannel" element={<AdminControlPannel />} />
-        <Route path="control-pannel/history" element={<AdimHistory />} />
+        <Route path="control-pannel/history" element={<AdminHistory />} />
         <Route path="control-pannel/add-user" element={<AdminAddNewUser />} />
         <Route path="add-product/" element={<Product />} />
         <Route path="edit-product/:productid" element={<Product />} />

@@ -1,0 +1,23 @@
+.container {
+  position: absolute;
+
+  width: 500px;
+  height: 700px;
+  background-color: white;
+
+  z-index: 999;
+  transform: translate(-50%, 5%);
+  left: 50%;
+  top: 0;
+  border-radius: 10px;
+  padding: 20px;
+}
+header {
+  padding-bottom: 10px;
+}
+.user {
+  cursor: pointer;
+}
+.user:hover {
+  background-color: #dee2e6;
+}

@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { Admin_User_Symbol } from "../../../../../../reactQuery/common/callGetService";
 import { AdminDelete_Symbol_Mutation } from "../../../../../../reactQuery/admin/callDeleteService";
 import Icons from "../../../../../../styles/__ready/Icons";
+import Typography from "../../../../../../styles/__ready/Typography";
 
-function Symbol({ id }) {
+function Symbol({ id,DeleteBtn=true,count=0 }) {
   const symbol = Admin_User_Symbol("admin");
   const delete_symbol = AdminDelete_Symbol_Mutation();
 
@@ -58,9 +59,12 @@ function Symbol({ id }) {
           />
           {/* {symbol.data.replace('"', "")} */}
         </article>
-        <article onClick={deleteSymbol}>
+        <Typography.H9_5 className={'my-2'}>تعداد چاپ : {count}</Typography.H9_5>
+        <article style={{
+          display:DeleteBtn?'block':'none'
+        }} onClick={deleteSymbol}>
           <Icons.Trash />
-        </article>
+       </article>
       </div>
     );
   }

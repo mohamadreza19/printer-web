@@ -153,6 +153,7 @@ export default function () {
             className={`font-200   ${cssClass.ms_2} ${dynamicColor.color}`}
           >
             {buttonsText.ViewPrintStatistics}
+            
           </Typography.H7>
         </Buttons.Contained_Custom>
       </Link>

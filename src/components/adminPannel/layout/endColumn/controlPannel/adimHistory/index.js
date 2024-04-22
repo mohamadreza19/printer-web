@@ -12,23 +12,26 @@ import {
   AdminPrints_Excel,
 } from "../../../../../../reactQuery/admin/callGetService";
 import SortBox from "../../../../../../styles/__ready/datepicker/SortBox";
+import { useContext_ } from "./adminHistory.context";
 
 export default function () {
   const datePickred = useDateObject();
+  const { state } = useContext_();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setendDate] = useState(null);
   const [justProduct, setJustProduct] = useState(false);
   const [justLabel, setJustLabel] = useState(false);
   const queryClient = useQueryClient();
-
+  console.log(state);
   const { data, fetchNextPage, hasNextPage, isSuccess } = AdminPrints(
     1,
     10,
-    justProduct,
-    justLabel,
+    state.just_product,
+    state.just_label,
     startDate,
     endDate,
-    "DESC"
+    "DESC",
+    state.user.id
   );
   const excel_response = AdminPrints_Excel();
   function submitDataPickred() {

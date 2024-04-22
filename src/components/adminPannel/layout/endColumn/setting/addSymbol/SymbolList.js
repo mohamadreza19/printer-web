@@ -19,7 +19,7 @@ function SymbolList() {
       }}
     >
       {symbolList.data && symbolList.data.length > 0
-        ? symbolList.data.map((data) => <Symbol id={data.id} />)
+        ? symbolList.data.map((data) => <Symbol count={data.printsCount} id={data.id} />)
         : null}
     </div>
   );

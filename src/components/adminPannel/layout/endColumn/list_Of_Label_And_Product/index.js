@@ -26,39 +26,6 @@ export default function () {
   const cssClass = useDynamicCssClass();
   const content = useContent_Based_Language();
 
-<<<<<<< HEAD
-  const product = AdminProduct_Label({
-    // productLableFilter: currentList,
-    productLableFilter: "Product",
-    search,
-    limit,
-    page,
-  });
-  console.log(product);
-  console.log(currentList);
-  function get_MapedPage() {
-    switch (currentList) {
-      case "Product":
-        let arr = [];
-
-        product.data.pages.forEach((item) => {
-          item.prodcuts.items.forEach((itemTwo) => {
-            arr.push(itemTwo);
-          });
-        });
-
-        return arr;
-      case "Label":
-        let arr_ = [];
-        return project_template.data;
-
-      default:
-        break;
-    }
-  }
-
-=======
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
   return (
     <div className="w-100">
       <Header
@@ -71,23 +38,9 @@ export default function () {
         <InfiniteScroll
           className="w-100 px-4"
           pullDownToRefreshThreshold={300}
-<<<<<<< HEAD
-          next={
-            currentList === "Product"
-              ? product.fetchNextPage
-              : project_template.fetchNextPage
-          }
-          dataLength={get_MapedPage().length}
-          hasMore={
-            currentList === "Product"
-              ? product.hasNextPage
-              : project_template.hasNextPage
-          }
-=======
           next={items.fetchNextPage}
           dataLength={items.data.length}
           hasMore={items.hasNextPage}
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
           threshold={100}
           height={768}
           scrollableTarget

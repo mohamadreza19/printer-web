@@ -44,14 +44,10 @@ export default function ({
   const deleteLabel_mutate = AdminDelete_Project_template_Mutation();
   const imageRes = Admin_User_Image("admin");
   const language = useLanguage();
-<<<<<<< HEAD
-  const iamgeId = "pictures" in item ? item.pictures[0].id : undefined;
-=======
   const iamgeId =
     'pictures' in item && item.pictures.length > 0
       ? item.pictures[0]?.id
       : undefined;
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
   //
   const content =
     useContent_Based_Language().AdminPannel.end_col.label_Product_List.item;

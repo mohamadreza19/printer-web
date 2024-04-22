@@ -70,7 +70,6 @@ export const UserProjects_Call = (
     queryKey: ['user-projects', search, projectsKey, startDate, endDate],
     queryFn: ({ pageParam = initUrl }) =>
       api_get.project_list(token, pageParam),
-<<<<<<< HEAD
     getNextPageParam: (lastPage) => {
       const { currentPage, totalPages } = lastPage.meta;
 
@@ -79,9 +78,6 @@ export const UserProjects_Call = (
       }
       return undefined;
     },
-=======
-    getNextPageParam: (lastPage) => handleNextPageParam(lastPage.meta, initUrl),
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
   });
 
   const { isSuccess, isLoading, error, data } = result;

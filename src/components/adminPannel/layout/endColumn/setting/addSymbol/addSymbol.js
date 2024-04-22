@@ -1,4 +1,5 @@
 import Typography from "../../../../../../styles/__ready/Typography";
+import MonstPrintedSymbol from "./MostPrintedSymbol";
 import SymbolList from "./SymbolList";
 import UploadSymbolArea from "./UploadSymbolArea";
 
@@ -15,6 +16,7 @@ function AddSymbol() {
       }}
     >
       <header className="w-100 px-5 mt-3 mb-5">
+        <MonstPrintedSymbol/>
         <Typography.H5 className="font-500">لیست سیمبل ها</Typography.H5>
         <SymbolList />
       </header>

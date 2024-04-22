@@ -31,14 +31,9 @@ import {
 import {
   addSuccess,
   clearSuccess,
-<<<<<<< HEAD
-} from "../../../../../../../../redux/project/success_slice";
-import { useTranslation } from "react-i18next";
-=======
 } from '../../../../../../../../redux/project/success_slice';
 import { useTranslation } from 'react-i18next';
 import { setUser_project_findOne } from '../../../../../../../../reactQuery/querykey/user_key';
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
 
 const PROJECT_EDIT = "project/edit";
 const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
@@ -52,13 +47,8 @@ export default function () {
   const [editor_access, _] = useLocalStorage("editor_access");
   const language = useLanguage();
   const { projectId } = useParams();
-<<<<<<< HEAD
-  const profile = useGetUserProfile();
-  const beForward = language == "fa" ? true : false;
-=======
 
   const beForward = language == 'fa' ? true : false;
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
   const cssClass = useDynamicCssClass();
   const { t } = useTranslation();
   const content =
@@ -170,12 +160,6 @@ export default function () {
     }
   }
   function print() {
-<<<<<<< HEAD
-    autoPrint("PRODUCT", projectId, printRepetition);
-  }
-  function singlePrint() {
-    autoPrint("PRODUCT", projectId, 1);
-=======
     handleSubmitProject();
     handleSaveMode('save');
     setTimeout(() => {
@@ -190,7 +174,6 @@ export default function () {
       handleClearSuccess();
       setTimeout(() => autoPrint('PRODUCT', projectId, 1), 200);
     }, 500);
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
   }
   function sreenShot() {
     autoPrint("IMAGE");
@@ -204,13 +187,8 @@ export default function () {
     const payload = {
       status: "success",
       onBack: handleClearSuccess,
-<<<<<<< HEAD
-      body: project_mutate.data,
-      type: "edit",
-=======
       body: handle_bundled_project(),
       type: 'edit',
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
     };
     disptach(addSuccess(payload));
   }
@@ -390,13 +368,8 @@ export default function () {
             className="editor-header-button_extra-auto mx-3"
             onClick={() => {
               handleSubmitProject();
-<<<<<<< HEAD
-              handleSaveMode("save");
-              handleClearSuccess();
-=======
               handleSaveMode('save');
               setTimeout(() => handleClearSuccess(), 500);
->>>>>>> 62d5c10e2030d9df2e4702c613f150f9ddcdf498
             }}
           >
             <Icons.Editor_Save size="medium " />

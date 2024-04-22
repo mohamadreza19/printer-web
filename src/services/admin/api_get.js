@@ -23,6 +23,28 @@ export default class {
       });
     }
   }
+  static async most_symbol(token = "") {
+    if (!token) throw new Error("there isnt token");
+    const url = `${apiUrl}/symbol/mostprint`;
+
+    try {
+      const res = await axios({
+        url: url,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.message);
+      });
+    }
+  }
   static async projects(token = "") {
     try {
       const res = await axios.get(`${apiUrl}/project/admin?page=1&limit=10`, {

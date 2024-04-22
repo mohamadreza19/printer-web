@@ -25,7 +25,7 @@ export default function () {
         className="w-100 px-3 "
         pullDownToRefreshThreshold={300}
         next={resposne.fetchNextPage}
-        dataLength={resposne.data}
+        dataLength={resposne.data.length}
         hasMore={resposne.hasNextPage}
         threshold={100}
         height={580}
