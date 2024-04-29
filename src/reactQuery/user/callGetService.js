@@ -74,7 +74,7 @@ export const UserProjects_Call = (
       const { currentPage, totalPages } = lastPage.meta;
 
       if (currentPage < totalPages) {
-        return `${initUrl}?page=${Number(currentPage) + 1}&limit=10`;
+        return `${initUrl}page=${Number(currentPage) + 1}&limit=10`;
       }
       return undefined;
     },
