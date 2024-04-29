@@ -12,6 +12,7 @@ import {
   muiti_selectCell_caseReducers,
 } from './multi_selectCell_slice';
 import { selectMode, viewMode } from './edit_mode_slice';
+import selectedCell from './selectedCell';
 
 const history_changer_slice = createSlice({
   name: 'rails',

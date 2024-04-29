@@ -25,10 +25,11 @@ import { useTranslation } from 'react-i18next';
 export default function () {
   const dispatch = useDispatch();
   const Cell = useSelector(getSelectedCell);
+
   const { t } = useTranslation();
 
   const multiSelectCells = useSelector(getMutliSelectCells);
-  console.log(Cell);
+
   function onClick(type = '') {
     if (multiSelectCells.cellIds.length > 1) {
       if ('JOIN/COLUMN') {

@@ -569,6 +569,7 @@ export class Structure {
     ];
 
     if (PayloadCenter.event.itemId) {
+      // console.log({ _target });
       switch (structure.frontId === PayloadCenter.event.itemId) {
         case true:
           if (
@@ -576,6 +577,7 @@ export class Structure {
             PayloadCenter.event.type !== 'JOIN/ROW' &&
             PayloadCenter.event.type !== 'DELETECELL'
           ) {
+            selectedCell('set', _target);
           }
           return _target;
 

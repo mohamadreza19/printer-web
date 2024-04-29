@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const selectedCell = createSlice({
-  name: "selectedCell",
+  name: 'selectedCell',
   initialState: {
-    frontId: "",
-    split: "",
+    frontId: '',
+    split: '',
   },
   reducers: {
     addSelectedCell(state, action) {

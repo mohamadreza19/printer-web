@@ -1,5 +1,5 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { useDynamicCssClass } from "../../../../../../../../../../../recoil/readStore";
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { useDynamicCssClass } from '../../../../../../../../../../../recoil/readStore';
 import {
   Angle,
   CubeSpace,
@@ -7,41 +7,41 @@ import {
   Text,
   TextSize,
   Up,
-} from "../../../../../../../../../../../styles/__ready/EditorIcons";
-import Typography from "../../../../../../../../../../../styles/__ready/Typography";
+} from '../../../../../../../../../../../styles/__ready/EditorIcons';
+import Typography from '../../../../../../../../../../../styles/__ready/Typography';
 import {
   useSet_dynamicNumber,
   ColumnThree_angle,
   ColumnThree_fontSize,
   ColumnThree_margin,
   ColumnThree_padding,
-} from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
+} from '../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton';
 import {
   selectedCellForReadStyle,
   useSetCell_editEvent,
-} from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
-import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
+} from '../../../../../../../../../../../recoil/userEditorStore/cellsStore';
+import { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addEditEvent } from '../../../../../../../../../../../redux/project/edit_event_slice';
 import useSelectedCell, {
   getSelectedCellSyle,
-} from "../../../../../../../../../../../redux/project/selectedCell";
-import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
-import { useTranslation } from "react-i18next";
-import { t } from "i18next";
+} from '../../../../../../../../../../../redux/project/selectedCell';
+import { getSelectedCell } from '../../../../../../../../../../../redux/project/selectedCell_slice';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 export default function () {
   const dispatch = useDispatch();
 
   const Cell = useSelector(getSelectedCell);
   const selectedCellStyle = getSelectedCellSyle();
-  const { t } = useTranslation();
 
+  const { t } = useTranslation();
   const _interval_Margin_Ref = useRef(null);
   const _interval_Padding_Ref = useRef(null);
   const _interval_Angle_Ref = useRef(null);
   const _interval_TextSize_Ref = useRef(null);
-  function onClick(type = "") {
+  function onClick(type = '') {
     dispatch(
       addEditEvent({
         type: type,
@@ -49,7 +49,7 @@ export default function () {
       })
     );
   }
-  function onChange(event, type = "") {
+  function onChange(event, type = '') {
     const value = Number(event.target.value);
     dispatch(
       addEditEvent({
@@ -106,7 +106,7 @@ const TextAngleBox = ({
       <main className="position-relative">
         <span className="editor-angle-symbol">°</span>
         <input
-          onChange={(event) => onChange(event, "ANGLE")}
+          onChange={(event) => onChange(event, 'ANGLE')}
           type="number"
           className="custom-input-editor "
           value={value}
@@ -115,10 +115,10 @@ const TextAngleBox = ({
       <div className="d-flex flex-column  justify-content-center ">
         <span
           className="d-flex justify-content-center"
-          onClick={() => onClick("ANGLE/INCREMENT")}
+          onClick={() => onClick('ANGLE/INCREMENT')}
           onMouseDown={() => {
             _interval_Angle_Ref.current = setInterval(() => {
-              onClick("ANGLE/INCREMENT");
+              onClick('ANGLE/INCREMENT');
             }, 100);
           }}
           onMouseUp={() => {
@@ -129,10 +129,10 @@ const TextAngleBox = ({
         </span>
         <span
           className="d-flex justify-content-center"
-          onClick={() => onClick("ANGLE/DECREMENT")}
+          onClick={() => onClick('ANGLE/DECREMENT')}
           onMouseDown={() => {
             _interval_Angle_Ref.current = setInterval(() => {
-              onClick("ANGLE/DECREMENT");
+              onClick('ANGLE/DECREMENT');
             }, 100);
           }}
           onMouseUp={() => {
@@ -143,7 +143,7 @@ const TextAngleBox = ({
         </span>
       </div>
       <div className="editor-small-info-cell-box ">
-        <Typography.H9>{t("editor.angle")}</Typography.H9>
+        <Typography.H9>{t('editor.angle')}</Typography.H9>
       </div>
     </section>
   );
@@ -158,7 +158,7 @@ const TextChangeSizeBox = ({
     <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
       <TextSize />
       <input
-        onChange={(event) => onChange(event, "TEXTSIZE")}
+        onChange={(event) => onChange(event, 'TEXTSIZE')}
         type="number"
         className="custom-input-editor "
         value={value}
@@ -170,34 +170,34 @@ const TextChangeSizeBox = ({
         <span
           onMouseDown={() => {
             _interval_TextSize_Ref.current = setInterval(() => {
-              onClick("TEXTSIZE/INCREMENT");
+              onClick('TEXTSIZE/INCREMENT');
             }, 100);
           }}
           onMouseUp={() => {
             clearInterval(_interval_TextSize_Ref.current);
           }}
           className="d-flex justify-content-center"
-          onClick={() => onClick("TEXTSIZE/INCREMENT")}
+          onClick={() => onClick('TEXTSIZE/INCREMENT')}
         >
           <Up />
         </span>
         <span
           onMouseDown={() => {
             _interval_TextSize_Ref.current = setInterval(() => {
-              onClick("TEXTSIZE/DECREMENT");
+              onClick('TEXTSIZE/DECREMENT');
             }, 100);
           }}
           onMouseUp={() => {
             clearInterval(_interval_TextSize_Ref.current);
           }}
           className="d-flex justify-content-center"
-          onClick={() => onClick("TEXTSIZE/DECREMENT")}
+          onClick={() => onClick('TEXTSIZE/DECREMENT')}
         >
           <Down />
         </span>
       </div>
       <div className="editor-small-info-cell-box ">
-        <Typography.H9>{t("editor.fontSize")}</Typography.H9>
+        <Typography.H9>{t('editor.fontSize')}</Typography.H9>
       </div>
     </section>
   );
@@ -212,7 +212,7 @@ const ChangeMarginBox = ({
     <section className="editor-medium-cell-box px-2 me-2 d-flex align-items-center justify-content-between ">
       <CubeSpace />
       <input
-        onChange={(event) => onChange(event, "MARGIN")}
+        onChange={(event) => onChange(event, 'MARGIN')}
         type="number"
         className="custom-input-editor "
         value={value}
@@ -221,10 +221,10 @@ const ChangeMarginBox = ({
       <div className="d-flex flex-column  justify-content-center ">
         <span
           className="d-flex justify-content-center"
-          onClick={() => onClick("MARGIN/INCREMENT")}
+          onClick={() => onClick('MARGIN/INCREMENT')}
           onMouseDown={() => {
             _interval_Margin_Ref.current = setInterval(() => {
-              onClick("MARGIN/INCREMENT");
+              onClick('MARGIN/INCREMENT');
             }, 100);
           }}
           onMouseUp={() => {
@@ -235,10 +235,10 @@ const ChangeMarginBox = ({
         </span>
         <span
           className="d-flex justify-content-center"
-          onClick={() => onClick("MARGIN/DECREMENT")}
+          onClick={() => onClick('MARGIN/DECREMENT')}
           onMouseDown={() => {
             _interval_Margin_Ref.current = setInterval(() => {
-              onClick("MARGIN/DECREMENT");
+              onClick('MARGIN/DECREMENT');
             }, 100);
           }}
           onMouseUp={() => {
@@ -249,7 +249,7 @@ const ChangeMarginBox = ({
         </span>
       </div>
       <div className="editor-small-info-cell-box ">
-        <Typography.H9>{t("editor.margin")}</Typography.H9>
+        <Typography.H9>{t('editor.margin')}</Typography.H9>
       </div>
     </section>
   );
@@ -264,7 +264,7 @@ const ChangePaddingBox = ({
     <section className="editor-medium-cell-box px-2  d-flex align-items-center justify-content-between ">
       <Text />
       <input
-        onChange={(event) => onChange(event, "PADDING")}
+        onChange={(event) => onChange(event, 'PADDING')}
         type="number"
         className="custom-input-editor "
         value={value}
@@ -275,10 +275,10 @@ const ChangePaddingBox = ({
       <div className="d-flex flex-column  justify-content-center ">
         <span
           className="d-flex justify-content-center"
-          onClick={() => onClick("PADDING/INCREMENT")}
+          onClick={() => onClick('PADDING/INCREMENT')}
           onMouseDown={() => {
             _interval_Padding_Ref.current = setInterval(() => {
-              onClick("PADDING/INCREMENT");
+              onClick('PADDING/INCREMENT');
             }, 100);
           }}
           onMouseUp={() => {
@@ -289,10 +289,10 @@ const ChangePaddingBox = ({
         </span>
         <span
           className="d-flex justify-content-center"
-          onClick={() => onClick("PADDING/DECREMENT")}
+          onClick={() => onClick('PADDING/DECREMENT')}
           onMouseDown={() => {
             _interval_Padding_Ref.current = setInterval(() => {
-              onClick("PADDING/DECREMENT");
+              onClick('PADDING/DECREMENT');
             }, 100);
           }}
           onMouseUp={() => {
@@ -303,7 +303,7 @@ const ChangePaddingBox = ({
         </span>
       </div>
       <div className="editor-small-info-cell-box ">
-        <Typography.H9>{t("editor.padding")}</Typography.H9>
+        <Typography.H9>{t('editor.padding')}</Typography.H9>
       </div>
     </section>
   );
