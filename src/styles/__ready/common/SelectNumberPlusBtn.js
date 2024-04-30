@@ -1,8 +1,8 @@
-import { useState } from "react";
-import Typography from "../Typography";
-import styled from "styled-components";
-import { Down, PlusPeoduct_Labels, Up } from "../EditorIcons";
-import { useDynamicCssClass } from "../../../recoil/readStore";
+import { useState } from 'react';
+import Typography from '../Typography';
+import styled from 'styled-components';
+import { Down, PlusPeoduct_Labels, Up } from '../EditorIcons';
+import { useDynamicCssClass } from '../../../recoil/readStore';
 
 const SelectNumberPlusBtn = ({
   listLength = 0,
@@ -23,10 +23,10 @@ const SelectNumberPlusBtn = ({
       options.push(
         <div
           style={{
-            width: "100%",
-            height: "36px",
+            width: '100%',
+            height: '36px',
             // border: "1px solid black",
-            backgroundColor: i === selectedItem ? "#CBCBCB" : "white",
+            backgroundColor: i === selectedItem ? '#CBCBCB' : 'white',
           }}
           className="cur-pointer"
           key={i}
@@ -48,24 +48,39 @@ const SelectNumberPlusBtn = ({
       </SelectNumberOfRailBox>
       <header className="product-label-plus-box  d-flex align-item-center justify-content-end ">
         <header
+          style={{
+            top: '0.25rem',
+          }}
           onClick={submit}
           className="c-pointer product-label-icon-plus-box d-flex justify-content-center align-items-center"
         >
-          <PlusPeoduct_Labels />
+          <span
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <PlusPeoduct_Labels />
+          </span>
         </header>
         <section
           style={{
-            width: "20px",
-            maxWidth: "20px",
-            textAlign: "center",
+            width: '20px',
+            maxWidth: '20px',
+            textAlign: 'center',
           }}
           className={cssClass.pe_3}
         >
           <input
             type="number"
             style={{
-              width: 20,
+              width: 30,
               height: 20,
+              position: 'relative',
+              left: 10,
+              top: '5px',
             }}
             className="border-0 pe-2"
             onChange={handleChange}
@@ -73,18 +88,23 @@ const SelectNumberPlusBtn = ({
           />
         </section>
 
-        <footer className={"d-flex flex-column " + cssClass.me_1}>
+        <footer
+          style={{
+            top: '5px',
+          }}
+          className={'d-flex flex-column position-relative ' + cssClass.me_1}
+        >
           <span
             onClick={incresment}
             className="c-pointer d-flex justify-content-center align-item-center mb-1"
           >
-            <Up className_for_path={"fill_secondray_v2 "} />
+            <Up className_for_path={'fill_secondray_v2 '} />
           </span>
           <span
             onClick={decrement}
             className="c-pointer d-flex justify-content-center align-item-center "
           >
-            <Down className_for_path={"fill_secondray_v2"} />
+            <Down className_for_path={'fill_secondray_v2'} />
           </span>
         </footer>
       </header>

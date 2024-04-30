@@ -16,6 +16,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeType } from '../redux/project/border_slice';
 import { viewMode } from '../redux/project/edit_mode_slice';
 import { getProjectRailWidth } from '../redux/project/project._slice';
+import {
+  canvasToBlob,
+  base64StringToBlob,
+  blobToBase64String,
+} from 'blob-util';
 //
 
 export default function () {
@@ -175,7 +180,9 @@ export default function () {
         });
         const imgDataURL = await imgListener.getImageDataURLFromCanvas();
 
+        // console.log(imgDataURL);
         const a_tag = new FormCreator().AtagdownloadLinkGenerator(imgDataURL);
+
         a_tag.click();
         dispatch(changeType('none'));
 
@@ -232,8 +239,13 @@ class ImageListener {
     });
 
     const url = canvas.toDataURL('image/png', 1.0);
-
+    // canvas.toBlob(async function (blob) {
+    //   console.log(blob);
+    //   const base64 = await blobToBase64String(blob);
+    //   console.log(base64);
+    // });
     return url;
+    // console.log(blob);
   }
 
   getB64toBlob(imgDataURL) {
@@ -287,8 +299,10 @@ class FormCreator {
   AtagdownloadLinkGenerator(DataURL) {
     // console.log({ DataURL });
     const a = document.createElement('a');
-    a.href = DataURL;
-    a.download = DataURL;
+    // a.href = DataURL;
+    a.setAttribute('href', DataURL);
+    a.setAttribute('download', 'screenshot.png');
+    // a.download = DataURL;
     return a;
   }
 }

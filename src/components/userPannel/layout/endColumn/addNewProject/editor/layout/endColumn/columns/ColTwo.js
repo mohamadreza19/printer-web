@@ -1,9 +1,9 @@
-import { Grid } from "@mui/material";
-import SearchBox from "../layout/searchBox";
+import { Grid } from '@mui/material';
+import SearchBox from '../layout/searchBox';
 
-import { Toggle_show_hide } from "../../../../../../../../../styles/__ready/EditorIcons";
-import { useProject_baseValue } from "../../../../../../../../../recoil/userEditorStore/project_base";
-import CreateCustom from "../layout/createCustom";
+import { Toggle_show_hide } from '../../../../../../../../../styles/__ready/EditorIcons';
+import { useProject_baseValue } from '../../../../../../../../../recoil/userEditorStore/project_base';
+import CreateCustom from '../layout/createCustom';
 
 export default function ({ isShow, setShow = () => {} }) {
   const poject_base = useProject_baseValue();
@@ -11,17 +11,17 @@ export default function ({ isShow, setShow = () => {} }) {
 
   return (
     <Grid
-      key={"11"}
+      key={'11'}
       item
       lg={4}
-      className={`position-relative ${isShow && "d-none"}`}
+      className={`position-relative ${isShow && 'd-none'}`}
     >
       <Controller base={poject_base} />
 
       <div
         className="position-absolute"
         style={{
-          top: poject_base === "CUSTOM" ? "5%" : "50%",
+          top: poject_base === 'CUSTOM' ? '5%' : '50%',
         }}
       >
         <section
@@ -38,11 +38,11 @@ export default function ({ isShow, setShow = () => {} }) {
   );
 }
 
-const Controller = ({ base = "" }) => {
+const Controller = ({ base = '' }) => {
   switch (base) {
-    case "PRODUCT":
+    case 'PRODUCT':
       return <SearchBox />;
-    case "CUSTOM":
+    case 'CUSTOM':
       return <CreateCustom />;
 
     default:
