@@ -1,48 +1,48 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDynamicCssClass } from '../../../../../../../../../../../recoil/readStore';
-import {} from '../../../../../../../../../../../styles/__ready/EditorIcons';
-import Icons from '../../../../../../../../../../../styles/__ready/Icons';
-import Typography from '../../../../../../../../../../../styles/__ready/Typography';
-import RailArea from './railArea';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useDispatch, useSelector } from "react-redux";
+import { useDynamicCssClass } from "../../../../../../../../../../../recoil/readStore";
+import {} from "../../../../../../../../../../../styles/__ready/EditorIcons";
+import Icons from "../../../../../../../../../../../styles/__ready/Icons";
+import Typography from "../../../../../../../../../../../styles/__ready/Typography";
+import RailArea from "./railArea";
 
 import {
   product_column,
   // rails,
   railsLength_store,
   railsWidth_store,
-} from '../../../../../../../../../../../recoil/userEditorStore/cellsStore';
-import { ColumnFour_justify_start } from '../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton';
-import { addRail } from '../../../../../../../../../../../recoil/userEditorStore/railAriaButton';
+} from "../../../../../../../../../../../recoil/userEditorStore/cellsStore";
+import { ColumnFour_justify_start } from "../../../../../../../../../../../recoil/userEditorStore/EditorHeaderActionButton";
+import { addRail } from "../../../../../../../../../../../recoil/userEditorStore/railAriaButton";
 
-import { createRef, useEffect, useRef, useState } from 'react';
+import { createRef, useEffect, useRef, useState } from "react";
 
-import scaleStore from '../../../../../../../../../../../recoil/userEditorStore/scaleStore';
-import ScaleContainer from './layout/ScaleContainer';
+import scaleStore from "../../../../../../../../../../../recoil/userEditorStore/scaleStore";
+import ScaleContainer from "./layout/ScaleContainer";
 
-import useToastReducer from '../../../../../../../../../../../recoil/reducer/useToastReducer';
-import useRailReducer from '../../../../../../../../../../../recoil/reducer/editor/useRailReducer';
+import useToastReducer from "../../../../../../../../../../../recoil/reducer/useToastReducer";
+import useRailReducer from "../../../../../../../../../../../recoil/reducer/editor/useRailReducer";
 
-import { UserProjectFindOne_Qury } from '../../../../../../../../../../../reactQuery/user/callGetService';
-import { memo } from 'react';
-import useLocalStorage from 'react-use-localstorage';
+import { UserProjectFindOne_Qury } from "../../../../../../../../../../../reactQuery/user/callGetService";
+import { memo } from "react";
+import useLocalStorage from "react-use-localstorage";
 import {
   CommonProject_templateFindOne_Qury,
   Project_templateFindOne_Qury,
-} from '../../../../../../../../../../../reactQuery/common/callGetService';
-import { useSetLabel } from '../../../../../../../../../../../recoil/store/label';
+} from "../../../../../../../../../../../reactQuery/common/callGetService";
+import { useSetLabel } from "../../../../../../../../../../../recoil/store/label";
 
-import { useSetBorderToProntState } from '../../../../../../../../../../../recoil/userEditorStore/bordersToPrint';
-import { useSetProject_baseState } from '../../../../../../../../../../../recoil/userEditorStore/project_base';
-import { addRails } from '../../../../../../../../../../../redux/project/rails_slice';
-import { fetchProject } from '../../../../../../../../../../../redux/project/project._slice';
+import { useSetBorderToProntState } from "../../../../../../../../../../../recoil/userEditorStore/bordersToPrint";
+import { useSetProject_baseState } from "../../../../../../../../../../../recoil/userEditorStore/project_base";
+import { addRails } from "../../../../../../../../../../../redux/project/rails_slice";
+import { fetchProject } from "../../../../../../../../../../../redux/project/project._slice";
 import {
   addEmptyRail,
   addPresent,
   getRails,
-} from '../../../../../../../../../../../redux/project/history_changer_slice';
-import { useTranslation } from 'react-i18next';
-import { addBorderEvent } from '../../../../../../../../../../../redux/project/border_slice';
+} from "../../../../../../../../../../../redux/project/history_changer_slice";
+import { useTranslation } from "react-i18next";
+import { addBorderEvent } from "../../../../../../../../../../../redux/project/border_slice";
 
 //  data = {
 //   frontId: 112,
@@ -52,9 +52,9 @@ import { addBorderEvent } from '../../../../../../../../../../../redux/project/b
 //   projectName: "werewr",
 //   userId: 1,
 // };
-const PROJECT_EDIT = 'project/edit';
-const PROJECT_TEMPLATES_EDIT = 'project-templates/edit';
-const PROJECT_TEMPLATES_USER_EDIT = 'project-templates/user_edit';
+const PROJECT_EDIT = "project/edit";
+const PROJECT_TEMPLATES_EDIT = "project-templates/edit";
+const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
 function setFindOne_based_editor_access(editorAccess) {
   // CommonProject_templateFindOne_Qury
 
@@ -65,14 +65,14 @@ function setFindOne_based_editor_access(editorAccess) {
     case PROJECT_TEMPLATES_USER_EDIT:
       return Project_templateFindOne_Qury();
     case PROJECT_TEMPLATES_EDIT:
-      return Project_templateFindOne_Qury('admin');
+      return Project_templateFindOne_Qury("admin");
   }
 }
 
 export default memo(function () {
   const dispatch = useDispatch();
   const rails = useSelector(getRails);
-  const [editor_access, _] = useLocalStorage('editor_access');
+  const [editor_access, _] = useLocalStorage("editor_access");
   const setLabel = useSetLabel();
   const [railsArr, setRailsArr] = useState([]);
 
@@ -92,14 +92,14 @@ export default memo(function () {
   useEffect(() => {
     if (isSuccess) {
       setRailsLength(data.raillength);
-      if ('bordersToPrint' in data) {
+      if ("bordersToPrint" in data) {
         const payload = {
-          type: 'none',
+          type: "none",
           value: data.bordersToPrint,
         };
         dispatch(addBorderEvent(payload));
       }
-      if ('base' in data) {
+      if ("base" in data) {
         setProject_base(data.base);
       }
       if (data) {
@@ -137,19 +137,19 @@ export default memo(function () {
       >
         <Icons.Plus />
         <Typography.H9 className="color-white font-400">
-          {t('editor.addNewRail')}
+          {t("editor.addNewRail")}
         </Typography.H9>
       </div>
     );
   };
-  console.log(rails.length);
+
   if (rails.length > 0)
     return (
       <div className="dir-ltr bg-white scrollable-x-large position-relative disabled_gray2">
         <ScaleContainer
           id="rails-box"
           scale={scaleState_}
-          className={'dir-ltr rails-box-pt   border-r-bottom-20'}
+          className={"dir-ltr rails-box-pt   border-r-bottom-20"}
         >
           {rails.map((rail, index) => {
             return (

@@ -4,21 +4,13 @@ import Full from "./Full";
 import SplitedColumn from "./SplitedColumn";
 import SplitedRow from "./SplitedRow";
 
-export default function ({
-  cellForCheck,
-  index,
-  removeBorderRight,
-  removeBorderBottom,
-  isCellSplitedFromRow,
-}) {
+export default function ({ cellForCheck, index, isLast }) {
   const symbolDetail = Admin_User_Symbol("user");
 
   if (cellForCheck?.split == "none") {
     return (
       <Full
-        removeBorderRight={removeBorderRight}
-        removeBorderBottom={removeBorderBottom}
-        isCellSplitedFromRow={isCellSplitedFromRow}
+        isLast={isLast}
         index={index}
         symbolDetail={symbolDetail}
         cell={cellForCheck}

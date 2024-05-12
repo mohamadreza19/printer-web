@@ -14,7 +14,7 @@ const success_slice = createSlice({
   reducers: {
     addSuccess(state, action) {
       const { body, onBack, status, type } = action.payload;
-
+      console.log(action.payload);
       state.body = body;
       state.onBack = onBack;
       state.status = status;

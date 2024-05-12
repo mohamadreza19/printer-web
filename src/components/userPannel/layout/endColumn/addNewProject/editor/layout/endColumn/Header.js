@@ -31,9 +31,9 @@ import {
 import {
   addSuccess,
   clearSuccess,
-} from '../../../../../../../../redux/project/success_slice';
-import { useTranslation } from 'react-i18next';
-import { setUser_project_findOne } from '../../../../../../../../reactQuery/querykey/user_key';
+} from "../../../../../../../../redux/project/success_slice";
+import { useTranslation } from "react-i18next";
+import { setUser_project_findOne } from "../../../../../../../../reactQuery/querykey/user_key";
 
 const PROJECT_EDIT = "project/edit";
 const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
@@ -43,12 +43,12 @@ export default function () {
   const disptach = useDispatch();
   const [openPopUp, setOpenPopUp] = useState(false);
   const [printRepetition, setRrintRepetition] = useState(1);
-  const [saveMode, setSaveMode] = useState("idle");
+  const [saveMode, setSaveMode] = useState("idle"); // 'idle | 'save' | 'saveAndContinue'
   const [editor_access, _] = useLocalStorage("editor_access");
   const language = useLanguage();
   const { projectId } = useParams();
 
-  const beForward = language == 'fa' ? true : false;
+  const beForward = language == "fa" ? true : false;
   const cssClass = useDynamicCssClass();
   const { t } = useTranslation();
   const content =
@@ -161,47 +161,46 @@ export default function () {
   }
   function print() {
     handleSubmitProject();
-    handleSaveMode('save');
-    setTimeout(() => {
-      handleClearSuccess();
-      setTimeout(() => autoPrint('PRODUCT', projectId, printRepetition), 200);
-    }, 500);
+    handleSaveMode("print");
   }
   function singlePrint() {
     handleSubmitProject();
-    handleSaveMode('save');
-    setTimeout(() => {
-      handleClearSuccess();
-      setTimeout(() => autoPrint('PRODUCT', projectId, 1), 200);
-    }, 500);
+    handleSaveMode("print");
   }
   function sreenShot() {
     autoPrint("IMAGE");
   }
-  function handleClearSuccess() {
-    disptach(clearSuccess());
-    // setSaveMode('idle');
-    // window.location.reload();
-  }
-  function handleSuccess() {
-    const payload = {
-      status: "success",
-      onBack: handleClearSuccess,
-      body: handle_bundled_project(),
-      type: 'edit',
-    };
-    disptach(addSuccess(payload));
-  }
+
   function handleSaveMode(action) {
-    setUser_project_findOne();
+    // setUser_project_findOne();
     setSaveMode(action);
   }
+  useEffect(() => {
+    if (project_mutate.isSuccess || project_template_mutate.isSuccess) {
+      // handleSuccess();
+      switch (saveMode) {
+        case "save":
+          break;
+        case "saveAndContinue":
+          disptach(
+            addSuccess({
+              body: "پروژه با موفقیت ویرایش شد",
+              onBack: () => disptach(clearSuccess()),
+              body: handle_bundled_project(),
+              status: "success",
+              type: "edit",
+            })
+          );
+          break;
 
-  if (project_mutate.isSuccess || project_template_mutate.isSuccess) {
-    if (saveMode === "saveAndContinue") {
+        case "print":
+          autoPrint("PRODUCT", projectId, printRepetition);
+      }
+      handleSaveMode("idle");
+      setRrintRepetition(1);
     }
-    handleSuccess();
-  }
+  }, [project_mutate.isSuccess, project_template_mutate.isSuccess]);
+
   return (
     <header className="w-100 d-flex align-items-center justify-content-between  pt-4 px-4">
       <article className="d-flex">
@@ -368,8 +367,7 @@ export default function () {
             className="editor-header-button_extra-auto mx-3"
             onClick={() => {
               handleSubmitProject();
-              handleSaveMode('save');
-              setTimeout(() => handleClearSuccess(), 500);
+              handleSaveMode("save");
             }}
           >
             <Icons.Editor_Save size="medium " />
