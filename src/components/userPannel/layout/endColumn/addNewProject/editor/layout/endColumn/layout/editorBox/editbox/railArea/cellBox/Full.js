@@ -255,12 +255,12 @@ class BorderToPrintController {
       case "use":
         if (this.#command === "ALL") {
           return {
-            border: "1px solid black",
+            border: "0.2645833333mm solid black",
           };
         } else if (this.#command === "VERTICAL") {
           return {
-            borderRight: "1px solid black",
-            borderLeft: "1px solid black",
+            borderRight: "0.2645833333mm solid black",
+            borderLeft: "0.2645833333mm solid black",
             borderTop: "none",
             borderBottom: "none",
           };
@@ -268,8 +268,8 @@ class BorderToPrintController {
           return {
             borderRight: "none",
             borderLeft: "none",
-            borderTop: "1px solid black",
-            borderBottom: "1px solid black",
+            borderTop: "0.2645833333mm solid black",
+            borderBottom: "0.2645833333mm solid black",
           };
         } else if (this.#command === "NONE") {
           return {
@@ -283,7 +283,7 @@ class BorderToPrintController {
       case "none":
         return {
           borderColor: this.#CellIsSelected ? "#F36523" : "black",
-          borderWidth: "1px",
+          borderWidth: "0.2645833333mm",
           borderStyle: "solid",
         };
     }

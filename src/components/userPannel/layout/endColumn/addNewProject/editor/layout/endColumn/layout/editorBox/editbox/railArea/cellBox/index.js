@@ -112,6 +112,7 @@ export default function ({
       disableInteractiveElementBlocking={true}
     >
       {(provided, snapshot) => {
+        console.log(get_Dimensions_based_label_project_template_exist());
         return (
           <>
             {editMode !== "VIEW_MODE" ? (
@@ -120,10 +121,12 @@ export default function ({
                 data-rail-id={railId}
                 style={{
                   width: `${
-                    get_Dimensions_based_label_project_template_exist().width
+                    get_Dimensions_based_label_project_template_exist().width +
+                    (isLast ? 0 : 0.13229166665)
                   }mm`,
                   minWidth: `${
-                    get_Dimensions_based_label_project_template_exist().width
+                    get_Dimensions_based_label_project_template_exist().width +
+                    (isLast ? 0 : 0.13229166665)
                   }mm`,
                   height: `${
                     get_Dimensions_based_label_project_template_exist().height
@@ -147,7 +150,8 @@ export default function ({
                 ref={provided.innerRef}
                 {...provided.dragHandleProps}
                 cellWidth={
-                  get_Dimensions_based_label_project_template_exist().width
+                  get_Dimensions_based_label_project_template_exist().width +
+                  (isLast ? 0 : 0.13229166665)
                 }
                 cellWidthOfPrintingArea={
                   get_Dimensions_based_label_project_template_exist().height
