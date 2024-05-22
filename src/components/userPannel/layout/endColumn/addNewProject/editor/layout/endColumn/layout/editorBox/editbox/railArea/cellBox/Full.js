@@ -132,14 +132,16 @@ export default function ({
           borderToPrint.value,
           cell.isSelected
         ).getBorders(),
-        // ...borderToPrintController(borderToPrint, cell.isSelected, isLast),
+
         minWidth: "100%",
         margin: "0",
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
         overflow: "hidden",
         boxSizing: "border-box",
-        right: index + "px",
+        // borderRight: "none",
+
+        right: index * 0.2645833333 + "mm",
       }}
     >
       {/* <Editor_Cell_Input
