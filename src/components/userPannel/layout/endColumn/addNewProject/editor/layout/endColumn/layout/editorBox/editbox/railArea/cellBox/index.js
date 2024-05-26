@@ -122,11 +122,11 @@ export default function ({
                 style={{
                   width: `${
                     get_Dimensions_based_label_project_template_exist().width +
-                    (isLast ? 0 : 0.13229166665)
+                    (!isLast ? 0.100066665 : 0)
                   }mm`,
                   minWidth: `${
                     get_Dimensions_based_label_project_template_exist().width +
-                    (isLast ? 0 : 0.13229166665)
+                    (!isLast ? 0.100066665 : 0)
                   }mm`,
                   height: `${
                     get_Dimensions_based_label_project_template_exist().height
@@ -151,7 +151,7 @@ export default function ({
                 {...provided.dragHandleProps}
                 cellWidth={
                   get_Dimensions_based_label_project_template_exist().width +
-                  (isLast ? 0 : 0.13229166665)
+                  (!isLast ? 0.100066665 : 0)
                 }
                 cellWidthOfPrintingArea={
                   get_Dimensions_based_label_project_template_exist().height

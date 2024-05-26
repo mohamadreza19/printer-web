@@ -21,7 +21,7 @@ export default {
         "Please enter your project information",
       projectName: "Project name",
       typeOfProject: "Type of project",
-      stripOrLabel: "  استریپ یا لیبل",
+      stripOrLabel: "  Strip or label",
       nameOfCreator: "Name of creator",
       railWidth: "Rail width",
       railLength: "Rail length",

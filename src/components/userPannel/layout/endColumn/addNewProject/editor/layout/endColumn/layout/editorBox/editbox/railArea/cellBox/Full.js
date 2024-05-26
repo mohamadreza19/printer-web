@@ -117,7 +117,7 @@ export default function ({
   function CellStyle() {
     return cell.content.style;
   }
-
+  console.log(isLast);
   return (
     <main
       ref={ref}
@@ -138,8 +138,8 @@ export default function ({
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
         overflow: "hidden",
-        boxSizing: "border-box",
-        // borderRight: "none",
+        boxSizing: "border-box !important",
+        borderRight: isLast ? "0.2645833333mm solid black" : "none",
 
         right: index * 0.2645833333 + "mm",
       }}
