@@ -108,10 +108,10 @@ export default function () {
 
         document.body.appendChild(clonedRootElement);
         clonedRootElement.childNodes.forEach((child) => {
-          child.style.border = "none";
+          // child.style.border = "none";
         });
         clonedRootElement.style.padding = "0";
-        clonedRootElement.style.zoom = 2;
+        clonedRootElement.style.zoom = 3;
         const imgListener = new ImageListener({
           element: clonedRootElement,
         });

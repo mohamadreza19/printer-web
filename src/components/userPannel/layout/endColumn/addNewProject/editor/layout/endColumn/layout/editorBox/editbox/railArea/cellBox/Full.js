@@ -42,8 +42,6 @@ export default function ({
   const borderToPrint = useSelector(getBorderToPrint);
   const editMode = useSelector(getEditMode);
 
-  const allowReplaceInputToDiv = useRecoilValue(allowReplaceInputToDiv_store);
-
   //
 
   //
@@ -117,7 +115,7 @@ export default function ({
   function CellStyle() {
     return cell.content.style;
   }
-  console.log(isLast);
+
   return (
     <main
       ref={ref}
@@ -130,7 +128,8 @@ export default function ({
         ...BorderToPrintController.setConfig(
           borderToPrint.type,
           borderToPrint.value,
-          cell.isSelected
+          cell.isSelected,
+          isLast
         ).getBorders(),
 
         minWidth: "100%",
@@ -139,9 +138,6 @@ export default function ({
         marginRight: CellStyle().margin,
         overflow: "hidden",
         boxSizing: "border-box !important",
-        borderRight: isLast ? "0.2645833333mm solid black" : "none",
-
-        right: index * 0.2645833333 + "mm",
       }}
     >
       {/* <Editor_Cell_Input
@@ -164,14 +160,15 @@ export default function ({
       ) : (
         <>
           <Editor_Cell_Input
-            allowReplaceInputToDiv={allowReplaceInputToDiv}
-            value={cell.content.text}
+            // value={cell.content.text}
+            value={index + 1}
             disabled={cell.isSelected}
             onChange={handleChangeValue}
             style={cell.content.style}
             isBarcode={cell.isBarcode}
             isQrcode={cell.isQrcode}
-            isSelection={editMode === "SELECT_MODE"}
+            // isSelection={editMode === "SELECT_MODE"}
+            isSelection={true}
             // parentWidth={parentSize.width}
             // parentHeight={parentSize.height}
             // font={font.font}
@@ -242,11 +239,13 @@ class BorderToPrintController {
   static #borderType = ""; // use | none
   static #command = ""; // VERTICAL | ALL | HORIZONTAL | NONE
   static #CellIsSelected = false;
+  static #isLastCell = false;
 
-  static setConfig(borderType, command, CellIsSelected) {
+  static setConfig(borderType, command, CellIsSelected, isLastCell) {
     this.#borderType = borderType;
     this.#command = command;
     this.#CellIsSelected = CellIsSelected;
+    this.#isLastCell = isLastCell;
     return this;
   }
 
@@ -255,12 +254,15 @@ class BorderToPrintController {
       case "use":
         if (this.#command === "ALL") {
           return {
-            border: "0.2645833333mm solid black",
+            borderRight: this.#isLastCell ? "1px solid black" : "none",
+            borderLeft: "1px solid black",
+            borderTop: "1px solid black",
+            borderBottom: "1px solid black",
           };
         } else if (this.#command === "VERTICAL") {
           return {
-            borderRight: "0.2645833333mm solid black",
-            borderLeft: "0.2645833333mm solid black",
+            borderRight: this.#isLastCell ? "1px solid black" : "none",
+            borderLeft: "1px solid black",
             borderTop: "none",
             borderBottom: "none",
           };
@@ -268,8 +270,8 @@ class BorderToPrintController {
           return {
             borderRight: "none",
             borderLeft: "none",
-            borderTop: "0.2645833333mm solid black",
-            borderBottom: "0.2645833333mm solid black",
+            borderTop: "1px solid black",
+            borderBottom: "1px solid black",
           };
         } else if (this.#command === "NONE") {
           return {
@@ -282,9 +284,19 @@ class BorderToPrintController {
 
       case "none":
         return {
-          borderColor: this.#CellIsSelected ? "#F36523" : "black",
-          borderWidth: "0.2645833333mm",
-          borderStyle: "solid",
+          // borderColor: this.#CellIsSelected ? "#F36523" : "black",
+          // borderWidth: "1px",
+          // borderStyle: "solid",
+          borderRight: this.#isLastCell ? "1px solid black" : "none",
+          borderLeft: this.#CellIsSelected
+            ? "1px solid #F36523"
+            : "1px solid black",
+          borderTop: this.#CellIsSelected
+            ? "1px solid #F36523"
+            : "1px solid black",
+          borderBottom: this.#CellIsSelected
+            ? "1px solid #F36523"
+            : "1px solid black",
         };
     }
   }

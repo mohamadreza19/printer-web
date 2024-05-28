@@ -11,6 +11,8 @@ import InnerContainer from "./layout/InnerContainer";
 import { useProject_baseValue } from "../../../../../../../../../../../../../recoil/userEditorStore/project_base";
 import { useSelector } from "react-redux";
 import { getEditMode } from "../../../../../../../../../../../../../redux/project/edit_mode_slice";
+import mmToPx from "../../../../../../../../../../../../../utility/editor-tools/mmToPx";
+import isNumberInSequence from "../../../../../../../../../../../../../utility/editor-tools/isNumberInSequence";
 
 export default function ({
   children,
@@ -112,21 +114,24 @@ export default function ({
       disableInteractiveElementBlocking={true}
     >
       {(provided, snapshot) => {
-        console.log(get_Dimensions_based_label_project_template_exist());
+        console.log(isNumberInSequence(index + 1));
+        const convertValueMmToPx = mmToPx(
+          get_Dimensions_based_label_project_template_exist().width
+        );
+
         return (
           <>
             {editMode !== "VIEW_MODE" ? (
               <div
+                key={index}
                 data-root-id={cell.structure.frontId}
                 data-rail-id={railId}
                 style={{
                   width: `${
-                    get_Dimensions_based_label_project_template_exist().width +
-                    (!isLast ? 0.100066665 : 0)
+                    get_Dimensions_based_label_project_template_exist().width
                   }mm`,
                   minWidth: `${
-                    get_Dimensions_based_label_project_template_exist().width +
-                    (!isLast ? 0.100066665 : 0)
+                    get_Dimensions_based_label_project_template_exist().width
                   }mm`,
                   height: `${
                     get_Dimensions_based_label_project_template_exist().height
@@ -144,14 +149,14 @@ export default function ({
               </div>
             ) : (
               <InnerContainer
+                key={index}
                 data-root-id={cell.structure.frontId}
                 data-rail-id={railId}
                 {...provided.draggableProps}
                 ref={provided.innerRef}
                 {...provided.dragHandleProps}
                 cellWidth={
-                  get_Dimensions_based_label_project_template_exist().width +
-                  (!isLast ? 0.100066665 : 0)
+                  get_Dimensions_based_label_project_template_exist().width
                 }
                 cellWidthOfPrintingArea={
                   get_Dimensions_based_label_project_template_exist().height
