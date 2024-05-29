@@ -1,33 +1,33 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { Editor_Cell_Input } from "../../../../../../../../../../../../../styles/__ready/Textfields";
-import allowReplaceInputToDiv_store from "../../../../../../../../../../../../../recoil/userEditorStore/allowReplaceInputToDiv_store";
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { Editor_Cell_Input } from '../../../../../../../../../../../../../styles/__ready/Textfields';
+import allowReplaceInputToDiv_store from '../../../../../../../../../../../../../recoil/userEditorStore/allowReplaceInputToDiv_store';
 
-import { useEffect, useRef, useState } from "react";
-import { useSelection } from "../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
+import { useEffect, useRef, useState } from 'react';
+import { useSelection } from '../../../../../../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton';
 
-import styled from "styled-components";
-import shortid from "shortid";
+import styled from 'styled-components';
+import shortid from 'shortid';
 
-import { useDispatch, useSelector } from "react-redux";
-import { addEditEvent } from "../../../../../../../../../../../../../redux/project/edit_event_slice";
-import selectedCell from "../../../../../../../../../../../../../redux/project/selectedCell";
+import { useDispatch, useSelector } from 'react-redux';
+import { addEditEvent } from '../../../../../../../../../../../../../redux/project/edit_event_slice';
+import selectedCell from '../../../../../../../../../../../../../redux/project/selectedCell';
 import {
   changeType,
   getBorderToPrint,
-} from "../../../../../../../../../../../../../redux/project/border_slice";
-import { addSelectedCell } from "../../../../../../../../../../../../../redux/project/selectedCell_slice";
-import { getEditMode } from "../../../../../../../../../../../../../redux/project/edit_mode_slice";
+} from '../../../../../../../../../../../../../redux/project/border_slice';
+import { addSelectedCell } from '../../../../../../../../../../../../../redux/project/selectedCell_slice';
+import { getEditMode } from '../../../../../../../../../../../../../redux/project/edit_mode_slice';
 export default function ({
   symbolDetail,
   index,
   cell = {
-    frontId: " ",
+    frontId: ' ',
 
     style: {
-      fontSize: "14",
-      angle: "14",
-      textAlign: "center",
-      fontStyle: "bold",
+      fontSize: '14',
+      angle: '14',
+      textAlign: 'center',
+      fontStyle: 'bold',
     },
     isBarcode: false,
     isQrcode: false,
@@ -54,13 +54,13 @@ export default function ({
   // const symbolDetail = Admin_User_Symbol("user");
   function handleSelectCell_Via_onClick() {
     const payload = {
-      type: "SELECT",
+      type: 'SELECT',
       itemId: cell.frontId,
     };
     dispatch(addEditEvent(payload));
   }
   function handleDeleteSymbol() {
-    if ("symbolId" in cell) {
+    if ('symbolId' in cell) {
       const payload = {
         cellId: cell.frontId,
       };
@@ -69,7 +69,7 @@ export default function ({
   }
   function handleChangeValue(value) {
     const payload = {
-      type: "CONTENT/NEW",
+      type: 'CONTENT/NEW',
       itemId: cell.frontId,
       value,
     };
@@ -84,20 +84,20 @@ export default function ({
     }
   }, [cell.isSelected]);
   useEffect(() => {
-    if ("symbolId" in cell) {
+    if ('symbolId' in cell) {
       symbolDetail.mutate({ id: cell.symbolId });
     }
   }, [cell.symbolId]);
 
   useEffect(() => {
     setParentSize({
-      width: getOrintaion("WIDTH"),
-      height: getOrintaion("HEIGHT"),
+      width: getOrintaion('WIDTH'),
+      height: getOrintaion('HEIGHT'),
     });
   }, []);
-  function getOrintaion(type = "") {
-    const WIDTH = "WIDTH";
-    const HEIGHT = "HEIGHT";
+  function getOrintaion(type = '') {
+    const WIDTH = 'WIDTH';
+    const HEIGHT = 'HEIGHT';
     const parent = ref?.current;
 
     if (parent) {
@@ -132,49 +132,27 @@ export default function ({
           isLast
         ).getBorders(),
 
-        minWidth: "100%",
-        margin: "0",
+        minWidth: '100%',
+        margin: '0',
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
-        overflow: "hidden",
-        boxSizing: "border-box !important",
+        overflow: 'hidden',
+        boxSizing: 'border-box !important',
       }}
     >
-      {/* <Editor_Cell_Input
-        allowReplaceInputToDiv={allowReplaceInputToDiv}
-        value={cell.content.text}
+      <Editor_Cell_Input
+        parentWidth={
+          ref.current ? ref.current.getBoundingClientRect().width : 0
+        }
+        // value={cell.content.text}
+        value={index + 1}
         disabled={cell.isSelected}
         onChange={handleChangeValue}
         style={cell.content.style}
         isBarcode={cell.isBarcode}
         isQrcode={cell.isQrcode}
-        isSelection={editMode === "SELECT_MODE"}
-       
-      /> */}
-      {"symbolId" in cell && symbolDetail.isSuccess ? (
-        <ImageContainer
-          svgSrc={symbolDetail.data}
-          style={cell.content.style}
-          cellSymbolId={cell.symbolId}
-        />
-      ) : (
-        <>
-          <Editor_Cell_Input
-            // value={cell.content.text}
-            value={index + 1}
-            disabled={cell.isSelected}
-            onChange={handleChangeValue}
-            style={cell.content.style}
-            isBarcode={cell.isBarcode}
-            isQrcode={cell.isQrcode}
-            // isSelection={editMode === "SELECT_MODE"}
-            isSelection={true}
-            // parentWidth={parentSize.width}
-            // parentHeight={parentSize.height}
-            // font={font.font}
-          />
-        </>
-      )}
+        isSelection={editMode === 'SELECT_MODE'}
+      />
     </main>
   );
 }
@@ -182,13 +160,13 @@ export default function ({
 const ImageContainer = ({
   style = {
     angle: 0,
-    fontFamily: "0",
+    fontFamily: '0',
     fontSize: 0,
-    fontStyle: "regular",
+    fontStyle: 'regular',
     margin: 0,
     padding: 0,
-    textAlign: "",
-    textDirecton: "",
+    textAlign: '',
+    textDirecton: '',
   },
   svgSrc,
   cellSymbolId,
@@ -203,8 +181,8 @@ const ImageContainer = ({
       `#cell-svg-container-${generatedID} svg`
     );
     if (svgContainer) {
-      svgContainer.setAttribute("width", `${style.fontSize}px`);
-      svgContainer.setAttribute("height", `${style.fontSize}px`);
+      svgContainer.setAttribute('width', `${style.fontSize}px`);
+      svgContainer.setAttribute('height', `${style.fontSize}px`);
     }
   }, [svgSrc, style.fontSize]);
 
@@ -229,15 +207,15 @@ const Container = styled.div`
   align-items: center;
 `;
 function textAlignToJustify(textAlign) {
-  if (textAlign === "right") return "end";
-  if (textAlign === "center") return "center";
-  if (textAlign === "left") return "start";
-  return "center";
+  if (textAlign === 'right') return 'end';
+  if (textAlign === 'center') return 'center';
+  if (textAlign === 'left') return 'start';
+  return 'center';
 }
 
 class BorderToPrintController {
-  static #borderType = ""; // use | none
-  static #command = ""; // VERTICAL | ALL | HORIZONTAL | NONE
+  static #borderType = ''; // use | none
+  static #command = ''; // VERTICAL | ALL | HORIZONTAL | NONE
   static #CellIsSelected = false;
   static #isLastCell = false;
 
@@ -251,52 +229,52 @@ class BorderToPrintController {
 
   static #handleBorder() {
     switch (this.#borderType) {
-      case "use":
-        if (this.#command === "ALL") {
+      case 'use':
+        if (this.#command === 'ALL') {
           return {
-            borderRight: this.#isLastCell ? "1px solid black" : "none",
-            borderLeft: "1px solid black",
-            borderTop: "1px solid black",
-            borderBottom: "1px solid black",
+            borderRight: this.#isLastCell ? '1px solid black' : 'none',
+            borderLeft: '1px solid black',
+            borderTop: '1px solid black',
+            borderBottom: '1px solid black',
           };
-        } else if (this.#command === "VERTICAL") {
+        } else if (this.#command === 'VERTICAL') {
           return {
-            borderRight: this.#isLastCell ? "1px solid black" : "none",
-            borderLeft: "1px solid black",
-            borderTop: "none",
-            borderBottom: "none",
+            borderRight: this.#isLastCell ? '1px solid black' : 'none',
+            borderLeft: '1px solid black',
+            borderTop: 'none',
+            borderBottom: 'none',
           };
-        } else if (this.#command === "HORIZONTAL") {
+        } else if (this.#command === 'HORIZONTAL') {
           return {
-            borderRight: "none",
-            borderLeft: "none",
-            borderTop: "1px solid black",
-            borderBottom: "1px solid black",
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderTop: '1px solid black',
+            borderBottom: '1px solid black',
           };
-        } else if (this.#command === "NONE") {
+        } else if (this.#command === 'NONE') {
           return {
-            borderRight: "none",
-            borderLeft: "none",
-            borderTop: "none",
-            borderBottom: "none",
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderTop: 'none',
+            borderBottom: 'none',
           };
         }
 
-      case "none":
+      case 'none':
         return {
           // borderColor: this.#CellIsSelected ? "#F36523" : "black",
           // borderWidth: "1px",
           // borderStyle: "solid",
-          borderRight: this.#isLastCell ? "1px solid black" : "none",
+          borderRight: this.#isLastCell ? '1px solid black' : 'none',
           borderLeft: this.#CellIsSelected
-            ? "1px solid #F36523"
-            : "1px solid black",
+            ? '1px solid #F36523'
+            : '1px solid black',
           borderTop: this.#CellIsSelected
-            ? "1px solid #F36523"
-            : "1px solid black",
+            ? '1px solid #F36523'
+            : '1px solid black',
           borderBottom: this.#CellIsSelected
-            ? "1px solid #F36523"
-            : "1px solid black",
+            ? '1px solid #F36523'
+            : '1px solid black',
         };
     }
   }
@@ -305,10 +283,9 @@ class BorderToPrintController {
   }
 }
 function handleBorderRightBasedIndex(isLast = false) {
-  console.log({ isLast });
   if (!isLast) {
-    return "1px solid black";
+    return '1px solid black';
   } else {
-    return "none";
+    return 'none';
   }
 }
