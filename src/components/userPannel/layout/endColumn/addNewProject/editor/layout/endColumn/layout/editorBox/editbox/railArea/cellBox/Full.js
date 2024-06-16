@@ -160,8 +160,8 @@ export default function ({
       ) : (
         <>
           <Editor_Cell_Input
-            // value={cell.content.text}
-            value={index + 1}
+            value={cell.content.text}
+            // value={index + 1}
             disabled={cell.isSelected}
             onChange={handleChangeValue}
             style={cell.content.style}
