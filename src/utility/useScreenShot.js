@@ -111,7 +111,7 @@ export default function () {
           child.style.border = "none";
         });
         clonedRootElement.style.padding = "0";
-        clonedRootElement.style.zoom = 2;
+        clonedRootElement.style.zoom = 3;
         const imgListener = new ImageListener({
           element: clonedRootElement,
         });
@@ -236,7 +236,7 @@ class ImageListener {
   async getImageDataURLFromCanvas() {
     const canvas = await html2canvas(this.element, {
       allowTaint: true,
-      scale: 9,
+      scale: 1,
       // width: 1200,
       // height: 1200,
     });

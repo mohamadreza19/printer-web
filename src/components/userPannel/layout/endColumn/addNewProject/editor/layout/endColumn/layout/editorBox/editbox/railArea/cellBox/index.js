@@ -11,7 +11,8 @@ import InnerContainer from "./layout/InnerContainer";
 import { useProject_baseValue } from "../../../../../../../../../../../../../recoil/userEditorStore/project_base";
 import { useSelector } from "react-redux";
 import { getEditMode } from "../../../../../../../../../../../../../redux/project/edit_mode_slice";
-
+import MeasurementService from "../../../../../../../../../../../../../utility/MeasurementService";
+const measurementService = new MeasurementService();
 export default function ({
   children,
   cell = {
@@ -112,61 +113,33 @@ export default function ({
       disableInteractiveElementBlocking={true}
     >
       {(provided, snapshot) => {
-        console.log(get_Dimensions_based_label_project_template_exist());
+        const convertedWidth =
+          measurementService.mmToPx(
+            get_Dimensions_based_label_project_template_exist().width
+          ) + measurementService.borderWidthBasedDpi();
+        const convertedheight =
+          get_Dimensions_based_label_project_template_exist().height;
         return (
           <>
-            {editMode !== "VIEW_MODE" ? (
-              <div
-                data-root-id={cell.structure.frontId}
-                data-rail-id={railId}
-                style={{
-                  width: `${
-                    get_Dimensions_based_label_project_template_exist().width +
-                    (!isLast ? 0.100066665 : 0)
-                  }mm`,
-                  minWidth: `${
-                    get_Dimensions_based_label_project_template_exist().width +
-                    (!isLast ? 0.100066665 : 0)
-                  }mm`,
-                  height: `${
-                    get_Dimensions_based_label_project_template_exist().height
-                  }mm`,
-                }}
-                className="position-relative "
-              >
-                {/* <Description /> */}
-                <CellSplitController
-                  cellForCheck={cell.structure}
-                  index={index}
-                  isRootCell={isRootCell}
-                  isLast={isLast}
-                />
-              </div>
-            ) : (
-              <InnerContainer
-                data-root-id={cell.structure.frontId}
-                data-rail-id={railId}
-                {...provided.draggableProps}
-                ref={provided.innerRef}
-                {...provided.dragHandleProps}
-                cellWidth={
-                  get_Dimensions_based_label_project_template_exist().width +
-                  (!isLast ? 0.100066665 : 0)
-                }
-                cellWidthOfPrintingArea={
-                  get_Dimensions_based_label_project_template_exist().height
-                }
-              >
-                {/* <Description /> */}
-                <CellSplitController
-                  index={index}
-                  cellForCheck={cell.structure}
-                  isRootCell={isRootCell}
-                  isLast={isLast}
-                  // rootFrontId={cell.frontId}
-                />
-              </InnerContainer>
-            )}
+            <InnerContainer
+              data-root-id={cell.structure.frontId}
+              data-rail-id={railId}
+              {...provided.draggableProps}
+              ref={provided.innerRef}
+              {...provided.dragHandleProps}
+              cellWidth={convertedWidth}
+              cellWidthOfPrintingArea={convertedheight}
+              left={(index + 1) * measurementService.borderWidthBasedDpi()}
+            >
+              {/* <Description /> */}
+              <CellSplitController
+                index={index}
+                cellForCheck={cell.structure}
+                isRootCell={isRootCell}
+                isLast={isLast}
+                // rootFrontId={cell.frontId}
+              />
+            </InnerContainer>
           </>
         );
       }}

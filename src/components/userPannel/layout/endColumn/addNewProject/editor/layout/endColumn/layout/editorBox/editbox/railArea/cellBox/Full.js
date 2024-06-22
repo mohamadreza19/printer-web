@@ -17,6 +17,10 @@ import {
 } from "../../../../../../../../../../../../../redux/project/border_slice";
 import { addSelectedCell } from "../../../../../../../../../../../../../redux/project/selectedCell_slice";
 import { getEditMode } from "../../../../../../../../../../../../../redux/project/edit_mode_slice";
+import MeasurementService from "../../../../../../../../../../../../../utility/MeasurementService";
+
+const measurementService = new MeasurementService();
+
 export default function ({
   symbolDetail,
   index,
@@ -117,7 +121,7 @@ export default function ({
   function CellStyle() {
     return cell.content.style;
   }
-  console.log(isLast);
+
   return (
     <main
       ref={ref}
@@ -132,16 +136,13 @@ export default function ({
           borderToPrint.value,
           cell.isSelected
         ).getBorders(),
-
+        paddingRight: "0.5px",
         minWidth: "100%",
         margin: "0",
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
         overflow: "hidden",
         boxSizing: "border-box !important",
-        borderRight: isLast ? "0.2645833333mm solid black" : "none",
-
-        right: index * 0.2645833333 + "mm",
       }}
     >
       {/* <Editor_Cell_Input
@@ -165,6 +166,7 @@ export default function ({
         <>
           <Editor_Cell_Input
             allowReplaceInputToDiv={allowReplaceInputToDiv}
+            borderWidthBasedDpi={measurementService.borderWidthBasedDpi()}
             value={cell.content.text}
             disabled={cell.isSelected}
             onChange={handleChangeValue}
@@ -242,11 +244,15 @@ class BorderToPrintController {
   static #borderType = ""; // use | none
   static #command = ""; // VERTICAL | ALL | HORIZONTAL | NONE
   static #CellIsSelected = false;
+  static #isLastCell = false;
+  static #borderWidth;
 
-  static setConfig(borderType, command, CellIsSelected) {
+  static setConfig(borderType, command, CellIsSelected, isLastCell) {
     this.#borderType = borderType;
     this.#command = command;
     this.#CellIsSelected = CellIsSelected;
+    this.#isLastCell = isLastCell;
+    this.#borderWidth = measurementService.borderWidthBasedDpi();
     return this;
   }
 
@@ -255,12 +261,17 @@ class BorderToPrintController {
       case "use":
         if (this.#command === "ALL") {
           return {
-            border: "0.2645833333mm solid black",
+            borderRight: this.#borderWidth + "px solid black",
+
+            borderLeft: this.#borderWidth + "px solid black",
+            borderTop: this.#borderWidth + "px solid black",
+            borderBottom: this.#borderWidth + "px solid black",
           };
         } else if (this.#command === "VERTICAL") {
           return {
-            borderRight: "0.2645833333mm solid black",
-            borderLeft: "0.2645833333mm solid black",
+            borderRight: this.#borderWidth + "px solid black",
+
+            borderLeft: this.#borderWidth + "px solid black",
             borderTop: "none",
             borderBottom: "none",
           };
@@ -268,8 +279,8 @@ class BorderToPrintController {
           return {
             borderRight: "none",
             borderLeft: "none",
-            borderTop: "0.2645833333mm solid black",
-            borderBottom: "0.2645833333mm solid black",
+            borderTop: this.#borderWidth + "px solid black",
+            borderBottom: this.#borderWidth + "px solid black",
           };
         } else if (this.#command === "NONE") {
           return {
@@ -283,8 +294,21 @@ class BorderToPrintController {
       case "none":
         return {
           borderColor: this.#CellIsSelected ? "#F36523" : "black",
-          borderWidth: "0.2645833333mm",
+          borderWidth: this.#borderWidth + "px",
           borderStyle: "solid",
+
+          // borderRight: this.#isLastCell
+          //   ? this.#borderWidth + "px solid black"
+          //   : "none",
+          // borderLeft: this.#CellIsSelected
+          //   ? this.#borderWidth + "px solid #F36523"
+          //   : this.#borderWidth + "px solid black",
+          // borderTop: this.#CellIsSelected
+          //   ? this.#borderWidth + "px solid #F36523"
+          //   : this.#borderWidth + "px solid black",
+          // borderBottom: this.#CellIsSelected
+          //   ? this.#borderWidth + "px solid #F36523"
+          //   : this.#borderWidth + "px solid black",
         };
     }
   }

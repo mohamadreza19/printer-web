@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: ${(props) => (props.isDragingOver ? "#F36523" : "#CBCBCB")};
-  height: ${(prop) => prop.railsWidth}mm;
-
+  height: ${(prop) => prop.railsWidth}px;
+  padding-left: ${(prop) => prop.paddingLeft}px;
   min-width: 100vw;
   // min-width: 10px;
   width: ${(prop) => prop.railsLength}mm;
