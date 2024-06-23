@@ -120,6 +120,7 @@ export default function ({
         return (
           <>
             <InnerContainer
+              borderWidth={convertor}
               key={index}
               data-root-id={cell.structure.frontId}
               data-rail-id={railId}

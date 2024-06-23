@@ -13,6 +13,7 @@ import {
   AdminEditProduct_Mutation,
 } from '../../../../../reactQuery/admin/callPutService';
 import { useParams } from 'react-router-dom';
+import { t } from 'i18next';
 const PageTwo = () => {
   const { state, distapch } = useProductContext();
   const editImage = AdminEditImage_Mutation();
@@ -187,7 +188,7 @@ const PageTwo = () => {
       >
         <section className={styles['input-box'] + ' ' + styles['input-small']}>
           <label>
-            <Typography.H8>عرض محصول</Typography.H8>
+            <Typography.H8>{t('addNewProduct.productWidth')}</Typography.H8>
           </label>
           <input
             type="number"
@@ -199,7 +200,7 @@ const PageTwo = () => {
         </section>
         <section className={styles['input-box'] + ' ' + styles['input-small']}>
           <label>
-            <Typography.H8>عرض محل چاپ</Typography.H8>
+            <Typography.H8>{t('addNewProduct.widthPritingArea')}</Typography.H8>
           </label>
           <input
             type="number"
@@ -231,7 +232,7 @@ const PageTwo = () => {
           onClick={handleSubmit}
           className={styles['submit-btn']}
         >
-          ادامه
+          {t('continue')}
         </Buttons.Contained>
       </div>
     </div>
@@ -291,7 +292,7 @@ const UploadArea = ({ file, clearFile, onChange, onDrop }) => {
             <Icons.Download width="44" height="44" fill="#CBCBCB" />
           </span>
           <Typography.H7>
-            تصویر محصول را بارگذاری کنید یا در این مکان بیاندازید
+            {t('addNewProduct.uploadOrDropProductImageHere')}
           </Typography.H7>
         </div>
       )}

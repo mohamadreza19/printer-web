@@ -9,7 +9,7 @@ export default styled.div`
   min-width: ${(props) => `${props.cellWidth}px !important`};
   max-width: ${(props) => `${props.cellWidth}px !important`}
 
-
+  border:
   // height: ${(props) => `${props.cellWidthOfPrintingArea}mm`};
   // min-height: ${(props) => `${props.cellWidthOfPrintingArea}mm`};
 

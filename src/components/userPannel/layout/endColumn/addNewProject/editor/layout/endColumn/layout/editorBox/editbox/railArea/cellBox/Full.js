@@ -17,6 +17,8 @@ import {
 } from '../../../../../../../../../../../../../redux/project/border_slice';
 import { addSelectedCell } from '../../../../../../../../../../../../../redux/project/selectedCell_slice';
 import { getEditMode } from '../../../../../../../../../../../../../redux/project/edit_mode_slice';
+import ConverTMeasureService from '../../../../../../../../../../../../../utility/ConverTMeasureService';
+const converTMeasureService = new ConverTMeasureService();
 export default function ({
   symbolDetail,
   index,
@@ -88,7 +90,7 @@ export default function ({
       symbolDetail.mutate({ id: cell.symbolId });
     }
   }, [cell.symbolId]);
-  console.log();
+
   useEffect(() => {
     setParentSize({
       width: getOrintaion('WIDTH'),
@@ -219,7 +221,7 @@ class BorderToPrintController {
   static #command = ''; // VERTICAL | ALL | HORIZONTAL | NONE
   static #CellIsSelected = false;
   static #isLastCell = false;
-  static #borderWidth = 2; // px
+  static #borderWidth = converTMeasureService.borderWidthBasedDpi(); // px
 
   static setConfig(borderType, command, CellIsSelected, isLastCell) {
     this.#borderType = borderType;

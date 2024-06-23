@@ -46,6 +46,7 @@ const initalState = {
 };
 
 const reducer = (state = initalState, action) => {
+  console.log(action);
   const { type, payload } = action;
 
   switch (type) {
@@ -151,7 +152,7 @@ const reducer = (state = initalState, action) => {
         ...state,
         [payload.target]: {
           ...state[payload.target],
-          err: payload.msg,
+          err: payload.value,
         },
       };
 

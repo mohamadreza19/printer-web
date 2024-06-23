@@ -29,6 +29,24 @@ export default {
       ltr: 'چینش از چپ به راست',
       rtl: 'چینش از راست به چپ',
     },
+    addNewProduct: {
+      AddNewProduct: 'افزودن محصول / لیبل جدید',
+      addNewProduct2: 'افزودن محصول جدید',
+      editProduct: 'ویرایش محصول',
+      persianNameErr: 'نام فارسی محصول کمتر از چهار کاراکتر می باشد',
+      englishNameErr: 'نام انگلیسی محصول کمتر از چهار کارکتر می باشد',
+      turkishNameErr: 'نام ترکی محصول کمتر از چهار کارکتر می باشد',
+      productName: 'نام محصول ',
+      link: 'لینک محصول در سایت',
+      AdditionalInformationAboutTheProduct: 'توضیحات تکمیلی درباره محصول',
+      productWidth: 'عرض محصول',
+      widthPritingArea: 'عرض محل چاپ',
+      uploadOrDropProductImageHere:
+        'تصویر محصول را بارگذاری کنید یا در این مکان بیاندازید',
+    },
+    addNewLabel: {
+      addNewLabel: 'افزودن لیبل جدید',
+    },
     listOfLabels: {
       listOfLabels: 'لیست لیبل ها',
       labelSearch: 'جستجوی لیبل',
@@ -66,6 +84,7 @@ export default {
       createProductCustom: 'ساخت محصول سفارشی',
       addNewRail: 'ریل جدید',
     },
+    excelUpload: 'آپلود فایل به شکل اکسل',
     print: 'چاپ',
     sortingFrom: 'مرتب سازی از تاریخ',
     to: 'تا تاریخ',
@@ -85,6 +104,9 @@ export default {
     setting: {
       setting: 'تنظیمات',
     },
+    english: 'انگلیسی',
+    persian: 'فارسی',
+    turkish: 'ترکی',
     signOut: 'خروج از حساب کاربری',
   },
 };
