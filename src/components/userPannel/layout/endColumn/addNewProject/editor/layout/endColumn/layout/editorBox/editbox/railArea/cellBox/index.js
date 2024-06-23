@@ -11,12 +11,8 @@ import InnerContainer from './layout/InnerContainer';
 import { useProject_baseValue } from '../../../../../../../../../../../../../recoil/userEditorStore/project_base';
 import { useSelector } from 'react-redux';
 import { getEditMode } from '../../../../../../../../../../../../../redux/project/edit_mode_slice';
-import mmToPx from '../../../../../../../../../../../../../utility/editor-tools/mmToPx';
-import isNumberInSequence from '../../../../../../../../../../../../../utility/editor-tools/isNumberInSequence';
-import ConverTMeasureService from '../../../../../../../../../../../../../utility/ConverTMeasureService';
-
-const convertor = new ConverTMeasureService();
-
+import MeasurementService from '../../../../../../../../../../../../../utility/MeasurementService';
+const measurementService = new MeasurementService();
 export default function ({
   children,
   cell = {
@@ -117,22 +113,24 @@ export default function ({
       disableInteractiveElementBlocking={true}
     >
       {(provided, snapshot) => {
+        const convertedWidth =
+          measurementService.mmToPx(
+            get_Dimensions_based_label_project_template_exist().width
+          ) + measurementService.borderWidthBasedDpi();
+        const convertedheight =
+          get_Dimensions_based_label_project_template_exist().height;
         return (
           <>
             <InnerContainer
-              borderWidth={convertor}
-              key={index}
               data-root-id={cell.structure.frontId}
               data-rail-id={railId}
               {...provided.draggableProps}
               ref={provided.innerRef}
               {...provided.dragHandleProps}
-              cellWidth={convertor.mmToPx(
-                get_Dimensions_based_label_project_template_exist().width
-              )}
-              cellWidthOfPrintingArea={convertor.mmToPx(
-                get_Dimensions_based_label_project_template_exist().height
-              )}
+              cellWidth={convertedWidth}
+              cellWidthOfPrintingArea={convertedheight}
+              borderWidth={measurementService.borderWidthBasedDpi()}
+              left={(index + 1) * measurementService.borderWidthBasedDpi()}
             >
               {/* <Description /> */}
               <CellSplitController

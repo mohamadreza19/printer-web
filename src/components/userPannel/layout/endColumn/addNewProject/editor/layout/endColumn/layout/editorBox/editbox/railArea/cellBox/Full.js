@@ -17,8 +17,10 @@ import {
 } from '../../../../../../../../../../../../../redux/project/border_slice';
 import { addSelectedCell } from '../../../../../../../../../../../../../redux/project/selectedCell_slice';
 import { getEditMode } from '../../../../../../../../../../../../../redux/project/edit_mode_slice';
-import ConverTMeasureService from '../../../../../../../../../../../../../utility/ConverTMeasureService';
-const converTMeasureService = new ConverTMeasureService();
+import MeasurementService from '../../../../../../../../../../../../../utility/MeasurementService';
+
+const measurementService = new MeasurementService();
+
 export default function ({
   symbolDetail,
   index,
@@ -133,14 +135,13 @@ export default function ({
           cell.isSelected,
           isLast
         ).getBorders(),
-
+        paddingRight: '0.5px',
         minWidth: '100%',
         margin: '0',
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
         overflow: 'hidden',
         boxSizing: 'border-box !important',
-        // fontFamily: "'Roboto Mono', monospace !important",
       }}
     >
       <Editor_Cell_Input
@@ -155,7 +156,31 @@ export default function ({
         isBarcode={cell.isBarcode}
         isQrcode={cell.isQrcode}
         isSelection={editMode === 'SELECT_MODE'}
-      />
+      />{' '}
+      {'symbolId' in cell && symbolDetail.isSuccess ? (
+        <ImageContainer
+          svgSrc={symbolDetail.data}
+          style={cell.content.style}
+          cellSymbolId={cell.symbolId}
+        />
+      ) : (
+        <>
+          <Editor_Cell_Input
+            // allowReplaceInputToDiv={allowReplaceInputToDiv}
+            borderWidthBasedDpi={measurementService.borderWidthBasedDpi()}
+            value={cell.content.text}
+            disabled={cell.isSelected}
+            onChange={handleChangeValue}
+            style={cell.content.style}
+            isBarcode={cell.isBarcode}
+            isQrcode={cell.isQrcode}
+            isSelection={editMode === 'SELECT_MODE'}
+            // parentWidth={parentSize.width}
+            // parentHeight={parentSize.height}
+            // font={font.font}
+          />
+        </>
+      )}
     </main>
   );
 }
@@ -221,13 +246,14 @@ class BorderToPrintController {
   static #command = ''; // VERTICAL | ALL | HORIZONTAL | NONE
   static #CellIsSelected = false;
   static #isLastCell = false;
-  static #borderWidth = converTMeasureService.borderWidthBasedDpi(); // px
+  static #borderWidth;
 
   static setConfig(borderType, command, CellIsSelected, isLastCell) {
     this.#borderType = borderType;
     this.#command = command;
     this.#CellIsSelected = CellIsSelected;
     this.#isLastCell = isLastCell;
+    this.#borderWidth = measurementService.borderWidthBasedDpi();
     return this;
   }
 
@@ -236,16 +262,16 @@ class BorderToPrintController {
       case 'use':
         if (this.#command === 'ALL') {
           return {
-            borderRight: this.#isLastCell ? '1px solid black' : 'none',
+            borderRight: this.#borderWidth + 'px solid black',
+
             borderLeft: this.#borderWidth + 'px solid black',
             borderTop: this.#borderWidth + 'px solid black',
             borderBottom: this.#borderWidth + 'px solid black',
           };
         } else if (this.#command === 'VERTICAL') {
           return {
-            borderRight: this.#isLastCell
-              ? this.#borderWidth + 'px solid black'
-              : 'none',
+            borderRight: this.#borderWidth + 'px solid black',
+
             borderLeft: this.#borderWidth + 'px solid black',
             borderTop: 'none',
             borderBottom: 'none',
@@ -268,21 +294,22 @@ class BorderToPrintController {
 
       case 'none':
         return {
-          // borderColor: this.#CellIsSelected ? "#F36523" : "black",
-          // borderWidth: "1px",
-          // borderStyle: "solid",
-          borderRight: this.#isLastCell
-            ? this.#borderWidth + 'px solid black'
-            : 'none',
-          borderLeft: this.#CellIsSelected
-            ? this.#borderWidth + 'px solid #F36523'
-            : this.#borderWidth + 'px solid black',
-          borderTop: this.#CellIsSelected
-            ? this.#borderWidth + 'px solid #F36523'
-            : this.#borderWidth + 'px solid black',
-          borderBottom: this.#CellIsSelected
-            ? this.#borderWidth + 'px solid #F36523'
-            : this.#borderWidth + 'px solid black',
+          borderColor: this.#CellIsSelected ? '#F36523' : 'black',
+          borderWidth: this.#borderWidth + 'px',
+          borderStyle: 'solid',
+
+          // borderRight: this.#isLastCell
+          //   ? this.#borderWidth + "px solid black"
+          //   : "none",
+          // borderLeft: this.#CellIsSelected
+          //   ? this.#borderWidth + "px solid #F36523"
+          //   : this.#borderWidth + "px solid black",
+          // borderTop: this.#CellIsSelected
+          //   ? this.#borderWidth + "px solid #F36523"
+          //   : this.#borderWidth + "px solid black",
+          // borderBottom: this.#CellIsSelected
+          //   ? this.#borderWidth + "px solid #F36523"
+          //   : this.#borderWidth + "px solid black",
         };
     }
   }

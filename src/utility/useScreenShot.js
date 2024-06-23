@@ -16,9 +16,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeType } from '../redux/project/border_slice';
 import { viewMode } from '../redux/project/edit_mode_slice';
 import { getProjectRailWidth } from '../redux/project/project._slice';
+import MeasurementService from './MeasurementService';
+import html2pdf from 'html2pdf.js';
 
 //
-
+const measurementService = new MeasurementService();
 export default function () {
   const dispatch = useDispatch();
   const railWidth = useSelector(getProjectRailWidth);
@@ -111,13 +113,18 @@ export default function () {
           // child.style.border = "none";
         });
         clonedRootElement.style.padding = '0';
-        clonedRootElement.style.zoom = 1;
+        clonedRootElement.style.zoom = 0;
+        clonedRootElement.style.rotate = 90 + 'deg';
         const imgListener = new ImageListener({
           element: clonedRootElement,
+
+          // height: measurementService.mmToPx(railWidth),
         });
+
         const imgDataURL = await imgListener.getImageDataURLFromCanvas();
 
         // console.log(imgDataURL);
+        return;
         const a_tag = new FormCreator().AtagdownloadLinkGenerator(imgDataURL);
 
         a_tag.click();
@@ -161,7 +168,7 @@ export default function () {
           child.style.border = 'none';
         });
         clonedRootElement.style.padding = '0';
-        clonedRootElement.style.zoom = 2;
+        clonedRootElement.style.zoom = 3;
         const imgListener = new ImageListener({
           element: clonedRootElement,
         });
@@ -225,23 +232,38 @@ function doThingOnChild(children = [], callback = () => {}) {
 const interfaceObj_ = {
   element: HTMLElement,
   ChildrenElement: HTMLCollection,
+  height: null,
   // image saveFunction //form_submit(form submitFunction)
 };
 
 class ImageListener {
   constructor(option = interfaceObj_) {
     this.element = option.element;
+    this.height = option.height;
   }
 
   async getImageDataURLFromCanvas() {
     const canvas = await html2canvas(this.element, {
       allowTaint: true,
       scale: 1,
+      // imageTimeout: 1000,
       // width: 1200,
-      // height: 1200,
+      // height: this.height,
     });
 
-    const url = canvas.toDataURL('image/png', 1.0);
+    const url = canvas.toDataURL('application/jpg', 1.0);
+    // const blob = canvas.toBlob('application/pdf', 1.0);
+    // const options = {
+    //   margin: 0,
+    //   filename: 'document.pdf',
+    //   image: { type: 'jpeg', quality: 1 },
+    //   html2canvas: { scale: 2, useCORS: true },
+    //   jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' },
+    // };
+    // html2pdf().from(canvas).save();
+    // var doc = new jsPDF();
+    // doc.addImage(url, 'JPEG', 35, 20, 130, 155);
+    // doc.save('Test.pdf');
     // canvas.toBlob(async function (blob) {
     //   console.log(blob);
     //   const base64 = await blobToBase64String(blob);

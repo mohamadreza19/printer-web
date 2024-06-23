@@ -488,7 +488,7 @@ export const TextFieldFUN_ClipBoardBadge = ({
   );
 };
 export const Editor_Cell_Input = ({
-  parentWidth = 0,
+  allowReplaceInputToDiv = false,
   value = '',
   onChange = () => {},
   isSelection = false,
@@ -501,6 +501,7 @@ export const Editor_Cell_Input = ({
   },
   isBarcode = false,
   isQrcode = false,
+  borderWidthBasedDpi,
   // parentWidth = 0,
   // parentHeight = 0,
 }) => {
@@ -566,18 +567,16 @@ export const Editor_Cell_Input = ({
               ref={ref}
               className="d-flex align-items-center   "
               style={{
-                width: 'fit-content',
-                // paddingLeft: String(value).length === 2 ? '1px' : '0',
                 color: 'black',
                 fontFamily: style.fontFamily,
                 fontWeight: style.fontStyle == 'bold' ? 600 : 400,
                 fontSize: style.fontSize,
-
                 fontStyle: style.fontStyle == 'italic' ? 'italic' : 'normal',
                 textDecoration:
                   style.fontStyle == 'underline' ? 'underline' : 'none',
-                textAlign: 'center' || style.textAlign,
+                textAlign: style.textAlign,
                 rotate: `${style.angle}deg`,
+                // marginRight: borderWidthBasedDpi + "px",
               }}
             >
               {/* <span style={{ textAlign: style.textAlign }} className="m-auto"> */}
@@ -590,7 +589,7 @@ export const Editor_Cell_Input = ({
               className="editor-cell-input  "
               value={value || ''}
               style={{
-                width: parentWidth,
+                // marginRight: borderWidthBasedDpi + "px",
                 fontFamily: style.fontFamily,
                 fontWeight: style.fontStyle == 'bold' ? 600 : 400,
                 fontSize: style.fontSize,

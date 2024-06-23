@@ -16,8 +16,8 @@ import { useGetLabel } from '../../../../../../../../../../../../recoil/store/la
 import useLocalStorage from 'react-use-localstorage';
 import { useSelector } from 'react-redux';
 import { getProjectDimensions } from '../../../../../../../../../../../../redux/project/project._slice';
-import ConverTMeasureService from '../../../../../../../../../../../../utility/ConverTMeasureService';
-const convertor = new ConverTMeasureService();
+import MeasurementService from '../../../../../../../../../../../../utility/MeasurementService';
+const measurementService = new MeasurementService();
 export default function ({
   key,
   customLabels = [],
@@ -49,8 +49,11 @@ export default function ({
         setIsDraggingOver(snapshot.isDraggingOver);
         return (
           <Container
-            railsWidth={convertor.mmToPx(get_railsWidth_based_editor_access())}
-            railsLength={convertor.mmToPx(get_railsLegth_based_editor_access())}
+            railsWidth={measurementService.mmToPx(
+              get_railsWidth_based_editor_access()
+            )}
+            railsLength={get_railsLegth_based_editor_access()}
+            paddingLeft={measurementService.borderWidthBasedDpi()}
             isDragingOver={isDragging}
             id="test-screen"
             data-rail-id={railId}
