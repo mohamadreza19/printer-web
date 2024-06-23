@@ -1,21 +1,22 @@
 export default function ({ language, onClick }) {
   return (
     <div
+      className="footer-slider-right-arrow"
       onClick={onClick}
       style={{
-        backgroundColor: "rgba(0, 0, 0, 0.301)",
+        backgroundColor: 'rgba(0, 0, 0, 0.301)',
         // opacity: "0.3",
-        width: "2.55rem",
-        height: "5rem",
-        top: "10.5vh",
-        position: "absolute",
+        width: '2.55rem',
+        height: '5rem',
+        top: '10.5vh',
+        position: 'absolute',
         zIndex: 5,
-        borderTopRightRadius: "10rem",
-        borderBottomRightRadius: "10rem",
-        display: "flex",
-        justifyContent: "center",
+        borderTopRightRadius: '10rem',
+        borderBottomRightRadius: '10rem',
+        display: 'flex',
+        justifyContent: 'center',
         //   transform: language == "fa" ? "rotate(180deg)" : "",
-        transform: "rotate(-180deg)",
+        transform: 'rotate(-180deg)',
       }}
     >
       <div className="d-flex  justify-content-center align-items-center w-100 h-100">

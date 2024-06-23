@@ -554,7 +554,7 @@ export const Editor_Cell_Input = ({
       );
     }
   };
-  console.log(String(value).length);
+
   return (
     <>
       {isBarcode || isQrcode ? (
@@ -566,12 +566,13 @@ export const Editor_Cell_Input = ({
               ref={ref}
               className="d-flex align-items-center   "
               style={{
-                width: parentWidth,
+                width: 'fit-content',
                 // paddingLeft: String(value).length === 2 ? '1px' : '0',
                 color: 'black',
                 fontFamily: style.fontFamily,
                 fontWeight: style.fontStyle == 'bold' ? 600 : 400,
                 fontSize: style.fontSize,
+
                 fontStyle: style.fontStyle == 'italic' ? 'italic' : 'normal',
                 textDecoration:
                   style.fontStyle == 'underline' ? 'underline' : 'none',
@@ -579,9 +580,9 @@ export const Editor_Cell_Input = ({
                 rotate: `${style.angle}deg`,
               }}
             >
-              <span style={{ textAlign: style.textAlign }} className="m-auto">
-                {value}
-              </span>
+              {/* <span style={{ textAlign: style.textAlign }} className="m-auto"> */}
+              {value}
+              {/* </span> */}
             </div>
           ) : (
             <input

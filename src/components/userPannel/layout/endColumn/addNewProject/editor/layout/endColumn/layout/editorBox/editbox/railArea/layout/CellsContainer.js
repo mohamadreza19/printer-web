@@ -1,12 +1,12 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-color: ${(props) => (props.isDragingOver ? "#F36523" : "#CBCBCB")};
-  height: ${(prop) => prop.railsWidth}mm;
+  background-color: ${(props) => (props.isDragingOver ? '#F36523' : '#CBCBCB')};
+  height: ${(prop) => prop.railsWidth}px;
 
   min-width: 100vw;
-  // min-width: 10px;
-  width: ${(prop) => prop.railsLength}mm;
+
+  width: ${(prop) => prop.railsLength}px;
   display: flex;
 `;
 // flex-direction: ${(prop) =>

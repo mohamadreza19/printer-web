@@ -1,14 +1,14 @@
-import { Grid } from "@mui/material";
-import { useDynamicCssClass } from "../../recoil/readStore";
+import { Grid } from '@mui/material';
+import { useDynamicCssClass } from '../../recoil/readStore';
 
-import Header from "./layout/Header";
+import Header from './layout/Header';
 
-import SelectedLanguage from "./layout/SelectedLanguage";
-import Slider from "./layout/Slider";
-import TextfiledsBox from "./layout/TextfiledsBox";
+import SelectedLanguage from './layout/SelectedLanguage';
+import Slider from '../login/layout/Slider';
+import TextfiledsBox from './layout/TextfiledsBox';
 
-import useCachedLanguage from "../../utility/useCachedLanguage";
-import { AdminLogin_Mutation } from "../../reactQuery/admin/callPostService";
+import useCachedLanguage from '../../utility/useCachedLanguage';
+import { AdminLogin_Mutation } from '../../reactQuery/admin/callPostService';
 
 export default function () {
   const { value: cachedValue, set: setCachedLanguage } = useCachedLanguage();
@@ -23,7 +23,7 @@ export default function () {
   }
   function handleLogin(body) {
     if (!cachedValue) {
-      setCachedLanguage("fa");
+      setCachedLanguage('fa');
     }
     mutate(body);
   }
@@ -31,9 +31,9 @@ export default function () {
   return (
     <Grid
       container
-      className={"bg_secondray  vh100"}
+      className={'bg_secondray  vh100'}
       style={{
-        minHeight: "768px",
+        minHeight: '768px',
       }}
     >
       <Grid
@@ -44,7 +44,7 @@ export default function () {
         xs={12}
         className={
           cssClass.border_r_e_50px +
-          " bg_info py-4 h-100 d-flex flex-column justify-content-between"
+          ' bg_info py-4 h-100 d-flex flex-column justify-content-between'
         }
       >
         <Header />

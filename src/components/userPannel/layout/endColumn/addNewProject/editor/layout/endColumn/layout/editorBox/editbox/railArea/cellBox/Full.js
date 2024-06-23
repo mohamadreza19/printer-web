@@ -88,7 +88,7 @@ export default function ({
       symbolDetail.mutate({ id: cell.symbolId });
     }
   }, [cell.symbolId]);
-
+  console.log();
   useEffect(() => {
     setParentSize({
       width: getOrintaion('WIDTH'),
@@ -123,7 +123,7 @@ export default function ({
       onKeyDown={handleDeleteSymbol}
       tabIndex="-1"
       onClick={handleSelectCell_Via_onClick}
-      className="w-100 h-100  bg-white position-relative d-flex justify-content-center align-content-center "
+      className="w-100 h-100  bg-white position-relative d-flex justify-content-center align-content-center cell"
       style={{
         ...BorderToPrintController.setConfig(
           borderToPrint.type,
@@ -138,6 +138,7 @@ export default function ({
         marginRight: CellStyle().margin,
         overflow: 'hidden',
         boxSizing: 'border-box !important',
+        // fontFamily: "'Roboto Mono', monospace !important",
       }}
     >
       <Editor_Cell_Input
@@ -218,6 +219,7 @@ class BorderToPrintController {
   static #command = ''; // VERTICAL | ALL | HORIZONTAL | NONE
   static #CellIsSelected = false;
   static #isLastCell = false;
+  static #borderWidth = 2; // px
 
   static setConfig(borderType, command, CellIsSelected, isLastCell) {
     this.#borderType = borderType;
@@ -233,14 +235,16 @@ class BorderToPrintController {
         if (this.#command === 'ALL') {
           return {
             borderRight: this.#isLastCell ? '1px solid black' : 'none',
-            borderLeft: '1px solid black',
-            borderTop: '1px solid black',
-            borderBottom: '1px solid black',
+            borderLeft: this.#borderWidth + 'px solid black',
+            borderTop: this.#borderWidth + 'px solid black',
+            borderBottom: this.#borderWidth + 'px solid black',
           };
         } else if (this.#command === 'VERTICAL') {
           return {
-            borderRight: this.#isLastCell ? '1px solid black' : 'none',
-            borderLeft: '1px solid black',
+            borderRight: this.#isLastCell
+              ? this.#borderWidth + 'px solid black'
+              : 'none',
+            borderLeft: this.#borderWidth + 'px solid black',
             borderTop: 'none',
             borderBottom: 'none',
           };
@@ -248,8 +252,8 @@ class BorderToPrintController {
           return {
             borderRight: 'none',
             borderLeft: 'none',
-            borderTop: '1px solid black',
-            borderBottom: '1px solid black',
+            borderTop: this.#borderWidth + 'px solid black',
+            borderBottom: this.#borderWidth + 'px solid black',
           };
         } else if (this.#command === 'NONE') {
           return {
@@ -265,16 +269,18 @@ class BorderToPrintController {
           // borderColor: this.#CellIsSelected ? "#F36523" : "black",
           // borderWidth: "1px",
           // borderStyle: "solid",
-          borderRight: this.#isLastCell ? '1px solid black' : 'none',
+          borderRight: this.#isLastCell
+            ? this.#borderWidth + 'px solid black'
+            : 'none',
           borderLeft: this.#CellIsSelected
-            ? '1px solid #F36523'
-            : '1px solid black',
+            ? this.#borderWidth + 'px solid #F36523'
+            : this.#borderWidth + 'px solid black',
           borderTop: this.#CellIsSelected
-            ? '1px solid #F36523'
-            : '1px solid black',
+            ? this.#borderWidth + 'px solid #F36523'
+            : this.#borderWidth + 'px solid black',
           borderBottom: this.#CellIsSelected
-            ? '1px solid #F36523'
-            : '1px solid black',
+            ? this.#borderWidth + 'px solid #F36523'
+            : this.#borderWidth + 'px solid black',
         };
     }
   }

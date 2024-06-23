@@ -6,10 +6,11 @@ export default {
       password: 'رمز عبور',
       forgetPassword: 'فراموشی رمز عبور',
       enter: 'ورود',
+      401: 'نام کاربری یا رمز عبور اشتباه است',
     },
     projectList: {
       projectList: 'لیست پروژه',
-      searcByProjectName: 'جست و جو بر اساس نام پروژه',
+      searchByProjectName: 'جست و جو بر اساس نام پروژه',
       messageToDelete: 'ایا از حذف پروژه خود مطمئن هستید ?',
       product: 'محصول',
       ltr: 'چپ به راست',
