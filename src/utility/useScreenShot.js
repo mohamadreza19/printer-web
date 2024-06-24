@@ -161,7 +161,7 @@ export default function () {
           child.style.border = "none";
         });
         clonedRootElement.style.padding = "0";
-        clonedRootElement.style.zoom = 2;
+        clonedRootElement.style.zoom = 1;
         const imgListener = new ImageListener({
           element: clonedRootElement,
         });

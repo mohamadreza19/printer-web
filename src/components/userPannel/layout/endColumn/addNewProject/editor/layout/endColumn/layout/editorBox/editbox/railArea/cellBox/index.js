@@ -127,9 +127,13 @@ export default function ({
               {...provided.draggableProps}
               ref={provided.innerRef}
               {...provided.dragHandleProps}
-              cellWidth={convertedWidth}
+              cellWidth={
+                isLast
+                  ? convertedWidth + measurementService.borderWidthBasedDpi()
+                  : convertedWidth
+              }
               cellWidthOfPrintingArea={convertedheight}
-              left={(index + 1) * measurementService.borderWidthBasedDpi()}
+              borderWidth={measurementService.borderWidthBasedDpi()}
             >
               {/* <Description /> */}
               <CellSplitController

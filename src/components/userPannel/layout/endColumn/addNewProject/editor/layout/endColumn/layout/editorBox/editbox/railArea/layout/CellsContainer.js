@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.table`
   background-color: ${(props) => (props.isDragingOver ? "#F36523" : "#CBCBCB")};
   height: ${(prop) => prop.railsWidth}px;
-  padding-left: ${(prop) => prop.paddingLeft}px;
-  min-width: 100vw;
-  // min-width: 10px;
+  
+  min-width: 100px;
+  padding-right:${(prop) => (prop.railsLength ? "0" : "40px")} 
   width: ${(prop) => prop.railsLength}mm;
-  display: flex;
+  border-collapse: collapse;
 `;
 // flex-direction: ${(prop) =>
 //   prop.justify == "right" ? "row-reverse" : "row"};

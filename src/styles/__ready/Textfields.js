@@ -501,7 +501,7 @@ export const Editor_Cell_Input = ({
   },
   isBarcode = false,
   isQrcode = false,
-  borderWidthBasedDpi,
+
   // parentWidth = 0,
   // parentHeight = 0,
 }) => {
@@ -576,7 +576,6 @@ export const Editor_Cell_Input = ({
                   style.fontStyle == "underline" ? "underline" : "none",
                 textAlign: style.textAlign,
                 rotate: `${style.angle}deg`,
-                // marginRight: borderWidthBasedDpi + "px",
               }}
             >
               {/* <div
@@ -587,31 +586,33 @@ export const Editor_Cell_Input = ({
               {/* </div> */}
             </div>
           ) : (
-            <input
-              ref={ref}
-              className="editor-cell-input  "
-              value={value || ""}
-              style={{
-                // marginRight: borderWidthBasedDpi + "px",
-                fontFamily: style.fontFamily,
-                fontWeight: style.fontStyle == "bold" ? 600 : 400,
-                fontSize: style.fontSize,
-                fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
-                textDecoration:
-                  style.fontStyle == "underline" ? "underline" : "none",
-                textAlign: style.textAlign,
-                rotate: `${style.angle}deg`,
-                // margin: `${style.margin}px `,
-                padding: `${style.padding}px`,
-              }}
-              onClick={() => {
-                onClick();
-              }}
-              onChange={(e) => {
-                onChange(e.target.value);
-              }}
-              id="text"
-            />
+            <>
+              <input
+                ref={ref}
+                className="editor-cell-input  "
+                value={value || ""}
+                style={{
+                  // marginRight: borderWidthBasedDpi + "px",
+                  fontFamily: style.fontFamily,
+                  fontWeight: style.fontStyle == "bold" ? 600 : 400,
+                  fontSize: style.fontSize,
+                  fontStyle: style.fontStyle == "italic" ? "italic" : "normal",
+                  textDecoration:
+                    style.fontStyle == "underline" ? "underline" : "none",
+                  textAlign: style.textAlign,
+                  rotate: `${style.angle}deg`,
+                  // margin: `${style.margin}px `,
+                  padding: `${style.padding}px`,
+                }}
+                onClick={() => {
+                  onClick();
+                }}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                }}
+                id="text"
+              />
+            </>
           )}
         </>
       ) : (

@@ -129,15 +129,17 @@ export default function ({
       onKeyDown={handleDeleteSymbol}
       tabIndex="-1"
       onClick={handleSelectCell_Via_onClick}
-      className="w-100 h-100  bg-white position-relative d-flex justify-content-center align-content-center "
+      className="w-100 h-100  bg-white position-position d-flex justify-content-center align-content-center "
       style={{
         ...BorderToPrintController.setConfig(
           borderToPrint.type,
           borderToPrint.value,
-          cell.isSelected
+          cell.isSelected,
+          isLast
         ).getBorders(),
-        paddingRight: "0.5px",
+        // border: "1px solid black",
         minWidth: "100%",
+        maxWidth: "100%",
         margin: "0",
         marginLeft: CellStyle().margin,
         marginRight: CellStyle().margin,
@@ -156,30 +158,31 @@ export default function ({
         isSelection={editMode === "SELECT_MODE"}
        
       /> */}
-      {"symbolId" in cell && symbolDetail.isSuccess ? (
-        <ImageContainer
-          svgSrc={symbolDetail.data}
-          style={cell.content.style}
-          cellSymbolId={cell.symbolId}
-        />
-      ) : (
-        <>
-          <Editor_Cell_Input
-            allowReplaceInputToDiv={allowReplaceInputToDiv}
-            borderWidthBasedDpi={measurementService.borderWidthBasedDpi()}
-            value={cell.content.text}
-            disabled={cell.isSelected}
-            onChange={handleChangeValue}
+      <>
+        {"symbolId" in cell && symbolDetail.isSuccess ? (
+          <ImageContainer
+            svgSrc={symbolDetail.data}
             style={cell.content.style}
-            isBarcode={cell.isBarcode}
-            isQrcode={cell.isQrcode}
-            isSelection={editMode === "SELECT_MODE"}
-            // parentWidth={parentSize.width}
-            // parentHeight={parentSize.height}
-            // font={font.font}
+            cellSymbolId={cell.symbolId}
           />
-        </>
-      )}
+        ) : (
+          <>
+            <Editor_Cell_Input
+              allowReplaceInputToDiv={allowReplaceInputToDiv}
+              value={cell.content.text}
+              disabled={cell.isSelected}
+              onChange={handleChangeValue}
+              style={cell.content.style}
+              isBarcode={cell.isBarcode}
+              isQrcode={cell.isQrcode}
+              isSelection={editMode === "SELECT_MODE"}
+              // parentWidth={parentSize.width}
+              // parentHeight={parentSize.height}
+              // font={font.font}
+            />
+          </>
+        )}
+      </>
     </main>
   );
 }
@@ -253,6 +256,7 @@ class BorderToPrintController {
     this.#CellIsSelected = CellIsSelected;
     this.#isLastCell = isLastCell;
     this.#borderWidth = measurementService.borderWidthBasedDpi();
+
     return this;
   }
 
@@ -261,7 +265,9 @@ class BorderToPrintController {
       case "use":
         if (this.#command === "ALL") {
           return {
-            borderRight: this.#borderWidth + "px solid black",
+            borderRight: this.#isLastCell
+              ? this.#borderWidth + "px solid black"
+              : "none",
 
             borderLeft: this.#borderWidth + "px solid black",
             borderTop: this.#borderWidth + "px solid black",
@@ -293,22 +299,22 @@ class BorderToPrintController {
 
       case "none":
         return {
-          borderColor: this.#CellIsSelected ? "#F36523" : "black",
-          borderWidth: this.#borderWidth + "px",
-          borderStyle: "solid",
+          // borderColor: this.#CellIsSelected ? "#F36523" : "black",
+          // borderWidth: this.#borderWidth + "px",
+          // borderStyle: "solid",
 
-          // borderRight: this.#isLastCell
-          //   ? this.#borderWidth + "px solid black"
-          //   : "none",
-          // borderLeft: this.#CellIsSelected
-          //   ? this.#borderWidth + "px solid #F36523"
-          //   : this.#borderWidth + "px solid black",
-          // borderTop: this.#CellIsSelected
-          //   ? this.#borderWidth + "px solid #F36523"
-          //   : this.#borderWidth + "px solid black",
-          // borderBottom: this.#CellIsSelected
-          //   ? this.#borderWidth + "px solid #F36523"
-          //   : this.#borderWidth + "px solid black",
+          borderRight: this.#isLastCell
+            ? this.#borderWidth + "px solid black"
+            : "none",
+          borderLeft: this.#CellIsSelected
+            ? this.#borderWidth + "px solid #F36523"
+            : this.#borderWidth + "px solid black",
+          borderTop: this.#CellIsSelected
+            ? this.#borderWidth + "px solid #F36523"
+            : this.#borderWidth + "px solid black",
+          borderBottom: this.#CellIsSelected
+            ? this.#borderWidth + "px solid #F36523"
+            : this.#borderWidth + "px solid black",
         };
     }
   }
@@ -317,7 +323,6 @@ class BorderToPrintController {
   }
 }
 function handleBorderRightBasedIndex(isLast = false) {
-  console.log({ isLast });
   if (!isLast) {
     return "1px solid black";
   } else {

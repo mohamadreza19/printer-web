@@ -61,19 +61,22 @@ export default function ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {customLabels?.map((c, index) => {
-              return (
-                <CellBox
-                  projectDimensions={projectDimensions}
-                  isRootCell={true}
-                  key={index}
-                  index={index}
-                  isLast={customLabels.length - 1 === index}
-                  cell={c}
-                  railId={railId}
-                />
-              );
-            })}
+            <tr>
+              {customLabels?.map((c, index) => {
+                return (
+                  <CellBox
+                    projectDimensions={projectDimensions}
+                    isRootCell={true}
+                    key={index}
+                    index={index}
+                    isLast={customLabels.length - 1 === index}
+                    cell={c}
+                    railId={railId}
+                  />
+                );
+              })}
+            </tr>
+
             {provided.placeholder}
           </Container>
         );

@@ -1120,10 +1120,7 @@ html[dir="ltr"] .product-label-icon-plus-box {
   text-align: center;
   text-justify: center;
   border: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
   /* position: relative; */
 }
 .add-new-rail-btn {

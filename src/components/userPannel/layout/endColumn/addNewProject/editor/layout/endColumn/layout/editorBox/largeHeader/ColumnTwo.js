@@ -71,7 +71,7 @@ export default function () {
           </span>
           <span
             className="mt-2 w-100 border"
-            onClick={() => onClick("FONT/CHANGE", "Roboto")}
+            onClick={() => onClick("FONT/CHANGE", "Roboto Mono, monospace")}
           >
             Roboto
           </span>
