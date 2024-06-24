@@ -8,6 +8,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { AdminRoutePath, UserRoutePath } from '../../../../routes/Routes';
 import styled from 'styled-components';
+import { t } from 'i18next';
 export default function () {
   const { pathname } = useLocation();
 
@@ -224,10 +225,10 @@ export default function () {
           {pathname.includes('setting') && (
             <SubButtonsBox className={cssClass.ms_2}>
               <Link className={symbols_selected} to={'/admin/setting/symbols'}>
-                سیمبل
+                {t('symbols.symbolList')}
               </Link>
               <Link className={slider_selected} to={'/admin/setting/slider'}>
-                اسلایدر
+                {t('slider.slider')}
               </Link>
             </SubButtonsBox>
           )}

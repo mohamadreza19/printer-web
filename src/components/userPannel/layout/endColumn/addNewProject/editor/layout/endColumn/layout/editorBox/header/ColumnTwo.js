@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   DropDown,
   TextBold,
@@ -7,25 +7,47 @@ import {
   TextLeft,
   TextRight,
   TextUnderLine,
-} from "../../../../../../../../../../../styles/__ready/EditorIcons";
-import Typography from "../../../../../../../../../../../styles/__ready/Typography";
+} from '../../../../../../../../../../../styles/__ready/EditorIcons';
+import Typography from '../../../../../../../../../../../styles/__ready/Typography';
 
 import useSelectedCell, {
   getSelectedCellSyle,
-} from "../../../../../../../../../../../redux/project/selectedCell";
-import { useDispatch, useSelector } from "react-redux";
-import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
-import { useState } from "react";
-import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
-import { useTranslation } from "react-i18next";
+} from '../../../../../../../../../../../redux/project/selectedCell';
+import { useDispatch, useSelector } from 'react-redux';
+import { addEditEvent } from '../../../../../../../../../../../redux/project/edit_event_slice';
+import { useState } from 'react';
+import { getSelectedCell } from '../../../../../../../../../../../redux/project/selectedCell_slice';
+import { useTranslation } from 'react-i18next';
 
+const fonts = [
+  {
+    text: ' Arial',
+    value: 'Arial',
+  },
+  {
+    text: ' Ubuntu',
+    value: 'Ubuntu',
+  },
+  {
+    text: ' Roboto',
+    value: "'Roboto Mono', monospace",
+  },
+  {
+    text: ' Titr',
+    value: 'Titr',
+  },
+  {
+    text: ' Nazanin',
+    value: 'Nazanin',
+  },
+];
 export default function () {
   const dispatch = useDispatch();
 
   const Cell = useSelector(getSelectedCell);
   const selectedCell = getSelectedCellSyle();
   const { t } = useTranslation();
-  function onClick(type = "", value = "") {
+  function onClick(type = '', value = '') {
     dispatch(
       addEditEvent({
         type: type,
@@ -45,25 +67,36 @@ export default function () {
         <menu
           className={`position-absolute  flex-column`}
           style={{
-            width: "224px",
+            width: '224px',
             left: 0,
-            top: "2.2rem",
-            zIndex: "10",
-            backgroundColor: "#ecececcc",
-            borderBottomLeftRadius: "10px",
-            borderBottomRightRadius: "10px",
-            display: open ? "flex" : "none",
+            top: '2.2rem',
+            zIndex: '10',
+            backgroundColor: '#ecececcc',
+            borderBottomLeftRadius: '10px',
+            borderBottomRightRadius: '10px',
+            display: open ? 'flex' : 'none',
           }}
         >
-          <span
+          {fonts.map((font, index) => {
+            return (
+              <span
+                key={index}
+                className="mt-2 w-100 border"
+                onClick={() => onClick('FONT/CHANGE', font.value)}
+              >
+                {font.text}
+              </span>
+            );
+          })}
+          {/* <span
             className="mt-2 w-100 border"
-            onClick={() => onClick("FONT/CHANGE", "Arial")}
+            onClick={() => onClick('FONT/CHANGE', 'Arial')}
           >
             Arial
           </span>
           <span
             className="mt-2 w-100 border"
-            onClick={() => onClick("FONT/CHANGE", "Ubuntu")}
+            onClick={() => onClick('FONT/CHANGE', 'Ubuntu')}
           >
             Ubuntu
           </span>
@@ -75,22 +108,22 @@ export default function () {
           </span>
           <span
             className="mt-2 w-100 border"
-            onClick={() => onClick("FONT/CHANGE", "Traffic")}
+            onClick={() => onClick('FONT/CHANGE', 'Traffic')}
           >
             Traffic
           </span>
           <span
             className="mt-2 w-100 border"
-            onClick={() => onClick("FONT/CHANGE", "Titr")}
+            onClick={() => onClick('FONT/CHANGE', 'Titr')}
           >
             Titr
           </span>
           <span
             className="mt-2 w-100 border"
-            onClick={() => onClick("FONT/CHANGE", "Nazanin")}
+            onClick={() => onClick('FONT/CHANGE', 'Nazanin')}
           >
             Nazanin
-          </span>
+          </span> */}
         </menu>
       );
     };
@@ -103,7 +136,7 @@ export default function () {
 
         <span
           style={{
-            top: "0.15rem",
+            top: '0.15rem',
           }}
           className="h-100 d-flex justify-content-center align-items-center position-relative"
         >
@@ -111,7 +144,7 @@ export default function () {
           <FontsMenu />
         </span>
         <div className="editor-small-info-cell-box">
-          <Typography.H9>{t("editor.fontType")}</Typography.H9>
+          <Typography.H9>{t('editor.fontType')}</Typography.H9>
         </div>
       </section>
     );
@@ -120,10 +153,10 @@ export default function () {
   const TextBoldBox = () => {
     return (
       <span
-        onClick={() => onClick("FONT/STYLE", "bold")}
+        onClick={() => onClick('FONT/STYLE', 'bold')}
         className={`editor-group-button-left-box d-flex justify-content-center align-item-center ${
           // selectedCell.fontStyle == "bold" && "opacity-4"
-          selectedCell.fontStyle == "bold" ? "opacity-4" : " "
+          selectedCell.fontStyle == 'bold' ? 'opacity-4' : ' '
         }`}
       >
         <TextBold />
@@ -133,10 +166,10 @@ export default function () {
   const TextUnderLineBox = () => {
     return (
       <span
-        onClick={() => onClick("FONT/STYLE", "underline")}
+        onClick={() => onClick('FONT/STYLE', 'underline')}
         className={`editor-group-button-right-box  d-flex justify-content-center align-item-center ${
           // selectedCell.fontStyle == "bold" && "opacity-4"
-          selectedCell.fontStyle == "underline" && "opacity-4"
+          selectedCell.fontStyle == 'underline' && 'opacity-4'
         }`}
       >
         <TextUnderLine />
@@ -146,10 +179,10 @@ export default function () {
   const TextItalicBox = () => {
     return (
       <span
-        onClick={() => onClick("FONT/STYLE", "italic")}
+        onClick={() => onClick('FONT/STYLE', 'italic')}
         className={`editor-group-button-center-box d-flex justify-content-center align-item-center ${
           // selectedCell.fontStyle == "bold" && "opacity-4"
-          selectedCell.fontStyle == "italic" && "opacity-4"
+          selectedCell.fontStyle == 'italic' && 'opacity-4'
         }`}
       >
         <TextItalic />
@@ -160,32 +193,32 @@ export default function () {
     return (
       <section className="d-flex grop-box">
         <span
-          onClick={() => onClick("FONT/ALIGN", "right")}
+          onClick={() => onClick('FONT/ALIGN', 'right')}
           className={`editor-group-button-right-box d-flex justify-content-center align-item-center ${
-            selectedCell.textAlign == "right" && "opacity-4"
+            selectedCell.textAlign == 'right' && 'opacity-4'
           }`}
         >
           <TextRight />
         </span>
         <span
-          onClick={() => onClick("FONT/ALIGN", "center")}
+          onClick={() => onClick('FONT/ALIGN', 'center')}
           className={`editor-group-button-center-box d-flex justify-content-center align-item-center  ${
-            selectedCell.textAlign == "center" && "opacity-4"
+            selectedCell.textAlign == 'center' && 'opacity-4'
           }`}
         >
           <TextCenter />
         </span>
         <span
-          onClick={() => onClick("FONT/ALIGN", "left")}
+          onClick={() => onClick('FONT/ALIGN', 'left')}
           className={`editor-group-button-left-box d-flex justify-content-center align-item-center  ${
-            selectedCell.textAlign == "left" && "opacity-4"
+            selectedCell.textAlign == 'left' && 'opacity-4'
           }`}
         >
           <TextLeft />
         </span>
 
         <div className="editor-small-info-cell-box ">
-          <Typography.H9>{t("editor.textAlignment")}</Typography.H9>
+          <Typography.H9>{t('editor.textAlignment')}</Typography.H9>
         </div>
       </section>
     );
@@ -202,7 +235,7 @@ export default function () {
           <TextItalicBox />
           <TextBoldBox />
           <div className="editor-small-info-cell-box ">
-            <Typography.H9>{t("editor.textStyle")}</Typography.H9>
+            <Typography.H9>{t('editor.textStyle')}</Typography.H9>
           </div>
         </section>
       </footer>

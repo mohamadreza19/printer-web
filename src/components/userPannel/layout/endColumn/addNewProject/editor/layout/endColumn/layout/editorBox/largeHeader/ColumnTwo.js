@@ -22,7 +22,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addEditEvent } from "../../../../../../../../../../../redux/project/edit_event_slice";
 import { getSelectedCell } from "../../../../../../../../../../../redux/project/selectedCell_slice";
-
+const fonts = [
+  {
+    text: " Arial",
+    value: "Arial",
+  },
+  {
+    text: " Ubuntu",
+    value: "Ubuntu",
+  },
+  {
+    text: " Roboto",
+    value: "'Roboto Mono', monospace",
+  },
+  {
+    text: " Titr",
+    value: "Titr",
+  },
+  {
+    text: " Nazanin",
+    value: "Nazanin",
+  },
+];
 export default function () {
   const dispatch = useDispatch();
 

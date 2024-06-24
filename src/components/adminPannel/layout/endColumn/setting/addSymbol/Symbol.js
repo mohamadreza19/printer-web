@@ -3,8 +3,9 @@ import { Admin_User_Symbol } from "../../../../../../reactQuery/common/callGetSe
 import { AdminDelete_Symbol_Mutation } from "../../../../../../reactQuery/admin/callDeleteService";
 import Icons from "../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../styles/__ready/Typography";
+import { t } from "i18next";
 
-function Symbol({ id,DeleteBtn=true,count=0 }) {
+function Symbol({ id, DeleteBtn = true, count = 0 }) {
   const symbol = Admin_User_Symbol("admin");
   const delete_symbol = AdminDelete_Symbol_Mutation();
 
@@ -59,12 +60,17 @@ function Symbol({ id,DeleteBtn=true,count=0 }) {
           />
           {/* {symbol.data.replace('"', "")} */}
         </article>
-        <Typography.H9_5 className={'my-2'}>تعداد چاپ : {count}</Typography.H9_5>
-        <article style={{
-          display:DeleteBtn?'block':'none'
-        }} onClick={deleteSymbol}>
+        <Typography.H9_5 className={"my-2"}>
+          {t("symbols.printCount")} : {count}
+        </Typography.H9_5>
+        <article
+          style={{
+            display: DeleteBtn ? "block" : "none",
+          }}
+          onClick={deleteSymbol}
+        >
           <Icons.Trash />
-       </article>
+        </article>
       </div>
     );
   }

@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import Typography from "../../../../../../styles/__ready/Typography";
 import MonstPrintedSymbol from "./MostPrintedSymbol";
 import SymbolList from "./SymbolList";
@@ -16,8 +17,10 @@ function AddSymbol() {
       }}
     >
       <header className="w-100 px-5 mt-3 mb-5">
-        <MonstPrintedSymbol/>
-        <Typography.H5 className="font-500">لیست سیمبل ها</Typography.H5>
+        <MonstPrintedSymbol />
+        <Typography.H5 className="font-500">
+          {t("symbols.symbolList")}
+        </Typography.H5>
         <SymbolList />
       </header>
       <main className=" d-flex  flex-column justify-content-center align-items-center">

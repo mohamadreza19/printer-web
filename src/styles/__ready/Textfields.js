@@ -488,7 +488,6 @@ export const TextFieldFUN_ClipBoardBadge = ({
   );
 };
 export const Editor_Cell_Input = ({
-  allowReplaceInputToDiv = false,
   value = "",
   onChange = () => {},
   isSelection = false,
@@ -560,7 +559,7 @@ export const Editor_Cell_Input = ({
     <>
       {isBarcode || isQrcode ? (
         <BarcodeAndQrCodeController />
-      ) : !allowReplaceInputToDiv ? (
+      ) : (
         <>
           {!isSelection ? (
             <div
@@ -578,12 +577,9 @@ export const Editor_Cell_Input = ({
                 rotate: `${style.angle}deg`,
               }}
             >
-              {/* <div
-                style={{ textAlign: style.textAlign, paddingTop: "2px" }}
-                className="w-100"
-              > */}
+              {/* <span style={{ textAlign: style.textAlign }} className="m-auto"> */}
               {value}
-              {/* </div> */}
+              {/* </span> */}
             </div>
           ) : (
             <>
@@ -615,8 +611,6 @@ export const Editor_Cell_Input = ({
             </>
           )}
         </>
-      ) : (
-        <RelacedToDiv style={style} value={value} />
       )}
     </>
   );

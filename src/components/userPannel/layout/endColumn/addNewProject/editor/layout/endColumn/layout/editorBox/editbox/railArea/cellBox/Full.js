@@ -46,8 +46,6 @@ export default function ({
   const borderToPrint = useSelector(getBorderToPrint);
   const editMode = useSelector(getEditMode);
 
-  const allowReplaceInputToDiv = useRecoilValue(allowReplaceInputToDiv_store);
-
   //
 
   //
@@ -147,17 +145,19 @@ export default function ({
         boxSizing: "border-box !important",
       }}
     >
-      {/* <Editor_Cell_Input
-        allowReplaceInputToDiv={allowReplaceInputToDiv}
-        value={cell.content.text}
+      <Editor_Cell_Input
+        parentWidth={
+          ref.current ? ref.current.getBoundingClientRect().width : 0
+        }
+        // value={cell.content.text}
+        value={index + 1}
         disabled={cell.isSelected}
         onChange={handleChangeValue}
         style={cell.content.style}
         isBarcode={cell.isBarcode}
         isQrcode={cell.isQrcode}
         isSelection={editMode === "SELECT_MODE"}
-       
-      /> */}
+      />
       <>
         {"symbolId" in cell && symbolDetail.isSuccess ? (
           <ImageContainer
@@ -168,7 +168,6 @@ export default function ({
         ) : (
           <>
             <Editor_Cell_Input
-              allowReplaceInputToDiv={allowReplaceInputToDiv}
               value={cell.content.text}
               disabled={cell.isSelected}
               onChange={handleChangeValue}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Icons from "../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../styles/__ready/Typography";
 import { AdminAddSymbol_Mutation } from "../../../../../../reactQuery/admin/callPostService";
+import { t } from "i18next";
 
 function UploadSymbolArea() {
   const [file, setFile] = useState("");
@@ -49,7 +50,7 @@ function UploadSymbolArea() {
       <FileInput setFile={setFile} file={file} />
       <footer>
         <Typography.H7 className="font-300 disabled_gray2">
-          آپلود فایل SVG حداکثر حجم 1 مگابایت
+          {t("symbols.uploadOneMBSVGFile")}
         </Typography.H7>
       </footer>
     </div>

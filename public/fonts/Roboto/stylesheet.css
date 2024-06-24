@@ -1,16 +1,41 @@
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-ExtraLight.ttf') format('truetype');
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-ExtraLight.eot");
   src: url("RobotoMono-ExtraLight.eot?#iefix") format("embedded-opentype"),
     url("RobotoMono-ExtraLight.woff2") format("woff2"),
     url("RobotoMono-ExtraLight.woff") format("woff"),
     url("RobotoMono-ExtraLight.ttf") format("truetype");
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-ExtraLightItalic.ttf') format('truetype');
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-Bold.eot");
   src: url("RobotoMono-Bold.eot?#iefix") format("embedded-opentype"),
@@ -41,12 +66,26 @@
     url("RobotoMono-ExtraLightItalic.woff2") format("woff2"),
     url("RobotoMono-ExtraLightItalic.woff") format("woff"),
     url("RobotoMono-ExtraLightItalic.ttf") format("truetype");
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-Italic.ttf') format('truetype');
+  font-weight: normal;
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-BoldItalic.eot");
   src: url("RobotoMono-BoldItalic.eot?#iefix") format("embedded-opentype"),
@@ -54,35 +93,67 @@
     url("RobotoMono-BoldItalic.woff") format("woff"),
     url("RobotoMono-BoldItalic.ttf") format("truetype");
   font-weight: bold;
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-SemiBold.ttf') format('truetype');
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-SemiBold.eot");
   src: url("RobotoMono-SemiBold.eot?#iefix") format("embedded-opentype"),
     url("RobotoMono-SemiBold.woff2") format("woff2"),
     url("RobotoMono-SemiBold.woff") format("woff"),
     url("RobotoMono-SemiBold.ttf") format("truetype");
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-SemiBoldItalic.ttf') format('truetype');
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-SemiBoldItalic.eot");
   src: url("RobotoMono-SemiBoldItalic.eot?#iefix") format("embedded-opentype"),
     url("RobotoMono-SemiBoldItalic.woff2") format("woff2"),
     url("RobotoMono-SemiBoldItalic.woff") format("woff"),
     url("RobotoMono-SemiBoldItalic.ttf") format("truetype");
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-Medium.eot");
   src: url("RobotoMono-Medium.eot?#iefix") format("embedded-opentype"),
@@ -102,23 +173,34 @@
     url("RobotoMono-LightItalic.woff") format("woff"),
     url("RobotoMono-LightItalic.ttf") format("truetype");
   font-weight: 300;
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-Regular.ttf') format('truetype');
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-Regular.eot");
   src: url("RobotoMono-Regular.eot?#iefix") format("embedded-opentype"),
     url("RobotoMono-Regular.woff2") format("woff2"),
     url("RobotoMono-Regular.woff") format("woff"),
     url("RobotoMono-Regular.ttf") format("truetype");
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-Thin.ttf') format('truetype');
+  font-weight: 100;
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-MediumItalic.eot");
   src: url("RobotoMono-MediumItalic.eot?#iefix") format("embedded-opentype"),
@@ -138,21 +220,29 @@
     url("RobotoMono-Light.woff") format("woff"),
     url("RobotoMono-Light.ttf") format("truetype");
   font-weight: 300;
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
+<<<<<<< HEAD
+  font-family: 'Roboto Mono', monospace;
+  src: url('RobotoMono-ThinItalic.ttf') format('truetype');
+=======
   font-family: Roboto Mono, monospace;
   src: url("RobotoMono-ThinItalic.eot");
   src: url("RobotoMono-ThinItalic.eot?#iefix") format("embedded-opentype"),
     url("RobotoMono-ThinItalic.woff2") format("woff2"),
     url("RobotoMono-ThinItalic.woff") format("woff"),
     url("RobotoMono-ThinItalic.ttf") format("truetype");
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd
   font-weight: 100;
   font-style: italic;
   font-display: swap;
 }
+<<<<<<< HEAD
+=======
 
 @font-face {
   font-family: Roboto Mono, monospace;
@@ -165,3 +255,4 @@
   font-style: normal;
   font-display: swap;
 }
+>>>>>>> 97e0e05cde0f5af4a1710f9ec99b0ca223c429fd

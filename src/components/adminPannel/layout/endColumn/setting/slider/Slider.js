@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "../../../../../../styles/__ready/Typography";
 import SlidesList from "./SlidesList";
 import UploadImageArea from "./UploadImageArea";
+import { t } from "i18next";
 
 function AddSlider() {
   return (
@@ -16,7 +17,9 @@ function AddSlider() {
       }}
     >
       <header className="w-100 px-5 mt-3 mb-5">
-        <Typography.H5 className="font-500">لیست عکس های اسلایدر</Typography.H5>
+        <Typography.H5 className="font-500">
+          {t("slider.sliderImagesList")}
+        </Typography.H5>
         <SlidesList />
       </header>
       <main className=" d-flex  flex-column justify-content-center align-items-center">

@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from "react-query";
-import callPostServices from "../../services/user/api_post";
-import useCachedToken from "../../utility/useCachedToken";
-import { useRecoilState } from "recoil";
-import { isUserLogin } from "../../recoil/recoilStore";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from 'react-query';
+import callPostServices from '../../services/user/api_post';
+import useCachedToken from '../../utility/useCachedToken';
+import { useRecoilState } from 'recoil';
+import { isUserLogin } from '../../recoil/recoilStore';
+import { useNavigate } from 'react-router-dom';
 
 import {
   add_Product_Bookmark_Mutation_key,
@@ -12,39 +12,37 @@ import {
   setAdd_Product_Bookmark_Mutation_key,
   setBookmark_Product_Delete_key,
   setProjectsKey,
-} from "../querykey/user_key";
-import { useEffect } from "react";
-import useToastReducer from "../../recoil/reducer/useToastReducer";
+} from '../querykey/user_key';
+import { useEffect } from 'react';
+import useToastReducer from '../../recoil/reducer/useToastReducer';
 import {
   admin_user_productList,
   setAdmin_user_productList,
-} from "../querykey/common";
+} from '../querykey/common';
+import { useTranslation } from 'react-i18next';
 
 export const UserLogin_Mutation = () => {
   const [_, setIsUserLogin] = useRecoilState(isUserLogin);
   const { set: setUserToken } = useCachedToken();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const result = useMutation({
-    mutationKey: "login",
+    mutationKey: 'login',
     mutationFn: (body) => callPostServices.login(body),
   });
-  const is401 = result.error?.includes("401");
-  let message = {
-    fa: "",
-  };
+  const is401 = result.error?.includes('401');
+  let message;
   let statusCode = 201;
   if (is401) {
-    message = {
-      fa: "نام کاربری یا رمز عبور اشتباه است",
-    };
+    message = t('login.401');
     statusCode = 401;
   }
   if (result.data) {
     setUserToken(result.data);
     setIsUserLogin(true);
-    navigate("/user");
+    navigate('/user');
   }
-  return { ...result, error: message.fa, statusCode };
+  return { ...result, error: message, statusCode };
 };
 
 //need edit projectsKey
@@ -59,7 +57,7 @@ export const AddProject_Mutation = () => {
   const setLoading = useToastReducer();
 
   const result = useMutation({
-    mutationKey: "project-post",
+    mutationKey: 'project-post',
     mutationFn: (body) => {
       return callPostServices.add_project(token, body);
     },
@@ -74,7 +72,7 @@ export const AddProject_Mutation = () => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
   }, [isLoading]);
@@ -82,7 +80,7 @@ export const AddProject_Mutation = () => {
   if (isSuccess) {
     setLoading({
       isShow: false,
-      message: "",
+      message: '',
     });
     // data = {
     //   createdAt: "2023-05-07T10:56:14.762Z",
@@ -107,12 +105,12 @@ export const AddImage_ToPrint_Local_Mutation = () => {
   const setLoading = useToastReducer();
 
   const result = useMutation({
-    mutationKey: "local-fileupload",
+    mutationKey: 'local-fileupload',
 
     mutationFn: (body) => {
       let formedFile = new FormData();
       const width = body.width;
-      formedFile.append("fileupload", body.file);
+      formedFile.append('fileupload', body.file);
 
       return callPostServices.add_image_to_local_prointer(formedFile, width);
     },
@@ -127,7 +125,7 @@ export const AddImage_ToPrint_Local_Mutation = () => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
   }, [isLoading]);
@@ -135,7 +133,7 @@ export const AddImage_ToPrint_Local_Mutation = () => {
   if (isSuccess) {
     setLoading({
       isShow: false,
-      message: "",
+      message: '',
     });
     // data = {
     //   createdAt: "2023-05-07T10:56:14.762Z",
@@ -157,7 +155,7 @@ export const Add_Label_Bookmark_Mutation = () => {
   const setLoading = useToastReducer();
 
   const result = useMutation({
-    mutationKey: "label-bookmark",
+    mutationKey: 'label-bookmark',
     mutationFn: (option) => {
       return callPostServices.add_label_bookmark(token, option.id);
     },
@@ -172,7 +170,7 @@ export const Add_Label_Bookmark_Mutation = () => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
   }, [isLoading]);
@@ -180,7 +178,7 @@ export const Add_Label_Bookmark_Mutation = () => {
   if (isSuccess) {
     setLoading({
       isShow: false,
-      message: "",
+      message: '',
     });
   }
   return result;
@@ -193,7 +191,7 @@ export const Add_Product_Bookmark_Mutation = () => {
   const setLoading = useToastReducer();
 
   const result = useMutation({
-    mutationKey: ["product-bookmark"],
+    mutationKey: ['product-bookmark'],
     mutationFn: (option) => {
       return callPostServices.add_product_bookmark(token, option.id);
     },
@@ -210,7 +208,7 @@ export const Add_Product_Bookmark_Mutation = () => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
   }, [isLoading]);
@@ -218,7 +216,7 @@ export const Add_Product_Bookmark_Mutation = () => {
   if (isSuccess) {
     setLoading({
       isShow: false,
-      message: "",
+      message: '',
     });
   }
   return result;
@@ -231,7 +229,7 @@ export const Add_Print = () => {
   const setLoading = useToastReducer();
 
   const result = useMutation({
-    mutationKey: ["add-print"],
+    mutationKey: ['add-print'],
     mutationFn: (option) => {
       const firstKey = Object.keys(option)[0];
       const firstValue = option[firstKey];
@@ -253,7 +251,7 @@ export const Add_Print = () => {
     if (isLoading) {
       setLoading({
         isShow: true,
-        message: "",
+        message: '',
       });
     }
   }, [isLoading]);
@@ -261,7 +259,7 @@ export const Add_Print = () => {
   if (isSuccess) {
     setLoading({
       isShow: false,
-      message: "",
+      message: '',
     });
   }
   return result;

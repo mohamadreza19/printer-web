@@ -1,15 +1,15 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { useRef, useState } from "react";
-import { useLanguage } from "../../../../recoil/readStore";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { useRef, useState } from 'react';
+import { useLanguage } from '../../../../recoil/readStore';
 
-import RightArrow from "./RightArrow";
-import LeftArrow from "./LeftArrow";
-import { Admin_User_ImageSlide } from "../../../../reactQuery/common/callGetService";
-import { useEffect } from "react";
+import RightArrow from './RightArrow';
+import LeftArrow from './LeftArrow';
+import { Admin_User_ImageSlide } from '../../../../reactQuery/common/callGetService';
+import { useEffect } from 'react';
 export default function ({ data }) {
   const slide = Admin_User_ImageSlide();
 
@@ -20,9 +20,9 @@ export default function ({ data }) {
   return (
     <div
       style={{
-        height: "240px",
-        position: "relative",
-        maxHeight: "240px",
+        height: '240px',
+        position: 'relative',
+        maxHeight: '240px',
       }}
       className="w-100 arrow-test-box"
     >
@@ -43,7 +43,7 @@ export default function ({ data }) {
         spaceBetween={3}
         style={{
           //   direction: language === "fa" ? "rtl" : "ltr",
-          direction: "ltr",
+          direction: 'ltr',
           zIndex: 1,
         }}
         onBeforeInit={(swiper) => {
@@ -72,12 +72,12 @@ const ImageSlide = ({ id }) => {
     return (
       <img
         style={{
-          borderRadius: "20px",
-          boxShadow: "0px 30px 25px -20px rgba(0, 0, 0, 0.60)",
-          minHeight: "240px",
-          minWidth: "240px",
-          maxWidth: "240px",
-          maxHeight: "240px",
+          borderRadius: '20px',
+          boxShadow: '0px 30px 25px -20px rgba(0, 0, 0, 0.60)',
+          minHeight: '240px',
+          minWidth: '240px',
+          maxWidth: '240px',
+          maxHeight: '240px',
         }}
         className="w-100 h-100"
         src={URL.createObjectURL(slide.data)}

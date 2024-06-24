@@ -2,10 +2,17 @@
 /* * {
   outline: 1px solid red;
 } */
+
+@import url('/fonts/Roboto/stylesheet.css');
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+  /* box-sizing: border-box;
+  font-family: 'Roboto Mono', monospace !important;
+  font-optical-sizing: auto; */
+}
+#full-cell {
+  /* font-family: 'Roboto Mono', monospace !important; */
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -183,6 +190,11 @@ input::-ms-clear {
 
 .MuiButton-outlined {
   border: 2px solid #ff7d41 !important;
+}
+.footer-slider-right-arrow {
+}
+html[dir='ltr'] .footer-slider-right-arrow {
+  right: 0;
 }
 .footer-slider-left-arrow {
   position: absolute;
@@ -883,6 +895,9 @@ html[dir="ltr"] .editor-end-column-r {
 .cell-regular:hover .editor-small-info-cell-box {
   display: flex;
 }
+.cell {
+  /* outline: 1px solid black !important; */
+}
 .editor-angle-symbol {
   position: absolute;
   /* left: 10px; */
@@ -1443,4 +1458,14 @@ html[dir="ltr"] .add-new-rail-btn {
 }
 .color-danger {
   color: #842029;
+}
+
+.gooz {
+  width: 19px !important;
+  min-width: 19px !important ;
+  max-width: 19px !important;
+  height: 42px;
+  box-sizing: border-box;
+
+  /* height: 19px !important; */
 }
