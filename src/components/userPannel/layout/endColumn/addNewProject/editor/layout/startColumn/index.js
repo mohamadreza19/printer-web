@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import useSelectionReducer from '../../../../../../../../recoil/reducer/editor/actionButtons/useSelectionReducer';
-import SelectionAction from '../../../../../../../../recoil/actions/editor/actionButton/selectionbuttons';
+import { useState } from "react";
+import useSelectionReducer from "../../../../../../../../recoil/reducer/editor/actionButtons/useSelectionReducer";
+import SelectionAction from "../../../../../../../../recoil/actions/editor/actionButton/selectionbuttons";
 import {
   useSelection,
   useView,
   useUseText,
   useUseShape,
-} from '../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton';
-import ActionButtons_GroupOne from './ActionButtons_GroupOne';
-import ActionButtons_GroupTwo from './ActionButtons_GroupTwo';
-import IconBox from './IconBox';
+} from "../../../../../../../../recoil/readStore/editor/ReadSelectionActionButton";
+import ActionButtons_GroupOne from "./ActionButtons_GroupOne";
+import ActionButtons_GroupTwo from "./ActionButtons_GroupTwo";
+import IconBox from "./IconBox";
 
 export default function () {
   const handleOnclickSelectionButton = useSelectionReducer();

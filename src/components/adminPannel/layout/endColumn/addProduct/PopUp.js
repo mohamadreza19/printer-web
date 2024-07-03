@@ -7,6 +7,7 @@ import Icons from "../../../../../styles/__ready/Icons";
 import { AdminAddExcelFile_Mutation as send_excel_file } from "../../../../../reactQuery/admin/callPostService";
 import { ButtonSpinnerLoading } from "../../../../../styles/__ready/common/ButtonSpinnerLoading";
 import { Check } from "@mui/icons-material";
+import { t } from "i18next";
 
 export default function PopUpContainer() {
   const { state, distapch } = useProductContext();
@@ -80,12 +81,13 @@ export default function PopUpContainer() {
       >
         <header className="d-flex">
           <CloseBtn onClick={toggleShowPopup} />
-          <Typography.H5>افزودن محصول با فایل اکسل</Typography.H5>
+          <Typography.H5>
+            {t("addNewProduct.excel.addProductWithExcelFile")}
+          </Typography.H5>
         </header>
         <section className={styles["pop-up-section-1"]}>
           <Typography.H9 className={styles["text-limit-width"]}>
-            لطفا اطلاعات محصول خود را با توجه به این فایل راهنما وارد کرده و در
-            انتها فایل خود را بارگذاری کنید.
+            {t("addNewProduct.excel.info")}
           </Typography.H9>
           <DownloadBtn />
         </section>
@@ -99,7 +101,10 @@ export default function PopUpContainer() {
           {status === "loading" ? <ButtonSpinnerLoading /> : null}
           {status === "success" ? <Check color="white" /> : null}
           {status === "idle" ? (
-            <Typography.H6> تایید اطلاعات</Typography.H6>
+            <Typography.H6>
+              {" "}
+              {t("addNewProduct.excel.confirmInformation")}
+            </Typography.H6>
           ) : null}
         </Buttons.Contained>
         <input
@@ -148,7 +153,7 @@ const DownloadBtn = () => {
         <Icons.Download />
       </div>
       <Typography.H9 className={styles["text-limit-width"]}>
-        دانلود فایل راهنما
+        {t("addNewProduct.excel.downloadGuideFile")}
       </Typography.H9>
     </Buttons.Outlined>
   );
@@ -203,9 +208,7 @@ const UploadArea = ({ exelFile, clearFile }) => {
           <span onClick={handle_open_hidden_input}>
             <Icons.Download width="44" height="44" fill="#CBCBCB" />
           </span>
-          <Typography.H7>
-            فایل خود را بارگذاری کنید و یا در این مکان بکشید (فایل xlsx)
-          </Typography.H7>
+          <Typography.H7>{t("addNewProduct.excel.downloadArea")}</Typography.H7>
         </div>
       )}
     </section>

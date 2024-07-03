@@ -1,27 +1,27 @@
-import { Grid } from '@mui/material';
-import { useDynamicCssClass } from '../../../../../../../../recoil/readStore';
-import Header from './Header';
+import { Grid } from "@mui/material";
+import { useDynamicCssClass } from "../../../../../../../../recoil/readStore";
+import Header from "./Header";
 // import EditorBox from "./layout/editorBox";
 // import SearchBox from "./layout/searchBox";
-import { DragDropContext } from 'react-beautiful-dnd';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { DragDropContext } from "react-beautiful-dnd";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   product_column,
   // rails,
-} from '../../../../../../../../recoil/userEditorStore/cellsStore';
-import ColOne from './columns/ColOne';
-import ColTwo from './columns/ColTwo';
+} from "../../../../../../../../recoil/userEditorStore/cellsStore";
+import ColOne from "./columns/ColOne";
+import ColTwo from "./columns/ColTwo";
 
-import { showHide_Btn } from '../../../../../../../../recoil/userEditorStore/searchboxStore';
+import { showHide_Btn } from "../../../../../../../../recoil/userEditorStore/searchboxStore";
 
-import userEditor_DnD from '../../../../../../../../helper/userEditor_DnD';
+import userEditor_DnD from "../../../../../../../../helper/userEditor_DnD";
 
-import React from 'react';
+import React from "react";
 import {
   addPresent,
   getRails,
-} from '../../../../../../../../redux/project/history_changer_slice';
-import { useDispatch, useSelector } from 'react-redux';
+} from "../../../../../../../../redux/project/history_changer_slice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default React.memo(function () {
   const cssClass = useDynamicCssClass();
@@ -37,13 +37,13 @@ export default React.memo(function () {
 
   return (
     <div
-      className={'w-100 h-100 bg_info editor-end-column-r position-relative  '}
+      className={"w-100 h-100 bg_info editor-end-column-r position-relative  "}
     >
       <Header />
 
       <Grid
         container
-        className={`${!showHide ? cssClass.ps_3 : 'px-3'} mt-4`}
+        className={`${!showHide ? cssClass.ps_3 : "px-3"} mt-4`}
         columns={13}
       >
         <DragDropContext

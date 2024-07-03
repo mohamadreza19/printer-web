@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useDynamicCssClass } from "../../../../../../../../recoil/readStore";
 import {
   JoinColumn,
@@ -25,7 +26,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
         right: 0,
         marginLeft: "auto",
         marginRight: "auto",
-        zIndex: "5",
+        zIndex: "1000",
         height: "100%",
         backgroundColor: "#00000031",
       }}
@@ -46,7 +47,9 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
           >
             <Icons.Close />
           </span>
-          <Typography.H5 className="position-fixed">راهنما</Typography.H5>
+          <Typography.H5 className="position-fixed">
+            {t("editor.guide.guide")}
+          </Typography.H5>
         </header>
         <article className="w-100  d-flex justify-content-center flex-column   pt-4 ">
           <article
@@ -65,10 +68,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
                 <Icons.Select_CursorPrimary />
               </span>
 
-              <Typography.H9_5>
-                با این ابزار میتوانید تریمنال هارا انتخاب کنید با دبل کلیک کردن
-                روی هر ترمینال ابزار متن فعال میشود.
-              </Typography.H9_5>
+              <Typography.H9_5>{t("editor.guide.select")}</Typography.H9_5>
             </section>
             <section
               style={{ width: "300px", heigth: "76px" }}
@@ -78,10 +78,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
                 <Icons.Text size="popUp" />
               </span>
 
-              <Typography.H9_5>
-                با این ابزار میتوانید هر خانه را انتخاب کنید و متن دلخواه را در
-                داخل هر خانه وارد کنید.
-              </Typography.H9_5>
+              <Typography.H9_5>{t("editor.guide.text")}</Typography.H9_5>
             </section>
           </article>
           <article
@@ -100,10 +97,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
                 <Icons.Hand size="popUp" />
               </span>
 
-              <Typography.H9_5>
-                با این ابزار میتوانید جایگاه هر تریمنال روی ریل را تغییر دهید و
-                ترتیب چاپ را تغییر دهید.
-              </Typography.H9_5>
+              <Typography.H9_5>{t("editor.guide.view")}</Typography.H9_5>
             </section>
             <section
               style={{ width: "300px", heigth: "76px" }}
@@ -113,10 +107,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
                 <Icons.Shape size="popUp" />
               </span>
 
-              <Typography.H9_5>
-                داخل این ابزار اشکال هندسی و نماد های متفاوت وجود دارد که
-                میتوانید به داخل هر خانه اضافه کنید.
-              </Typography.H9_5>
+              <Typography.H9_5>{t("editor.guide.shape")}</Typography.H9_5>
             </section>
           </article>
           <article
@@ -137,7 +128,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
               </span>
 
               <Typography.H9_5>
-                هر خانه را به دو قسمت به شکل افقی تقسیم کنید.
+                {t("editor.guide.horizontalSplit")}
               </Typography.H9_5>
             </section>
             <section
@@ -149,7 +140,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
               </span>
 
               <Typography.H9_5>
-                یک خانه و خانه زیرین را با هم به یک خانه تبدیل کنید.
+                {t("editor.guide.joinHorizontal")}
               </Typography.H9_5>
             </section>
           </article>
@@ -171,7 +162,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
               </span>
 
               <Typography.H9_5>
-                هر خانه را به دو قسمت به شکل افقی تقسیم کنید.
+                {t("editor.guide.verticalSplit")}
               </Typography.H9_5>
             </section>
             <section
@@ -183,7 +174,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
               </span>
 
               <Typography.H9_5>
-                یک خانه و خانه مجاور آن را به یک خانه تبدیل کنید.
+                {t("editor.guide.joinVertical")}
               </Typography.H9_5>
             </section>
           </article>
@@ -203,9 +194,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
                 <Undo size="popUp" />
               </span>
 
-              <Typography.H9_5>
-                یک مرحله کار های انجام شده را به عقب بر می گرداند.
-              </Typography.H9_5>
+              <Typography.H9_5>{t("editor.guide.undo")}</Typography.H9_5>
             </section>
             <section
               style={{ width: "300px", heigth: "76px" }}
@@ -216,7 +205,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
               </span>
 
               <Typography.H9_5>
-                ترتیب چینش روی ریل را از راست به چپ تنظیم می کند
+                {t("editor.guide.justoffyToRight")}
               </Typography.H9_5>
             </section>
           </article>
@@ -236,9 +225,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
                 <Redo size="popUp" />
               </span>
 
-              <Typography.H9_5>
-                یک مرحله کار های انجام شده را به جلو بر می برد.
-              </Typography.H9_5>
+              <Typography.H9_5>{t("editor.guide.redo")}</Typography.H9_5>
             </section>
             <section
               style={{ width: "300px", heigth: "76px" }}
@@ -249,7 +236,7 @@ export const PopUpInfo = ({ setShowInfoPopUp = () => {} }) => {
               </span>
 
               <Typography.H9_5>
-                ترتیب چینش روی ریل را از چپ به راست تنظیم می کند
+                {t("editor.guide.justifyToLeft")}
               </Typography.H9_5>
             </section>
           </article>

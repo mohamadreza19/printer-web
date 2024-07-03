@@ -1,23 +1,23 @@
-import { Component, useState } from 'react';
+import { Component, useState } from "react";
 
-import styles from './Product.module.css';
-import Typography from '../../../../../styles/__ready/Typography';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useProductContext } from './product.context';
-import Buttons from '../../../../../styles/__ready/Buttons';
-import { useTranslation } from 'react-i18next';
+import styles from "./Product.module.css";
+import Typography from "../../../../../styles/__ready/Typography";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useProductContext } from "./product.context";
+import Buttons from "../../../../../styles/__ready/Buttons";
+import { useTranslation } from "react-i18next";
 
 export default function PageOne() {
   const { state, distapch } = useProductContext();
-  const [productNameCardLang, setProductNameCardLang] = useState('persian');
+  const [productNameCardLang, setProductNameCardLang] = useState("persian");
   const [productDescriptionCardLang, setProductDescriptionCardLang] =
-    useState('persian');
+    useState("persian");
   const navigate = useNavigate();
   const { t } = useTranslation();
   function onChangeSelect(event) {
     const value = event.target.value;
 
-    navigate('/admin/' + value);
+    navigate("/admin/" + value);
   }
   function handleChangeProductnameCardLang(value) {
     const selectedlan = value;
@@ -32,7 +32,7 @@ export default function PageOne() {
   function handleChangeProductName(event) {
     const value = event.target.value;
     const action = {
-      type: 'CHANGE_NAME',
+      type: "CHANGE_NAME",
       payload: {
         target: productNameCardLang,
         value,
@@ -43,7 +43,7 @@ export default function PageOne() {
   function handleChangeProductDescription(event) {
     const value = event.target.value;
     const action = {
-      type: 'CHANGE_DESCRIPTION',
+      type: "CHANGE_DESCRIPTION",
       payload: {
         target: productDescriptionCardLang,
         value,
@@ -55,7 +55,7 @@ export default function PageOne() {
   function handleChangeLink(event) {
     const value = event.target.value;
     const action = {
-      type: 'CHANGE_LINK',
+      type: "CHANGE_LINK",
       payload: value,
     };
     distapch(action);
@@ -66,27 +66,27 @@ export default function PageOne() {
       /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
 
     if (name.persian.length < 4) {
-      callErr('name', t('addNewProduct.persianNameErr'));
+      callErr("name", t("addNewProduct.persianNameErr"));
       return;
     }
     if (name.english.length < 4) {
-      callErr('name', t('addNewProduct.englishNameErr'));
+      callErr("name", t("addNewProduct.englishNameErr"));
       return;
     }
     if (name.turkish.length < 4) {
-      callErr('name', t('addNewProduct.turkishNameErr'));
+      callErr("name", t("addNewProduct.turkishNameErr"));
       return;
     }
 
     if (urlPattern.test(link.value) === false) {
-      callErr('link', 'لینک وارد شده معتبر نمی باشد');
+      callErr("link", "لینک وارد شده معتبر نمی باشد");
       return;
     }
-    distapch({ type: 'NEXT_PAGE' });
+    distapch({ type: "NEXT_PAGE" });
 
     function callErr(target, value) {
       const action = {
-        type: 'ERROR',
+        type: "ERROR",
         payload: {
           target,
           value,
@@ -97,20 +97,20 @@ export default function PageOne() {
   }
 
   return (
-    <div className={styles['page-1-container']}>
-      <section className={styles['input-box'] + ' ' + styles['input-medium']}>
+    <div className={styles["page-1-container"]}>
+      <section className={styles["input-box"] + " " + styles["input-medium"]}>
         <select onChange={onChangeSelect} className="w-100">
           <option value="add-product">
-            <Typography.H8>{t('addNewProduct.addNewProduct2')}</Typography.H8>
+            <Typography.H8>{t("addNewProduct.addNewProduct2")}</Typography.H8>
           </option>
           <option value="add-label-beta">
-            <Typography.H8>{t('addNewLabel.addNewLabel')}</Typography.H8>
+            <Typography.H8>{t("addNewLabel.addNewLabel")}</Typography.H8>
           </option>
         </select>
       </section>
-      <section className={styles['input-box'] + ' ' + styles['input-medium']}>
+      <section className={styles["input-box"] + " " + styles["input-medium"]}>
         <label>
-          <Typography.H8>{t('addNewProduct.productName')}</Typography.H8>
+          <Typography.H8>{t("addNewProduct.productName")}</Typography.H8>
         </label>
         <LanguageSelectCards
           selectedValue={productNameCardLang}
@@ -121,29 +121,29 @@ export default function PageOne() {
           value={state.name[productNameCardLang]}
           onChange={handleChangeProductName}
         />
-        <div className={styles['err-message']}>{state.name.err}</div>
+        <div className={styles["err-message"]}>{state.name.err}</div>
 
-        <span className={styles['length']}>
-          <Typography.H10 className={styles['color-disabled']}>
+        <span className={styles["length"]}>
+          <Typography.H10 className={styles["color-disabled"]}>
             {state.name[productNameCardLang].length}/120
           </Typography.H10>
         </span>
       </section>
-      <section className={styles['input-box'] + ' ' + styles['input-medium']}>
+      <section className={styles["input-box"] + " " + styles["input-medium"]}>
         <label>
-          <Typography.H8>{t('addNewProduct.link')}</Typography.H8>
+          <Typography.H8>{t("addNewProduct.link")}</Typography.H8>
         </label>
 
         <input
           style={{
-            paddingRight: '50px',
+            paddingRight: "50px",
           }}
           className="w-100"
           value={state.link.value}
           onChange={handleChangeLink}
         />
-        <div className={styles['err-message']}>{state.link.err}</div>
-        <div onClick={readCurrentClipboard} className={styles['link-icon']}>
+        <div className={styles["err-message"]}>{state.link.err}</div>
+        <div onClick={readCurrentClipboard} className={styles["link-icon"]}>
           <svg
             width="83"
             height="88"
@@ -222,10 +222,10 @@ export default function PageOne() {
           </svg>
         </div>
       </section>
-      <section className={styles['input-box'] + ' ' + styles['input-big']}>
+      <section className={styles["input-box"] + " " + styles["input-big"]}>
         <label>
           <Typography.H8>
-            {t('addNewProduct.AdditionalInformationAboutTheProduct')}
+            {t("addNewProduct.AdditionalInformationAboutTheProduct")}
           </Typography.H8>
         </label>
         <LanguageSelectCards
@@ -238,15 +238,15 @@ export default function PageOne() {
           onChange={handleChangeProductDescription}
         />
 
-        <span className={'ms-auto'}>
-          <Typography.H10 className={styles['color-disabled']}>
+        <span className={"ms-auto"}>
+          <Typography.H10 className={styles["color-disabled"]}>
             {state.description[productNameCardLang].length}/120
           </Typography.H10>
         </span>
       </section>
       <div>
-        <Buttons.Contained onClick={nextPage} className={styles['submit-btn']}>
-          {t('continue')}
+        <Buttons.Contained onClick={nextPage} className={styles["submit-btn"]}>
+          {t("continue")}
         </Buttons.Contained>
       </div>
     </div>
@@ -256,30 +256,30 @@ export default function PageOne() {
 const LanguageSelectCards = ({ selectedValue, onClickCard }) => {
   const { t } = useTranslation();
   const isPersian =
-    selectedValue === 'persian' ? 'language-select-card-selected' : '';
+    selectedValue === "persian" ? "language-select-card-selected" : "";
   const isEnglish =
-    selectedValue === 'english' ? 'language-select-card-selected' : '';
+    selectedValue === "english" ? "language-select-card-selected" : "";
   const isTurkish =
-    selectedValue === 'turkish' ? 'language-select-card-selected' : '';
+    selectedValue === "turkish" ? "language-select-card-selected" : "";
   return (
-    <div className={styles['language-select-cards']}>
+    <div className={styles["language-select-cards"]}>
       <section
-        onClick={() => onClickCard('persian')}
-        className={styles['language-select-card'] + ' ' + styles[isPersian]}
+        onClick={() => onClickCard("persian")}
+        className={styles["language-select-card"] + " " + styles[isPersian]}
       >
-        <Typography.H8> {t('persian')}</Typography.H8>
+        <Typography.H8> {t("persian")}</Typography.H8>
       </section>
       <section
-        onClick={() => onClickCard('english')}
-        className={styles['language-select-card'] + ' ' + styles[isEnglish]}
+        onClick={() => onClickCard("english")}
+        className={styles["language-select-card"] + " " + styles[isEnglish]}
       >
-        <Typography.H8>{t('english')}</Typography.H8>
+        <Typography.H8>{t("english")}</Typography.H8>
       </section>
       <section
-        onClick={() => onClickCard('turkish')}
-        className={styles['language-select-card'] + ' ' + styles[isTurkish]}
+        onClick={() => onClickCard("turkish")}
+        className={styles["language-select-card"] + " " + styles[isTurkish]}
       >
-        <Typography.H8> {t('turkish')}</Typography.H8>
+        <Typography.H8> {t("turkish")}</Typography.H8>
       </section>
     </div>
   );
