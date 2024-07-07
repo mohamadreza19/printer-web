@@ -3,7 +3,7 @@ class MeasurementService {
   #basedDpi;
   #oldBorderWidthInPx;
 
-  constructor(dpi = 300, basedDpi = 96, oldBorderWidthInPx = 1) {
+  constructor(dpi = 400, basedDpi = 96, oldBorderWidthInPx = 1) {
     this.#dpi = window.devicePixelRatio * dpi;
     this.#basedDpi = basedDpi;
     this.#oldBorderWidthInPx = oldBorderWidthInPx;

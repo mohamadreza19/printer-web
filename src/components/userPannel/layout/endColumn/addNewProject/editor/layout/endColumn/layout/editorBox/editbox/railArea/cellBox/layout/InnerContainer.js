@@ -8,5 +8,5 @@ export default styled.td`
   min-width: ${(props) => `${props.cellWidth}px`};
   height: ${(props) => `${props.cellWidthOfPrintingArea}mm`};
   min-height: ${(props) => `${props.cellWidthOfPrintingArea}mm`};
-  // border: ${(props) => props.borderWidth}px solid black;
+  border: ${(props) => props.borderWidth}px solid black;
 `;
