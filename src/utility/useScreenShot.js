@@ -112,7 +112,7 @@ export default function () {
           // child.style.border = "none";
         });
         clonedRootElement.style.padding = '0';
-        clonedRootElement.style.zoom = 0;
+        clonedRootElement.style.zoom = 0.5;
 
         const imgListener = new ImageListener({
           element: clonedRootElement,
@@ -167,7 +167,7 @@ export default function () {
           child.style.border = 'none';
         });
         clonedRootElement.style.padding = '0';
-        clonedRootElement.style.zoom = 0;
+        clonedRootElement.style.zoom = 0.5;
         // clonedRootElement.style.rotate = 3 + 'deg';
         const imgListener = new ImageListener({
           element: clonedRootElement,
@@ -245,7 +245,7 @@ class ImageListener {
   async getImageDataURLFromCanvas() {
     const canvas = await html2canvas(this.element, {
       allowTaint: true,
-      scale: 1,
+      scale: 0.2,
 
       // imageTimeout: 1000,
       // width: 1200,
