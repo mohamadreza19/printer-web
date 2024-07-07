@@ -127,22 +127,18 @@ export default function ({
               {...provided.draggableProps}
               ref={provided.innerRef}
               {...provided.dragHandleProps}
-              cellWidth={
-                isLast
-                  ? convertedWidth + measurementService.borderWidthBasedDpi()
-                  : convertedWidth
-              }
+              cellWidth={convertedWidth}
               cellWidthOfPrintingArea={convertedheight}
               borderWidth={measurementService.borderWidthBasedDpi()}
             >
               {/* <Description /> */}
-              <CellSplitController
+              {/* <CellSplitController
                 index={index}
                 cellForCheck={cell.structure}
                 isRootCell={isRootCell}
                 isLast={isLast}
                 // rootFrontId={cell.frontId}
-              />
+              /> */}
             </InnerContainer>
           </>
         );

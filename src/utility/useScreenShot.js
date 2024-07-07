@@ -17,6 +17,7 @@ import { changeType } from '../redux/project/border_slice';
 import { viewMode } from '../redux/project/edit_mode_slice';
 import { getProjectRailWidth } from '../redux/project/project._slice';
 import MeasurementService from './MeasurementService';
+import * as htmlToImage from 'html-to-image';
 
 //
 const measurementService = new MeasurementService();
@@ -112,7 +113,7 @@ export default function () {
           // child.style.border = "none";
         });
         clonedRootElement.style.padding = '0';
-        clonedRootElement.style.zoom = 0.5;
+        clonedRootElement.style.zoom = 4;
 
         const imgListener = new ImageListener({
           element: clonedRootElement,
@@ -245,31 +246,16 @@ class ImageListener {
   async getImageDataURLFromCanvas() {
     const canvas = await html2canvas(this.element, {
       allowTaint: true,
-      scale: 0.2,
+      scale: 2,
+      removeContainer: false,
 
+      useCORS: true,
       // imageTimeout: 1000,
-      // width: 1200,
-      // height: this.height,
+      // width: 176,
+      // height: 176,
     });
 
     const url = canvas.toDataURL('application/jpg', 1.0);
-    // const blob = canvas.toBlob('application/pdf', 1.0);
-    // const options = {
-    //   margin: 0,
-    //   filename: 'document.pdf',
-    //   image: { type: 'jpeg', quality: 1 },
-    //   html2canvas: { scale: 2, useCORS: true },
-    //   jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' },
-    // };
-    // html2pdf().from(canvas).save();
-    // var doc = new jsPDF();
-    // doc.addImage(url, 'JPEG', 35, 20, 130, 155);
-    // doc.save('Test.pdf');
-    // canvas.toBlob(async function (blob) {
-    //   console.log(blob);
-    //   const base64 = await blobToBase64String(blob);
-    //   console.log(base64);
-    // });
     return url;
     // console.log(blob);
   }
