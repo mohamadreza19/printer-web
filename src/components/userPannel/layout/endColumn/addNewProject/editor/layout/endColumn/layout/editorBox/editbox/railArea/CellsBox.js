@@ -54,6 +54,7 @@ export default function ({
             )}
             railsLength={get_railsLegth_based_editor_access()}
             paddingLeft={measurementService.borderWidthBasedDpi()}
+            bottom={isFirstRail ? 0 : 2}
             isDragingOver={isDragging}
             id="test-screen"
             data-rail-id={railId}
@@ -61,21 +62,19 @@ export default function ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <tr>
-              {customLabels?.map((c, index) => {
-                return (
-                  <CellBox
-                    projectDimensions={projectDimensions}
-                    isRootCell={true}
-                    key={index}
-                    index={index}
-                    isLast={customLabels.length - 1 === index}
-                    cell={c}
-                    railId={railId}
-                  />
-                );
-              })}
-            </tr>
+            {customLabels?.map((c, index) => {
+              return (
+                <CellBox
+                  projectDimensions={projectDimensions}
+                  isRootCell={true}
+                  key={index}
+                  index={index}
+                  isLast={customLabels.length - 1 === index}
+                  cell={c}
+                  railId={railId}
+                />
+              );
+            })}
 
             {provided.placeholder}
           </Container>

@@ -144,7 +144,7 @@ export default function ({
         boxSizing: 'border-box !important',
       }}
     >
-      <Editor_Cell_Input
+      {/* <Editor_Cell_Input
         parentWidth={
           ref.current ? ref.current.getBoundingClientRect().width : 0
         }
@@ -156,7 +156,7 @@ export default function ({
         isBarcode={cell.isBarcode}
         isQrcode={cell.isQrcode}
         isSelection={editMode === 'SELECT_MODE'}
-      />
+      /> */}
       <>
         {'symbolId' in cell && symbolDetail.isSuccess ? (
           <ImageContainer
@@ -253,7 +253,8 @@ class BorderToPrintController {
     this.#command = command;
     this.#CellIsSelected = CellIsSelected;
     this.#isLastCell = isLastCell;
-    this.#borderWidth = measurementService.borderWidthBasedDpi();
+    // this.#borderWidth = measurementService.borderWidthBasedDpi();
+    this.#borderWidth = 2;
 
     return this;
   }
@@ -263,9 +264,7 @@ class BorderToPrintController {
       case 'use':
         if (this.#command === 'ALL') {
           return {
-            borderRight: this.#isLastCell
-              ? this.#borderWidth + 'px solid black'
-              : 'none',
+            borderRight: 'none',
 
             borderLeft: this.#borderWidth + 'px solid black',
             borderTop: this.#borderWidth + 'px solid black',
@@ -301,9 +300,7 @@ class BorderToPrintController {
           // borderWidth: this.#borderWidth + "px",
           // borderStyle: "solid",
 
-          borderRight: this.#isLastCell
-            ? this.#borderWidth + 'px solid black'
-            : 'none',
+          borderRight: 'none',
           borderLeft: this.#CellIsSelected
             ? this.#borderWidth + 'px solid #F36523'
             : this.#borderWidth + 'px solid black',

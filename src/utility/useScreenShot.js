@@ -113,7 +113,7 @@ export default function () {
           // child.style.border = "none";
         });
         clonedRootElement.style.padding = '0';
-        clonedRootElement.style.zoom = 4;
+        // clonedRootElement.style.zoom = 4;
 
         const imgListener = new ImageListener({
           element: clonedRootElement,
@@ -165,11 +165,11 @@ export default function () {
 
         document.body.appendChild(clonedRootElement);
         clonedRootElement.childNodes.forEach((child) => {
-          child.style.border = 'none';
+          // child.style.border = 'none';
         });
         clonedRootElement.style.padding = '0';
-        clonedRootElement.style.zoom = 0.5;
-        // clonedRootElement.style.rotate = 3 + 'deg';
+        // clonedRootElement.style.zoom = 0.5;
+
         const imgListener = new ImageListener({
           element: clonedRootElement,
         });
@@ -246,7 +246,7 @@ class ImageListener {
   async getImageDataURLFromCanvas() {
     const canvas = await html2canvas(this.element, {
       allowTaint: true,
-      scale: 2,
+      scale: 1,
       removeContainer: false,
 
       useCORS: true,
@@ -255,7 +255,7 @@ class ImageListener {
       // height: 176,
     });
 
-    const url = canvas.toDataURL('application/jpg', 1.0);
+    const url = canvas.toDataURL('application/png', 1.0);
     return url;
     // console.log(blob);
   }
