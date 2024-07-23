@@ -254,7 +254,7 @@ class BorderToPrintController {
     this.#CellIsSelected = CellIsSelected;
     this.#isLastCell = isLastCell;
     // this.#borderWidth = measurementService.borderWidthBasedDpi();
-    this.#borderWidth = 2;
+    this.#borderWidth = 1;
 
     return this;
   }
@@ -264,7 +264,11 @@ class BorderToPrintController {
       case 'use':
         if (this.#command === 'ALL') {
           return {
-            borderRight: 'none',
+            borderRight: !this.#isLastCell
+              ? 'none'
+              : this.#CellIsSelected
+              ? this.#borderWidth + 'px solid #F36523'
+              : this.#borderWidth + 'px solid black',
 
             borderLeft: this.#borderWidth + 'px solid black',
             borderTop: this.#borderWidth + 'px solid black',
@@ -300,7 +304,11 @@ class BorderToPrintController {
           // borderWidth: this.#borderWidth + "px",
           // borderStyle: "solid",
 
-          borderRight: 'none',
+          borderRight: !this.#isLastCell
+            ? 'none'
+            : this.#CellIsSelected
+            ? this.#borderWidth + 'px solid #F36523'
+            : this.#borderWidth + 'px solid black',
           borderLeft: this.#CellIsSelected
             ? this.#borderWidth + 'px solid #F36523'
             : this.#borderWidth + 'px solid black',

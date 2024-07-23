@@ -112,7 +112,7 @@ export default function () {
         clonedRootElement.childNodes.forEach((child) => {
           // child.style.border = "none";
         });
-        clonedRootElement.style.padding = '0';
+        clonedRootElement.style.padding = '0 3px';
         // clonedRootElement.style.zoom = 4;
 
         const imgListener = new ImageListener({
@@ -167,7 +167,7 @@ export default function () {
         clonedRootElement.childNodes.forEach((child) => {
           // child.style.border = 'none';
         });
-        clonedRootElement.style.padding = '0';
+        clonedRootElement.style.padding = '0 3px';
         // clonedRootElement.style.zoom = 0.5;
 
         const imgListener = new ImageListener({
