@@ -264,11 +264,11 @@ class BorderToPrintController {
       case "use":
         if (this.#command === "ALL") {
           return {
-            borderRight: this.#isLastCell
-              ? this.#CellIsSelected
-                ? this.#borderWidth + "px solid #F36523"
-                : this.#borderWidth + "px solid black"
-              : "none",
+            borderRight: !this.#isLastCell
+              ? "none"
+              : this.#CellIsSelected
+              ? this.#borderWidth + "px solid #F36523"
+              : this.#borderWidth + "px solid black",
 
             borderLeft: this.#borderWidth + "px solid black",
             borderTop: this.#borderWidth + "px solid black",
@@ -304,11 +304,11 @@ class BorderToPrintController {
           // borderWidth: this.#borderWidth + "px",
           // borderStyle: "solid",
 
-          borderRight: this.#isLastCell
-            ? this.#CellIsSelected
-              ? this.#borderWidth + "px solid #F36523"
-              : this.#borderWidth + "px solid black"
-            : "none",
+          borderRight: !this.#isLastCell
+            ? "none"
+            : this.#CellIsSelected
+            ? this.#borderWidth + "px solid #F36523"
+            : this.#borderWidth + "px solid black",
           borderLeft: this.#CellIsSelected
             ? this.#borderWidth + "px solid #F36523"
             : this.#borderWidth + "px solid black",
