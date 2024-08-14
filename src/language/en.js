@@ -109,6 +109,7 @@ export default {
         justifyToLeft: "Arrange the order on the rail from right to left",
         justoffyToRight: "Arrange the order on the rail from left to right",
       },
+      unaccessProduct: "The user's access to products is denied",
     },
     symbols: {
       mostPrintedSymbol: "Most Printed Symbol",

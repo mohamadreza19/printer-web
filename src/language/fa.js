@@ -48,7 +48,8 @@ export default {
         info: "  لطفا اطلاعات محصول خود را با توجه به این فایل راهنما وارد کرده و در انتها فایل خود را بارگذاری کنید.",
         confirmInformation: "تایید اطلاعات",
         downloadGuideFile: " دانلود فایل راهنما",
-        downloadArea:' فایل خود را بارگذاری کنید و یا در این مکان بکشید (فایل xlsx)'
+        downloadArea:
+          " فایل خود را بارگذاری کنید و یا در این مکان بکشید (فایل xlsx)",
       },
     },
     addNewLabel: {
@@ -108,6 +109,7 @@ export default {
         justifyToLeft: "ترتیب چینش روی ریل را از راست به چپ تنظیم می کند",
         justoffyToRight: "ترتیب چینش روی ریل را از چپ به راست تنظیم می کند",
       },
+      unaccessProduct: "عدم دسترسی به محصولات",
     },
     symbols: {
       mostPrintedSymbol: "بیشترین سیمبل چاپ شده",

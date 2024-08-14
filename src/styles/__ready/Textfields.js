@@ -269,6 +269,7 @@ export const EditorSearchBox = ({
   placeholder = "نام محصول",
   iconMarginStart = " ",
   setSearch = () => {},
+  disabled = false,
 }) => {
   const cssClass = useDynamicCssClass();
   function onChangeValue(e) {
@@ -285,6 +286,7 @@ export const EditorSearchBox = ({
       ${cssClass.ps_2} ${cssClass.pe_1} ${className} `}
     >
       <input
+        disabled={disabled}
         onChange={onChangeValue}
         style={{
           position: "relative",
@@ -299,7 +301,9 @@ export const EditorSearchBox = ({
       />
       <section
         className={
-          "cur-pointer bg_primary d-flex justify-content-center align-items-center   " +
+          `${
+            disabled == false && "cur-pointer "
+          }  bg_primary d-flex justify-content-center align-items-center` +
           iconMarginStart
         }
         style={{ width: "60px", height: "52px" }}

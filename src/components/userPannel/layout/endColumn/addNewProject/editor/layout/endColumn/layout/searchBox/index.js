@@ -25,6 +25,8 @@ import {
   getRailsLength,
 } from "../../../../../../../../../../redux/project/history_changer_slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import Typography from "../../../../../../../../../../styles/__ready/Typography";
 
 export default function () {
   const railsLength = useSelector(getRailsLength);
@@ -32,7 +34,7 @@ export default function () {
   const dispatch = useDispatch();
   const cssClass = useDynamicCssClass();
   const [product_column_, setProduct_column_] = useRecoilState(product_column);
-
+  const { t } = useTranslation();
   const [filteredProduct_column_, setFilteredProduct_column_] = useState([]);
   const [search, setSearch] = useState("");
   const isAllowShowProductsBookmark = useRecoilValue(
@@ -129,6 +131,25 @@ export default function () {
       setFilteredProduct_column_(product_column_);
     }
   }, [isAllowShowProductsBookmark]);
+
+  if (response.error && response.error.includes("403")) {
+    return (
+      <div
+        className={"w-100  " + cssClass.ps_3}
+        style={{
+          height: "78vh",
+        }}
+      >
+        <main className={"bg-white border-r-top-right-20 pt-3 "}>
+          <Search setSearch={setSearch} disabled={true} />
+
+          <p className="text-center py-5">
+            <Typography.H7>{t("editor.unaccessProduct")}</Typography.H7>
+          </p>
+        </main>
+      </div>
+    );
+  }
 
   if (product_column_.length >= 0)
     return (

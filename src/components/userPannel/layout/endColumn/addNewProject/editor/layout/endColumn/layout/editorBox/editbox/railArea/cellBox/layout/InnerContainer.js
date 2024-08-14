@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default styled.div`
   position: relative;
@@ -11,7 +11,7 @@ export default styled.div`
     `${
       props.cellWidthOfPrintingArea
         ? `${props.cellWidthOfPrintingArea}mm`
-        : '100%'
+        : "100%"
     }`};
   // border: ${(props) => props.borderWidth}px solid black;
 `;

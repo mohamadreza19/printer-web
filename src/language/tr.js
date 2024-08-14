@@ -108,6 +108,7 @@ export default {
         justifyToLeft: "Ray üzerindeki sıralamayı sağdan sola ayarlar",
         justoffyToRight: "Ray üzerindeki sıralamayı soldan sağa ayarlar",
       },
+      unaccessProduct: "Kullanıcının ürünlere erişimi engellendi",
     },
     symbols: {
       mostPrintedSymbol: "En Çok Basılan Sembol",

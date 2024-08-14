@@ -10,6 +10,7 @@ class MeasurementService {
   }
 
   mmToPx(mm) {
+    console.log(mm * this.#dpi);
     const value = (mm * this.#dpi) / 25.4;
 
     return Math.round(value);

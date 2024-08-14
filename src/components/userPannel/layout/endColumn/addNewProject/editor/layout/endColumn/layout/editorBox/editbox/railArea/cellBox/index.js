@@ -1,42 +1,42 @@
-import CellSplitController from './CellSplitController';
+import CellSplitController from "./CellSplitController";
 // import { ColumnFive_delete } from "../../../";
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from "recoil";
 
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable } from "react-beautiful-dnd";
 
-import { isView } from '../../../../../../../../../../../../../recoil/userEditorStore/selectionButtonsStore/actionButton';
-import InnerContainer from './layout/InnerContainer';
+import { isView } from "../../../../../../../../../../../../../recoil/userEditorStore/selectionButtonsStore/actionButton";
+import InnerContainer from "./layout/InnerContainer";
 
-import { useProject_baseValue } from '../../../../../../../../../../../../../recoil/userEditorStore/project_base';
-import { useSelector } from 'react-redux';
-import { getEditMode } from '../../../../../../../../../../../../../redux/project/edit_mode_slice';
-import MeasurementService from '../../../../../../../../../../../../../utility/MeasurementService';
+import { useProject_baseValue } from "../../../../../../../../../../../../../recoil/userEditorStore/project_base";
+import { useSelector } from "react-redux";
+import { getEditMode } from "../../../../../../../../../../../../../redux/project/edit_mode_slice";
+import MeasurementService from "../../../../../../../../../../../../../utility/MeasurementService";
 const measurementService = new MeasurementService();
 export default function ({
   children,
   cell = {
     structure: {
-      frontId: '',
+      frontId: "",
       isSelected: false,
     },
     product: {
       description: {
-        english: '',
-        persian: '',
-        turkish: '',
+        english: "",
+        persian: "",
+        turkish: "",
       },
       name: {
-        english: '',
-        persian: '',
-        turkish: '',
+        english: "",
+        persian: "",
+        turkish: "",
       },
-      width: '',
+      width: "",
       widthOfPrintingArea: 0,
     },
   },
   index,
-  railId = '',
+  railId = "",
   projectDimensions = {
     width: 0,
     height: 0,
@@ -49,7 +49,7 @@ export default function ({
       if (text)
         if (text.length > 21) {
           let textNew = text.substring(0, 20);
-          textNew = textNew.concat('...');
+          textNew = textNew.concat("...");
           return textNew;
         } else {
           let textNew = text.substring(0, 20);
@@ -79,20 +79,20 @@ export default function ({
 
   function get_Dimensions_based_label_project_template_exist() {
     let dimensions = {
-      width: '',
-      height: '',
+      width: "",
+      height: "",
     };
 
-    if (projectBase === 'CUSTOM') {
+    if (projectBase === "CUSTOM") {
       dimensions.width = cell.height;
       dimensions.height = cell.width;
 
       return dimensions;
-    } else if (projectBase === 'PRODUCT') {
+    } else if (projectBase === "PRODUCT") {
       // dimensions.width = projectDimensions.height;
       // dimensions.height = projectDimensions.width;
 
-      if ('product' in cell && cell.product !== null) {
+      if ("product" in cell && cell.product !== null) {
         dimensions.width = cell.product.width;
         dimensions.height = cell.width || projectDimensions.height;
       } else {
@@ -106,7 +106,7 @@ export default function ({
 
   return (
     <Draggable
-      isDragDisabled={editMode !== 'VIEW_MODE'}
+      isDragDisabled={editMode !== "VIEW_MODE"}
       draggableId={cell.structure.frontId}
       index={index}
       key={cell.structure.frontId}

@@ -204,7 +204,8 @@ export default function () {
       e.target.value = findedUser.data.managerName;
       meta.handeler.setManagerNameHandeler(e);
 
-      e.target.value = findedUser.data.phoneNumber;
+      e.target.value = String(findedUser.data.phoneNumber).replace(/^\+98/, "");
+
       meta.handeler.setPhoneNumberHandeler(e);
 
       e.target.value = findedUser.data.username;
@@ -225,12 +226,13 @@ export default function () {
       meta.handeler.setProductAccessHandeler(findedUser.data.productAccess);
 
       meta.handeler.setProvinceHandeler(findedUser.data.province);
-      console.log(findedUser.data.city);
+
       meta.handeler.setCityHandeler(findedUser.data.city);
 
       var currenDate = moment(new Date());
       var endDate = moment(findedUser.data.expiresIn);
       var result = endDate.diff(currenDate, "days");
+
       meta.handeler.setDaysToExpireHandeler(result);
     }
     return () => {
@@ -298,7 +300,7 @@ export default function () {
             margin={cssClass.ms_3}
             meta={meta}
           />
-          <Expirition margin={cssClass.ms_3} meta={meta} />
+          <Expirition credit={content.row4.credit} margin={cssClass.ms_3} />
           <AccessProductBox
             AccessToProducts={content.row5.AccessToProducts}
             accessProduct={state.productAccess}
