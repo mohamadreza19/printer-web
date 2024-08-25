@@ -3,7 +3,8 @@ import use_addUser_controller from "../../../../../../helper/admin_add_user/cont
 import { TextFieldFUN_v3 } from "../../../../../../styles/__ready/Textfields";
 import Typography from "../../../../../../styles/__ready/Typography";
 
-export default function ({ phoneNumber = "", margin, meta }) {
+export default function ({ phoneNumber = "", margin, meta ,value}) {
+ 
   return (
     <article className="mb-4">
       <Typography.H8 className={"font-400 mb-2  " + margin}>
@@ -12,7 +13,8 @@ export default function ({ phoneNumber = "", margin, meta }) {
       <section className="add-user-input-box">
         <TextFieldFUN_v3
           type="number"
-          value={meta.state.phoneNumber.value}
+   
+          value={value}
           onChange={meta.handeler.setPhoneNumberHandeler}
           className="w-100"
         />

@@ -45,11 +45,11 @@ export default function () {
 
   const validate = add_user_validate();
   const findedUser = AdminUser_FindOne("admin", id);
-  const { isSuccess, data, mutateAsync ,mutate} = AdminEditUser_Mutation();
+  const { isSuccess, data, mutateAsync } = AdminEditUser_Mutation();
 
   async function EditUser() {
     try {
-      // await validate();
+      await validate();
 
       const option = {
         id: id,
@@ -149,7 +149,9 @@ export default function () {
 
   }, [findedUser.isSuccess]);
   useEffect(() => {
+  
     return () => {
+      location.reload()
       meta.clearAll();
     };
   }, []);
@@ -279,6 +281,7 @@ export default function () {
             margin={cssClass.ms_3}
             phoneNumber={content.row2.phoneNumber}
             meta={meta}
+            value={meta.state.phoneNumber.value}
           />
           <UserName
             userName={content.row2.userName}
@@ -308,7 +311,7 @@ export default function () {
             margin={cssClass.ms_3}
             meta={meta}
           />
-          <Expirition credit={content.row4.credit} margin={cssClass.ms_3} />
+          <Expirition credit={content.row4.credit} margin={cssClass.ms_3}   value={meta.state.daysToExpire.value}/>
           <AccessProductBox
             AccessToProducts={content.row5.AccessToProducts}
             accessProduct={state.productAccess}

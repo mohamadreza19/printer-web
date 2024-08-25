@@ -4,9 +4,9 @@ import use_addUser_controller from "../../../../../../helper/admin_add_user/cont
 import Typography from "../../../../../../styles/__ready/Typography";
 import User_DropDown from "../../../../../../styles/__ready/common/User_DropDown";
 
-export default function ({ margin, credit }) {
+export default function ({ margin, credit ,value}) {
   const meta = use_addUser_controller();
-  console.log(meta);
+
   useEffect(() => {
     // meta.handeler.setDaysToExpireHandeler("30");
   }, []);
@@ -32,7 +32,8 @@ export default function ({ margin, credit }) {
           type="number"
           style={{ textAlign: "center" }}
           className="text-filed-input-v2"
-          value={meta.state.daysToExpire.value}
+         
+          value={value}
           // options={[
           //   { label: "یک ماهه", value: "30" },
           //   { label: "دو ماهه", value: "60" },

@@ -12,13 +12,14 @@ export default function ({ City = "", margin }) {
   const res = Public_Provinces_Cities();
 
   useEffect(() => {
-    console.log(meta.state.city.value);
+   
     if (res.isSuccess && !meta.state.city.value) {
-      console.log("______________--------____________");
+      
       const value = res.data[0]?.value;
       meta.handeler.setCityHandeler(value);
     }
   }, [res.isSuccess]);
+  console.log(meta.state.city.value);
   if (meta.state.city.value)
     return (
       <>
