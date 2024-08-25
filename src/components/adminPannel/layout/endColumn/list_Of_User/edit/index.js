@@ -27,7 +27,7 @@ import AccessProductBox from "./AccessProductBox";
 import moment from "moment";
 import "moment/locale/fa";
 import "moment/locale/tr";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { AdminUser_FindOne } from "../../../../../../reactQuery/admin/callGetService";
 import { AdminEditUser_Mutation } from "../../../../../../reactQuery/admin/callPutService";
@@ -45,19 +45,20 @@ export default function () {
 
   const validate = add_user_validate();
   const findedUser = AdminUser_FindOne("admin", id);
-  const { isSuccess, data, mutateAsync } = AdminEditUser_Mutation();
+  const { isSuccess, data, mutateAsync ,mutate} = AdminEditUser_Mutation();
 
   async function EditUser() {
     try {
-      await validate();
-      console.log(state);
+      // await validate();
+
       const option = {
         id: id,
         body: state,
       };
+      
       await mutateAsync(option);
 
-      console.log("hhh");
+ 
     } catch (error) {
       console.log(error);
     }
@@ -74,107 +75,11 @@ export default function () {
 
     console.log(mypersiandate);
   }
-  format();
 
-  if (data)
-    return (
-      <div className="w-100">
-        <Header />
-        <section className="w-100 d-flex mt-4 justify-content-center flex-column align-item-center  mt-4 ">
-          <span className="success-logo ">
-            <Icons.Cheked />
-          </span>
-          <Typography.H5 className="color-primary font-500 mt-3">
-            {content.success.NewUserSuccessfullyCreated}
-          </Typography.H5>
-        </section>
 
-        <section className="w-100 d-flex  justify-content-center mt-3">
-          <article className="card-1  ">
-            <header className="w-100 d-flex justify-content-center  ">
-              <Typography.H5 className={"font-500 mt-3 "}>
-                {data.managerName}
-              </Typography.H5>
-            </header>
-            <main className="w-100 d-flex justify-content-center mt-3 ">
-              <Typography.H8 className="font-400 ">
-                با مدیریت {data.managerName}
-              </Typography.H8>
-            </main>
-            <main className="w-100 d-flex justify-content-center flex-column align-item-center mt-3 card-header-1 ">
-              <div className="user-pass-box d-flex">
-                <article className="w-100 d-flex  border-bottom">
-                  <section className="user-pass-child-box  ">
-                    <Icons.UserName size="small" />
-                  </section>
-                  <section
-                    style={{
-                      width: "142px",
-                      position: "relative",
-                      top: "4.5px",
-                    }}
-                    className={"d-flex justify-content-end px-2   "}
-                  >
-                    <p
-                      className={"font-400 " + data.username}
-                      style={{
-                        overflowY: "auto",
-                      }}
-                    >
-                      {data.username}
-                    </p>
-                  </section>
-                </article>
-                <article className="w-100 d-flex ">
-                  <section className="user-pass-child-box  ">
-                    <Icons.Password size="small" />
-                  </section>
-                  <section
-                    style={{
-                      width: "142px",
-                      position: "relative",
-                      top: "4.5px",
-                    }}
-                    className="d-flex justify-content-end px-2 "
-                  >
-                    <p
-                      style={{
-                        overflowY: "auto",
-                      }}
-                      className={"font-400 " + data.password}
-                    >
-                      {data.password}
-                    </p>
-                  </section>
-                </article>
-              </div>
-            </main>
-            <footer className="w-100 d-flex justify-content-center mt-3">
-              <Typography.H9_5 className={"font-400 " + cssClass.me_2}>
-                <span className={cssClass.me_2}>
-                  انقضا اعتبار({state.daysToExpire})
-                </span>
-                {new Date(data.expiresIn).toLocaleDateString("fa-IR")}
-              </Typography.H9_5>
-            </footer>
-          </article>
-        </section>
-        <footer className="w-100 d-flex  justify-content-center mt-6 pb-4_2rem">
-          <Buttons.Outlined className="button_extra-large ">
-            <Typography.H7>
-              {allContent.AdminPannel.end_col.controlPannel.row1.usersList}
-            </Typography.H7>
-          </Buttons.Outlined>
-          <Buttons.Contained_Custom
-            className={"button_extra-large bg_primary " + cssClass.ms_2}
-          >
-            <Typography.H7 className={"font-400 "}>
-              {allContent.AdminPannel.end_col.controlPannel.row1.AddNewProduct}
-            </Typography.H7>
-          </Buttons.Contained_Custom>
-        </footer>
-      </div>
-    );
+
+  
+
 
   const EditUserButton = () => {
     return (
@@ -190,6 +95,12 @@ export default function () {
       </div>
     );
   };
+  // useEffect(()=>{
+ 
+  //   setTimeout(()=>{
+  //     meta.clearAll();
+  //   },3000)
+  // },[])
   useEffect(() => {
     if (findedUser.data) {
       let e = {
@@ -235,18 +146,115 @@ export default function () {
 
       meta.handeler.setDaysToExpireHandeler(result);
     }
+
+  }, [findedUser.isSuccess]);
+  useEffect(() => {
     return () => {
       meta.clearAll();
     };
-  }, [findedUser.isSuccess]);
-  // useEffect(() => {
-  //   return () => {
-  //     meta.clearAll();
-  //   };
-  // }, []);
-  if (findedUser.data)
-    return (
-      <div
+  }, []);
+  return (
+    <>
+    {
+      data ?  
+      <div className="w-100">
+      <Header />
+      <section className="w-100 d-flex mt-4 justify-content-center flex-column align-item-center  mt-4 ">
+        <span className="success-logo ">
+          <Icons.Cheked />
+        </span>
+        <Typography.H5 className="color-primary font-500 mt-3">
+          {content.success.NewUserSuccessfullyCreated}
+        </Typography.H5>
+      </section>
+
+      <section className="w-100 d-flex  justify-content-center mt-3">
+        <article className="card-1  ">
+          <header className="w-100 d-flex justify-content-center  ">
+            <Typography.H5 className={"font-500 mt-3 "}>
+              {data.managerName}
+            </Typography.H5>
+          </header>
+          <main className="w-100 d-flex justify-content-center mt-3 ">
+            <Typography.H8 className="font-400 ">
+              با مدیریت {data.managerName}
+            </Typography.H8>
+          </main>
+          <main className="w-100 d-flex justify-content-center flex-column align-item-center mt-3 card-header-1 ">
+            <div className="user-pass-box d-flex">
+              <article className="w-100 d-flex  border-bottom">
+                <section className="user-pass-child-box  ">
+                  <Icons.UserName size="small" />
+                </section>
+                <section
+                  style={{
+                    width: "142px",
+                    position: "relative",
+                    top: "4.5px",
+                  }}
+                  className={"d-flex justify-content-end px-2   "}
+                >
+                  <p
+                    className={"font-400 " + data.username}
+                    style={{
+                      overflowY: "auto",
+                    }}
+                  >
+                    {data.username}
+                  </p>
+                </section>
+              </article>
+              {/* <article className="w-100 d-flex ">
+                <section className="user-pass-child-box  ">
+                  <Icons.Password size="small" />
+                </section>
+                <section
+                  style={{
+                    width: "142px",
+                    position: "relative",
+                    top: "4.5px",
+                  }}
+                  className="d-flex justify-content-end px-2 "
+                >
+                  <p
+                    style={{
+                      overflowY: "auto",
+                    }}
+                    className={"font-400 " + data.password}
+                  >
+                    {data.password}
+                  </p>
+                </section>
+              </article> */}
+            </div>
+          </main>
+          <footer className="w-100 d-flex justify-content-center mt-3">
+            <Typography.H9_5 className={"font-400 " + cssClass.me_2}>
+              <span className={cssClass.me_2}>
+                انقضا اعتبار({state.daysToExpire})
+              </span>
+              {new Date(data.expiresIn).toLocaleDateString("fa-IR")}
+            </Typography.H9_5>
+          </footer>
+        </article>
+      </section>
+      <footer className="w-100 d-flex  justify-content-center mt-6 pb-4_2rem">
+          <Link to={'/admin/list-user'}>
+        <Buttons.Outlined className="button_extra-large ">
+          <Typography.H7>
+            {allContent.AdminPannel.end_col.controlPannel.row1.usersList}
+          </Typography.H7>
+        </Buttons.Outlined>
+          </Link>
+        {/* <Buttons.Contained_Custom
+          className={"button_extra-large bg_primary " + cssClass.ms_2}
+        >
+          <Typography.H7 className={"font-400 "}>
+            {allContent.AdminPannel.end_col.controlPannel.row1.AddNewProduct}
+          </Typography.H7>
+        </Buttons.Contained_Custom> */}
+      </footer>
+    </div>:  <div
         style={{
           overflow: "auto",
         }}
@@ -310,5 +318,9 @@ export default function () {
           <EditUserButton />
         </main>
       </div>
-    );
+    }
+    
+    </>
+  )
+ 
 }

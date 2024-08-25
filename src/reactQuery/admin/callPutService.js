@@ -19,7 +19,12 @@ export const AdminEditUser_Mutation = () => {
   const meta = useAdd_user_controller(false, true);
   const result = useMutation({
     mutationKey: 'edit-user',
-    mutationFn: (option) => api_put.edit_user(token, option.id, option.body),
+    mutationFn: async(option) =>{
+      const res = await  api_put.edit_user(token, option.id, option.body)
+        console.log(res)
+      return res
+    }, 
+   
   });
   const { isSuccess, isLoading, error } = result;
   useEffect(() => {

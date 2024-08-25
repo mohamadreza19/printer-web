@@ -2,6 +2,7 @@ import axios from "axios";
 import { apiUrl } from "../urlStore";
 export default class {
   static async edit_user(token = "", id, body) {
+      
     try {
       const res = await axios.put(`${apiUrl}/user/${id}`, body, {
         headers: {
@@ -10,11 +11,12 @@ export default class {
           accept: "application/json",
         },
       });
-      console.log(res);
+      
       return new Promise((resolve, _) => {
         resolve(res.data);
       });
     } catch (error) {
+      console.log(error)
       return new Promise((_, reject) => {
         reject(error.response.data);
       });
