@@ -1,74 +1,75 @@
-import React from "react";
+import React from 'react';
 
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from 'react-router-dom';
 
-import Authentication from "../controller/Authentication";
-import SelectLanguage from "../components/selectLanguage";
-import useCachedLanguage from "../utility/useCachedLanguage";
-import Login from "../components/login";
-import AdminLogin from "../components/admin-login";
-import UserPannel from "../components/userPannel";
+import Authentication from '../controller/Authentication';
+import SelectLanguage from '../components/selectLanguage';
+import useCachedLanguage from '../utility/useCachedLanguage';
+import Login from '../components/login';
+import AdminLogin from '../components/admin-login';
+import UserPannel from '../components/userPannel';
 
 // import ListOfProject from "../components/userPannel/layout/endColumn/listOfProject";
 
-import AddNewProject from "../components/userPannel/layout/endColumn/addNewProject/";
-import AddNewProject_Editor from "../components/userPannel/layout/endColumn/addNewProject/editor";
-import LabelList from "../components/userPannel/layout/endColumn/label-list";
-import HistoryPrining from "../components/userPannel/layout/endColumn/historyPrining";
+import AddNewProject from '../components/userPannel/layout/endColumn/addNewProject/';
+import AddNewProject_Editor from '../components/userPannel/layout/endColumn/addNewProject/editor';
+import LabelList from '../components/userPannel/layout/endColumn/label-list';
+import HistoryPrining from '../components/userPannel/layout/endColumn/historyPrining';
 //admin
-import AdminPannel from "../components/adminPannel";
+import AdminPannel from '../components/adminPannel';
 
-import AdminControlPannel from "../components/adminPannel/layout/endColumn/controlPannel";
-import AdimHistory from "../components/adminPannel/layout/endColumn/controlPannel/adimHistory";
-import AdminAddNewUser from "../components/adminPannel/layout/endColumn/controlPannel/adminAddNewUser";
+import AdminControlPannel from '../components/adminPannel/layout/endColumn/controlPannel';
+import AdimHistory from '../components/adminPannel/layout/endColumn/controlPannel/adimHistory';
+import AdminAddNewUser from '../components/adminPannel/layout/endColumn/controlPannel/adminAddNewUser';
 
-import AdminAddProduct_UploadFile from "../components/adminPannel/layout/endColumn/addNewProduct/uploadFile";
+import AdminAddProduct_UploadFile from '../components/adminPannel/layout/endColumn/addNewProduct/uploadFile';
 
-import AdminList_Of_Label_And_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product";
-import AdminAddLabelBeta from "../components/adminPannel/layout/endColumn/addNewLabelBeta";
-import Admin_Edit_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/ProductEdit";
-import Admin_Edit_Label from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/LabelEdit";
+import AdminList_Of_Label_And_Product from '../components/adminPannel/layout/endColumn/list_Of_Label_And_Product';
+import AdminAddLabelBeta from '../components/adminPannel/layout/endColumn/addNewLabelBeta';
+import Admin_Edit_Product from '../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/ProductEdit';
+import Admin_Edit_Label from '../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/LabelEdit';
 
-import AdminList_Of_User from "../components/adminPannel/layout/endColumn/list_Of_User";
-import AdminList_Of_User_edit from "../components/adminPannel/layout/endColumn/list_Of_User/edit";
-import AdminList_Of_User_Printer from "../components/adminPannel/layout/endColumn/list_Of_User/printer";
+import AdminList_Of_User from '../components/adminPannel/layout/endColumn/list_Of_User';
+import AdminList_Of_User_edit from '../components/adminPannel/layout/endColumn/list_Of_User/edit';
+import AdminList_Of_User_Printer from '../components/adminPannel/layout/endColumn/list_Of_User/printer';
 //
-import AdminList_Of_Manager from "../components/adminPannel/layout/endColumn/list_Of_Manager";
-import AdminList_Of_Manager_edit from "../components/adminPannel/layout/endColumn/list_Of_Manager/edit";
-import AdminList_Of_Manager_Printer from "../components/adminPannel/layout/endColumn/list_Of_Manager/printer";
+import AdminList_Of_Manager from '../components/adminPannel/layout/endColumn/list_Of_Manager';
+import AdminList_Of_Manager_edit from '../components/adminPannel/layout/endColumn/list_Of_Manager/edit';
+import AdminList_Of_Manager_Printer from '../components/adminPannel/layout/endColumn/list_Of_Manager/printer';
 
-import AddSymbol from "../components/adminPannel/layout/endColumn/setting/addSymbol/addSymbol";
-import SliderSetting from "../components/adminPannel/layout/endColumn/setting/slider/Slider";
+import AddSymbol from '../components/adminPannel/layout/endColumn/setting/addSymbol/addSymbol';
+import SliderSetting from '../components/adminPannel/layout/endColumn/setting/slider/Slider';
 
 //
-import AdminAddLabel from "../components/adminPannel/layout/endColumn/addNewLabel";
+import AdminAddLabel from '../components/adminPannel/layout/endColumn/addNewLabel';
 
-import ElsePath from "../controller/ElsePath";
-import { Suspense } from "react";
-import ViewPrinitChart from "../components/adminPannel/layout/endColumn/viewPrinitChart";
-import Loading from "../styles/__ready/Loading";
-import AdminAuthentication from "../controller/AdminAuthentication";
-import Product from "../components/adminPannel/layout/endColumn/addProduct/Product";
-import AdminHistory from "../components/adminPannel/layout/endColumn/controlPannel/adimHistory/adminHistory.context";
+import ElsePath from '../controller/ElsePath';
+import { Suspense } from 'react';
+import ViewPrinitChart from '../components/adminPannel/layout/endColumn/viewPrinitChart';
+import Loading from '../styles/__ready/Loading';
+import AdminAuthentication from '../controller/AdminAuthentication';
+import Product from '../components/adminPannel/layout/endColumn/addProduct/Product';
+import AdminHistory from '../components/adminPannel/layout/endColumn/controlPannel/adimHistory/adminHistory.context';
+import CreateAdmin from '../components/adminPannel/layout/endColumn/controlPannel/admin/create/CreateAdmin';
 
 const ListOfProject = React.lazy(() =>
-  import("../components/userPannel/layout/endColumn/listOfProject")
+  import('../components/userPannel/layout/endColumn/listOfProject')
 );
 // const Setting = React.lazy(() =>
 //   import("../components/adminPannel/layout/endColumn/setting/Setting")
 // );
 export const UserRoutePath = {
-  Index: "/user",
-  projectList: "/user/project-list",
-  createProject: "/user/add-project",
-  labelList: "/user/label-list",
-  priningHistory: "/user/print-history",
+  Index: '/user',
+  projectList: '/user/project-list',
+  createProject: '/user/add-project',
+  labelList: '/user/label-list',
+  priningHistory: '/user/print-history',
 };
 export const AdminRoutePath = {
-  index: "/admin",
-  controlPannel: "/admin/control-pannel",
-  controlPannel_History: "/admin/control-pannel/history",
-  addProduct_Or_Label: "/admin/add-product-label",
+  index: '/admin',
+  controlPannel: '/admin/control-pannel',
+  controlPannel_History: '/admin/control-pannel/history',
+  addProduct_Or_Label: '/admin/add-product-label',
 };
 
 export default function () {
@@ -119,6 +120,7 @@ export default function () {
         <Route path="control-pannel" element={<AdminControlPannel />} />
         <Route path="control-pannel/history" element={<AdminHistory />} />
         <Route path="control-pannel/add-user" element={<AdminAddNewUser />} />
+        <Route path="control-pannel/add-admin" element={<CreateAdmin />} />
         <Route path="add-product/" element={<Product />} />
         <Route path="edit-product/:productid" element={<Product />} />
         <Route
