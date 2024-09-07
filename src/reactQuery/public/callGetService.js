@@ -69,11 +69,10 @@ export const Public_Provinces = () => {
   }
   return { ...result, data: modifiedData };
 };
-export const Public_Provinces_Cities = () => {
+export const Public_Provinces_Cities = (province) => {
   const queryClient = useQueryClient();
   const setLoading = useToastReducer();
   const language = useLanguage();
-  const { province } = use_addUser_controller(true);
 
   let lanForBackend;
 

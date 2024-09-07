@@ -6,32 +6,30 @@ import Typography from "../../../../../../styles/__ready/Typography";
 import User_DropDown from "../../../../../../styles/__ready/common/User_DropDown";
 import { Public_Provinces_Cities } from "../../../../../../reactQuery/public/callGetService";
 
-export default function ({ City = "", margin }) {
-  const [currentCity, SetcurrentCity] = useState(null);
-  const meta = use_addUser_controller();
-  const res = Public_Provinces_Cities();
+export default function ({ title, value, onChange, margin, province }) {
+  const res = Public_Provinces_Cities(province);
 
-  useEffect(() => {
-   
-    if (res.isSuccess && !meta.state.city.value) {
-      
-      const value = res.data[0]?.value;
-      meta.handeler.setCityHandeler(value);
-    }
-  }, [res.isSuccess]);
-  console.log(meta.state.city.value);
-  if (meta.state.city.value)
+  const hanndleOnChangeCunstom = (value, label) => {
+    let event = {
+      target: {
+        value: value,
+      },
+    };
+    // console.log(value, label);
+    onChange(event);
+  };
+  if (res.data && res.data.length > 0)
     return (
       <>
         <article>
           <span>
             <Typography.H8 className={"font-400 mb-2 " + margin}>
-              {City}
+              {title}
             </Typography.H8>
           </span>
           <User_DropDown
-            currentValue={meta.state.city.value}
-            onChange={meta.handeler.setCityHandeler}
+            currentValue={value}
+            onChange={hanndleOnChangeCunstom}
             options={res?.data}
             isAllow_ShowCurrentValue_Whitout_Seariching_in_option={true}
           />

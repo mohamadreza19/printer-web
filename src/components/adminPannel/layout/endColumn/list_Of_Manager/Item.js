@@ -1,4 +1,6 @@
+import { AdminDelete_Admin_Mutation } from "../../../../../reactQuery/admin/callDeleteService";
 import { useDynamicCssClass } from "../../../../../recoil/readStore";
+
 import Icons from "../../../../../styles/__ready/Icons";
 import Typography from "../../../../../styles/__ready/Typography";
 
@@ -22,10 +24,19 @@ export default function ({
   navigateToAdd_printer = () => {},
 }) {
   const cssClass = useDynamicCssClass();
+  const { mutate } = AdminDelete_Admin_Mutation();
   function navigateToEdit() {
-    navigate("/admin/manager/edit/" + item.id);
+    const params = new URLSearchParams({
+      key1: JSON.stringify(item),
+    });
+    navigate("/admin/list-manager/edit/" + item.id + "?" + params.toString());
   }
-  console.table(item);
+  function deleteAdmin() {
+    mutate({
+      id: item.id,
+    });
+  }
+
   return (
     <div
       style={{
@@ -73,7 +84,7 @@ export default function ({
               {" "}
               <span
                 className={cssClass.me_1 + " cur-pointer"}
-                onClick={deleteFn}
+                onClick={deleteAdmin}
               >
                 <Icons.Trash />
               </span>

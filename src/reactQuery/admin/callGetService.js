@@ -122,6 +122,42 @@ export const AdminUser_FindOne = (role = "admin", id) => {
 
   return result;
 };
+export const Admin_FindOne = (id) => {
+  const { value: token } = useAdmin_CachedToken();
+  const { value: userToken } = useCachedToken();
+  const queryClient = useQueryClient();
+  const setLoading = useToastReducer();
+
+  const currentToken = token;
+
+  const result = useQuery({
+    queryKey: ["find-one-admin", id],
+    queryFn: () => api_get.findOne_admin(currentToken, id),
+  });
+  const { isLoading, isSuccess, error } = result;
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(() => ({
+        isShow: true,
+        message: "",
+      }));
+    }
+    if (isSuccess) {
+      setLoading(() => ({
+        isShow: false,
+        message: "",
+      }));
+    }
+    if (error) {
+      setLoading(() => ({
+        isShow: true,
+        message: error,
+      }));
+    }
+  }, [isSuccess, isLoading, error]);
+
+  return result;
+};
 export const AdminProjects = () => {
   const setLoading = useToastReducer();
   const { value: token } = useAdmin_CachedToken();

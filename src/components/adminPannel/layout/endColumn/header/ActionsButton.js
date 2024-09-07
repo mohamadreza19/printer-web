@@ -8,6 +8,7 @@ import Typography from "../../../../../styles/__ready/Typography";
 import Buttons from "../../../../../styles/__ready/Buttons";
 import { useRecoilValue } from "recoil";
 import { adminRole } from "../../../../../recoil/recoilStore";
+import { Link } from "react-router-dom";
 
 export default function () {
   const cssClass = useDynamicCssClass();
@@ -17,12 +18,14 @@ export default function () {
     if (role === "superAdmin")
       return (
         <div className="mx-2">
-          <Buttons.Outlined>
-            <Icons.AdminAvatar />
-            <Typography.Button className={cssClass.ms_1}>
-              {content.AdminPannel.end_col.row1.add_new_admin}
-            </Typography.Button>
-          </Buttons.Outlined>
+          <Link to={"/admin/control-pannel/add-admin"}>
+            <Buttons.Outlined>
+              <Icons.AdminAvatar />
+              <Typography.Button className={cssClass.ms_1}>
+                {content.AdminPannel.end_col.row1.add_new_admin}
+              </Typography.Button>
+            </Buttons.Outlined>
+          </Link>
         </div>
       );
   };

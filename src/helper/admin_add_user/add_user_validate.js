@@ -49,6 +49,12 @@ export default function () {
             errMsg: err.message,
           }));
         }
+        if (path === "daysToExpire") {
+          return setExpiresIn((draft) => ({
+            ...draft,
+            errMsg: err.message,
+          }));
+        }
       });
       throw "validate was handeled";
     }

@@ -6,27 +6,39 @@ import { t } from "i18next";
 import Buttons from "../../../../../../../styles/__ready/Buttons";
 import Typography from "../../../../../../../styles/__ready/Typography";
 import validateAdmin from "../validateAdmin";
-import { AdminAddAdmin_Mutation } from "../../../../../../../reactQuery/admin/callPostService";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
-const CreateAdmin = () => {
-  const { mutate, error, isSuccess } = AdminAddAdmin_Mutation();
+import { useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { AdminEditAdmin_Mutation } from "../../../../../../../reactQuery/admin/callPutService";
+import { Admin_FindOne } from "../../../../../../../reactQuery/admin/callGetService";
+
+const EditAdmin = () => {
+  const { mutate, error, isSuccess } = AdminEditAdmin_Mutation();
+
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const findOne = JSON.parse(params.get("key1"));
+  // const { data } = Admin_FindOne(params.id);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      username: "",
+      username: findOne.username,
       password: "",
       Role: "admin",
-      firstName: "",
-      lastName: "",
+      firstName: findOne.firstName,
+      lastName: findOne.lastName,
     },
     onSubmit: (values) => {
-      mutate(values);
+      mutate({
+        id: findOne.id,
+        body: values,
+      });
     },
 
     validationSchema: validateAdmin,
   });
+
   useEffect(() => {
     if (error) {
       if (error.message.includes("username is already taken")) {
@@ -57,7 +69,7 @@ const CreateAdmin = () => {
   }
   return (
     <div className="w-100 h_100vh">
-      <Header title={t("admin.addNewAdmin")} />
+      <Header title={t("admin.editAdmin")} />
 
       <div className="d-flex flex-wrap gap-3 py-3 px-3">
         <Input
@@ -87,14 +99,14 @@ const CreateAdmin = () => {
 
         <AddUserButton
           onlick={formik.handleSubmit}
-          value={t("admin.addNewAdmin")}
+          value={t("admin.editAdmin")}
         />
       </div>
     </div>
   );
 };
 
-export default CreateAdmin;
+export default EditAdmin;
 const AddUserButton = ({ value, onlick }) => {
   return (
     <div className="w-100 d-flex justify-content-end">

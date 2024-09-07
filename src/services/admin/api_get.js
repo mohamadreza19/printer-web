@@ -137,8 +137,7 @@ export default class {
       });
     }
   }
-  static async admins(token = "") {
-    const url = `${apiUrl}/admin`;
+  static async admins(token = "", url) {
     try {
       const res = await axios.get(url, {
         headers: {
@@ -281,6 +280,25 @@ export default class {
   static async findOne_user(token = "", id) {
     try {
       const res = await axios.get(`${apiUrl}/user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+      });
+      // console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.response.data);
+      });
+    }
+  }
+  static async findOne_admin(token = "", id) {
+    try {
+      const res = await axios.get(`${apiUrl}/admin/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

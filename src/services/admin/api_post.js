@@ -32,6 +32,25 @@ export default class {
       });
     }
   }
+  static async add_admin(token = "", body) {
+    try {
+      const res = await axios.post(`${apiUrl}/admin/create`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+      });
+      console.log(res);
+      return new Promise((resolve, _) => {
+        resolve(res.data);
+      });
+    } catch (error) {
+      return new Promise((_, reject) => {
+        reject(error.response.data);
+      });
+    }
+  }
   static async add_product(token = "", body) {
     try {
       const res = await axios.post(`${apiUrl}/product`, body, {

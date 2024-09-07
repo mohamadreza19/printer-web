@@ -5,7 +5,7 @@ import Icons from "../../../../../styles/__ready/Icons";
 import Textfields from "../../../../../styles/__ready/Textfields";
 import Typography from "../../../../../styles/__ready/Typography";
 
-export default function ({ headerContent }) {
+export default function ({ headerContent, setSearch, searcht }) {
   const { header, goToAdminList, goToUserList, searchBoxPlaceHolder } =
     headerContent;
   const cssClass = useDynamicCssClass();
@@ -28,7 +28,10 @@ export default function ({ headerContent }) {
           </Buttons.Outlined>
         </section>
         <section className="search_box">
-          <Textfields.v2_SearchBox placeholder={searchBoxPlaceHolder} />
+          <Textfields.v2_SearchBox
+            placeholder={searcht || searchBoxPlaceHolder}
+            onClickAndGetValeFn={setSearch}
+          />
         </section>
       </article>
     </header>

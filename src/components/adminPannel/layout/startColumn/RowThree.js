@@ -17,7 +17,10 @@ export default function ({ singOut }) {
       }}
       className={"px-3  w-100  d-flex cur-pointer"}
       // className={"px-3  w-100  d-flex cur-pointer"}
-      onClick={() => logOut("admin")}
+      onClick={() => {
+        logOut("admin");
+        window.location.reload();
+      }}
     >
       <Icons.SingOut />
       <Typography.H7 className={"color_danger text-upercase " + cssClass.ms_2}>

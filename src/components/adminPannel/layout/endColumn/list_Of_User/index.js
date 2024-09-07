@@ -5,6 +5,7 @@ import Items from "./Items";
 import { useRef, useState } from "react";
 import { AdminUsers } from "../../../../../reactQuery/admin/callGetService";
 import { useContent_Based_Language } from "../../../../../recoil/readStore";
+import { t } from "i18next";
 
 export default function () {
   const [search, setSearch] = useState("");
@@ -20,7 +21,11 @@ export default function () {
       
       "
     >
-      <Header headerContent={headerContent} setSearch={setSearch} />
+      <Header
+        headerContent={headerContent}
+        setSearch={setSearch}
+        searcht={t("serch")}
+      />
       <InfiniteScroll
         className="w-100 px-3 "
         pullDownToRefreshThreshold={300}

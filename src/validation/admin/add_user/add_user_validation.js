@@ -35,14 +35,65 @@ export default function (
         email: "آدرس ایمیل وارد شده باید معتبر باشد",
         required: "آدرس ایمیل الزامی می باشد",
       },
-      daysToExpire: 1,
+      expiresIn: {
+        positive: "عدد وارد شده باید مثبت باشد",
+      },
       productAccess: true,
     },
-    english: {},
-    turkish: {},
+    english: {
+      username: "Username must not be less than five characters",
+      companyName:
+        "Company or institution name must not be less than five characters",
+      managerName: "Manager name must not be less than five characters",
+      phoneNumber:
+        "The provided phone number is incorrect. The phone number format should be 9030000000",
+      companyZipCode: {
+        number: "Zip code must be a number",
+        exact: "Zip code must be exactly five digits",
+      },
+      province: "",
+      city: "",
+      address: "The address provided must not be less than five characters",
+      email: {
+        email: "The provided email address must be valid",
+        required: "Email address is required",
+      },
+      expiresIn: {
+        positive: "The entered number must be positive",
+      },
+      productAccess: true,
+    },
+    turkish: {
+      username: "Kullanıcı adı beş karakterden az olmamalıdır",
+      companyName: "Şirket veya kurum adı beş karakterden az olmamalıdır",
+      managerName: "Yönetici adı beş karakterden az olmamalıdır",
+      phoneNumber:
+        "Girilen telefon numarası geçerli değil. Telefon numarası formatı 9030000000 olmalıdır",
+      companyZipCode: {
+        number: "Posta kodu rakam olmalıdır",
+        exact: "Posta kodu tam olarak beş haneli olmalıdır",
+      },
+      province: "",
+      city: "",
+      address: "Girilen adres beş karakterden az olmamalıdır",
+      email: {
+        email: "Girilen e-posta adresi geçerli olmalıdır",
+        required: "E-posta adresi zorunludur",
+      },
+      expiresIn: {
+        positive: "Girilen sayı pozitif olmalıdır",
+      },
+      productAccess: true,
+    },
   };
   if (language === "fa") {
     message = message.persian;
+  }
+  if (language === "en") {
+    message = message.english;
+  }
+  if (language === "tr") {
+    message = message.turkish;
   }
 
   const phoneNumberFOrvalidate = parsePhoneNumber(body.phoneNumber, "IR");
@@ -83,6 +134,7 @@ export default function (
     // .max(10, message.companyZipCode.max)
     email: string().email(message.email.email).required(message.email.required),
     address: string().min(5, message.address),
+    daysToExpire: number().positive(message.expiresIn.positive),
   });
 
   return add_user_schema.validate(body, {

@@ -4,7 +4,7 @@ import use_addUser_controller from "../../../../../../helper/admin_add_user/cont
 import Typography from "../../../../../../styles/__ready/Typography";
 import User_DropDown from "../../../../../../styles/__ready/common/User_DropDown";
 
-export default function ({ margin, credit ,value}) {
+export default function ({ title, value, onChange, margin, error }) {
   const meta = use_addUser_controller();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function ({ margin, credit ,value}) {
           }}
         >
           <Typography.H8 className={"font-400   " + margin}>
-            {credit}
+            {title}
           </Typography.H8>
         </span>
 
@@ -32,18 +32,15 @@ export default function ({ margin, credit ,value}) {
           type="number"
           style={{ textAlign: "center" }}
           className="text-filed-input-v2"
-         
           value={value}
           // options={[
           //   { label: "یک ماهه", value: "30" },
           //   { label: "دو ماهه", value: "60" },
           // ]}
-          onChange={(e) => {
-            const value = e.target.value;
-            meta.handeler.setDaysToExpireHandeler(value);
-          }}
+          onChange={onChange}
         />
       </article>
+      <Typography.H10 className="color_danger">{error}</Typography.H10>
     </div>
   );
 }

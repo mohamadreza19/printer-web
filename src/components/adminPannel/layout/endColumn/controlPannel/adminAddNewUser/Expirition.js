@@ -31,7 +31,7 @@ export default function ({ margin, credit }) {
             type="number"
             style={{ textAlign: "center" }}
             className="text-filed-input-v2"
-            currentValue={meta.state.daysToExpire.value}
+            value={meta.state.daysToExpire.value}
             // options={[
             //   { label: "یک ماهه", value: "30" },
             //   { label: "دو ماهه", value: "60" },
@@ -42,6 +42,9 @@ export default function ({ margin, credit }) {
             }}
           />
         </article>
+        <Typography.H10 className="color_danger">
+          {meta.state.daysToExpire.errMsg}
+        </Typography.H10>
       </div>
     );
 }

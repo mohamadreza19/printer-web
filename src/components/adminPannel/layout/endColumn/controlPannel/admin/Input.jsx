@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { useDynamicCssClass } from '../../../../../../recoil/readStore';
 import Typography from '../../../../../../styles/__ready/Typography';
 
-export default ({ title, value, onChange }) => {
+export default ({ title, value, onChange ,error}) => {
   const cssClass = useDynamicCssClass();
 
   return (
@@ -22,6 +22,9 @@ export default ({ title, value, onChange }) => {
         onChange={onChange}
         type="text"
       />
+      <section className='mt-2'>
+        <Typography.H10 className='text-danger'>{error}</Typography.H10>
+      </section>
     </div>
   );
 };
