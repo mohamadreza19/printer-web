@@ -85,35 +85,8 @@ export const AdminAddUser_Mutation = () => {
       }));
     }
     if (error) {
-      console.log(error);
-      if (error.statusCode === 409) {
-        const username = error.message.includes("username");
-        const email = error.message.includes("email");
-
-        let message = {
-          userName: "این نام کاربری قبلا ثبت شده!",
-          email: "این ایمیل قبلا ثبت شده !",
-        };
-        if (username) {
-          meta.setUsername((draft) => ({ ...draft, errMsg: message.userName }));
-          setLoading(() => ({
-            isShow: false,
-            message: "",
-          }));
-          return;
-        }
-        if (email) {
-          setLoading(() => ({
-            isShow: false,
-            message: "",
-          }));
-          meta.setEmail((draft) => ({ ...draft, errMsg: message.email }));
-          return;
-        }
-      }
-
       setLoading(() => ({
-        isShow: true,
+        isShow: false,
         message: error,
       }));
     }

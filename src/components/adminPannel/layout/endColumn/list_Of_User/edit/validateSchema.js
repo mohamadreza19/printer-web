@@ -3,7 +3,7 @@ import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
-    .min(5, () => t("errMsg.minStr5"))
+    .min(5, () => t("errMsg.minStr4"))
     .required(() => t("errMsg.required")),
 
   email: Yup.string()
@@ -11,18 +11,19 @@ const validationSchema = Yup.object().shape({
     .required(() => t("errMsg.required")),
 
   companyName: Yup.string()
-    .min(5, () => t("errMsg.minStr5"))
+    .min(5, () => t("errMsg.minStr4"))
     .required(() => t("errMsg.required")),
 
   managerName: Yup.string()
-    .min(5, () => t("errMsg.minStr5"))
+    .min(5, () => t("errMsg.minStr4"))
     .required(() => t("errMsg.required")),
 
-  phoneNumber: Yup.number()
+  phoneNumber: Yup.string()
+
     .test(
       "isValidPhoneNumber", // Custom test name
       () => t("errMsg.phoneNumber"), // Error message from translation
-      (value) => /^090\d{8}$/.test(value) // Custom regex check
+      (value) => /^09\d{9}$/.test(value) // Custom regex check
     )
     .required(() => t("errMsg.required")),
 
@@ -31,10 +32,10 @@ const validationSchema = Yup.object().shape({
     .required(() => t("errMsg.required")),
 
   address: Yup.string()
-    .min(5, () => t("errMsg.minStr5"))
+    .min(5, () => t("errMsg.minStr4"))
     .required(() => t("errMsg.required")),
 
-  expiresIn: Yup.number()
+  daysToExpire: Yup.number()
     .positive(() => t("errMsg.positive"))
     .required(() => t("errMsg.required")),
 });

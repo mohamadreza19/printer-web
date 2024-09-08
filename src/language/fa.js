@@ -16,7 +16,7 @@ export default {
       alreadyExist: "از قبل ساخته شده است",
       email: "آدرس ایمیل نامعتبر است",
       phoneNumber: "شماره تلفن باید به فرمت 090XXXXXXXX باشد",
-      length: "باید دقیقاً 10 کاراکتر باشد",
+      length10: "باید دقیقاً 10 کاراکتر باشد",
       positive: "باید یک عدد مثبت باشد",
     },
     admin: {

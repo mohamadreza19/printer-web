@@ -27,7 +27,7 @@ import AccessProductBox from "./AccessProductBox";
 import moment from "moment";
 import "moment/locale/fa";
 import "moment/locale/tr";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { AdminUser_FindOne } from "../../../../../../reactQuery/admin/callGetService";
 import { AdminEditUser_Mutation } from "../../../../../../reactQuery/admin/callPutService";
@@ -40,15 +40,11 @@ export default function () {
     useContent_Based_Language().AdminPannel.end_col.controlPannel.AddNewUser;
 
   const allContent = useContent_Based_Language();
-
+  const navigate = useNavigate();
   const { id } = useParams();
 
-  const state = useAdd_user_controller(true);
-  const meta = useAdd_user_controller();
-
-  const validate = add_user_validate();
   const findedUser = AdminUser_FindOne("admin", id);
-  const { isSuccess, data, mutateAsync } = AdminEditUser_Mutation();
+  const { isSuccess, data, mutateAsync, error } = AdminEditUser_Mutation();
 
   const formik = useFormik({
     initialValues: {
@@ -61,10 +57,26 @@ export default function () {
       province: "",
       city: "",
       address: "",
-      expiresIn: 1,
+      daysToExpire: 1,
       productAccess: true,
     },
-    onSubmit: () => {},
+    onSubmit: (values) => {
+      const phoneNumber = "+98" + values.phoneNumber;
+
+      const copy = {
+        ...values,
+        phoneNumber: phoneNumber,
+        daysToExpire: Number(values.daysToExpire),
+      };
+
+      const data = {
+        id,
+        body: copy,
+      };
+
+      mutateAsync(data);
+      navigate("/admin/list-user");
+    },
     enableReinitialize: true,
     validationSchema: validationSchema,
   });
@@ -96,25 +108,11 @@ export default function () {
     formik.setFieldValue("address", event.target.value);
   };
   const handleChangeExpiresIn = (event) => {
-    formik.setFieldValue("expiresIn", event.target.value);
+    formik.setFieldValue("daysToExpire", event.target.value);
   };
   const handleChangeProductAccess = (event) => {
     formik.setFieldValue("productAccess", event.target.value);
   };
-  async function EditUser() {
-    try {
-      await validate();
-
-      const option = {
-        id: id,
-        body: state,
-      };
-
-      await mutateAsync(option);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   function format() {
     const d = new Date("2023-06-13T21:15:25.829Z");
@@ -160,19 +158,26 @@ export default function () {
       formik.setFieldValue("address", findedUser.data.address);
 
       var currenDate = moment(new Date());
-      var endDate = moment(findedUser.data.expiresIn);
+      var endDate = moment(findedUser.data.daysToExpire);
       var result = endDate.diff(currenDate, "days");
-      formik.setFieldValue("expiresIn", result);
+      formik.setFieldValue("daysToExpire", result);
       formik.setFieldValue("productAccess", findedUser.data.productAccess);
     }
   }, [findedUser.isSuccess]);
 
   useEffect(() => {
-    return () => {
-      window.location.reload();
-      meta.clearAll();
-    };
-  }, []);
+    if (error) {
+      if (error.message === "email is already registered") {
+        formik.setFieldError("email", t("errMsg.alreadyExist"));
+      }
+      if (error.message === "username is already taken") {
+        formik.setFieldError("username", t("errMsg.alreadyExist"));
+      }
+    }
+    if (isSuccess) {
+      navigate("/admin/list-user");
+    }
+  }, [error, isSuccess]);
   return (
     <>
       {data ? (
@@ -228,7 +233,7 @@ export default function () {
               <footer className="w-100 d-flex justify-content-center mt-3">
                 <Typography.H9_5 className={"font-400 " + cssClass.me_2}>
                   <span className={cssClass.me_2}>
-                    انقضا اعتبار({state.expiresIn})
+                    انقضا اعتبار({formik.values.expiresIn})
                   </span>
                   {new Date(data.expiresIn).toLocaleDateString("fa-IR")}
                 </Typography.H9_5>
@@ -327,9 +332,9 @@ export default function () {
               margin={cssClass.ms_3}
             />
             <Expirition
-              error={formik.errors.expiresIn}
+              error={formik.errors.daysToExpire}
               title={t("admin.createUserFeild.daysToExpire")}
-              value={formik.values.expiresIn}
+              value={formik.values.daysToExpire}
               onChange={handleChangeExpiresIn}
               margin={cssClass.ms_3}
             />

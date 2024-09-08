@@ -16,7 +16,7 @@ export default {
       alreadyExist: "zaten alınmış",
       email: "Geçersiz e-posta adresi",
       phoneNumber: "Telefon numarası 090XXXXXXXX formatında olmalıdır ",
-      length: "Tam olarak 10 karakter olmalıdır",
+      length10: "Tam olarak 10 karakter olmalıdır",
       positive: "Pozitif bir sayı olmalıdır",
     },
     admin: {

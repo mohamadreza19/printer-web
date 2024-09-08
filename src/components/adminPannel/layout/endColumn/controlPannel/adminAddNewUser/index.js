@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useContent_Based_Language,
   useDynamicCssClass,
@@ -12,23 +12,26 @@ import Icons from "../../../../../../styles/__ready/Icons";
 import Typography from "../../../../../../styles/__ready/Typography";
 //
 import Header from "./Header";
-import Company_or_Institution from "./Company_or_Institution";
-import ManagementName from "./ManagementName";
-import PhoneNumber from "./PhoneNumber";
-import UserName from "./UserName";
-import Email from "./Email";
-import CompanyZipCode from "./CompanyZipCode";
-import Province from "./Province";
-import City from "./City";
-import CompanyAddress from "./CompanyAddress";
-import Expirition from "./Expirition";
-import AccessProductBox from "./AccessProductBox";
 
 import moment from "moment";
 import "moment/locale/fa";
 import "moment/locale/tr";
 import { AdminAddUser_Mutation } from "../../../../../../reactQuery/admin/callPostService";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import Company_or_Institution from "../../list_Of_User/edit/Company_or_Institution";
+import ManagementName from "../../list_Of_User/edit/ManagementName";
+import PhoneNumber from "../../list_Of_User/edit/PhoneNumber";
+import UserName from "../../list_Of_User/edit/UserName";
+import Email from "../../list_Of_User/edit/Email";
+import Province from "../../list_Of_User/edit/Province";
+import City from "../../list_Of_User/edit/City";
+import CompanyAddress from "../../list_Of_User/edit/CompanyAddress";
+import Expirition from "../../list_Of_User/edit/Expirition";
+import AccessProductBox from "../../list_Of_User/edit/AccessProductBox";
+import validationSchema from "../../list_Of_User/edit/validateSchema";
+import { t } from "i18next";
+import CompanyZipCode from "../../list_Of_User/edit/CompanyZipCode";
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =
@@ -37,31 +40,85 @@ export default function () {
   const state = useAdd_user_controller(true);
   const validate = add_user_validate();
   const navigate = useNavigate();
-  const { isSuccess, data, mutateAsync } = AdminAddUser_Mutation();
+  const { isSuccess, data, mutateAsync, error } = AdminAddUser_Mutation();
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      companyName: "",
+      managerName: "",
+      phoneNumber: "",
+      companyZipCode: "",
+      province: "",
+      city: "",
+      address: "",
+      daysToExpire: 1,
+      productAccess: true,
+    },
+    // enableReinitialize: true,
+    onSubmit: (values) => {
+      const phoneNumber = "+98" + values.phoneNumber;
 
-  const response = false;
-  async function addUser() {
-    try {
-      await validate();
+      const copy = {
+        ...values,
+        phoneNumber: phoneNumber,
+        daysToExpire: Number(values.daysToExpire),
+      };
 
-      await mutateAsync(state);
-    } catch (error) {
-      console.log(error);
+      mutateAsync(copy);
+    },
+
+    validationSchema: validationSchema,
+  });
+
+  const handleChangeUsername = (event) => {
+    formik.setFieldValue("username", event.target.value);
+  };
+
+  const handleChangeEmail = (event) => {
+    formik.setFieldValue("email", event.target.value);
+  };
+  const handleChangeCompanyName = (event) => {
+    formik.setFieldValue("companyName", event.target.value);
+  };
+  const handleChangeManagerName = (event) => {
+    formik.setFieldValue("managerName", event.target.value);
+  };
+  const handleChangePhoneNumber = (event) => {
+    formik.setFieldValue("phoneNumber", event.target.value);
+  };
+  const handleChangeCompanyZipCode = (event) => {
+    formik.setFieldValue("companyZipCode", event.target.value);
+  };
+  const handleChangeProvince = (event) => {
+    formik.setFieldValue("province", event.target.value);
+  };
+  const handleChangeCity = (event) => {
+    formik.setFieldValue("city", event.target.value);
+  };
+  const handleChangeAddress = (event) => {
+    formik.setFieldValue("address", event.target.value);
+  };
+  const handleChangeExpiresIn = (event) => {
+    formik.setFieldValue("daysToExpire", event.target.value);
+  };
+  const handleChangeProductAccess = (event) => {
+    formik.setFieldValue("productAccess", event.target.value);
+  };
+
+  useEffect(() => {
+    if (error) {
+      if (error.message === "email is already registered") {
+        formik.setFieldError("email", t("errMsg.alreadyExist"));
+      }
+      if (error.message === "username is already taken") {
+        formik.setFieldError("username", t("errMsg.alreadyExist"));
+      }
     }
-  }
-
-  function format() {
-    const d = new Date("2023-06-13T21:15:25.829Z");
-    let mypersiandate = d.toLocaleDateString("fa-IR");
-    const momentDate = moment("2023-05-15T20:12:57.454Z").locale("fa");
-    const diff = moment("2023-06-13T21:15:25.829Z").diff(
-      moment(),
-      "millisecond"
-    );
-
-    console.log(mypersiandate);
-  }
-  format();
+    if (isSuccess) {
+      navigate("/admin/list-user");
+    }
+  }, [error, isSuccess]);
 
   if (data)
     return (
@@ -170,7 +227,7 @@ export default function () {
     return (
       <div className="w-100 d-flex justify-content-end">
         <Buttons.Contained
-          onClick={addUser}
+          onClick={formik.handleSubmit}
           className="button_large border-r-20 "
         >
           <Typography.H7 className="font-400">
@@ -181,41 +238,90 @@ export default function () {
     );
   };
   return (
-    <div className="w-100 h-100 bg-white">
+    <div
+      style={{
+        overflow: "auto",
+      }}
+      className="
+w-100 h-100 bg-white"
+    >
       <Header />
       <main className="w-100 px-3-58 d-flex justify-content-between flex-wrap pt-4 bg-white">
         <Company_or_Institution
-          Name_of_the_company_or_institution={
-            content.row1.Name_of_the_company_or_institution
-          }
+          error={formik.errors.companyName}
+          title={t("admin.createUserFeild.companyName")}
+          value={formik.values.companyName}
+          onChange={handleChangeCompanyName}
           margin={cssClass.ms_3}
         />
         <ManagementName
-          ManagementName={content.row1.ManagementName}
+          error={formik.errors.managerName}
+          title={t("admin.createUserFeild.managerName")}
+          value={formik.values.managerName}
+          onChange={handleChangeManagerName}
           margin={cssClass.ms_3}
         />
         <PhoneNumber
+          error={formik.errors.phoneNumber}
+          title={t("admin.createUserFeild.phoneNumber")}
+          value={formik.values.phoneNumber}
+          onChange={handleChangePhoneNumber}
           margin={cssClass.ms_3}
-          phoneNumber={content.row2.phoneNumber}
         />
-        <UserName userName={content.row2.userName} margin={cssClass.ms_3} />
-        <Email Email={content.row3.Email} margin={cssClass.ms_3} />
-        <CompanyZipCode
+        <UserName
+          error={formik.errors.username}
+          title={t("admin.createUserFeild.username")}
+          value={formik.values.username}
+          onChange={handleChangeUsername}
           margin={cssClass.ms_3}
-          CompanyZipCode={content.row3.CompanyZipCode}
+        />
+        <Email
+          error={formik.errors.email}
+          title={t("admin.createUserFeild.email")}
+          value={formik.values.email}
+          onChange={handleChangeEmail}
+          margin={cssClass.ms_3}
+        />
+        <CompanyZipCode
+          error={formik.errors.companyZipCode}
+          title={t("admin.createUserFeild.companyZipCode")}
+          value={formik.values.companyZipCode}
+          onChange={handleChangeCompanyZipCode}
+          margin={cssClass.ms_3}
         />
         <article className="state-city-box d-flex justify-content-between">
-          <Province State={content.row4.State} margin={cssClass.ms_3} />
-          <City City={content.row4.City} margin={cssClass.ms_3} />
+          <Province
+            title={t("admin.createUserFeild.province")}
+            value={formik.values.province}
+            onChange={handleChangeProvince}
+            margin={cssClass.ms_3}
+          />
+          <City
+            title={t("admin.createUserFeild.city")}
+            value={formik.values.city}
+            onChange={handleChangeCity}
+            margin={cssClass.ms_3}
+            province={formik.values.province}
+          />
         </article>
         <CompanyAddress
-          CompanyAddress={content.row4.CompanyAddress}
+          error={formik.errors.address}
+          title={t("admin.createUserFeild.address")}
+          value={formik.values.address}
+          onChange={handleChangeAddress}
           margin={cssClass.ms_3}
         />
-        <Expirition credit={content.row4.credit} margin={cssClass.ms_3} />
+        <Expirition
+          error={formik.errors.daysToExpire}
+          title={t("admin.createUserFeild.daysToExpire")}
+          value={formik.values.daysToExpire}
+          onChange={handleChangeExpiresIn}
+          margin={cssClass.ms_3}
+        />
         <AccessProductBox
-          AccessToProducts={content.row5.AccessToProducts}
-          accessProduct={state.productAccess}
+          title={t("admin.createUserFeild.productAccess")}
+          value={formik.values.productAccess}
+          onChange={handleChangeProductAccess}
           margin={cssClass.ms_3}
         />
         <AddUserButton />
