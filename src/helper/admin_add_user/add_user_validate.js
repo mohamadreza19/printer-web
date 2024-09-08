@@ -50,7 +50,7 @@ export default function () {
           }));
         }
         if (path === "daysToExpire") {
-          return setExpiresIn((draft) => ({
+          return setDaysToExpire((draft) => ({
             ...draft,
             errMsg: err.message,
           }));
