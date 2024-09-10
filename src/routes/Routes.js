@@ -33,6 +33,9 @@ import AdminList_Of_User from "../components/adminPannel/layout/endColumn/list_O
 import AdminList_Of_User_edit from "../components/adminPannel/layout/endColumn/list_Of_User/edit";
 import AdminList_Of_User_Printer from "../components/adminPannel/layout/endColumn/list_Of_User/printer";
 //
+
+//
+
 import AdminList_Of_Manager from "../components/adminPannel/layout/endColumn/list_Of_Manager";
 import AdminList_Of_Manager_edit from "../components/adminPannel/layout/endColumn/list_Of_Manager/edit";
 import AdminList_Of_Manager_Printer from "../components/adminPannel/layout/endColumn/list_Of_Manager/printer";
@@ -50,6 +53,7 @@ import Loading from "../styles/__ready/Loading";
 import AdminAuthentication from "../controller/AdminAuthentication";
 import Product from "../components/adminPannel/layout/endColumn/addProduct/Product";
 import AdminHistory from "../components/adminPannel/layout/endColumn/controlPannel/adimHistory/adminHistory.context";
+import CreateAdmin from "../components/adminPannel/layout/endColumn/controlPannel/admin/create/CreateAdmin";
 
 const ListOfProject = React.lazy(() =>
   import("../components/userPannel/layout/endColumn/listOfProject")
@@ -119,6 +123,8 @@ export default function () {
         <Route path="control-pannel" element={<AdminControlPannel />} />
         <Route path="control-pannel/history" element={<AdminHistory />} />
         <Route path="control-pannel/add-user" element={<AdminAddNewUser />} />
+        <Route path="control-pannel/add-admin" element={<CreateAdmin />} />
+        
         <Route path="add-product/" element={<Product />} />
         <Route path="edit-product/:productid" element={<Product />} />
         <Route

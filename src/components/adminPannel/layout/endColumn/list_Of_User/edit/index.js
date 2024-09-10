@@ -151,7 +151,7 @@ export default function () {
   useEffect(() => {
   
     return () => {
-      location.reload()
+     window. location.reload()
       meta.clearAll();
     };
   }, []);
