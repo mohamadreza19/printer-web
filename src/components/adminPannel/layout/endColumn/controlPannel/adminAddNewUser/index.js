@@ -116,7 +116,7 @@ export default function () {
       }
     }
     if (isSuccess) {
-      navigate("/admin/list-user");
+      // navigate("/admin/list-user");
     }
   }, [error, isSuccess]);
 
@@ -195,9 +195,7 @@ export default function () {
             </main>
             <footer className="w-100 d-flex justify-content-center mt-3">
               <Typography.H9_5 className={"font-400 " + cssClass.me_2}>
-                <span className={cssClass.me_2}>
-                  انقضا اعتبار({state.daysToExpire})
-                </span>
+                <span className={cssClass.me_2}>انقضا اعتبار</span>
                 {new Date(data.expiresIn).toLocaleDateString("fa-IR")}
               </Typography.H9_5>
             </footer>
