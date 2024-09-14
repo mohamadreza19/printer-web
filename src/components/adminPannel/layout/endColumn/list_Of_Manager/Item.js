@@ -88,15 +88,15 @@ export default function ({
               >
                 <Icons.Trash />
               </span>
-              <span onClick={navigateToAdd_printer} className="cur-pointer">
+              {/* <span onClick={navigateToAdd_printer} className="cur-pointer">
                 <Icons.Print classNameForPath="fill_primary" />
-              </span>
-              <span className="mx-2 cur-pointer">
+              </span> */}
+              {/* <span className="mx-2 cur-pointer">
                 <Icons.Trade />
               </span>
               <span onClick={navigateToEdit} className="cur-pointer">
                 <Icons.Edit />
-              </span>
+              </span> */}
             </>
           ) : null}
         </section>

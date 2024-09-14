@@ -77,8 +77,7 @@ export default memo(function () {
   const [railsArr, setRailsArr] = useState([]);
 
   const setProject_base = useSetProject_baseState();
-  const { data, isLoading, isSuccess } =
-    setFindOne_based_editor_access(editor_access);
+  const meta = setFindOne_based_editor_access(editor_access);
 
   const setRail = useRailReducer();
   // const [railsState, setRailsState] = useRecoilState(rails);
@@ -90,7 +89,8 @@ export default memo(function () {
 
   const [scaleState_, setScaleState] = useRecoilState(scaleStore);
   useEffect(() => {
-    if (isSuccess) {
+    if (meta.isSuccess && meta.isSuccess) {
+      const { data } = meta;
       setRailsLength(data.raillength);
       if ("bordersToPrint" in data) {
         const payload = {
@@ -123,7 +123,7 @@ export default memo(function () {
         // });
       };
     }
-  }, [isSuccess]);
+  }, [meta.isSuccess && meta.isSuccess]);
 
   const AddNewRailButton = () => {
     function onClick() {

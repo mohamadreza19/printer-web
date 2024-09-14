@@ -97,6 +97,7 @@ export const AdminUser_FindOne = (role = "admin", id) => {
   const result = useQuery({
     queryKey: ["find-one-user", id],
     queryFn: () => api_get.findOne_user(currentToken, id),
+    refetchOnMount: "always",
   });
   const { isLoading, isSuccess, error } = result;
   useEffect(() => {
@@ -202,6 +203,8 @@ export const AdminUsers = (search, order = "ASC") => {
 
     getNextPageParam: (lastPage) =>
       handleNextPageParam(lastPage.meta, initialUrl),
+    refetchOnMount: "always",
+    refetchOnWindowFocus: "always",
   });
   const { isSuccess, isLoading, error } = result;
   useEffect(() => {
@@ -225,15 +228,17 @@ export const AdminUsers = (search, order = "ASC") => {
     }
   }, [isSuccess, isLoading, error]);
 
-  let modifedData = [];
+  // let modifedData = [];
 
-  if (isSuccess) {
-    result.data.pages.forEach((page) =>
-      page.items.forEach((item) => modifedData.push(item))
-    );
-  }
-  console.log(result);
-  return { ...result, data: modifedData };
+  // if (isSuccess) {
+  //   result.data.pages.forEach((page) =>
+  //     page.items.forEach((item) => modifedData.push(item))
+  //   );
+  //   console.log(result.data.pages);
+  //   console.log(modifedData[0]);
+  // }
+
+  return result;
 };
 
 export const AdminPrints = (

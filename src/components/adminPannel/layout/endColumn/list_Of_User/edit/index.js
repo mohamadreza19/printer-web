@@ -34,6 +34,21 @@ import { AdminEditUser_Mutation } from "../../../../../../reactQuery/admin/callP
 import { useFormik } from "formik";
 import { t } from "i18next";
 import validationSchema from "./validateSchema";
+import { setAdmins_and_users_key } from "../../../../../../reactQuery/querykey/admin_key";
+
+const initialValues = {
+  username: "",
+  email: "",
+  companyName: "",
+  managerName: "",
+  phoneNumber: "",
+  companyZipCode: "",
+  province: "",
+  city: "",
+  address: "",
+  daysToExpire: 1,
+  productAccess: true,
+};
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =
@@ -47,19 +62,7 @@ export default function () {
   const { isSuccess, data, mutateAsync, error } = AdminEditUser_Mutation();
 
   const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      companyName: "",
-      managerName: "",
-      phoneNumber: "",
-      companyZipCode: "",
-      province: "",
-      city: "",
-      address: "",
-      daysToExpire: 1,
-      productAccess: true,
-    },
+    initialValues: initialValues,
     onSubmit: (values) => {
       const phoneNumber = "+98" + values.phoneNumber;
 
@@ -76,10 +79,12 @@ export default function () {
 
       mutateAsync(data);
       navigate("/admin/list-user");
+      formik.resetForm();
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
   });
+
   const handleChangeUsername = (event) => {
     formik.setFieldValue("username", event.target.value);
   };
@@ -125,8 +130,7 @@ export default function () {
 
     console.log(mypersiandate);
   }
-  console.log(formik.errors);
-  console.log(formik.values);
+
   const EditUserButton = () => {
     return (
       <div className="w-100 d-flex justify-content-end">
@@ -157,13 +161,19 @@ export default function () {
       formik.setFieldValue("city", findedUser.data.city);
       formik.setFieldValue("address", findedUser.data.address);
 
-      var currenDate = moment(new Date());
-      var endDate = moment(findedUser.data.daysToExpire);
-      var result = endDate.diff(currenDate, "days");
-      formik.setFieldValue("daysToExpire", result);
+      // var currenDate = moment(new Date());
+      // var endDate = moment(findedUser.data.daysToExpire);
+      // console.log(findedUser.data.daysToExpire);
+      // var result = endDate.diff(currenDate, "days");
+      formik.setFieldValue("daysToExpire", findedUser.data.daysToExpire);
       formik.setFieldValue("productAccess", findedUser.data.productAccess);
     }
-  }, [findedUser.isSuccess]);
+
+    return () => {
+      // console.log(findedUser.data);
+      setAdmins_and_users_key(Math.random() * 122);
+    };
+  }, [findedUser.isSuccess, findedUser.data]);
 
   useEffect(() => {
     if (error) {
