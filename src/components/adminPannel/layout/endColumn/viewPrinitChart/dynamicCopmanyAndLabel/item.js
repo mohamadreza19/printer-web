@@ -34,14 +34,12 @@ export default function ({
       <section className=" w-25 d-flex justify-content-start">
         <Typography.H9_5 className="font-500">
           {/* شرکت تجهیز صنعت پاسارگاد */}
-          {displayPriority === "product_label"
-            ? item.label?.name.persian
-            : item.user.companyName}
+          {item.user ? item.user.companyName : "null"}
         </Typography.H9_5>
       </section>
       <section className=" w-25 ">
         <Typography.H9 className="font-400">
-          {content.Created_by}: {item.user.username}
+          {content.Created_by}: {item.user ? item.user.username : null}
         </Typography.H9>
       </section>
       <section className="d-flex justify-content-center w-25">

@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid } from "@mui/material";
 import {
   BarChart,
   Bar,
@@ -10,20 +10,20 @@ import {
   ResponsiveContainer,
   Line,
   LineChart,
-} from 'recharts';
+} from "recharts";
 import {
   useContent_Based_Language,
   useDynamicCssClass,
   useLanguage,
-} from '../../../../../recoil/readStore';
-import Icons from '../../../../../styles/__ready/Icons';
-import Typography from '../../../../../styles/__ready/Typography';
-import { AdminPrintsStatistics } from '../../../../../reactQuery/admin/callGetService';
-import useFormatDate2 from '../../../../../utility/useFormatDate2';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import PrintStatistics from './PrintStatistics';
-import useSortDataAcording_To_Scale_Chart from '../../../../../utility/useSortDataAcording_To_Scale_Chart';
+} from "../../../../../recoil/readStore";
+import Icons from "../../../../../styles/__ready/Icons";
+import Typography from "../../../../../styles/__ready/Typography";
+import { AdminPrintsStatistics } from "../../../../../reactQuery/admin/callGetService";
+import useFormatDate2 from "../../../../../utility/useFormatDate2";
+import { useEffect } from "react";
+import { useState } from "react";
+import PrintStatistics from "./PrintStatistics";
+import useSortDataAcording_To_Scale_Chart from "../../../../../utility/useSortDataAcording_To_Scale_Chart";
 
 export default function ({
   data = [],
@@ -47,7 +47,7 @@ export default function ({
     language
   );
 
-  const key = 'تعداد چاپ';
+  const key = "تعداد چاپ";
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -59,11 +59,11 @@ export default function ({
               <div
                 key={index}
                 style={{
-                  display: 'inline-block',
-                  padding: '10px 15px',
-                  backgroundColor: '#FFFFFF',
-                  border: '1px solid #CBCBCB',
-                  borderRadius: '8px',
+                  display: "inline-block",
+                  padding: "10px 15px",
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #CBCBCB",
+                  borderRadius: "8px",
                 }}
               >
                 <div style={{ color: pld.fill }}>{pld.value}</div>
@@ -88,7 +88,7 @@ export default function ({
         return newState;
       });
   }
-  console.log({ data_acording_to_scale });
+
   const CustomizedAxisTick = (props) => {
     const { x, y, payload } = props;
 
@@ -99,7 +99,7 @@ export default function ({
           textAnchor="middle"
           fill="#666"
           style={{
-            rotate: '45 deg',
+            rotate: "45 deg",
           }}
         >
           {payload.value}
@@ -131,7 +131,7 @@ export default function ({
                 dataKey="name"
                 axisLine={{
                   style: {
-                    stroke: '#ECECEC',
+                    stroke: "#ECECEC",
                   },
                 }}
                 tickLine={false}
@@ -145,7 +145,7 @@ export default function ({
               <YAxis
                 type="number"
                 axisLine={false}
-                tick={{ fill: '#CBCBCB' }}
+                tick={{ fill: "#CBCBCB" }}
                 tickLine={false}
                 // markerHeight={10}
                 tickMargin={10}
@@ -153,17 +153,17 @@ export default function ({
               />
               <Tooltip
                 content={<CustomTooltip />}
-                position={{ x: '10px', y: '10px' }}
+                position={{ x: "10px", y: "10px" }}
               />
 
               <Line
                 type="monotone"
-                dot={{ stroke: '#F36523', strokeWidth: 4, r: 4 }}
-                activeDot={{ stroke: '#F36523', strokeWidth: 4, r: 4 }}
+                dot={{ stroke: "#F36523", strokeWidth: 4, r: 4 }}
+                activeDot={{ stroke: "#F36523", strokeWidth: 4, r: 4 }}
                 dataKey={key}
                 stroke="#F36523"
                 fill="#F36523"
-                scale={'1rem'}
+                scale={"1rem"}
                 strokeWidth={2.8}
                 legendType=""
               />
@@ -171,11 +171,11 @@ export default function ({
           </ResponsiveContainer>
           <section
             style={{
-              width: '70.5%',
-              bottom: '0.4rem',
+              width: "70.5%",
+              bottom: "0.4rem",
             }}
             className={
-              'position-absolute d-flex justify-content-between ' +
+              "position-absolute d-flex justify-content-between " +
               cssClass.pe_1
             }
           >
