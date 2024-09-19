@@ -196,7 +196,7 @@ export const AdminUsers = (search, order = "ASC") => {
       page.items.forEach((item) => modifedData.push(item))
     );
   }
-  console.log(result);
+
   return { ...result, data: modifedData };
 };
 

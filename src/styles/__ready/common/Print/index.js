@@ -27,19 +27,20 @@ export default function ({
     },
   },
   language = "",
+  justProduct = false,
 }) {
   const currentLanguage = useLanguage();
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
   const fromNowDate = useFormetDate(print.createdAt, currentLanguage);
+  console.log(justProduct);
   function change_background_based_project_label() {
-    if (print.project) {
+    if ("project" in print) {
       return "bg_primary_v1";
     }
     if (print.label) {
       return "bg_gray2";
     }
-    return "bg_primary_v1";
   }
   // printCount(print);
   return (
