@@ -26,7 +26,7 @@ import AdminAddProduct_UploadFile from "../components/adminPannel/layout/endColu
 
 import AdminList_Of_Label_And_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product";
 import AdminAddLabelBeta from "../components/adminPannel/layout/endColumn/addNewLabelBeta";
-import Admin_Edit_Product from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/ProductEdit";
+
 import Admin_Edit_Label from "../components/adminPannel/layout/endColumn/list_Of_Label_And_Product/LabelEdit";
 
 import AdminList_Of_User from "../components/adminPannel/layout/endColumn/list_Of_User";

@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
-import { AdminProduct_findOne } from '../../../../../reactQuery/admin/callGetService';
-import { useParams } from 'react-router-dom';
-import { Admin_User_Image } from '../../../../../reactQuery/common/callGetService';
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { AdminProduct_findOne } from "../../../../../reactQuery/admin/callGetService";
+import { useParams } from "react-router-dom";
+import { Admin_User_Image } from "../../../../../reactQuery/common/callGetService";
 
 const ProductContext = createContext();
 
@@ -12,142 +12,141 @@ const initalState = {
   fileId: null,
   exel_file: {
     file: null,
-    err: '',
+    err: "",
   },
   file: {
     file: null,
-    err: '',
+    err: "",
   },
 
   name: {
-    persian: '',
-    english: '',
-    turkish: '',
-    err: '',
+    persian: "",
+    english: "",
+    turkish: "",
+    err: "",
   },
   link: {
-    value: '',
-    err: '',
+    value: "",
+    err: "",
   },
   description: {
-    persian: '',
-    english: '',
-    turkish: '',
-    err: '',
+    persian: "",
+    english: "",
+    turkish: "",
+    err: "",
   },
   width: {
     value: 1,
-    err: '',
+    err: "",
   },
   widthOfPrintingArea: {
     value: 1,
-    err: '',
+    err: "",
   },
 };
 
 const reducer = (state = initalState, action) => {
-  console.log(action);
   const { type, payload } = action;
 
   switch (type) {
-    case 'CHANGE_POPUP__OPEN_STATUS':
+    case "CHANGE_POPUP__OPEN_STATUS":
       return {
         ...state,
         is_popup_open: !state.is_popup_open,
       };
-    case 'ADD_EXEL_FILE':
+    case "ADD_EXEL_FILE":
       return {
         ...state,
         exel_file: {
           file: payload,
-          err: '',
+          err: "",
         },
       };
-    case 'ADD_FILE':
+    case "ADD_FILE":
       return {
         ...state,
         file: {
           file: payload,
-          err: '',
+          err: "",
         },
       };
-    case 'ADD_FILEID':
+    case "ADD_FILEID":
       return {
         ...state,
         fileId: payload,
       };
-    case 'ADD_PRODUCTID':
+    case "ADD_PRODUCTID":
       return {
         ...state,
         productId: payload,
       };
-    case 'NEXT_PAGE':
+    case "NEXT_PAGE":
       return {
         ...state,
         page: state.page + 1,
       };
-    case 'CLEAR__EXELFILE':
+    case "CLEAR__EXELFILE":
       return {
         ...state,
         exel_file: {
           file: null,
-          err: '',
+          err: "",
         },
       };
-    case 'CLEAR__FILE':
+    case "CLEAR__FILE":
       return {
         ...state,
         file: {
           file: null,
-          err: '',
+          err: "",
         },
       };
-    case 'CHANGE_NAME':
+    case "CHANGE_NAME":
       return {
         ...state,
         name: {
           ...state.name,
           [payload.target]: payload.value,
-          err: '',
+          err: "",
         },
       };
-    case 'CHANGE_DESCRIPTION':
+    case "CHANGE_DESCRIPTION":
       return {
         ...state,
         description: {
           ...state.description,
           [payload.target]: payload.value,
-          err: '',
+          err: "",
         },
       };
-    case 'CHANGE_LINK':
+    case "CHANGE_LINK":
       return {
         ...state,
         link: {
           value: payload,
-          err: '',
+          err: "",
         },
       };
-    case 'CHANGE_WIDTH':
+    case "CHANGE_WIDTH":
       return {
         ...state,
         width: {
           value: payload,
-          err: '',
+          err: "",
         },
       };
-    case 'CHANGE_WIDTHOFPRITINGAREA':
+    case "CHANGE_WIDTHOFPRITINGAREA":
       return {
         ...state,
         widthOfPrintingArea: {
           value: payload,
-          err: '',
+          err: "",
         },
       };
-    case 'CLEAR_ALL':
+    case "CLEAR_ALL":
       return initalState;
 
-    case 'ERROR':
+    case "ERROR":
       return {
         ...state,
         [payload.target]: {
@@ -168,7 +167,7 @@ export const ProductProvider = ({ children }) => {
 
   const fetchProduct = AdminProduct_findOne(productid);
 
-  const image = Admin_User_Image('admin');
+  const image = Admin_User_Image("admin");
 
   useEffect(() => {
     if (fetchProduct.isSuccess) {
@@ -187,69 +186,69 @@ export const ProductProvider = ({ children }) => {
       } = fetchProduct.data;
 
       distapch({
-        type: 'ADD_PRODUCTID',
+        type: "ADD_PRODUCTID",
         payload: id,
       });
       //
       distapch({
-        type: 'CHANGE_NAME',
+        type: "CHANGE_NAME",
         payload: {
-          target: 'persian',
+          target: "persian",
           value: name.persian,
         },
       });
       distapch({
-        type: 'CHANGE_NAME',
+        type: "CHANGE_NAME",
         payload: {
-          target: 'english',
+          target: "english",
           value: name.english,
         },
       });
       distapch({
-        type: 'CHANGE_NAME',
+        type: "CHANGE_NAME",
         payload: {
-          target: 'turkish',
+          target: "turkish",
           value: name.turkish,
         },
       });
       //
       distapch({
-        type: 'CHANGE_LINK',
+        type: "CHANGE_LINK",
         payload: link,
       });
       //
       distapch({
-        type: 'CHANGE_WIDTH',
+        type: "CHANGE_WIDTH",
         payload: width,
       });
       //
       distapch({
-        type: 'CHANGE_WIDTHOFPRITINGAREA',
+        type: "CHANGE_WIDTHOFPRITINGAREA",
         payload: widthOfPrintingArea,
       });
       distapch({
-        type: 'CHANGE_DESCRIPTION',
+        type: "CHANGE_DESCRIPTION",
         payload: {
-          target: 'persian',
-          value: name.persian,
+          target: "persian",
+          value: description.persian,
         },
       });
       distapch({
-        type: 'CHANGE_DESCRIPTION',
+        type: "CHANGE_DESCRIPTION",
         payload: {
-          target: 'english',
-          value: name.english,
+          target: "english",
+          value: description.english,
         },
       });
       distapch({
-        type: 'CHANGE_DESCRIPTION',
+        type: "CHANGE_DESCRIPTION",
         payload: {
-          target: 'turkish',
-          value: name.turkish,
+          target: "turkish",
+          value: description.turkish,
         },
       });
       distapch({
-        type: 'ADD_FILEID',
+        type: "ADD_FILEID",
         payload: fileId,
       });
       //
@@ -262,7 +261,7 @@ export const ProductProvider = ({ children }) => {
 
       let file = new File([blob], blob.type);
       distapch({
-        type: 'ADD_FILE',
+        type: "ADD_FILE",
         payload: file,
       });
     }
@@ -270,14 +269,14 @@ export const ProductProvider = ({ children }) => {
   useEffect(() => {
     return () => {
       distapch({
-        type: 'CLEAR_ALL',
+        type: "CLEAR_ALL",
       });
     };
   }, []);
   useEffect(() => {
     if (!productid) {
       distapch({
-        type: 'CLEAR_ALL',
+        type: "CLEAR_ALL",
       });
     }
   }, [productid]);

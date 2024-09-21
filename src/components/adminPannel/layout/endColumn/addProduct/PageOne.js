@@ -98,16 +98,19 @@ export default function PageOne() {
 
   return (
     <div className={styles["page-1-container"]}>
-      <section className={styles["input-box"] + " " + styles["input-medium"]}>
-        <select onChange={onChangeSelect} className="w-100">
-          <option value="add-product">
-            <Typography.H8>{t("addNewProduct.addNewProduct2")}</Typography.H8>
-          </option>
-          <option value="add-label-beta">
-            <Typography.H8>{t("addNewLabel.addNewLabel")}</Typography.H8>
-          </option>
-        </select>
-      </section>
+      {!state.productId && (
+        <section className={styles["input-box"] + " " + styles["input-medium"]}>
+          <select onChange={onChangeSelect} className="w-100">
+            <option value="add-product">
+              <Typography.H8>{t("addNewProduct.addNewProduct2")}</Typography.H8>
+            </option>
+            <option value="add-label-beta">
+              <Typography.H8>{t("addNewLabel.addNewLabel")}</Typography.H8>
+            </option>
+          </select>
+        </section>
+      )}
+
       <section className={styles["input-box"] + " " + styles["input-medium"]}>
         <label>
           <Typography.H8>{t("addNewProduct.productName")}</Typography.H8>
