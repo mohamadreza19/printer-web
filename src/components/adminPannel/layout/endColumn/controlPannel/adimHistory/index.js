@@ -19,10 +19,9 @@ export default function () {
   const { state } = useContext_();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setendDate] = useState(null);
-  const [justProduct, setJustProduct] = useState(false);
-  const [justLabel, setJustLabel] = useState(false);
+
   const queryClient = useQueryClient();
-  console.log(state);
+
   const { data, fetchNextPage, hasNextPage, isSuccess } = AdminPrints(
     1,
     10,
@@ -48,12 +47,7 @@ export default function () {
       <div className="w-100  max-h-100 ">
         <article className="mb-3">
           <HistoryHeader />
-          <HistorySearchBox
-            justProduct={justProduct}
-            setJustProduct={setJustProduct}
-            justLabel={justLabel}
-            setJustLabel={setJustLabel}
-          />
+          <HistorySearchBox />
         </article>
 
         <div className="mb-3">
@@ -64,8 +58,8 @@ export default function () {
               excel_response.mutate({
                 page: 1,
                 limit: 10,
-                justProduct,
-                justLabel,
+                justProduct: state.just_product,
+                justLabel: state.just_label,
                 startDate,
                 endDate,
                 order: "ASC",
@@ -85,7 +79,7 @@ export default function () {
           height={435}
           scrollableTarget
         >
-          <Items items={data} />
+          <Items items={data} justProduct={state.justProduct} />
         </InfiniteScroll>
       </div>
     );

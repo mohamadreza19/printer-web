@@ -124,6 +124,7 @@ export default function () {
     return (
       <div className="w-100">
         <Header />
+  
         <section className="w-100 d-flex mt-4 justify-content-center flex-column align-item-center  mt-4 ">
           <span className="success-logo ">
             <Icons.Cheked />
@@ -244,6 +245,7 @@ export default function () {
 w-100 h-100 bg-white"
     >
       <Header />
+      
       <main className="w-100 px-3-58 d-flex justify-content-between flex-wrap pt-4 bg-white">
         <Company_or_Institution
           error={formik.errors.companyName}
