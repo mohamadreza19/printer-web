@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "Nazanin";
+  src: local("B Nazanin"), local("BNazanin"),
+    url("../fonts/Nazanin/BNazanin.woff2") format("woff2"),
+    url("../fonts/Nazanin/BNazanin.woff") format("woff"),
+    url("../fonts/Nazanin/BNazanin.ttf") format("truetype");
+  font-weight: 400;
+  font-stretch: normal;
+  /*font-style: normal;*/
+}
+
+@font-face {
+  font-family: "Nazanin";
+  src: local("B Nazanin Bold"), local("BNazanin-Bold"),
+    url("../fonts/Nazanin/BNaznnBd.woff2") format("woff2"),
+    url("../fonts/Nazanin/BNaznnBd.woff") format("woff"),
+    url("../fonts/Nazanin/BNaznnBd.ttf") format("truetype");
+  font-weight: 700;
+  font-stretch: normal;
+  /*font-style: normal;*/
+}

@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Titr";
+  src: url("../fonts/Titer/Titr.woff2.woff2") format("woff2"),
+    url("../fonts/Titer/Titr.woff2.woff") format("woff"),
+    url("../fonts/Titer/Titr.woff2.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
