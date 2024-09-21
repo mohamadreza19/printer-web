@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../../recoil/readStore";
-import useFormateDate from "../../../../../utility/useFormetDate";
+import useFormateDate, {
+  FormateDateWithExpire,
+} from "../../../../../utility/useFormetDate";
 import Item from "./Item";
 
 import useDeleteAlert from "../../../../../recoil/reducer/useDeleteAlert";
@@ -34,7 +36,7 @@ export default function ({ items = [], itemContent }) {
           key={key}
           item={item}
           language={lan}
-          formatDate={useFormateDate}
+          formatDate={FormateDateWithExpire}
           navigate={navigate}
           deleteFn={() => onClick_delete(item.id, item.companyName)}
           navigateToAdd_printer={navigateToAdd_printer}

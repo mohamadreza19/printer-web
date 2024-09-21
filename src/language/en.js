@@ -19,6 +19,7 @@ export default {
       phoneNumber: "Phone number must be in the format 090XXXXXXXX ",
       length10: "Company zip code must be exactly 10 characters",
       positive: "Must be a positive number",
+      integer: "Must be a whole number",
     },
     admin: {
       addNewAdmin: "Add New Admin",
@@ -39,6 +40,7 @@ export default {
         address: "Address",
         daysToExpire: "Days to Expire",
         productAccess: "Product Access",
+        password: "Password",
       },
     },
     projectList: {

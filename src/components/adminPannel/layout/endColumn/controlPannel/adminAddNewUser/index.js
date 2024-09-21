@@ -29,9 +29,10 @@ import City from "../../list_Of_User/edit/City";
 import CompanyAddress from "../../list_Of_User/edit/CompanyAddress";
 import Expirition from "../../list_Of_User/edit/Expirition";
 import AccessProductBox from "../../list_Of_User/edit/AccessProductBox";
-import validationSchema from "../../list_Of_User/edit/validateSchema";
+import { validationSchemaForCreate } from "../../list_Of_User/edit/validateSchema";
 import { t } from "i18next";
 import CompanyZipCode from "../../list_Of_User/edit/CompanyZipCode";
+import Password from "../../list_Of_User/edit/Password";
 export default function () {
   const cssClass = useDynamicCssClass();
   const content =
@@ -41,20 +42,36 @@ export default function () {
   const validate = add_user_validate();
   const navigate = useNavigate();
   const { isSuccess, data, mutateAsync, error } = AdminAddUser_Mutation();
+  const initialValues = {
+    username: "",
+    password: "",
+    email: "",
+    companyName: "",
+    managerName: "",
+    phoneNumber: "",
+    companyZipCode: "",
+    province: "",
+    city: "",
+    address: "",
+    daysToExpire: 10,
+    productAccess: true,
+  };
+  // const initialValues = {
+  //   username: "test1",
+  //   password: "test1",
+  //   email: "test1@gmail.com",
+  //   companyName: "test1",
+  //   managerName: "test1",
+  //   phoneNumber: "09032446913",
+  //   companyZipCode: "1111111111",
+  //   province: "تهران",
+  //   city: "تهران",
+  //   address: "ضصث ضضصث",
+  //   daysToExpire: 10,
+  //   productAccess: true,
+  // };
   const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      companyName: "",
-      managerName: "",
-      phoneNumber: "",
-      companyZipCode: "",
-      province: "",
-      city: "",
-      address: "",
-      daysToExpire: 1,
-      productAccess: true,
-    },
+    initialValues: initialValues,
     // enableReinitialize: true,
     onSubmit: (values) => {
       const phoneNumber = "+98" + values.phoneNumber;
@@ -68,11 +85,14 @@ export default function () {
       mutateAsync(copy);
     },
 
-    validationSchema: validationSchema,
+    validationSchema: validationSchemaForCreate,
   });
 
   const handleChangeUsername = (event) => {
     formik.setFieldValue("username", event.target.value);
+  };
+  const handleChangePassword = (event) => {
+    formik.setFieldValue("password", event.target.value);
   };
 
   const handleChangeEmail = (event) => {
@@ -124,7 +144,7 @@ export default function () {
     return (
       <div className="w-100">
         <Header />
-  
+
         <section className="w-100 d-flex mt-4 justify-content-center flex-column align-item-center  mt-4 ">
           <span className="success-logo ">
             <Icons.Cheked />
@@ -186,9 +206,9 @@ export default function () {
                       style={{
                         overflowY: "auto",
                       }}
-                      className={"font-400 " + data.password}
+                      className={"font-400 "}
                     >
-                      {data.password}
+                      {formik.values.password}
                     </p>
                   </section>
                 </article>
@@ -245,7 +265,7 @@ export default function () {
 w-100 h-100 bg-white"
     >
       <Header />
-      
+
       <main className="w-100 px-3-58 d-flex justify-content-between flex-wrap pt-4 bg-white">
         <Company_or_Institution
           error={formik.errors.companyName}
@@ -273,6 +293,13 @@ w-100 h-100 bg-white"
           title={t("admin.createUserFeild.username")}
           value={formik.values.username}
           onChange={handleChangeUsername}
+          margin={cssClass.ms_3}
+        />
+        <Password
+          error={formik.errors.password}
+          title={t("admin.createUserFeild.password")}
+          value={formik.values.password}
+          onChange={handleChangePassword}
           margin={cssClass.ms_3}
         />
         <Email

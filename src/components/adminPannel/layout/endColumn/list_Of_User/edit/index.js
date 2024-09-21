@@ -33,12 +33,14 @@ import { AdminUser_FindOne } from "../../../../../../reactQuery/admin/callGetSer
 import { AdminEditUser_Mutation } from "../../../../../../reactQuery/admin/callPutService";
 import { useFormik } from "formik";
 import { t } from "i18next";
-import validationSchema from "./validateSchema";
+import { validationSchemaForEdit } from "./validateSchema";
 import { setAdmins_and_users_key } from "../../../../../../reactQuery/querykey/admin_key";
+import Password from "./Password";
 
 const initialValues = {
   username: "",
   email: "",
+  password: "",
   companyName: "",
   managerName: "",
   phoneNumber: "",
@@ -72,6 +74,9 @@ export default function () {
         daysToExpire: Number(values.daysToExpire),
       };
 
+      if (!copy.password) {
+        delete copy.password;
+      }
       const data = {
         id,
         body: copy,
@@ -82,11 +87,14 @@ export default function () {
       formik.resetForm();
     },
     enableReinitialize: true,
-    validationSchema: validationSchema,
+    validationSchema: validationSchemaForEdit,
   });
 
   const handleChangeUsername = (event) => {
     formik.setFieldValue("username", event.target.value);
+  };
+  const handleChangePassword = (event) => {
+    formik.setFieldValue("password", event.target.value);
   };
   const handleChangeEmail = (event) => {
     formik.setFieldValue("email", event.target.value);
@@ -303,6 +311,13 @@ export default function () {
               title={t("admin.createUserFeild.username")}
               value={formik.values.username}
               onChange={handleChangeUsername}
+              margin={cssClass.ms_3}
+            />
+            <Password
+              error={formik.errors.password}
+              title={t("admin.createUserFeild.password")}
+              value={formik.values.password}
+              onChange={handleChangePassword}
               margin={cssClass.ms_3}
             />
             <Email

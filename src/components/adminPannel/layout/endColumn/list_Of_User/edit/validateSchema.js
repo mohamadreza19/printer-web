@@ -36,8 +36,21 @@ const validationSchema = Yup.object().shape({
     .required(() => t("errMsg.required")),
 
   daysToExpire: Yup.number()
-    .positive(() => t("errMsg.positive"))
+    .integer(() => t("errMsg.integer"))
     .required(() => t("errMsg.required")),
 });
 
-export default validationSchema;
+export const validationSchemaForCreate = validationSchema.concat(
+  Yup.object().shape({
+    // New or modified fields can be added here
+    password: Yup.string()
+      .min(4, () => t("errMsg.minStr4"))
+      .required(() => t("errMsg.required")),
+  })
+);
+export const validationSchemaForEdit = validationSchema.concat(
+  Yup.object().shape({
+    // New or modified fields can be added here
+    password: Yup.string().min(4, () => t("errMsg.minStr4")),
+  })
+);

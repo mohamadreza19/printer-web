@@ -18,6 +18,7 @@ export default {
       phoneNumber: "شماره تلفن باید به فرمت 090XXXXXXXX باشد",
       length10: "باید دقیقاً 10 کاراکتر باشد",
       positive: "باید یک عدد مثبت باشد",
+      integer: "باید یک عدد صحیح باشد",
     },
     admin: {
       addNewAdmin: "افزودن ادمین",
@@ -38,6 +39,7 @@ export default {
         address: "آدرس",
         daysToExpire: "روز تا انقضا",
         productAccess: "دسترسی به محصول",
+        password: "رمز عبور",
       },
     },
     projectList: {

@@ -25,7 +25,7 @@ export default function ({
   function navigateToEdit() {
     navigate("/admin/list-user/edit/" + item.id);
   }
-
+  const dateObj = formatDate(item.expiresIn, language, true);
   return (
     <div
       style={{
@@ -54,13 +54,15 @@ export default function ({
       <article className="d-flex align-item-center justify-content-between w-50">
         <section className="w-33 d-flex">
           <Typography.H9_5
-            className="font-400 text-white-space-nowrap"
+            className="font-400 text-white-space-nowrap "
             language={language}
           >
             <span className={cssClass.me_1}>
               {itemContent.creditExpiration}:
             </span>
-            <span>{formatDate(item.expiresIn, language, true)}</span>
+            <span className={dateObj.isExipred ? "color_danger" : ""}>
+              {dateObj.date}
+            </span>
             {/* <span>(سه ماهه)</span> */}
           </Typography.H9_5>
         </section>

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { apiUrl } from "../urlStore";
+import { apiUrl, axiosInstance } from "../urlStore";
+
 export default class {
   static async put_projectById(token, body, id) {
     if (!token) throw new Error("there isnt token");

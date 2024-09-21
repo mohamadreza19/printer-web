@@ -18,6 +18,8 @@ export default {
       phoneNumber: "Telefon numarası 090XXXXXXXX formatında olmalıdır ",
       length10: "Tam olarak 10 karakter olmalıdır",
       positive: "Pozitif bir sayı olmalıdır",
+      integer: "Tam sayı olmalı",
+      password: "Password",
     },
     admin: {
       addNewAdmin: "Yeni Yönetici Ekle",

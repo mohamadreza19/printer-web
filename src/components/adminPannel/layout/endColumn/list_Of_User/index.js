@@ -13,27 +13,19 @@ export default function () {
   const [order, setOrder] = useState("ASC");
   const resposne = AdminUsers(search, order);
   const [mapedData, setMapedData] = useImmer([]);
-  const [SearchMapedData, setSearchMapedData] = useImmer([]);
 
   const content = useContent_Based_Language();
   const headerContent = content.AdminPannel.end_col.listOfUserAndAdmin.header;
   const itemContent = content.AdminPannel.end_col.listOfUserAndAdmin.component;
 
   useEffect(() => {
+    setMapedData([]);
     if (resposne.data && resposne.data.pages.length > 0) {
-      const lastPageIndex = resposne.data.pages.length - 1;
-      const itemsFromLastPage = resposne.data.pages[lastPageIndex].items;
-      if (search) {
-        setSearchMapedData((draft) => {
-          draft.length = 0; // Clear the current items
-          draft.push(...itemsFromLastPage); // Append new items
-        });
-      } else {
-        setSearchMapedData([]);
+      resposne.data.pages.forEach((page) => {
         setMapedData((draft) => {
-          draft.push(...itemsFromLastPage); // Append new items
+          return [...draft, ...page.items];
         });
-      }
+      });
     }
   }, [resposne.isSuccess, resposne.data, search]);
   // To handle the case where `search` is cleared and we need to reset
@@ -60,7 +52,7 @@ export default function () {
         scrollableTarget
       >
         <Items
-          items={search ? SearchMapedData : mapedData}
+          items={mapedData}
           // items={mapedData}
           itemContent={itemContent}
         />
