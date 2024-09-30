@@ -3,11 +3,23 @@ import Typography from "../../../../../../styles/__ready/Typography";
 import { useContext, useContext_ } from "./adminHistory.context";
 import { Close } from "@mui/icons-material";
 import { AdminUsers } from "../../../../../../reactQuery/admin/callGetService";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useImmer } from "use-immer";
 function PopUp() {
   const { state, dispatch } = useContext_();
   const resposne = AdminUsers();
+  const [mapedData, setMapedData] = useImmer([]);
+  useEffect(() => {
+    setMapedData([]);
+    if (resposne.data && resposne.data.pages.length > 0) {
+      resposne.data.pages.forEach((page) => {
+        setMapedData((draft) => {
+          return [...draft, ...page.items];
+        });
+      });
+    }
+  }, [resposne.isSuccess, resposne.data]);
 
   function handleChangePopUp() {
     dispatch({
@@ -26,6 +38,7 @@ function PopUp() {
       type: "POPUP/CHANGE",
     });
   }
+
   if (state.show_select_user_popup)
     return (
       <div className="container border ">
@@ -39,17 +52,18 @@ function PopUp() {
           className="w-100 px-3 "
           pullDownToRefreshThreshold={300}
           next={resposne.fetchNextPage}
-          dataLength={resposne.data.length}
+          dataLength={mapedData.length}
           hasMore={resposne.hasNextPage}
           threshold={100}
           height={580}
           scrollableTarget
         >
-          <MapedItem items={resposne.data} dispatch={handleSelectUser} />
+          <MapedItem items={mapedData} dispatch={handleSelectUser} />
         </InfiniteScroll>
       </div>
     );
 }
+
 const MapedItem = ({ items = [], dispatch }) => {
   return items.map((item, key) => {
     return (
