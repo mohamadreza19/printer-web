@@ -1,29 +1,22 @@
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import useLocalStorage from "react-use-localstorage";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import styled from "styled-components";
+import { EditTemplate_project_Mutation } from "../../../../../../../../reactQuery/admin/callPutService";
+import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
 import {
   useContent_Based_Language,
   useDynamicCssClass,
   useLanguage,
 } from "../../../../../../../../recoil/readStore";
-import Icons from "../../../../../../../../styles/__ready/Icons";
-import Typography from "../../../../../../../../styles/__ready/Typography";
-import Buttons from "../../../../../../../../styles/__ready/Buttons";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import profile_store, {
-  useGetUserProfile,
-} from "../../../../../../../../recoil/store/user/profile_store";
+import profile_store from "../../../../../../../../recoil/store/user/profile_store";
 import project_store from "../../../../../../../../recoil/store/user/project_store";
-import useBundleProject from "../../../../../../../../utility/useBundleProject";
-import { EditProject_Mutation } from "../../../../../../../../reactQuery/user/callPutServices";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { showPutProjectResponse } from "../../../../../../../../recoil/store/user/showPutProjectResponse";
-import useScreenShot from "../../../../../../../../utility/useScreenShot";
-import { FormatColorResetRounded } from "@mui/icons-material";
-import useLocalStorage from "react-use-localstorage";
-import { EditTemplate_project_Mutation } from "../../../../../../../../reactQuery/admin/callPutService";
 import { useSetBorderToProntState } from "../../../../../../../../recoil/userEditorStore/bordersToPrint";
 import { useProject_baseValue } from "../../../../../../../../recoil/userEditorStore/project_base";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
 import {
   addBorderEvent,
   getBorderToPrint,
@@ -32,8 +25,11 @@ import {
   addSuccess,
   clearSuccess,
 } from "../../../../../../../../redux/project/success_slice";
-import { useTranslation } from "react-i18next";
-import { setUser_project_findOne } from "../../../../../../../../reactQuery/querykey/user_key";
+import Buttons from "../../../../../../../../styles/__ready/Buttons";
+import Icons from "../../../../../../../../styles/__ready/Icons";
+import Typography from "../../../../../../../../styles/__ready/Typography";
+import useBundleProject from "../../../../../../../../utility/useBundleProject";
+import useScreenShot from "../../../../../../../../utility/useScreenShot";
 
 const PROJECT_EDIT = "project/edit";
 const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";

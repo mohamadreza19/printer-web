@@ -1,34 +1,31 @@
-import { createRef, useEffect, useState } from "react";
-import { useScreenshot, createFileName } from "use-react-screenshot";
+import { useEffect, useState } from "react";
 
-import allowRemoveCustomLabelsBorderToScreen_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
 import html2canvas from "html2canvas";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import {
-  AddImage_ToPrint_Local_Mutation,
-  Add_Print,
-} from "../reactQuery/user/callPostServices";
-import allowReplaceInputToDiv_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
-import { useLocation, useParams, useSearchParams } from "react-router-dom";
-import { rails, railsWidth_store } from "../recoil/userEditorStore/cellsStore";
-import useSelectionReducer from "../recoil/reducer/editor/actionButtons/useSelectionReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { Add_Print } from "../reactQuery/user/callPostServices";
+import useSelectionReducer from "../recoil/reducer/editor/actionButtons/useSelectionReducer";
+import { project_atom } from "../recoil/store/user/project.atom";
+import allowReplaceInputToDiv_store from "../recoil/userEditorStore/allowReplaceInputToDiv_store";
 import { changeType } from "../redux/project/border_slice";
 import { viewMode } from "../redux/project/edit_mode_slice";
 import { getProjectRailWidth } from "../redux/project/project._slice";
 import MeasurementService from "./MeasurementService";
-import * as htmlToImage from "html-to-image";
 
 //
 const measurementService = new MeasurementService();
 export default function () {
   const dispatch = useDispatch();
+  const addPrint = Add_Print();
   const railWidth = useSelector(getProjectRailWidth);
   const [searchParams, setSearchParams] = useSearchParams();
   const handleOnclickSelectionButton = useSelectionReducer();
   let { projectId } = useParams();
   const [allowClosePage, setAllowClosePage] = useState(false);
   const autoPrint = searchParams.get("autoPrint");
+
+  const [projectAtom, setprojectAtom] = useRecoilState(project_atom);
 
   const [allowReplaceInputToDiv, setAllowReplaceInputToDiv] = useRecoilState(
     allowReplaceInputToDiv_store
@@ -41,7 +38,6 @@ export default function () {
   //
 
   // const uploadFile = AddImage_ToPrint_Local_Mutation();
-  const addPrint = Add_Print();
 
   useEffect(() => {
     if (autoPrint === "true" && document.readyState == "complete") {
@@ -71,6 +67,10 @@ export default function () {
     const PRODUCT = "PRODUCT";
     const LABEL = "LABEL";
     const IMAGE = "IMAGE";
+
+    if (id) {
+      addPrint.mutate(Number(id));
+    }
 
     if (type === LABEL) {
       const blob = labelOption.labelImg;

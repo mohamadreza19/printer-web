@@ -4,25 +4,26 @@ import {
   useQuery,
   useQueryClient,
 } from "react-query";
-import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
 import { apiUrl } from "../../services/urlStore";
+import useAdmin_CachedToken from "../../utility/useAdmin_CachedToken";
 
+import { useEffect } from "react";
+import useToastReducer from "../../recoil/reducer/useToastReducer";
 import api_get from "../../services/common/api_get";
 import useCachedToken from "../../utility/useCachedToken";
-import useToastReducer from "../../recoil/reducer/useToastReducer";
-import { useEffect } from "react";
 
+import { useParams } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import handleNextPageParam from "../../helper/handleNextPageParam";
+import { useLanguage } from "../../recoil/readStore";
+import { project_atom } from "../../recoil/store/user/project.atom";
+import project_store from "../../recoil/store/user/project_store";
 import {
   admin_user_image,
   admin_user_productList,
   admin_user_symbolList,
 } from "../querykey/common";
-import { useLanguage } from "../../recoil/readStore";
-import { useSetRecoilState } from "recoil";
-import { useParams } from "react-router-dom";
-import project_store from "../../recoil/store/user/project_store";
 import { user_project_findOne } from "../querykey/user_key";
-import handleNextPageParam from "../../helper/handleNextPageParam";
 
 export const Admin_User_Image = (role = "admin") => {
   const adminToken = useAdmin_CachedToken();
@@ -556,6 +557,7 @@ export const Project_templateFindOne_Qury = (role = "admin") => {
   const { value: token } = useCachedToken();
   const { value: Admintoken } = useAdmin_CachedToken();
   const { projectId } = useParams();
+  const [projectAtom, setprojectAtom] = useRecoilState(project_atom);
   const result = useQuery({
     queryKey: ["project-templates", user_project_findOne],
     queryFn: () =>
@@ -580,7 +582,7 @@ export const Project_templateFindOne_Qury = (role = "admin") => {
       });
       if (data) {
         let copy = { ...data };
-
+        setprojectAtom(copy.id);
         delete copy.userId;
         delete copy.id;
         delete copy.createdBy;
