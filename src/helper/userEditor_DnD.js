@@ -1,4 +1,5 @@
 import shortid from "shortid";
+import { getSelectedCellSyle } from "../redux/project/selectedCell";
 
 export default class {
   static create_customLabel(
@@ -10,6 +11,8 @@ export default class {
   ) {
     const copyCells = [...findedRail.customLabels];
     const frontId = shortid.generate();
+    const selectedCell = getSelectedCellSyle();
+
     const newCell = {
       productId: findedProduct.id,
       frontId: frontId,
@@ -21,15 +24,7 @@ export default class {
         split: "none",
         content: {
           text: "",
-          style: {
-            fontFamily: "Arial",
-            fontSize: "14",
-            angle: "0",
-            textAlign: "none",
-            fontStyle: "regular",
-            margin: 0,
-            padding: 0,
-          },
+          style: selectedCell,
         },
       },
 
@@ -148,7 +143,7 @@ export default class {
     }
   ) {
     let mapedProduct = [];
-
+    const selectedCell = getSelectedCellSyle();
     for (let i = 0; i < option.numberOfCopy; i++) {
       const frontId = shortid.generate();
       mapedProduct.push({
@@ -163,15 +158,7 @@ export default class {
           split: "none",
           content: {
             text: "",
-            style: {
-              fontFamily: "Arial",
-              fontSize: "14",
-              angle: "0",
-              textAlign: "none",
-              fontStyle: "regular",
-              margin: 0,
-              padding: 0,
-            },
+            style: selectedCell,
           },
         },
 

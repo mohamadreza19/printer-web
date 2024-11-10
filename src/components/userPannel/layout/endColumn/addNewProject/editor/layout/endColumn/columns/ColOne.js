@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material";
-import EditorBox from "../layout/editorBox";
-import { Toggle_show_hide } from "../../../../../../../../../styles/__ready/EditorIcons";
-import Typography from "../../../../../../../../../styles/__ready/Typography";
-import { useLanguage } from "../../../../../../../../../recoil/readStore";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../../../../../../../../recoil/readStore";
+import { Toggle_show_hide } from "../../../../../../../../../styles/__ready/EditorIcons";
+import Typography from "../../../../../../../../../styles/__ready/Typography";
+import EditorBox from "../layout/editorBox";
 
 export default function ({ column, isShow, setShow = () => {} }) {
   const lan = useLanguage();

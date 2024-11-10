@@ -5,10 +5,7 @@ import Header from "./Header";
 // import SearchBox from "./layout/searchBox";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  product_column,
-  // rails,
-} from "../../../../../../../../recoil/userEditorStore/cellsStore";
+import { product_column } from "../../../../../../../../recoil/userEditorStore/cellsStore";
 import ColOne from "./columns/ColOne";
 import ColTwo from "./columns/ColTwo";
 
@@ -17,11 +14,11 @@ import { showHide_Btn } from "../../../../../../../../recoil/userEditorStore/sea
 import userEditor_DnD from "../../../../../../../../helper/userEditor_DnD";
 
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addPresent,
   getRails,
 } from "../../../../../../../../redux/project/history_changer_slice";
-import { useDispatch, useSelector } from "react-redux";
 
 export default React.memo(function () {
   const cssClass = useDynamicCssClass();
