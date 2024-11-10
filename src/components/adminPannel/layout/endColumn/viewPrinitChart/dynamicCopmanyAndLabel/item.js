@@ -18,6 +18,10 @@ export default function ({
         turkish: "",
       },
     },
+    project: {
+      productsCount: 1,
+      printsCount: 2,
+    },
     user: {
       companyName: "",
       username: "",
@@ -27,6 +31,15 @@ export default function ({
 }) {
   const language = useLanguage();
   const cssClass = useDynamicCssClass();
+  function handleShowprintCount() {
+    if (item.label) {
+      return item.label.printCount;
+    }
+    if (item.project) {
+      return item.project.printsCount;
+    }
+    return 0;
+  }
   const content =
     useContent_Based_Language().AdminPannel.end_col.view_Print_Statistics.item;
   return (
@@ -58,7 +71,7 @@ export default function ({
       </section>
       <section className="d-flex w-25 d-flex justify-content-end">
         <Typography.H9 className="font-500" language={language}>
-          {item.label?.printCount || 0}
+          {handleShowprintCount()}
           <span className={cssClass.ms_1}>{content.print}</span>
         </Typography.H9>
         <Icons.Trade className={cssClass.ms_4} />

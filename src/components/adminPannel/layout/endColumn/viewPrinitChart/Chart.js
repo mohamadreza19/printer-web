@@ -1,29 +1,18 @@
 import { Grid } from "@mui/material";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
   Line,
   LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
 import {
-  useContent_Based_Language,
   useDynamicCssClass,
   useLanguage,
 } from "../../../../../recoil/readStore";
-import Icons from "../../../../../styles/__ready/Icons";
-import Typography from "../../../../../styles/__ready/Typography";
-import { AdminPrintsStatistics } from "../../../../../reactQuery/admin/callGetService";
-import useFormatDate2 from "../../../../../utility/useFormatDate2";
-import { useEffect } from "react";
-import { useState } from "react";
-import PrintStatistics from "./PrintStatistics";
 import useSortDataAcording_To_Scale_Chart from "../../../../../utility/useSortDataAcording_To_Scale_Chart";
+import PrintStatistics from "./PrintStatistics";
 
 export default function ({
   data = [],
@@ -169,7 +158,7 @@ export default function ({
               />
             </LineChart>
           </ResponsiveContainer>
-          <section
+          {/* <section
             style={{
               width: "70.5%",
               bottom: "0.4rem",
@@ -188,7 +177,7 @@ export default function ({
                 Isactive={scale > 1 && !ignoreInterval ? true : false}
               />
             </span>
-          </section>
+          </section> */}
         </Grid>
         <Grid item lg={4}>
           <PrintStatistics
