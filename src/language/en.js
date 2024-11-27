@@ -184,5 +184,7 @@ export default {
     turkish: "Turkish",
     signOut: "Sign Out",
     search: "search name ...",
+    createBy: "create by",
+    lastPrint: "last print",
   },
 };

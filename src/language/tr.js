@@ -182,5 +182,7 @@ export default {
     turkish: "Türkçe",
     signOut: "Çıkış Yap",
     search: "isim ara ...",
+    createBy: "oluşturan",
+    lastPrint: "son baskı",
   },
 };

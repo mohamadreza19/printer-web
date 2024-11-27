@@ -25,6 +25,7 @@ export default function ({
   function navigateToEdit() {
     navigate("/admin/list-user/edit/" + item.id);
   }
+  console.log(item);
   const dateObj = formatDate(item.expiresIn, language, true);
   return (
     <div
@@ -68,7 +69,7 @@ export default function ({
         </section>
         <section className={`w-33 d-flex ${cssClass.me_2} ${cssClass.ms_6}`}>
           <Typography.H9_5 className="font-400" language={language}>
-            {item.printsCount || 0} {itemContent.print}
+            {item.countOfPrintedProducts || 0}
           </Typography.H9_5>
         </section>
         <section className={"w-33 d-flex justify-content-end " + cssClass.pe_2}>

@@ -214,7 +214,7 @@ export const content_Based_Language = selector({
                   searchBoxPlaceHolder:
                     "Search for the name of the company or the name of the person who created the project",
                   backToPannel: "Back to pannel",
-                  allPrints: "All prints",
+                  allPrints: "All projects",
                   onlyProducts: "Only products",
                   onlyLabels: "Only labels",
                 },
@@ -486,7 +486,7 @@ export const content_Based_Language = selector({
                   searchBoxPlaceHolder:
                     "جست و جوی نام شرکت یا نام شخص سازنده پروژه",
                   backToPannel: "بازگشت به پنل",
-                  allPrints: "همه چاپ ها",
+                  allPrints: "همه پروژه ها",
                   onlyProducts: "فقط محصولات",
                   onlyLabels: "فقط لیبل ها",
                 },
@@ -751,7 +751,7 @@ export const content_Based_Language = selector({
                   searchBoxPlaceHolder:
                     "Şirketin adını veya projeyi oluşturan kişinin adını arayın",
                   backToPannel: "Panele geri dön",
-                  allPrints: "tüm Baskılar",
+                  allPrints: "Tüm projeler",
                   onlyProducts: "sadece Ürünler",
                   onlyLabels: "sadece Etiketler",
                 },

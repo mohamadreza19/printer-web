@@ -9,7 +9,7 @@ export function setBaseUrl(newApiUrl = "") {
 axios.interceptors.response.use(
   (response) => {
     // Modify or log the response
-    console.log("Response received:", response);
+
     return response; // Must return the response to continue the chain
   },
   (error) => {

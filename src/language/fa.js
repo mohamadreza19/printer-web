@@ -183,5 +183,7 @@ export default {
     turkish: "ترکی",
     signOut: "خروج از حساب کاربری",
     search: "جستجوی نام ...",
+    createBy: "ایجاد توسط",
+    lastPrint: "اخرین چاپ",
   },
 };

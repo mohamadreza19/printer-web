@@ -22,6 +22,7 @@ export default function ({
       productsCount: "",
     },
     label: {},
+    product: {},
     user: {
       companyName: "",
     },
@@ -33,13 +34,16 @@ export default function ({
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
   const fromNowDate = useFormetDate(print.createdAt, currentLanguage);
-  console.log(justProduct);
+  console.log(print.label ? true : false);
   function change_background_based_project_label() {
-    if ("project" in print) {
-      return "bg_primary_v1";
+    if (print.project) {
+      return "bg_secondray";
     }
     if (print.label) {
       return "bg_gray2";
+    }
+    if (print.product) {
+      return "bg_primary_v1";
     }
   }
   // printCount(print);

@@ -220,10 +220,10 @@ export const Add_Print = () => {
 
   const result = useMutation({
     mutationKey: ["add-print"],
-    mutationFn: (value) => {
-      const body = {
-        projectId: value,
-      };
+    mutationFn: (body) => {
+      // const body = {
+      //   projectId: value,
+      // };
       return callPostServices.add_print(token, body);
     },
     onSuccess: (data) => {

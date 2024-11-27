@@ -1,44 +1,59 @@
 import { useState } from "react";
-import { AdminPrints } from "../../../../../reactQuery/admin/callGetService";
+import {
+  AdminPrints,
+  AdminProduct_Label_v2,
+  AdminUsers,
+} from "../../../../../reactQuery/admin/callGetService";
 import Typography from "../../../../../styles/__ready/Typography";
 import DynamicCopmanyAndLabel from "./dynamicCopmanyAndLabel";
-import { useContent_Based_Language } from "../../../../../recoil/readStore";
+import {
+  useContent_Based_Language,
+  useLanguage,
+} from "../../../../../recoil/readStore";
+import { ProductsLabels } from "./products-labels";
+import useCachedLanguage from "../../../../../utility/useCachedLanguage";
+import { Companies } from "./companies";
 
 export default function () {
   const [order, setOrder] = useState("DESC");
-  const [displayPriority, setDisplayPriority] = useState("companies");
-  const { data, hasNextPage, fetchNextPage } = AdminPrints(
-    1,
-    10,
-    null,
-    null,
-    null,
-    null,
-    order
-  );
+  const [displayPriority, setDisplayPriority] = useState("product_label"); //companies | product_label
+
+  const users = AdminUsers();
+
+  const products_labels = AdminProduct_Label_v2("All", "", 10, 1);
+  const lang = useLanguage();
+
   const content =
     useContent_Based_Language().AdminPannel.end_col.view_Print_Statistics;
 
-  if (data)
-    return (
-      <div>
-        <Header
-          displayPriority={displayPriority}
-          setDisplayPriority={setDisplayPriority}
-          Company_statistics_text={content.Company_statistics}
-          Statistics_of_products_and_labels={
-            content.Statistics_of_products_and_labels
-          }
-        />
-        <DynamicCopmanyAndLabel
-          data={data}
-          hasNextPage={hasNextPage}
-          fetchNextPage={fetchNextPage}
-          setOrder={setOrder}
-          displayPriority={displayPriority}
-        />
-      </div>
-    );
+  return (
+    <div>
+      <Header
+        displayPriority={displayPriority}
+        setDisplayPriority={setDisplayPriority}
+        Company_statistics_text={content.Company_statistics}
+        Statistics_of_products_and_labels={
+          content.Statistics_of_products_and_labels
+        }
+      />
+
+      <ProductsLabels
+        hasMore={products_labels.hasNextPage}
+        next={products_labels.fetchNextPage}
+        data={products_labels.data}
+        language={lang}
+        show={displayPriority === "product_label"}
+      />
+
+      <Companies
+        hasMore={users.hasNextPage}
+        next={users.fetchNextPage}
+        data={users.data}
+        language={lang}
+        show={displayPriority === "companies"}
+      />
+    </div>
+  );
 }
 const Header = ({
   displayPriority,
@@ -68,7 +83,7 @@ const Header = ({
         <section
           onClick={onClickCompanies}
           className={
-            "w-50 d-flex justify-content-center py-2  border-r-top-right-30 " +
+            "w-50 d-flex justify-content-center py-2  border-r-top-right-30 cur-pointer " +
             dynamicBackgorund_based_displayPriority_Companies
           }
         >
@@ -77,7 +92,7 @@ const Header = ({
         <section
           onClick={onClickProduct_label}
           className={
-            "w-50 d-flex justify-content-center py-2 border-r-top-left-30 " +
+            "w-50 d-flex justify-content-center py-2 border-r-top-left-30 cur-pointer " +
             dynamicBackgorund_based_displayPriority_pl
           }
         >

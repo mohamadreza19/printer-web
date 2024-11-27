@@ -21,6 +21,7 @@ export default function () {
   const [endDate, setendDate] = useState(null);
 
   const queryClient = useQueryClient();
+  const [search, setSearch] = useState("");
 
   const { data, fetchNextPage, hasNextPage, isSuccess } = AdminPrints(
     1,
@@ -30,7 +31,8 @@ export default function () {
     startDate,
     endDate,
     "DESC",
-    state.user.id
+    state.user.id,
+    search
   );
   const excel_response = AdminPrints_Excel();
   function submitDataPickred() {
@@ -41,13 +43,16 @@ export default function () {
     setStartDate(from);
     setendDate(to);
   }
+  function handleGetValueAndSetState(value) {
+    setSearch(value);
+  }
 
   if (data)
     return (
       <div className="w-100  max-h-100 ">
         <article className="mb-3">
           <HistoryHeader />
-          <HistorySearchBox />
+          <HistorySearchBox onClickAndGetValeFn={handleGetValueAndSetState} />
         </article>
 
         <div className="mb-3">

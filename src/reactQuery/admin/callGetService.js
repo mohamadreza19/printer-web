@@ -201,8 +201,16 @@ export const AdminUsers = (search, order = "ASC") => {
 
     queryFn: ({ pageParam = initialUrl }) => api_get.users(token, pageParam),
 
-    getNextPageParam: (lastPage) =>
-      handleNextPageParam(lastPage.meta, initialUrl),
+    getNextPageParam: (lastPage) => {
+      const { links } = lastPage;
+
+      if (links.next) {
+        const urlObj = new URL(links.next);
+        const page = urlObj.searchParams.get("page");
+
+        return initialUrl.concat(`page=${Number(page)}&limit=10`);
+      }
+    },
     refetchOnMount: "always",
     refetchOnWindowFocus: "always",
   });
@@ -249,7 +257,8 @@ export const AdminPrints = (
   startDate = "",
   endDate = "",
   order = "ASC",
-  userId = ""
+  userId = "",
+  search = ""
 ) => {
   const { value: token } = useAdmin_CachedToken();
   const queryClient = useQueryClient();
@@ -273,6 +282,10 @@ export const AdminPrints = (
     url = url.concat(`userId=${userId}&`);
   }
 
+  if (search) {
+    url = url.concat(`search=${search}&`);
+  }
+
   const result = useInfiniteQuery({
     queryKey: [
       "admin-print",
@@ -283,6 +296,7 @@ export const AdminPrints = (
       justProduct,
       justLabel,
       userId,
+      search,
     ],
     queryFn: ({ pageParam = url }) =>
       api_get.prints(
@@ -491,10 +505,13 @@ export const AdminProduct_Label_Count = () => {
 
   return result;
 };
-export async function AdminProduct_Label_v2(
-  option = { productLableFilter: "", search: "", limit: "", page: "" }
-) {
-  let initialUrl = `${apiUrl}/product-label?productLableFilter=${option.productLableFilter}&page=1&limit=10&`;
+export const AdminProduct_Label_v2 = (
+  productLabelFilter = "All",
+  search = "",
+  limit = "",
+  page = ""
+) => {
+  let initialUrl = `${apiUrl}/product-label?productLableFilter=${productLabelFilter}&`;
   const token = localStorage.getItem("admin-t");
   const language = localStorage.getItem("language");
   let lan = "persian";
@@ -502,10 +519,33 @@ export async function AdminProduct_Label_v2(
   if (language === "en") lan = "english";
   if (language === "tr") lan = "turkish";
 
-  if (option.search) {
-    initialUrl = initialUrl.concat(`search=${option.search}&`);
+  if (search) {
+    initialUrl = initialUrl.concat(`search=${search}&`);
   }
-}
+  const result = useInfiniteQuery({
+    queryKey: [
+      "product_label",
+      productLabelFilter,
+      search,
+      product_label_key,
+      search,
+    ],
+    queryFn: ({ pageParam = initialUrl }) =>
+      api_get.product_label(token, lan, pageParam),
+    getNextPageParam: (lastPage) => {
+      const { links } = lastPage;
+
+      if (links.next) {
+        const urlObj = new URL(links.next);
+        const page = urlObj.searchParams.get("page");
+
+        return initialUrl.concat(`page=${Number(page)}&limit=10`);
+      }
+    },
+  });
+
+  return result;
+};
 
 export const AdminProduct_Label = (
   option = { productLableFilter: "", search: "", limit: "", page: "" }
@@ -560,9 +600,6 @@ export const AdminProduct_Label = (
       const { currentPage, totalPages } = lastPage[finalKey].meta;
 
       if (currentPage < totalPages) {
-        console.log(currentPage);
-        console.log({ nextPage: currentPage + 1 });
-        console.log(`${initialUrl}&page=${Number(currentPage) + 1}&limit=10`);
         return `${initialUrl}&page=${Number(currentPage) + 1}&limit=10`;
       }
       return undefined;

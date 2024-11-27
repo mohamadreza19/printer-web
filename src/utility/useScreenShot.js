@@ -12,16 +12,22 @@ import { changeType } from "../redux/project/border_slice";
 import { viewMode } from "../redux/project/edit_mode_slice";
 import { getProjectRailWidth } from "../redux/project/project._slice";
 import MeasurementService from "./MeasurementService";
+import useLocalStorage from "react-use-localstorage";
+
+const PROJECT_EDIT = "project/edit";
+const PROJECT_TEMPLATES_EDIT = "project-templates/edit";
+const PROJECT_TEMPLATES_USER_EDIT = "project-templates/user_edit";
 
 //
 const measurementService = new MeasurementService();
 export default function () {
   const dispatch = useDispatch();
   const addPrint = Add_Print();
+  const [editor_access, _] = useLocalStorage("editor_access");
   const railWidth = useSelector(getProjectRailWidth);
   const [searchParams, setSearchParams] = useSearchParams();
   const handleOnclickSelectionButton = useSelectionReducer();
-  let { projectId } = useParams();
+
   const [allowClosePage, setAllowClosePage] = useState(false);
   const autoPrint = searchParams.get("autoPrint");
 
@@ -69,7 +75,22 @@ export default function () {
     const IMAGE = "IMAGE";
 
     if (id) {
-      addPrint.mutate(Number(id));
+      if (editor_access === PROJECT_EDIT) {
+        const body = {
+          projectId: Number(id),
+        };
+        addPrint.mutate(body);
+      } else if (editor_access === PROJECT_TEMPLATES_USER_EDIT) {
+        const body = {
+          labelId: Number(id),
+        };
+        addPrint.mutate(body);
+      } else if (editor_access === PROJECT_TEMPLATES_EDIT) {
+        const body = {
+          labelId: Number(id),
+        };
+        addPrint.mutate(body);
+      }
     }
 
     if (type === LABEL) {

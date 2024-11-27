@@ -8,7 +8,7 @@ export default function (utcDate, interval, language) {
   }
   if (interval === "Month") {
     console.log("hhhh");
-    return jalaliMoment(utcDate).locale(language).format("D");
+    return jalaliMoment(utcDate).locale(language).format("MM/DD");
     // return jalaliMoment(utcDate).locale(language).format("MM/DD");
   }
   if (interval === "Year") {
@@ -16,6 +16,6 @@ export default function (utcDate, interval, language) {
   }
 
   if (!interval) {
-    return jalaliMoment(utcDate).locale(language).format("y/M/D");
+    return jalaliMoment(utcDate).locale(language).format("YY/M/D");
   }
 }

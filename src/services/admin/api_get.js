@@ -196,35 +196,9 @@ export default class {
       });
     }
   }
-  static async product_label(
-    token = "",
-    lan,
-    page = 1,
-    limit = 10,
-    productLableFilter = "All",
-    search,
-    pageParam
-  ) {
-    console.log({ pageParam });
-    let url = pageParam;
+  static async product_label(token = "", lan, pageParam) {
     try {
-      // let url = `${api}/product-label?`;
-
-      // if (page) {
-      //   url = url.concat(`page=${page}&`);
-      // }
-      // if (limit) {
-      //   url = url.concat(`limit=${limit}&`);
-      // }
-      // if (productLableFilter) {
-      //   url = url.concat(`productLableFilter=${productLableFilter}&`);
-      // }
-
-      // if (search) {
-      //   url.concat(`search=${search}&`);
-      // }
-
-      const res = await axios.get(`${url}`, {
+      const res = await axios.get(`${pageParam}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           language: lan,

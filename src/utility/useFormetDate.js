@@ -19,7 +19,7 @@ export function FormateDateWithExpire(
   language = "",
   withoutSuffix = false
 ) {
-  console.log("timeStamp", timeStamp);
+  console.log(language);
   const date = moment(new Date());
   const timeStamp_ = moment(timeStamp);
   timeStamp_.diff(date, "days");

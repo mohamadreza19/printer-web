@@ -14,6 +14,7 @@ export default function ({
   justLabel = "",
   setJustProduct = () => {},
   setJustLabel = () => {},
+  onClickAndGetValeFn = () => {},
 }) {
   const content = useContent_Based_Language();
   const cssClass = useDynamicCssClass();
@@ -108,6 +109,7 @@ export default function ({
       </Grid>
       <Grid item lg={6} className={cssClass.ps_2}>
         <TextFields.v2_SearchBox
+          onClickAndGetValeFn={onClickAndGetValeFn}
           Input_marginStart_based_Language={cssClass.ms_1}
           placeholder={
             content.AdminPannel.end_col.controlPannel.history

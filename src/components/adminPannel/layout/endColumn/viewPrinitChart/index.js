@@ -9,12 +9,8 @@ import dateRangeSelectorStore from "../../../../../recoil/store/datepicker/dateR
 import Chart from "./Chart";
 import Company_And_PL_Statistics from "./Company_And_PL_Statistics";
 import Header from "./Header";
+import DynamicCopmanyAndLabel from "./dynamicCopmanyAndLabel";
 
-const options = [
-  { label: "سالیانه", value: "Year" },
-  { label: "ماهیانه", value: "Month" },
-  { label: "هفتگی", value: "Week" },
-];
 const Divider = () => {
   return (
     <div
@@ -117,7 +113,6 @@ export default function () {
         </div>
         <Divider />
         <Company_And_PL_Statistics />
-        {/* <DynamicCopmanyAndLabel /> */}
       </>
     );
 }

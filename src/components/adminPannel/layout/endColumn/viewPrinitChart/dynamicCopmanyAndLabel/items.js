@@ -26,6 +26,8 @@ export default function ({
     infinite.scrollTo({ top: 0, behavior: "smooth" });
     // infinite.scrollTo(0, 0);
   }
+  console.log(data);
+
   return (
     <div
       className="w-100 d-flex mt-3 px-4 position-relative "

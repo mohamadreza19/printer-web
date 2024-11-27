@@ -13,6 +13,7 @@ import {
 } from "../../../../../recoil/readStore";
 import useSortDataAcording_To_Scale_Chart from "../../../../../utility/useSortDataAcording_To_Scale_Chart";
 import PrintStatistics from "./PrintStatistics";
+import Icons from "../../../../../styles/__ready/Icons";
 
 export default function ({
   data = [],
@@ -114,7 +115,8 @@ export default function ({
               }}
             >
               <XAxis
-                tickMargin={15}
+                tickMargin={10}
+                tick={{ fontSize: 10 }}
                 // tick={<CustomizedAxisTick />}
                 angle={-45}
                 dataKey="name"
@@ -158,7 +160,7 @@ export default function ({
               />
             </LineChart>
           </ResponsiveContainer>
-          {/* <section
+          <section
             style={{
               width: "70.5%",
               bottom: "0.4rem",
@@ -177,7 +179,7 @@ export default function ({
                 Isactive={scale > 1 && !ignoreInterval ? true : false}
               />
             </span>
-          </section> */}
+          </section>
         </Grid>
         <Grid item lg={4}>
           <PrintStatistics
